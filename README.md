@@ -4,7 +4,7 @@
     Hi, I am a third year Software Engineering student at McGill University.
     
   Hana Gustyn:  
-    Hi, I am a third year Software Engineering student at McGill University
+    Hi, I am a third year Software Engineering student at McGill University.
   
   Tomasz Mroz:  
     --Here
