@@ -10,7 +10,7 @@
     --Here
   
   Fiona Ryan:  
-    --Here
+    Hi, I am a third year Computer Engineering student at McGill University.
   
   Victoria Sanchez:  
     --Here
