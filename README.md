@@ -16,7 +16,7 @@
     --Here
   
   Jerry Xia:  
-    --Here
+    Hi, I am a third year Software Engineering student at McGill University.
     
 ### Project Scope
 --Here
