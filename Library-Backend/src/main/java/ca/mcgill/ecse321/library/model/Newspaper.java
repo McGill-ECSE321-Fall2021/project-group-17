@@ -1,17 +1,16 @@
 package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.Entity;
-import java.sql.Date;
 
 @Entity
 public class Newspaper extends Item {
-    private Date datePublished;
+    private String headline;
 
-    public Date getDatePublished() {
-        return this.datePublished;
+    public String getHeadline() {
+        return this.headline;
     }
 
-    public void setDatePublished(Date date) {
-        this.datePublished = date;
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 }

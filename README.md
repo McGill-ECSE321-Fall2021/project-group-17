@@ -1,5 +1,5 @@
 # Library Management System
-  ### Team Inroductions
+  ### Team Introductions
   Aidan Jackson:  
     Hi, I am a third year Software Engineering student at McGill University.
     
