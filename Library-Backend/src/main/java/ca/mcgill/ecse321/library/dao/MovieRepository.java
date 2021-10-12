@@ -9,7 +9,7 @@ public interface MovieRepository extends CrudRepository<Movie,Integer>{
     //List<Movie> findByDirector(String director);
     //List<Movie> findByRating(String rating);
     //List<Movie> findFilmDistributor(String distributor);
-   Movie findMovieMovieID(Integer ID);
+     Movie findMovieMovieID(Integer ID);
 
 
 }
