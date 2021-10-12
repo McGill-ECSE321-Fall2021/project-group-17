@@ -5,8 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface MusicRepository extends CrudRepository<Music, Integer>{
+public interface MusicRepository extends CheckableItemRepository{
 //    List<Music> findByMusician(String musician);
 //    List<Music> findByRecordLabel(String label);
-    Music findMusicbyMusicID(Integer ID);
+    //Music findMusicById(Integer ID);
 }

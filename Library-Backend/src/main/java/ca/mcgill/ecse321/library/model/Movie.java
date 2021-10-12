@@ -7,19 +7,19 @@ import javax.persistence.Id;
 
 @Entity
 public class Movie extends CheckableItem {
-    Integer movieId;
+//    Integer movieId;
     String director;
     Integer runningTime;
     String rating;
     String filmDistributor;
 
-    public void setMovieId(Integer m){
-        this.movieId=m;
-    }
-    @Id
-    public Integer getMovieId(){
-        return this.movieId;
-    }
+//    public void setMovieId(Integer m){
+//        this.movieId=m;
+//    }
+//    //@Id
+//    public Integer getMovieId(){
+//        return this.movieId;
+//    }
     public void setDirector(String d){
         this.director=d;
     }

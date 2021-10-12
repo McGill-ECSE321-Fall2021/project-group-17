@@ -5,11 +5,11 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface MovieRepository extends CrudRepository<Movie,Integer>{
+public interface MovieRepository extends CheckableItemRepository{
     //List<Movie> findByDirector(String director);
     //List<Movie> findByRating(String rating);
     //List<Movie> findFilmDistributor(String distributor);
-     Movie findMovieMovieID(Integer ID);
+     //Movie findMovieById(Integer ID);
 
 
 }

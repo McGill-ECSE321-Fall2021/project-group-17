@@ -1,23 +1,25 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@Table(name="book")
 public class Book extends CheckableItem{
-    private Integer bookId;
+    @Column(name="author")
     private String author;
+    @Column(name="publisher")
     private String publisher;
-    private java.sql.Date datePublished;
+    @Column(name="genre")
     private String genre;
-    public void setBookId(int s){
-        this.bookId=s;
+    public Book(){
+
     }
-    @Id
-    public int getBookId(){
-        return this.bookId;
+    public Book(int id, String name, Date date,String author, String publisher, String genre){
+        super(id,name,date);
+        this.author=author;
+        this.publisher=publisher;
+        this.genre=genre;
     }
     public String getAuthor(){
         return this.author;
@@ -30,12 +32,6 @@ public class Book extends CheckableItem{
     }
     public String getPublisher(){
         return this.publisher;
-    }
-    public void setDatePublished(Date d){
-        this.datePublished=d;
-    }
-    public Date getDatePublished(){
-        return this.datePublished;
     }
     public void setGenre(String g){
         this.genre=g;

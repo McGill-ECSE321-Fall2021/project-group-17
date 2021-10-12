@@ -10,9 +10,17 @@ import java.sql.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Item {
-    private int id;
+    private Integer id;
     private String name;
     private Date datePublished;
+    public Item(){
+
+    }
+    public Item(Integer id, String name, Date datePublished){
+        this.id=id;
+        this.name=name;
+        this.datePublished=datePublished;
+    }
 
     @Id
     public int getId() {

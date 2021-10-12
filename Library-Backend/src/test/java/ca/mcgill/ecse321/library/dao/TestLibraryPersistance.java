@@ -24,6 +24,8 @@ public class TestLibraryPersistance {
 
     @Autowired
     private MusicRepository musicRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -38,18 +40,19 @@ public class TestLibraryPersistance {
         String publisher="penguin";
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
         String genre= "horror";
-
+        String name= "My Brilliant Friend";
         Book book = new Book();
-        book.setBookId(bookID);
+        book.setId(bookID);
+        book.setName(name);
         book.setAuthor(author);
         book.setPublisher(publisher);
         book.setDatePublished(date);
         book.setGenre(genre);
         bookRepository.save(book);
         book=null;
-        book=bookRepository.findBookByBookId(bookID);
+        book=(Book) bookRepository.findItemById(bookID);
         assertNotNull(book);
-        assertEquals(bookID,book.getBookId());
+        assertEquals(bookID,book.getId());
         assertEquals(author, book.getAuthor());
         assertEquals(publisher,book.getPublisher());
         assertEquals(date,book.getDatePublished());
