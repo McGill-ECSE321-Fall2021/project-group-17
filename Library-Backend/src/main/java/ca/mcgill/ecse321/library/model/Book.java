@@ -10,6 +10,7 @@ public class Book extends CheckableItem{
     private String author;
     private String publisher;
     private java.sql.Date datePublished;
+    private String genre;
     public void setBookId(int s){
         this.bookId=s;
     }
@@ -34,6 +35,12 @@ public class Book extends CheckableItem{
     }
     public Date getDatePublished(){
         return this.datePublished;
+    }
+    public void setGenre(String g){
+        this.genre=g;
+    }
+    public String getGenre(){
+        return this.genre;
     }
 
 }
