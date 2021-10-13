@@ -19,7 +19,7 @@ import java.time.Month;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class TestLibraryPersistance {
+public class TestLibraryPersistance{
 
     @Autowired
     private BookRepository bookRepository;
@@ -27,8 +27,6 @@ public class TestLibraryPersistance {
     private MovieRepository movieRepository;
     @Autowired
     private MusicRepository musicRepository;
-    @Autowired
-    private BookRepository bookRepository2;
 
     @AfterEach
     public void clearDatabase() {
@@ -95,10 +93,6 @@ public class TestLibraryPersistance {
         assertEquals(date,music.getDatePublished());
         assertEquals(musician,music.getMusician());
         assertEquals(recordLabel,music.getRecordLabel());
-
-
     }
-
-
 
 }
