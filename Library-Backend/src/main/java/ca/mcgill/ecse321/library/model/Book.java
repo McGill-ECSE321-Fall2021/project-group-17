@@ -4,13 +4,9 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name="book")
 public class Book extends CheckableItem{
-    @Column(name="author")
     private String author;
-    @Column(name="publisher")
     private String publisher;
-    @Column(name="genre")
     private String genre;
     public Book(){
 

@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 import java.sql.Date;
 
@@ -22,7 +19,9 @@ public abstract class Item {
         this.datePublished=datePublished;
     }
 
+
     @Id
+    @Column(name="id", updatable=false, nullable=false)
     public int getId() {
         return this.id;
     }

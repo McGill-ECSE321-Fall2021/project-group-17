@@ -2,21 +2,21 @@ package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 
 @Entity
 public class Music extends CheckableItem{
-//    private Integer musicId;
     private  String musician;
-//    private Integer yearReleased;
-    private String recordLabel;
 
-//    public void setMusicId(Integer m){
-//        this.musicId=m;
-//    }
-//    //@Id
-//    public Integer getMusicId(){
-//        return this.musicId;
-//    }
+    private String recordLabel;
+    public Music(){
+
+    }
+    public Music(int id, String name, Date date, String musician, String recordLabel){
+        super(id,name,date);
+        this.musician=musician;
+        this.recordLabel=recordLabel;
+    }
 
     public void setMusician(String m){
         this.musician=m;
@@ -24,12 +24,6 @@ public class Music extends CheckableItem{
     public String getMusician(){
         return this.musician;
     }
-//    public void setYearReleased(Integer y){
-//        this.yearReleased=y;
-//    }
-//    public Integer getYearReleased(){
-//        return this.yearReleased;
-//    }
     public void setRecordLabel(String r){
         this.recordLabel=r;
     }

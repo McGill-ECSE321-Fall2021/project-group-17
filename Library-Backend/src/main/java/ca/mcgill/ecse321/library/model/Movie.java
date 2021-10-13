@@ -4,22 +4,25 @@ import org.hibernate.annotations.Check;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 
 @Entity
 public class Movie extends CheckableItem {
-//    Integer movieId;
     String director;
     Integer runningTime;
     String rating;
     String filmDistributor;
 
-//    public void setMovieId(Integer m){
-//        this.movieId=m;
-//    }
-//    //@Id
-//    public Integer getMovieId(){
-//        return this.movieId;
-//    }
+    public Movie(){
+
+    }
+    public Movie(int id, String name, Date date, String director, Integer runningTime, String rating, String filmDistributor){
+        super(id,name,date);
+        this.director=director;
+        this.runningTime=runningTime;
+        this.rating=rating;
+        this.filmDistributor=filmDistributor;
+    }
     public void setDirector(String d){
         this.director=d;
     }
@@ -46,3 +49,4 @@ public class Movie extends CheckableItem {
     }
 
 }
+

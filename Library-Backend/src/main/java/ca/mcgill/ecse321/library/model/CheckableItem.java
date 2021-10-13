@@ -8,7 +8,6 @@ import java.sql.Date;
 
 
 @Entity
-@Table(name="CheckableItem")
 @Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
 public abstract class CheckableItem extends Item {
     public CheckableItem(){
