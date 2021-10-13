@@ -9,6 +9,6 @@ import ca.mcgill.ecse321.library.model.Item;
 public interface AddressRepository extends CrudRepository<Address,String>{
 	
 	//boolean findByUser(User user);
-	Address findItemById(String id);
+	Address findAddressByAddressId(String id);
 
 }

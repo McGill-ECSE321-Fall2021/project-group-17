@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Time;
@@ -13,6 +14,10 @@ public class LibraryHour {
     private Time endTime;
     private DayOfWeek dayOfWeek;
     
+    public LibraryHour() {
+    	
+    }
+    
     public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek) {
     	this.libraryHourId = libraryHourId;
     	this.startTime = startTime;
@@ -21,6 +26,7 @@ public class LibraryHour {
     }
 
     @Id
+    @Column(name="libraryHourId", updatable=false, nullable=false)
     public String getLibraryHourId() {
     	return libraryHourId;
     }

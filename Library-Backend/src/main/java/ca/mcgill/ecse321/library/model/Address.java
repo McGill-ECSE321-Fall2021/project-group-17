@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -15,6 +16,9 @@ public class Address {
 	
 	// Address Associations
 	// private User user;
+	public Address() {
+		
+	}
 	
 	public Address(String addressId, Integer streetNumber, String street, String city, String country) {
 		this.addressId = addressId;
@@ -24,7 +28,8 @@ public class Address {
 		this.country = country;
 	}
 	
-    @Id
+	@Id
+    @Column(name="addressId", updatable=false, nullable=false)
     public String getAddressId() {
         return addressId;
     }

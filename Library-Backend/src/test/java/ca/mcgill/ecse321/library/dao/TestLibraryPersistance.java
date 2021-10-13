@@ -123,7 +123,7 @@ public class TestLibraryPersistance{
     	Address address = new Address(addressID, streetNumber, street, city, country);
     	addressRepository.save(address);
     	address = null;
-    	address = addressRepository.findItemById(addressID);
+    	address = addressRepository.findAddressByAddressId(addressID);
 		assertNotNull(address);
 		assertEquals(addressID,address.getAddressId());
 		assertEquals(streetNumber, address.getStreetNumber());
