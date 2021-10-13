@@ -16,6 +16,14 @@ public class Address {
 	// Address Associations
 	// private User user;
 	
+	public Address(String addressId, Integer streetNumber, String street, String city, String country) {
+		this.addressId = addressId;
+		this.streetNumber = streetNumber;
+		this.street = street;
+		this.city = city;
+		this.country = country;
+	}
+	
     @Id
     public String getAddressId() {
         return addressId;

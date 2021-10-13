@@ -12,6 +12,13 @@ public class LibraryHour {
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
+    
+    public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek) {
+    	this.libraryHourId = libraryHourId;
+    	this.startTime = startTime;
+    	this.endTime = endTime;
+    	this.dayOfWeek = dayOfWeek;
+    }
 
     @Id
     public String getLibraryHourId() {

@@ -14,5 +14,5 @@ public interface LibraryHourRepository extends CrudRepository<LibraryHour,String
 	
 	boolean existsByLibrary(Library library);
 
-    Library findLibraryHourById(String id);
+    LibraryHour findLibraryHourById(String id);
 }

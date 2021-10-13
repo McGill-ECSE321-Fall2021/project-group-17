@@ -4,6 +4,10 @@ import javax.persistence.Id;
 
 public class Library {
     private String name;
+    
+    public Library(String name) {
+    	this.name = name;
+    }
 
     @Id
     public String getName() {
