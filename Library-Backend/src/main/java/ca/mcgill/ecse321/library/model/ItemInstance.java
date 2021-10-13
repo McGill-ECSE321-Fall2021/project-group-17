@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class ItemInstance {
@@ -12,6 +9,16 @@ public class ItemInstance {
     private CheckableItem checkableItem;
     //private Reservation reservation;
     //private Loan loan;
+
+    public ItemInstance() {
+
+    }
+
+    public ItemInstance(int id, String serialNum, CheckableItem item) {
+        this.id = id;
+        this.serialNum = serialNum;
+        this.checkableItem = item;
+    }
 
     @Id
     public int getId() {

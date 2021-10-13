@@ -1,11 +1,10 @@
 package ca.mcgill.ecse321.library.dao;
 
-import ca.mcgill.ecse321.library.model.Book;
+import ca.mcgill.ecse321.library.model.*;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.mcgill.ecse321.library.model.Movie;
-import ca.mcgill.ecse321.library.model.Music;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,12 +26,18 @@ public class TestLibraryPersistance{
     private MovieRepository movieRepository;
     @Autowired
     private MusicRepository musicRepository;
+    @Autowired
+    private ItemInstanceRepository itemInstanceRepository;
+    @Autowired
+    private CheckableItemRepository checkableItemRepository;
 
     @AfterEach
     public void clearDatabase() {
+        itemInstanceRepository.deleteAll();
         bookRepository.deleteAll();
         movieRepository.deleteAll();
         musicRepository.deleteAll();
+        checkableItemRepository.deleteAll();
     }
  @Test
  public void testPersistAndLoadBook(){
@@ -95,4 +100,20 @@ public class TestLibraryPersistance{
         assertEquals(recordLabel,music.getRecordLabel());
     }
 
+    @Test
+    public void testPersistAndLoadItemInstance() {
+        Integer id = 1234;
+        String serialNum = "5678";
+        CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
+                java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
+        checkableItemRepository.save(checkableItem);
+        ItemInstance itemInstance = new ItemInstance(id, serialNum, checkableItem);
+        itemInstanceRepository.save(itemInstance);
+        itemInstance = null;
+        itemInstance = itemInstanceRepository.findByCheckableItem(checkableItem);
+        assertNotNull(itemInstance);
+        assertEquals(id, itemInstance.getId());
+        assertEquals(serialNum, itemInstance.getSerialNum());
+        assertEquals(checkableItem.getId(), itemInstance.getCheckableItem().getId());
+    }
 }
