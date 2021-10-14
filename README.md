@@ -3,6 +3,9 @@
 ![LMS](https://github.com/McGill-ECSE321-Fall2021/project-group-17/blob/master/images/LMS.jpg)
 
   ### Team Introductions
+  |  Team Member |       Program       | Year |
+  |--------------|---------------------|------|
+  | Aidan Jackson| Software Eng.       |  U3  |
   Aidan Jackson:  
     Hi, I am a third year Software Engineering student at McGill University.
     
