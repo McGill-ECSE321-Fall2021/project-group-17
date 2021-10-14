@@ -10,26 +10,7 @@
   | Tomasz Mroz  |                     |      |
   | Fiona Ryan   | Computer Eng.       |  U2  |
   | Victoria Sanchez| Computer Eng.     |  U2  |
- 
- 
- 
- Aidan Jackson:  
-    Hi, I am a third year Software Engineering student at McGill University.
-    
-  Hana Gustyn:  
-    Hi, I am a third year Software Engineering student at McGill University.
-  
-  Tomasz Mroz:  
-    --Here
-  
-  Fiona Ryan:  
-    Hi, I am a third year Computer Engineering student at McGill University.
-  
-  Victoria Sanchez:   
-    Hi, I am a third year Computer Engineering student at McGill University.
-  
-  Jerry Xia:  
-    Hi, I am a third year Software Engineering student at McGill University.
+  | Jerry Xia | Software Eng. | U2 |
     
 ### Project Scope
 --Here
