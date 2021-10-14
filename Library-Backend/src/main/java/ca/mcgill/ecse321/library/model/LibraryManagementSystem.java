@@ -5,10 +5,10 @@ import java.util.Set;
 
 @Entity
 public class LibraryManagementSystem {
-    @GeneratedValue
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-
+    /*
     private Set<Address> addressSet;
     private Set<Person> personSet;
     private Set<PersonRole> personRoleSet;
@@ -109,7 +109,7 @@ public class LibraryManagementSystem {
     public void setAddressSet(Set<Address> addressSet) {
         this.addressSet = addressSet;
     }
-
+    */
     public int getId() {
         return id;
     }

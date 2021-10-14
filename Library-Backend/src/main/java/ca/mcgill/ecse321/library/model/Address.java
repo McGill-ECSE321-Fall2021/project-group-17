@@ -5,22 +5,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 public class Address {
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer addressID;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int addressID;
 
     private int streetNumber;
     private String street;
     private String city;
     private String country;
 
-    @ManyToMany
-    private User owner;
-
-    public void setAddressID(int addressID) {
-        this.addressID = addressID;
-    }
-
-    @Id
     public Integer getAddressID() {
         return addressID;
     }
