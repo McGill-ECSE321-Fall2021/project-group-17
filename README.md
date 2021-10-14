@@ -1,5 +1,5 @@
 # Library Management System
-  ### Team Inroductions
+  ### Team Introductions
   Aidan Jackson:  
     Hi, I am a third year Software Engineering student at McGill University.
     
@@ -12,8 +12,8 @@
   Fiona Ryan:  
     Hi, I am a third year Computer Engineering student at McGill University.
   
-  Victoria Sanchez:  
-    --Here
+  Victoria Sanchez:   
+    Hi, I am a third year Computer Engineering student at McGill University.
   
   Jerry Xia:  
     Hi, I am a third year Software Engineering student at McGill University.
