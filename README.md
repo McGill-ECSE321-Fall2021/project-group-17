@@ -1,5 +1,7 @@
 # Library Management System
 
+![LMS](https://github.com/McGill-ECSE321-Fall2021/project-group-17/blob/master/images/LMS.jpg)
+
   ### Team Introductions
   Aidan Jackson:  
     Hi, I am a third year Software Engineering student at McGill University.
