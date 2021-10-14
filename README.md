@@ -1,7 +1,5 @@
 # Library Management System
 
-![LMS](https://user-images.githubusercontent.com/70776631/137239977-fee046c6-a8a1-4430-81d5-18cfa3f3594c.jpg)
-
   ### Team Introductions
   Aidan Jackson:  
     Hi, I am a third year Software Engineering student at McGill University.
