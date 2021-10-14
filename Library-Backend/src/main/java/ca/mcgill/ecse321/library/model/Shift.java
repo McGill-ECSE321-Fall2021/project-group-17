@@ -7,10 +7,13 @@ public class Shift {
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
+    private Librarian librarian;
     //may need month and/or year
 
     public Shift(){
-
+        this.startTime = null;
+        this.endTime = null;
+        this.dayOfWeek = null;
     }
 
     public Shift(Time startTime, Time endTime, DayOfWeek dayOfWeek){
@@ -29,6 +32,7 @@ public class Shift {
     public DayOfWeek getDayOfWeek(){
         return this.dayOfWeek;
     }
+    public Librarian getLibrarian(){ return this.librarian;}
 
     //Setters
     public void setStartTime(Time startTime){
@@ -37,7 +41,6 @@ public class Shift {
     public void setEndTime(Time endTime){
         this.endTime = endTime;
     }
-    public void setDayOfWeek(DayOfWeek dayOfWeek){
-
-    }
+    public void setDayOfWeek(DayOfWeek dayOfWeek){}
+    public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
 }
