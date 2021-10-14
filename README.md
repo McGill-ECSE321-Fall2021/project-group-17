@@ -5,8 +5,15 @@
   ### Team Introductions
   |  Team Member |       Program       | Year |
   |--------------|---------------------|------|
-  | Aidan Jackson| Software Eng.       |  U3  |
-  Aidan Jackson:  
+  | Aidan Jackson| Software Eng.       |  U2  |
+  | Hana Gustyn  | Software Eng.       |  U2  |
+  | Tomasz Mroz  |                     |      |
+  | Fiona Ryan   | Computer Eng.       |  U2  |
+  | Victoria Sanchez| Computer Eng.     |  U2  |
+ 
+ 
+ 
+ Aidan Jackson:  
     Hi, I am a third year Software Engineering student at McGill University.
     
   Hana Gustyn:  
