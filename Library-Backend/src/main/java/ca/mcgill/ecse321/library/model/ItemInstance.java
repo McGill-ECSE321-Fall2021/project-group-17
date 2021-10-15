@@ -63,5 +63,4 @@ public class ItemInstance {
     public void setLoan(Loan loan) {
         this.loan = loan;
     }*/
-
 }
