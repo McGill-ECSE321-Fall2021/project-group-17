@@ -12,14 +12,11 @@ public class User extends PersonRole{
     private LibraryCard libCard;
 
     public User(){
-        this.penalty = 0;
-        this.oAccount = null;
-        this.loans = null;
-        this.address = null;
-        this.libCard = null;
+
     }
 
-    public User(int penalty, OnlineAccount oAccount, List<Loan> loans, Address address, LibraryCard libCard) {
+    public User(String roleType, Person person, int penalty, OnlineAccount oAccount, List<Loan> loans, Address address, LibraryCard libCard) {
+        super(roleType, person);
         this.penalty = penalty;
         this.oAccount = oAccount;
         this.loans = loans;
