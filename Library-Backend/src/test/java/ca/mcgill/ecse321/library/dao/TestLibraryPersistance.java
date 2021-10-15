@@ -30,6 +30,8 @@ public class TestLibraryPersistance{
     private ItemInstanceRepository itemInstanceRepository;
     @Autowired
     private CheckableItemRepository checkableItemRepository;
+    @Autowired
+    private NewspaperRepository newspaperRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -38,6 +40,7 @@ public class TestLibraryPersistance{
         movieRepository.deleteAll();
         musicRepository.deleteAll();
         checkableItemRepository.deleteAll();
+        newspaperRepository.deleteAll();
     }
  @Test
  public void testPersistAndLoadBook(){
@@ -115,5 +118,22 @@ public class TestLibraryPersistance{
         assertEquals(id, itemInstance.getId());
         assertEquals(serialNum, itemInstance.getSerialNum());
         assertEquals(checkableItem.getId(), itemInstance.getCheckableItem().getId());
+    }
+
+    @Test
+    public void testPersistAndLoadNewspaper() {
+        Integer id = 1234;
+        String name = "New York Times";
+        Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.MAY,24));
+        String headline = "US deaths near 100,000, an incalculable loss";
+        Newspaper newspaper = new Newspaper(id, name, date, headline);
+        newspaperRepository.save(newspaper);
+        newspaper = null;
+        newspaper = (Newspaper) newspaperRepository.findItemById(newspaper.getId());
+        assertNotNull(newspaper);
+        assertEquals(id,newspaper.getId());
+        assertEquals(name, newspaper.getName());
+        assertEquals(date, newspaper.getDatePublished());
+        assertEquals(headline, newspaper.getHeadline());
     }
 }
