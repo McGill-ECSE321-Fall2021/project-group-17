@@ -7,7 +7,7 @@
   |--------------|---------------------|------|
   | Aidan Jackson| Software Eng.       |  U2  |
   | Hana Gustyn  | Software Eng.       |  U2  |
-  | Tomasz Mroz  |                     |      |
+  | Tomasz Mroz  | Software Eng.       |  U2  |
   | Fiona Ryan   | Computer Eng.       |  U2  |
   | Victoria Sanchez| Computer Eng.     |  U2  |
   | Jerry Xia | Software Eng. | U2 |
