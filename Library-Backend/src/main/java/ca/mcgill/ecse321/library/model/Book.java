@@ -23,7 +23,7 @@ public class Book extends CheckableItem{
     public String getAuthor(){
         return this.author;
     }
-    public void setAuthor(String a){
+    public void setAuthor(String a) {
         this.author=a;
     }
     public void setPublisher(String p){
