@@ -1,15 +1,17 @@
 package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.sql.Date;
+/*
+class written by Victoria Sanchez
+ */
 
 @Entity
 public class Music extends CheckableItem{
     private  String musician;
 
     private String recordLabel;
-    public Music(){
+    public Music(){ //default constructor
 
     }
     public Music(int id, String name, Date date, String musician, String recordLabel){

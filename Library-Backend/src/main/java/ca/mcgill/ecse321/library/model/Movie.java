@@ -1,11 +1,11 @@
 package ca.mcgill.ecse321.library.model;
 
-import org.hibernate.annotations.Check;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.sql.Date;
-
+ /*
+ class written by Victoria Sanhcez
+  */
 @Entity
 public class Movie extends CheckableItem {
     String director;
@@ -23,6 +23,7 @@ public class Movie extends CheckableItem {
         this.rating=rating;
         this.filmDistributor=filmDistributor;
     }
+    //setters and getters are generated
     public void setDirector(String d){
         this.director=d;
     }
