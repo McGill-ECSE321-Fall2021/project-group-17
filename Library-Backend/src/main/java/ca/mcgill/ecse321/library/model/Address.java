@@ -10,10 +10,6 @@ public class Address {
     private String street;
     private String city;
     private String country;
-
-
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
     
     public Address() {
@@ -67,6 +63,8 @@ public class Address {
         this.country = country;
     }
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
@@ -75,5 +73,19 @@ public class Address {
         this.system = system;
     }
 
+    /*
+    private User user;
+
+
+    @OneToOne(optional=false)
+    public User getUser(){
+        return this.user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+     */
 
 }

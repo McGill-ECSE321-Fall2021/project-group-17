@@ -16,12 +16,14 @@ public class LibraryHour {
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
+    private Library library;
+    private LibraryManagementSystem system;
+
     
     public LibraryHour() {
     	
     }
 
-    
     public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek) {
     	this.libraryHourId = libraryHourId;
     	this.startTime = startTime;
@@ -35,13 +37,19 @@ public class LibraryHour {
     	return libraryHourId;
     }
 
-
-    private LibraryManagementSystem system;
-
     @ManyToOne
     @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
+    }
+    
+    @ManyToOne(optional=false)
+    public Library getLibrary() {
+        return this.library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 
     public void setSystem(LibraryManagementSystem system) {
