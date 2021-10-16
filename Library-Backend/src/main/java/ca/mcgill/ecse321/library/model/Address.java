@@ -4,10 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class Address {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    
     private int addressID;
-
     private int streetNumber;
     private String street;
     private String city;
@@ -31,6 +29,8 @@ public class Address {
 	}
 
 
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getAddressID() {
         return addressID;
     }
