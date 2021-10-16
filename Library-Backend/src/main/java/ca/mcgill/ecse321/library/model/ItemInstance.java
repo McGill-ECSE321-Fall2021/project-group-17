@@ -9,8 +9,6 @@ public class ItemInstance {
 
     public ItemInstance() {}
 
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
 
     public ItemInstance(String serialNum, CheckableItem item) {
@@ -53,7 +51,8 @@ public class ItemInstance {
     public void setLoan(Loan loan) {
         this.loan = loan;
     }*/
-
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

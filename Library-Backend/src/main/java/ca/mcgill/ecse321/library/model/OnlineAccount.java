@@ -8,7 +8,6 @@ public class OnlineAccount {
     private String username;
     private String password;
 
-    private LibraryManagementSystem system;
 
 
     public String getUsername() {
@@ -27,22 +26,7 @@ public class OnlineAccount {
         this.password = password;
     }
 
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
-    /*public LibraryManagementSystem getSystem(){
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system){
-        this.system = system;
-    }
 
 /*
     @OneToOne

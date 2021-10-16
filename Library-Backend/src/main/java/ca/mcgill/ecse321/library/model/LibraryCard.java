@@ -4,12 +4,12 @@ import javax.persistence.*;
 
 @Entity
 public class LibraryCard {
-    @Id
+
     private String id;
 
     private LibraryManagementSystem system;
 
-
+    @Id
     public String getId() {
         return this.id;
     }
