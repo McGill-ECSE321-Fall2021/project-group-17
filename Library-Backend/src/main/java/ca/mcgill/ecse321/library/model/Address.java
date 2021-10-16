@@ -4,18 +4,18 @@ import javax.persistence.*;
 
 @Entity
 public class Address {
-    
+
     private int addressID;
     private int streetNumber;
     private String street;
     private String city;
     private String country;
     private LibraryManagementSystem system;
-    
+
     public Address() {
-    	
+
     }
-    
+
 	public Address(int addressID, Integer streetNumber, String street, String city, String country) {
 		this.addressID = addressID;
 		this.streetNumber = streetNumber;
@@ -24,8 +24,7 @@ public class Address {
 		this.country = country;
 	}
 
-
-	@Id
+    @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public int getAddressID() {
         return addressID;
