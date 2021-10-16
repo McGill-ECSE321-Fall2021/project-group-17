@@ -97,7 +97,7 @@ public class LibraryManagementSystem {
         this.loanSet = loanSet;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "libraryHourId")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<LibraryHour> getLibraryHourSet() {
         return libraryHourSet;
     }
