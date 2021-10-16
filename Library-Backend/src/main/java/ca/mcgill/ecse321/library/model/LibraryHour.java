@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Time;
 import java.time.DayOfWeek;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 
 @Entity
 public class LibraryHour {
@@ -17,6 +20,7 @@ public class LibraryHour {
     public LibraryHour() {
     	
     }
+
     
     public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek) {
     	this.libraryHourId = libraryHourId;
@@ -29,6 +33,18 @@ public class LibraryHour {
     @Column(name="libraryHourId", updatable=false, nullable=false)
     public String getLibraryHourId() {
     	return libraryHourId;
+    }
+
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
+
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
     }
     
     public String setLibraryHourId() {
@@ -58,4 +74,5 @@ public class LibraryHour {
     public void setDayOfWeek(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
+
 }

@@ -1,133 +1,68 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
+import javax.persistence.*;
 
 @Entity
 public class Address {
-	
-	private String addressId;
-	private Integer streetNumber;
-	private String street;
-	private String city;
-	private String country;
-	
-	// Address Associations
-	// private User user;
-	public Address() {
-		
-	}
-	
-	public Address(String addressId, Integer streetNumber, String street, String city, String country) {
-		this.addressId = addressId;
-		this.streetNumber = streetNumber;
-		this.street = street;
-		this.city = city;
-		this.country = country;
-	}
-	
-	@Id
-    @Column(name="addressId", updatable=false, nullable=false)
-    public String getAddressId() {
-        return addressId;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int addressID;
+
+    private int streetNumber;
+    private String street;
+    private String city;
+    private String country;
+
+
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
+
+
+
+    public Integer getAddressID() {
+        return addressID;
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
+    public int getStreetNumber() {
+        return streetNumber;
     }
 
-	public boolean setStreetNumber(int streetNumber) {
-	    boolean wasSet = false;
-	    this.streetNumber = streetNumber;
-	    wasSet = true;
-	    return wasSet;
-	}
+    public void setStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
+    }
 
-	public boolean setStreet(String street) {
-	    boolean wasSet = false;
-	    this.street = street;
-	    wasSet = true;
-	    return wasSet;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public boolean setCity(String city) {
-	    boolean wasSet = false;
-	    this.city = city;
-	    wasSet = true;
-	    return wasSet;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public boolean setCountry(String country) {
-	    boolean wasSet = false;
-	    this.country = country;
-	    wasSet = true;
-	    return wasSet;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public int getStreetNumber() {
-	    return streetNumber;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getStreet() {
-	    return street;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public String getCity() {
-	    return city;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getCountry() {
-	    return country;
-	}
-	
-	  /* Associations */
-//	  public User getUser() {
-//	    return user;
-//	  }
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
 
-//	  public boolean setUser(User user) {
-//	    boolean wasSet = false;
-//	    if (user == null) {
-//	      //Unable to setUser to null, as address must always be associated to a user
-//	      return wasSet;
-//	    }
-//	    
-//	    Address existingAddress = user.getAddress();
-//	    if (existingAddress != null && !equals(existingAddress)) {
-//	      //Unable to setUser, the current user already has a address, which would be orphaned if it were re-assigned
-//	      return wasSet;
-//	    }
-//	    
-//	    User anOldUser = user;
-//	    user = user;
-//	    user.setAddress(this);
-//
-//	    if (anOldUser != null) {
-//	      anOldUser.setAddress(null);
-//	    }
-//	    wasSet = true;
-//	    return wasSet;
-//	  }
-	  
-
-//	  public void delete() {
-//	    User existingUser = user;
-//	    user = null;
-//	    if (existingUser != null) {
-//	      existingUser.setAddress(null);
-//	    }
-//	  }
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
+    }
 
 
-//	  public String toString() {
-//	    return super.toString() + "["+
-//	            "streetNumber" + ":" + getStreetNumber()+ "," +
-//	            "street" + ":" + getStreet()+ "," +
-//	            "city" + ":" + getCity()+ "," +
-//	            "country" + ":" + getCountry()+ "]" + System.getProperties().getProperty("line.separator") +
-//	            "  " + "user = "+(getUser()!=null?Integer.toHexString(System.identityHashCode(getUser())):"null") + System.getProperties().getProperty("line.separator") +
-//	            "  " + "libraryManagementSystem = "+(getLibraryManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getLibraryManagementSystem())):"null");
-//	  }
 }

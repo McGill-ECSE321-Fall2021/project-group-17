@@ -1,14 +1,13 @@
 package ca.mcgill.ecse321.library.dao;
 
-import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.library.model.Address;
-//import ca.mcgill.ecse321.library.model.User;
-import ca.mcgill.ecse321.library.model.Item;
+//import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import org.springframework.data.repository.CrudRepository;
 
-public interface AddressRepository extends CrudRepository<Address,String>{
-	
-	//boolean findByUser(User user);
-	Address findAddressByAddressId(String id);
 
+public interface AddressRepository extends CrudRepository<Address, Integer> {
+    Address findAddressByAddressID(int id);
+    Address findAddressByCity(String street);
+    Address findAddressByStreetNumber(int street);
 }
