@@ -4,8 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Address {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+
     private int addressID;
 
     private int streetNumber;
@@ -14,12 +13,12 @@ public class Address {
     private String country;
 
 
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
 
 
-
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Integer getAddressID() {
         return addressID;
     }
@@ -56,6 +55,8 @@ public class Address {
         this.country = country;
     }
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

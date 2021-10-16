@@ -17,7 +17,7 @@ public class LibraryManagementSystem {
     private Set<Loan> loanSet;
     private Set<LibraryHour> libraryHourSet;
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "addressID")
     public Set<Address> getAddressSet() {
         return addressSet;
     }
