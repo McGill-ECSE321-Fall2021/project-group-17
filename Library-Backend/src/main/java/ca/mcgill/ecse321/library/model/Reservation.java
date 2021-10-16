@@ -15,8 +15,7 @@ public class Reservation {
     private Date pickupDay;
     private ItemInstance itemInstance;
   
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
 
     public Reservation() { }
@@ -62,7 +61,9 @@ public class Reservation {
     public void setItemInstance(ItemInstance itemInstance) {
         this.itemInstance = itemInstance;
     }
-  
+
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

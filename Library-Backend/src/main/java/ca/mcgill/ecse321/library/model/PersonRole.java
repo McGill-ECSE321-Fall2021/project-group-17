@@ -6,17 +6,18 @@ import javax.persistence.*;
 @Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class PersonRole {
 
+
     private Person person;
     private LibraryManagementSystem system;
     private String roleType;
     private OnlineAccount account;
 
-    public PersonRole(){
+    public PersonRole(){}
 
-    }
     public PersonRole(String type, Person person, OnlineAccount account){
         this.roleType = type;
         this.person = person;
+        this.account = account;
     }
 
     @Id
@@ -33,6 +34,7 @@ public abstract class PersonRole {
     @JoinColumn()
     public Person getPerson(){return this.person;}
     public void setPerson(Person person){this.person = person;}
+
 
     @ManyToOne
     @JoinColumn()

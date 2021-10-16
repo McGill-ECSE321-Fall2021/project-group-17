@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,17 +11,16 @@ public class Person {
     private Integer id;
     private String name;
 
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    private Set<PersonRole> personRoleSet;
 
     @Id
     public Integer getId() {return id;}
 
     public void setId(Integer Id){this.id = Id;}
+
+    private List<PersonRole> personRoleList;
+
 
     public String getName() {
         return name;
@@ -30,6 +30,9 @@ public class Person {
         this.name = name;
     }
 
+
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
@@ -38,11 +41,12 @@ public class Person {
         this.system = system;
     }
 
-    public Set<PersonRole> getPersonRoleSet() {
-        return personRoleSet;
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "roleType")
+    public List<PersonRole> getPersonRoleList() {
+        return personRoleList;
     }
 
-    public void setPersonRoleSet(Set<PersonRole> personRoleSet) {
-        this.personRoleSet = personRoleSet;
+    public void setPersonRoleList(List<PersonRole> personRoleList) {
+        this.personRoleList = personRoleList;
     }
 }

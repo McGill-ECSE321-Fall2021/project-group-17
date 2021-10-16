@@ -16,8 +16,7 @@ public class Loan {
     private Date returnDate;
     private ItemInstance itemInstance;
   
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
 
     public Loan() {
@@ -65,7 +64,9 @@ public class Loan {
     public void setItemInstance(ItemInstance itemInstance) {
         this.itemInstance = itemInstance;
     }
-  
+
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

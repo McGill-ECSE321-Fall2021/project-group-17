@@ -24,10 +24,7 @@ class LibraryApplicationTests {
 	private PersonRepository personRepository;
 	@Autowired
 	private AddressRepository addressRepository;
-	@Autowired
-	private LibraryCardRepository libraryCardRepository;
-	@Autowired
-	private OnlineAccountRepository onlineAccountRepository;
+
 	@Autowired
 	private NewspaperRepository newspaperRepository;
 	@Autowired
@@ -128,39 +125,7 @@ class LibraryApplicationTests {
 		assertEquals(city,add.getCity());
 	}
 
-	@Test
-	public void testPersistAndLoadLibraryCardId(){
-		String id = "123";
-		LibraryCard card = new LibraryCard();
-		card.setId(id);
-		libraryCardRepository.save(card);
 
-		String s = card.getId();
-
-		card = null;
-
-		card = libraryCardRepository.findLibraryCardById(s);
-		assertNotNull(card);
-		assertEquals(id, card.getId());
-	}
-
-	@Test
-	public void testPersistAndLoadOnlineAccountUsername(){
-		String username = "fiona";
-		String password = "abc123";
-		OnlineAccount acct = new OnlineAccount();
-		acct.setUsername(username);
-		acct.setPassword(password);
-		onlineAccountRepository.save(acct);
-
-		String s = acct.getUsername();
-
-		acct = null;
-
-		acct = onlineAccountRepository.findOnlineAccountByUsername(s);
-		assertNotNull(acct);
-		assertEquals(username, acct.getUsername());
-	}
 
 	@Test
 	public void testPersistAndLoadNewspaper() {

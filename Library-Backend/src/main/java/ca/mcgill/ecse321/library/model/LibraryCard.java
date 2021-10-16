@@ -4,13 +4,12 @@ import javax.persistence.*;
 
 @Entity
 public class LibraryCard {
-    @Id
+
     private String id;
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
 
-
+    @Id
     public String getId() {
         return this.id;
     }
@@ -19,6 +18,8 @@ public class LibraryCard {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem(){
         return system;
     }

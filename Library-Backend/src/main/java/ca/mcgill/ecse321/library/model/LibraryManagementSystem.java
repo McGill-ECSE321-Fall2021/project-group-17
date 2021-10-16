@@ -5,41 +5,19 @@ import java.util.Set;
 
 @Entity
 public class LibraryManagementSystem {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<Address> addressSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "name")
     private Set<Person> personSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<Item> itemSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<LibraryCard> libraryCardSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<PersonRole> personRoleSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<Shift> shiftSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<ItemInstance> itemInstanceSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<Reservation> reservationSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<Loan> loanSet;
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<LibraryHour> libraryHourSet;
 
-
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "addressID")
     public Set<Address> getAddressSet() {
         return addressSet;
     }
@@ -48,6 +26,7 @@ public class LibraryManagementSystem {
         this.addressSet = addressSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "name")
     public Set<Person> getPersonSet() {
         return personSet;
     }
@@ -56,14 +35,15 @@ public class LibraryManagementSystem {
         this.personSet = personSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<Item> getItemSet() {
         return itemSet;
     }
-
     public void setItemSet(Set<Item> itemSet) {
         this.itemSet = itemSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<LibraryCard> getLibraryCardSet() {
         return libraryCardSet;
     }
@@ -72,6 +52,7 @@ public class LibraryManagementSystem {
         this.libraryCardSet = libraryCardSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "roleType")
     public Set<PersonRole> getPersonRoleSet() {
         return personRoleSet;
     }
@@ -80,6 +61,7 @@ public class LibraryManagementSystem {
         this.personRoleSet = personRoleSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<Shift> getShiftSet() {
         return shiftSet;
     }
@@ -88,6 +70,7 @@ public class LibraryManagementSystem {
         this.shiftSet = shiftSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "serialNum")
     public Set<ItemInstance> getItemInstanceSet() {
         return itemInstanceSet;
     }
@@ -96,6 +79,7 @@ public class LibraryManagementSystem {
         this.itemInstanceSet = itemInstanceSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<Reservation> getReservationSet() {
         return reservationSet;
     }
@@ -104,6 +88,7 @@ public class LibraryManagementSystem {
         this.reservationSet = reservationSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<Loan> getLoanSet() {
         return loanSet;
     }
@@ -112,6 +97,7 @@ public class LibraryManagementSystem {
         this.loanSet = loanSet;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<LibraryHour> getLibraryHourSet() {
         return libraryHourSet;
     }
@@ -120,6 +106,8 @@ public class LibraryManagementSystem {
         this.libraryHourSet = libraryHourSet;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }
