@@ -2,25 +2,28 @@ package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.*;
 import java.sql.Date;
-
+/*
+Written by Victoria Sanchez
+ */
 @Entity
 public class Book extends CheckableItem{
     private String author;
     private String publisher;
     private String genre;
-    public Book(){
+    public Book(){ //default constructor
 
     }
-    public Book(int id, String name, Date date,String author, String publisher, String genre){
+    public Book(int id, String name, Date date,String author, String publisher, String genre){ //main constructor
         super(id,name,date);
         this.author=author;
         this.publisher=publisher;
         this.genre=genre;
     }
+    //setters and getters
     public String getAuthor(){
         return this.author;
     }
-    public void setAuthor(String a){
+    public void setAuthor(String a) {
         this.author=a;
     }
     public void setPublisher(String p){
