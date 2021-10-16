@@ -6,7 +6,8 @@ import java.util.Set;
 @Entity
 
 public class Person {
-    @Id
+
+    private Integer id;
     private String name;
 
     @ManyToOne
@@ -16,6 +17,10 @@ public class Person {
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     private Set<PersonRole> personRoleSet;
 
+    @Id
+    public Integer getId() {return id;}
+
+    public void setId(Integer Id){this.id = Id;}
 
     public String getName() {
         return name;

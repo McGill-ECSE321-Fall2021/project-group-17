@@ -6,15 +6,13 @@ import java.time.DayOfWeek;
 
 @Entity
 public class Shift {
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
     private int id;
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
-    //private Librarian librarian;
-    //may need month and/or year
+    private Librarian librarian;
 
     public Shift(){
         this.startTime = null;
@@ -41,10 +39,14 @@ public class Shift {
     public DayOfWeek getDayOfWeek(){
         return this.dayOfWeek;
     }
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
-    //public Librarian getLibrarian(){ return this.librarian;}
+    @ManyToOne
+    @JoinColumn()
+    public Librarian getLibrarian(){ return this.librarian;}
 
     //Setters
     public void setId(Integer id){this.id = id;}
@@ -58,5 +60,5 @@ public class Shift {
     public void setSystem(LibraryManagementSystem system) {
         this.system = system;
     }
-    //public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
+    public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
 }

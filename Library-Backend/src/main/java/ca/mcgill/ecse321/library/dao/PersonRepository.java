@@ -4,6 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.library.model.Person;
 
-public interface PersonRepository extends CrudRepository<Person,String>{
-    Person findPersonByName(String name);
+import java.util.List;
+
+public interface PersonRepository extends CrudRepository<Person, Integer>{
+    Person findPersonById(Integer Id);
+    List<Person> findPersonByName(String name);
 }

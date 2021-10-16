@@ -45,12 +45,37 @@ public class TestPlayerRolePersistance {
     public void testPersistAndLoadCustomer(){
         int penalty = 0;
         String roleType = "Customer";
-        //Associations
+        Person person = new Person();
+        Loan loan = new Loan();
+        List<Loan> loans = null;
+        loans.add(loan);
+        Address address = new Address();
+        OnlineAccount account = new OnlineAccount();
+        LibraryCard libCard = new LibraryCard();
+        Customer c = new Customer();
+        c.setAddress(address);
+        c.setLoans(loans);
+        c.setAccount(account);
+        c.setRoleType(roleType);
+        c.setLibraryCard(libCard);
+        c.setPerson(person);
+        c.setPenalty(0);
+        customerRepository.save(c);
+        c = null;
+        c = (Customer) customerRepository.findPersonRoleByRoleType(roleType);
+        assertNotNull(c);
+        assertEquals(roleType,c.getRoleType());
+        assertEquals(loans, c.getLoans());
+        assertEquals(account, c.getAccount());
+        assertEquals(person, c.getPerson());
+        assertEquals(0, c.getPenalty());
+        assertEquals(libCard, c.getLibraryCard());
+        assertEquals(address, c.getAddress());
     }
 
     @Test
     public void testPersistAndLoadLibrarian(){
-        //Associations
+
     }
     @Test
     public void testPersistAndLoadHeadLibrarian(){
@@ -63,7 +88,9 @@ public class TestPlayerRolePersistance {
         Time endTime = java.sql.Time.valueOf(java.time.LocalTime.now());
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
         DayOfWeek DOW = java.time.DayOfWeek.valueOf("Monday");
+        Librarian librarian = new Librarian();
         Shift shift = new Shift();
+        shift.setLibrarian(librarian);
         shift.setDayOfWeek(DOW);
         shift.setEndTime(endTime);
         shift.setStartTime(startTime);
@@ -72,6 +99,7 @@ public class TestPlayerRolePersistance {
         shift = null;
         shift = shiftRepository.findShiftByID(shiftID);
         assertNotNull(shift);
+        assertEquals(librarian, shift.getLibrarian());
         assertEquals(shiftID, shift.getId());
         assertEquals(startTime, shift.getStartTime());
         assertEquals(endTime, shift.getEndTime());
