@@ -7,8 +7,6 @@ public class LibraryCard {
     @Id
     private String id;
 
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
 
 
@@ -20,6 +18,8 @@ public class LibraryCard {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem(){
         return system;
     }

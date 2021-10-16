@@ -35,10 +35,11 @@ public class LibraryHour {
     	return libraryHourId;
     }
 
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

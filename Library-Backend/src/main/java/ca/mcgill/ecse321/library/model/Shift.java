@@ -5,10 +5,11 @@ import javax.persistence.ManyToOne;
 
 public class Shift {
 
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
 
+
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

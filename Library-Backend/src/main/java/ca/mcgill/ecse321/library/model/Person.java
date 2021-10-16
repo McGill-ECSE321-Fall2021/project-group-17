@@ -6,17 +6,15 @@ import java.util.Set;
 @Entity
 
 public class Person {
-    @Id
+
     private String name;
 
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+
     private Set<PersonRole> personRoleSet;
 
-
+    @Id
     public String getName() {
         return name;
     }
@@ -25,6 +23,9 @@ public class Person {
         this.name = name;
     }
 
+
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
@@ -33,6 +34,7 @@ public class Person {
         this.system = system;
     }
 
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<PersonRole> getPersonRoleSet() {
         return personRoleSet;
     }
