@@ -17,10 +17,21 @@ public class Address {
     @ManyToOne
     @JoinColumn()
     private LibraryManagementSystem system;
+    
+    public Address() {
+    	
+    }
+    
+	public Address(int addressID, Integer streetNumber, String street, String city, String country) {
+		this.addressID = addressID;
+		this.streetNumber = streetNumber;
+		this.street = street;
+		this.city = city;
+		this.country = country;
+	}
 
 
-
-    public Integer getAddressID() {
+    public int getAddressID() {
         return addressID;
     }
 

@@ -15,14 +15,15 @@ public class OnlineAccount {
         return this.username;
     }
 
-    public void setUsername(String serialNum) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username; }
 
 
     public String getPassword() {
         return this.password;
     }
 
-    public void setPassword(String serialNum) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -41,7 +42,7 @@ public class OnlineAccount {
 
     public void setSystem(LibraryManagementSystem system){
         this.system = system;
-    }*/
+    }
 
 /*
     @OneToOne
