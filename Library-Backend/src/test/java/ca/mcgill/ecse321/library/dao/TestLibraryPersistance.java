@@ -5,6 +5,11 @@ import ca.mcgill.ecse321.library.model.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.mcgill.ecse321.library.model.Movie;
+import ca.mcgill.ecse321.library.model.Music;
+import ca.mcgill.ecse321.library.model.Address;
+import ca.mcgill.ecse321.library.model.Library;
+import ca.mcgill.ecse321.library.model.LibraryHour;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +37,21 @@ public class TestLibraryPersistance{
     @Autowired
     private MusicRepository musicRepository;
     @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private LibraryRepository libraryRepository;
+    @Autowired
+    private LibraryHourRepository libraryHourRepository;
+    @Autowired
     private ItemInstanceRepository itemInstanceRepository;
     @Autowired
     private CheckableItemRepository checkableItemRepository;
     @Autowired
     private NewspaperRepository newspaperRepository;
+    @Autowired
+    private LibraryCardRepository libraryCardRepository;
+    @Autowired
+    private OnlineAccountRepository onlineAccountRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -43,6 +61,9 @@ public class TestLibraryPersistance{
         musicRepository.deleteAll();
         checkableItemRepository.deleteAll();
         newspaperRepository.deleteAll();
+        addressRepository.deleteAll();
+        libraryRepository.deleteAll();
+        libraryHourRepository.deleteAll();
     }
     /*
     Read test for book class. Ensure a book and its attributes are properly stored and read from the database.
@@ -134,6 +155,66 @@ Written by Victoria Sanchez
         assertEquals(musician,music.getMusician());
         assertEquals(recordLabel,music.getRecordLabel());
     }
+    
+    /*
+Read test for address class. Ensure address and their attributes are properly stored and read from the database.
+Written by Jerry Xia
+ */
+    @Test
+    public void testPersistAndLoadAddress() {
+    	int addressID = 4321;
+    	Integer streetNumber = 1234;
+    	String street = "Main st";
+    	String city = "Montreal";
+    	String country = "Canada";
+    	Address address = new Address(addressID, streetNumber, street, city, country);
+    	addressRepository.save(address);
+    	address = null;
+    	address = addressRepository.findAddressByAddressID(addressID);
+		assertNotNull(address);
+		assertEquals(addressID,address.getAddressID());
+		assertEquals(streetNumber, address.getStreetNumber());
+		assertEquals(street,address.getStreet());
+		assertEquals(city,address.getCity());
+		assertEquals(country,address.getCountry());
+    }
+    
+    /*
+Read test for library class. Ensure library and their attributes are properly stored and read from the database.
+Written by Jerry Xia
+ */
+    @Test
+    public void testPersistAndLoadLibrary() {
+    	String name = "McLennen";
+    	Library library = new Library(name);
+    	libraryRepository.save(library);
+    	library = null;
+    	library = libraryRepository.findLibraryByName(name);
+		assertNotNull(library);
+		assertEquals(name, library.getName());
+	}
+    
+    /*
+Read test for libraryHour class. Ensure libraryHour and their attributes are properly stored and read from the database.
+Written by Jerry Xia
+ */
+    @Test
+    public void testPersistAndLoadLibraryHour() {
+    	String libraryHourId = "someId";
+    	Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
+		Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
+    	DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
+    	LibraryHour libraryHour = new LibraryHour(libraryHourId, startTime, endTime, dayOfWeek);
+    	libraryHourRepository.save(libraryHour);
+    	libraryHour = null;
+    	libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
+		assertNotNull(libraryHour);
+		assertEquals(libraryHourId, libraryHour.getLibraryHourId());
+		assertEquals(startTime, libraryHour.getStartTime());
+		assertEquals(endTime, libraryHour.getEndTime());
+		assertEquals(dayOfWeek, libraryHour.getDayOfWeek());
+	}
+    
 //checks database can return a list of books with the same author
     @Test
     public void testFindBookByAuthor(){
@@ -385,5 +466,40 @@ Written by Victoria Sanchez
         assertEquals(date, newspaper.getDatePublished());
         assertEquals(headline, newspaper.getHeadline());
     }
+
+    @Test
+    public void testPersistAndLoadLibraryCardId(){
+        String id = "123";
+        LibraryCard card = new LibraryCard();
+        card.setId(id);
+        libraryCardRepository.save(card);
+
+        String s = card.getId();
+
+        card = null;
+
+        card = libraryCardRepository.findLibraryCardById(s);
+        assertNotNull(card);
+        assertEquals(id, card.getId());
+    }
+
+    @Test
+    public void testPersistAndLoadOnlineAccountUsername(){
+        String username = "fiona";
+        String password = "abc123";
+        OnlineAccount acct = new OnlineAccount();
+        acct.setUsername(username);
+        acct.setPassword(password);
+        onlineAccountRepository.save(acct);
+
+        String s = acct.getUsername();
+
+        acct = null;
+
+        acct = onlineAccountRepository.findOnlineAccountByUsername(s);
+        assertNotNull(acct);
+        assertEquals(username, acct.getUsername());
+    }
 }
+
 

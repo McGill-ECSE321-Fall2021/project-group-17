@@ -6,7 +6,6 @@ import javax.persistence.*;
 public class Address {
 
     private int addressID;
-
     private int streetNumber;
     private String street;
     private String city;
@@ -16,10 +15,21 @@ public class Address {
 
     private LibraryManagementSystem system;
 
+    public Address() {
+
+    }
+
+	public Address(int addressID, Integer streetNumber, String street, String city, String country) {
+		this.addressID = addressID;
+		this.streetNumber = streetNumber;
+		this.street = street;
+		this.city = city;
+		this.country = country;
+	}
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public Integer getAddressID() {
+    public int getAddressID() {
         return addressID;
     }
 
