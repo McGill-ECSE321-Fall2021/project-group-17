@@ -16,15 +16,14 @@ public class LibraryHour {
     private LibraryManagementSystem system;
 
 
-    public LibraryHour() {
-    	
-    }
+    public LibraryHour() {}
 
-    public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek) {
+    public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek, Library library) {
     	this.libraryHourId = libraryHourId;
     	this.startTime = startTime;
     	this.endTime = endTime;
     	this.dayOfWeek = dayOfWeek;
+    	this.library = library;
     }
 
     @Id
@@ -32,12 +31,6 @@ public class LibraryHour {
     @GeneratedValue(strategy=GenerationType.AUTO)
     public String getLibraryHourId() {
     	return libraryHourId;
-    }
-
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
     }
 
     @ManyToOne(optional=false)
@@ -49,10 +42,6 @@ public class LibraryHour {
         this.library = library;
     }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
-    
     public String setLibraryHourId() {
     	return libraryHourId;
     }
@@ -79,6 +68,16 @@ public class LibraryHour {
 
     public void setDayOfWeek(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+    
+    @ManyToOne
+    @JoinColumn()
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+    
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
     }
 
 }
