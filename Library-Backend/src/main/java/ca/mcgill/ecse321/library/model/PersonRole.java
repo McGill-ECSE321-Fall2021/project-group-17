@@ -6,14 +6,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 public abstract class PersonRole {
-    @ManyToOne
-    @JoinColumn()
-    private Person person;
 
-    @ManyToOne
-    @JoinColumn()
+    private Person person;
     private LibraryManagementSystem system;
 
+    @ManyToOne
+    @JoinColumn()
     public Person getPerson() {
         return person;
     }
@@ -22,6 +20,8 @@ public abstract class PersonRole {
         this.person = person;
     }
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }

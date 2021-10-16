@@ -5,10 +5,11 @@ import javax.persistence.ManyToOne;
 
 public class LibraryHour {
 
-    @ManyToOne
-    @JoinColumn()
+
     private LibraryManagementSystem system;
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
