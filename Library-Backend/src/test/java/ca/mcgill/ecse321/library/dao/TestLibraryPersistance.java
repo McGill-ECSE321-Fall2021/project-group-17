@@ -151,7 +151,7 @@ Written by Victoria Sanchez
     
     @Test
     public void testPersistAndLoadAddress() {
-    	String addressID = "4321";
+    	int addressID = 4321;
     	Integer streetNumber = 1234;
     	String street = "Main st";
     	String city = "Montreal";
@@ -159,9 +159,9 @@ Written by Victoria Sanchez
     	Address address = new Address(addressID, streetNumber, street, city, country);
     	addressRepository.save(address);
     	address = null;
-    	address = addressRepository.findAddressByAddressId(addressID);
+    	address = addressRepository.findAddressByAddressID(addressID);
 		assertNotNull(address);
-		assertEquals(addressID,address.getAddressId());
+		assertEquals(addressID,address.getAddressID());
 		assertEquals(streetNumber, address.getStreetNumber());
 		assertEquals(street,address.getStreet());
 		assertEquals(city,address.getCity());
