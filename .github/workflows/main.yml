@@ -27,3 +27,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       working-directory: Library-Backend
+    - name: Test
+      run: ./gradlew test
+      working-directory: Library-Backend
