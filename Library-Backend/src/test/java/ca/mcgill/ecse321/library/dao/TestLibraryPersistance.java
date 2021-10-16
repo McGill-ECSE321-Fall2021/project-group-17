@@ -200,11 +200,13 @@ Written by Jerry Xia
  */
     @Test
     public void testPersistAndLoadLibraryHour() {
+    	String name = "McLennen";
+    	Library library = new Library(name);
     	String libraryHourId = "someId";
     	Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
 		Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
     	DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
-    	LibraryHour libraryHour = new LibraryHour(libraryHourId, startTime, endTime, dayOfWeek);
+    	LibraryHour libraryHour = new LibraryHour(libraryHourId, startTime, endTime, dayOfWeek, library);
     	libraryHourRepository.save(libraryHour);
     	libraryHour = null;
     	libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
@@ -213,6 +215,7 @@ Written by Jerry Xia
 		assertEquals(startTime, libraryHour.getStartTime());
 		assertEquals(endTime, libraryHour.getEndTime());
 		assertEquals(dayOfWeek, libraryHour.getDayOfWeek());
+		assertEquals(library, libraryHour.getLibrary());
 	}
     
 //checks database can return a list of books with the same author
