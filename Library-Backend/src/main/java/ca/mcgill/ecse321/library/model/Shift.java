@@ -1,13 +1,18 @@
 package ca.mcgill.ecse321.library.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Time;
 import java.time.DayOfWeek;
 
+@Entity
 public class Shift {
+    private int id;
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
-    private Librarian librarian;
+    //private Librarian librarian;
     //may need month and/or year
 
     public Shift(){
@@ -23,6 +28,9 @@ public class Shift {
     }
 
     //Getters
+    @Id
+    @Column(name="id", updatable=false, nullable = false)
+    public int getId(){return this.id;}
     public Time getStartTime(){
         return this.startTime;
     }
@@ -32,9 +40,10 @@ public class Shift {
     public DayOfWeek getDayOfWeek(){
         return this.dayOfWeek;
     }
-    public Librarian getLibrarian(){ return this.librarian;}
+    //public Librarian getLibrarian(){ return this.librarian;}
 
     //Setters
+    public void setId(Integer id){this.id = id;}
     public void setStartTime(Time startTime){
         this.startTime = startTime;
     }
@@ -42,5 +51,5 @@ public class Shift {
         this.endTime = endTime;
     }
     public void setDayOfWeek(DayOfWeek dayOfWeek){}
-    public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
+    //public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
 }

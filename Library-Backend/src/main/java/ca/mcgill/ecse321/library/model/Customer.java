@@ -4,18 +4,20 @@ import java.util.List;
 import javax.persistence.*;
 import java.sql.Date;
 
-public class User extends PersonRole{
+@Entity
+public class Customer extends PersonRole{
     private int penalty;
     private OnlineAccount oAccount;
     private List<Loan> loans;//0..5
     private Address address;
     private LibraryCard libCard;
 
-    public User(){
+    public Customer(){
 
     }
 
-    public User(String roleType, Person person, int penalty, OnlineAccount oAccount, List<Loan> loans, Address address, LibraryCard libCard) {
+    public Customer(String roleType, Person person, int penalty, OnlineAccount oAccount,
+                    List<Loan> loans, Address address, LibraryCard libCard) {
         super(roleType, person);
         this.penalty = penalty;
         this.oAccount = oAccount;
@@ -28,11 +30,11 @@ public class User extends PersonRole{
     public int getPenalty(){
         return this.penalty;
     }
-    public OnlineAccount getAccount(){ return this.oAccount;}
+    /*public OnlineAccount getAccount(){ return this.oAccount;}
     public List<Loan> getLoans(){ return this.loans;}
     public Address getAddress(){ return this.address;}
     public LibraryCard getLibraryCard(){ return this.libCard;}
-
+    */
     //Setters
     public void setPenalty(int penalty){
         this.penalty = penalty;
