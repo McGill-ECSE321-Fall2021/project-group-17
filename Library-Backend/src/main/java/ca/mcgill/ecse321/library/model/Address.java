@@ -31,7 +31,7 @@ public class Address {
 	}
 
 
-    public Integer getAddressID() {
+    public int getAddressID() {
         return addressID;
     }
 

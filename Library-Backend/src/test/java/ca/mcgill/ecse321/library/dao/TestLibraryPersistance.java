@@ -57,6 +57,9 @@ public class TestLibraryPersistance{
         musicRepository.deleteAll();
         checkableItemRepository.deleteAll();
         newspaperRepository.deleteAll();
+        addressRepository.deleteAll();
+        libraryRepository.deleteAll();
+        libraryHourRepository.deleteAll();
     }
     /*
     Read test for book class. Ensure a book and its attributes are properly stored and read from the database.
@@ -149,6 +152,10 @@ Written by Victoria Sanchez
         assertEquals(recordLabel,music.getRecordLabel());
     }
     
+    /*
+Read test for address class. Ensure address and their attributes are properly stored and read from the database.
+Written by Jerry Xia
+ */
     @Test
     public void testPersistAndLoadAddress() {
     	int addressID = 4321;
@@ -168,6 +175,10 @@ Written by Victoria Sanchez
 		assertEquals(country,address.getCountry());
     }
     
+    /*
+Read test for library class. Ensure library and their attributes are properly stored and read from the database.
+Written by Jerry Xia
+ */
     @Test
     public void testPersistAndLoadLibrary() {
     	String name = "McLennen";
@@ -179,6 +190,10 @@ Written by Victoria Sanchez
 		assertEquals(name, library.getName());
 	}
     
+    /*
+Read test for libraryHour class. Ensure libraryHour and their attributes are properly stored and read from the database.
+Written by Jerry Xia
+ */
     @Test
     public void testPersistAndLoadLibraryHour() {
     	String libraryHourId = "someId";
