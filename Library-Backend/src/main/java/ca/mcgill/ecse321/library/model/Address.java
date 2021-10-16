@@ -32,6 +32,9 @@ public class Address {
     public int getAddressID() {
         return addressID;
     }
+    public void setAddressID(int id){
+        this.addressID = id;
+    }
 
     public int getStreetNumber() {
         return streetNumber;

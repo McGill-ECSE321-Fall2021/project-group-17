@@ -1,12 +1,8 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Time;
 import java.time.DayOfWeek;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -31,9 +27,11 @@ public class LibraryHour {
 
     @Id
     @Column(name="libraryHourId", updatable=false, nullable=false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public String getLibraryHourId() {
     	return libraryHourId;
     }
+
 
 
     private LibraryManagementSystem system;

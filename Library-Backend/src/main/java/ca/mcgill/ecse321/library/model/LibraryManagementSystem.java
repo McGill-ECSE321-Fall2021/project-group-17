@@ -70,7 +70,7 @@ public class LibraryManagementSystem {
         this.shiftSet = shiftSet;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "serialNum")
     public Set<ItemInstance> getItemInstanceSet() {
         return itemInstanceSet;
     }
@@ -97,7 +97,7 @@ public class LibraryManagementSystem {
         this.loanSet = loanSet;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "libraryHourId")
     public Set<LibraryHour> getLibraryHourSet() {
         return libraryHourSet;
     }
