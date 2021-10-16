@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 public class Address {

@@ -8,19 +8,29 @@ public class LibraryManagementSystem {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    /*
-    private Set<Address> addressSet;
+
+    //private Set<Address> addressSet;
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "name")
     private Set<Person> personSet;
-    private Set<PersonRole> personRoleSet;
-    private Set<Item> itemSet;
-    private Set<LibraryCard> libraryCardSet;
+    //private Set<Item> itemSet;
+    //private Set<LibraryCard> libraryCardSet;
+    /*private Set<PersonRole> personRoleSet;
     private Set<Shift> shiftSet;
     private Set<ItemInstance> itemInstanceSet;
     private Set<Reservation> reservationSet;
     private Set<Loan> loanSet;
-    private Set<LibraryHour> libraryHourSet;
+    private Set<LibraryHour> libraryHourSet;*/
 
-    @OneToMany(cascade={CascadeType.ALL})
+    /*@OneToMany(cascade={CascadeType.ALL})
+    public Set<Address> getAddressSet() {
+        return addressSet;
+    }
+
+    public void setAddressSet(Set<Address> addressSet) {
+        this.addressSet = addressSet;
+    }*/
+
+
     public Set<Person> getPersonSet() {
         return personSet;
     }
@@ -29,16 +39,7 @@ public class LibraryManagementSystem {
         this.personSet = personSet;
     }
 
-    @OneToMany(cascade={CascadeType.ALL})
-    public Set<PersonRole> getPersonRoleSet() {
-        return personRoleSet;
-    }
-
-    public void setPersonRoleSet(Set<PersonRole> personRoleSet) {
-        this.personRoleSet = personRoleSet;
-    }
-
-    @OneToMany(cascade={CascadeType.ALL})
+   /* @OneToMany(cascade={CascadeType.ALL})
     public Set<Item> getItemSet() {
         return itemSet;
     }
@@ -54,6 +55,15 @@ public class LibraryManagementSystem {
 
     public void setLibraryCardSet(Set<LibraryCard> libraryCardSet) {
         this.libraryCardSet = libraryCardSet;
+    }
+
+    /*@OneToMany(cascade={CascadeType.ALL})
+    public Set<PersonRole> getPersonRoleSet() {
+        return personRoleSet;
+    }
+
+    public void setPersonRoleSet(Set<PersonRole> personRoleSet) {
+        this.personRoleSet = personRoleSet;
     }
 
     @OneToMany(cascade={CascadeType.ALL})
@@ -101,14 +111,7 @@ public class LibraryManagementSystem {
         this.libraryHourSet = libraryHourSet;
     }
 
-    @OneToMany(cascade={CascadeType.ALL})
-    public Set<Address> getAddressSet() {
-        return addressSet;
-    }
 
-    public void setAddressSet(Set<Address> addressSet) {
-        this.addressSet = addressSet;
-    }
     */
     public int getId() {
         return id;
