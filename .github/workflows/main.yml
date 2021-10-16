@@ -27,3 +27,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       working-directory: Library-Backend
+    - name: test
+      run: ./src/test/java/ca/mcgill/ecse321/library/dao/TestLibraryPersistence
+      working-directory: Library-Backend
