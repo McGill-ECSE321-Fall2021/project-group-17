@@ -10,9 +10,6 @@ public class Address {
     private String street;
     private String city;
     private String country;
-
-
-
     private LibraryManagementSystem system;
 
     public Address() {
@@ -78,5 +75,19 @@ public class Address {
         this.system = system;
     }
 
+    /*
+    private User user;
+
+
+    @OneToOne(optional=false)
+    public User getUser(){
+        return this.user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+     */
 
 }
