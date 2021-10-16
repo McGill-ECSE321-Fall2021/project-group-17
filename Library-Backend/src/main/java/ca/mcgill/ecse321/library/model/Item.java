@@ -24,7 +24,7 @@ public abstract class Item {
     private LibraryManagementSystem system;
 
     @Id
-    @Column(name="id", updatable=false, nullable=false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }

@@ -1,12 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Date;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -31,7 +26,7 @@ public class Loan {
     }
 
     @Id
-    @Column(name="id", updatable=false, nullable=false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
