@@ -1,12 +1,14 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class OnlineAccount {
     private String username;
     private String password;
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
 
     @Id
     public String getUsername() {
@@ -24,4 +26,24 @@ public class OnlineAccount {
         this.password = password;
     }
 
+    public LibraryManagementSystem getSystem(){
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system){
+        this.system = system;
+    }
+
+/*
+    @OneToOne
+    private User user;
+    public User getUser(){
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+ */
 }

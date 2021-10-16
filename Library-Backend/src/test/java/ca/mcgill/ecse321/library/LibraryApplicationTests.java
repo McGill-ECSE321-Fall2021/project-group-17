@@ -1,8 +1,12 @@
 package ca.mcgill.ecse321.library;
 
 import ca.mcgill.ecse321.library.dao.AddressRepository;
+import ca.mcgill.ecse321.library.dao.LibraryCardRepository;
+import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
 import ca.mcgill.ecse321.library.dao.PersonRepository;
 import ca.mcgill.ecse321.library.model.Address;
+import ca.mcgill.ecse321.library.model.LibraryCard;
+import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.Person;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +25,10 @@ class LibraryApplicationTests {
 	private PersonRepository personRepository;
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private LibraryCardRepository libraryCardRepository;
+	@Autowired
+	private OnlineAccountRepository onlineAccountRepository;
 	@Test
 	void contextLoads() {
 	}
@@ -108,4 +115,39 @@ class LibraryApplicationTests {
 		assertNotNull(add);
 		assertEquals(city,add.getCity());
 	}
+
+	@Test
+	public void testPersistAndLoadLibraryCardId(){
+		String id = "123";
+		LibraryCard card = new LibraryCard();
+		card.setId(id);
+		libraryCardRepository.save(card);
+
+		String s = card.getId();
+
+		card = null;
+
+		card = libraryCardRepository.findLibraryCardById(s);
+		assertNotNull(card);
+		assertEquals(id, card.getId());
+	}
+
+	@Test
+	public void testPersistAndLoadOnlineAccountUsername(){
+		String username = "fiona";
+		String password = "abc123";
+		OnlineAccount acct = new OnlineAccount();
+		acct.setUsername(username);
+		acct.setPassword(password);
+		onlineAccountRepository.save(acct);
+
+		String s = acct.getUsername();
+
+		acct = null;
+
+		acct = onlineAccountRepository.findOnlineAccountByUsername(s);
+		assertNotNull(acct);
+		assertEquals(username, acct.getUsername());
+	}
+
 }
