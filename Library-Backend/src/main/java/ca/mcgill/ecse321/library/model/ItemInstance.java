@@ -4,26 +4,21 @@ import javax.persistence.*;
 
 @Entity
 public class ItemInstance {
-    private int id;
     private String serialNum;
     private CheckableItem checkableItem;
-    //private Reservation reservation;
-    //private Loan loan;
+
+    public ItemInstance() {}
 
     @ManyToOne
     @JoinColumn()
     private LibraryManagementSystem system;
 
+    public ItemInstance(String serialNum, CheckableItem item) {
+        this.serialNum = serialNum;
+        this.checkableItem = item;
+    }
 
     @Id
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getSerialNum() {
         return this.serialNum;
     }
