@@ -1,27 +1,24 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class ItemInstance {
-    private int id;
     private String serialNum;
     private CheckableItem checkableItem;
-    //private Reservation reservation;
-    //private Loan loan;
+
+    public ItemInstance() {}
+
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
+
+    public ItemInstance(String serialNum, CheckableItem item) {
+        this.serialNum = serialNum;
+        this.checkableItem = item;
+    }
 
     @Id
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getSerialNum() {
         return this.serialNum;
     }
@@ -56,4 +53,12 @@ public class ItemInstance {
     public void setLoan(Loan loan) {
         this.loan = loan;
     }*/
+
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
+    }
 }
