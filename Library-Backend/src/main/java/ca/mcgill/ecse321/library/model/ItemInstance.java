@@ -7,9 +7,11 @@ public class ItemInstance {
     private String serialNum;
     private CheckableItem checkableItem;
 
-    public ItemInstance() {
+    public ItemInstance() {}
 
-    }
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
 
     public ItemInstance(String serialNum, CheckableItem item) {
         this.serialNum = serialNum;
@@ -32,5 +34,31 @@ public class ItemInstance {
 
     public void setCheckableItem(CheckableItem item) {
         this.checkableItem = item;
+    }
+
+    /*@OneToOne
+    public Reservation getReservation() {
+        return this.reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }*/
+
+    /*@OneToOne
+    public Loan getLoan() {
+        return this.loan;
+    }
+
+    public void setLoan(Loan loan) {
+        this.loan = loan;
+    }*/
+
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
     }
 }

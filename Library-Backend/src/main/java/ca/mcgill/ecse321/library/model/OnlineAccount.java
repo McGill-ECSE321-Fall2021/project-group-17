@@ -4,13 +4,14 @@ import javax.persistence.*;
 
 @Entity
 public class OnlineAccount {
+    @Id
     private String username;
     private String password;
     @ManyToOne
     @JoinColumn()
     private LibraryManagementSystem system;
 
-    @Id
+
     public String getUsername() {
         return this.username;
     }
@@ -26,13 +27,13 @@ public class OnlineAccount {
         this.password = password;
     }
 
-    public LibraryManagementSystem getSystem(){
+   /*public LibraryManagementSystem getSystem(){
         return system;
     }
 
     public void setSystem(LibraryManagementSystem system){
         this.system = system;
-    }
+    }*/
 
 /*
     @OneToOne

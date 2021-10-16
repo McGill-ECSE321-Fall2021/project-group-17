@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.sql.Date;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Reservation {
@@ -12,6 +14,10 @@ public class Reservation {
     private Date dateReserved;
     private Date pickupDay;
     private ItemInstance itemInstance;
+  
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system
 
     public Reservation() {
 
@@ -58,4 +64,11 @@ public class Reservation {
     public void setItemInstance(ItemInstance itemInstance) {
         this.itemInstance = itemInstance;
     }
+  
+   public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
 }

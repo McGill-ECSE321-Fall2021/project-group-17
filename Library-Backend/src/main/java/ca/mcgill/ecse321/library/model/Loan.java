@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.sql.Date;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 
 @Entity
 public class Loan {
@@ -12,6 +15,10 @@ public class Loan {
     private Date checkedOut;
     private Date returnDate;
     private ItemInstance itemInstance;
+  
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
 
     public Loan() {
 
@@ -57,5 +64,13 @@ public class Loan {
 
     public void setItemInstance(ItemInstance itemInstance) {
         this.itemInstance = itemInstance;
+    }
+  
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
     }
 }
