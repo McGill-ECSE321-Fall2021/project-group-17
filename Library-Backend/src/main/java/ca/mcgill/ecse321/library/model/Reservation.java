@@ -10,17 +10,17 @@ import java.sql.Date;
 public class Reservation {
     private Integer id;
     private Date dateReserved;
-    private Date lastPickupDay;
+    private Date pickupDay;
     private ItemInstance itemInstance;
 
     public Reservation() {
 
     }
 
-    public Reservation(Integer id, Date dateReserved, Date lastPickupDay, ItemInstance itemInstance) {
+    public Reservation(Integer id, Date dateReserved, Date pickupDay, ItemInstance itemInstance) {
         this.id = id;
         this.dateReserved = dateReserved;
-        this.lastPickupDay = lastPickupDay;
+        this.pickupDay = pickupDay;
         this.itemInstance = itemInstance;
     }
 
@@ -42,12 +42,12 @@ public class Reservation {
         this.dateReserved = dateReserved;
     }
 
-    public Date getReturnDate() {
-        return this.lastPickupDay;
+    public Date getPickupDay() {
+        return this.pickupDay;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.lastPickupDay = returnDate;
+    public void setPickupDay(Date pickupDay) {
+        this.pickupDay = pickupDay;
     }
 
     @OneToOne

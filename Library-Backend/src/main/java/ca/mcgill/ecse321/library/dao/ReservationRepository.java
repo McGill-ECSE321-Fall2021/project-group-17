@@ -10,6 +10,6 @@ import java.util.List;
 public interface ReservationRepository extends CrudRepository<Reservation, Integer> {
     Reservation findReservationById(Integer id);
     List<Reservation> findReservationByDateReserved(Date dateReserved);
-    List<Reservation> findReservationByLastPickupDay(Date lastPickupDay);
+    List<Reservation> findReservationByPickupDay(Date pickupDay);
     Reservation findByItemInstance(ItemInstance itemInstance);
 }
