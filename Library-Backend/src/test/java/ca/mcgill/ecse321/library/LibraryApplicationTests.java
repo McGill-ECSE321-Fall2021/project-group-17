@@ -47,16 +47,20 @@ class LibraryApplicationTests {
 	@Test
 	public void testPersistAndLoadPerson(){
 		String name = "TestPerson";
+		List<Person> persons = null;
 		Person person = new Person();
+		Person person1 = new Person();
 		person.setName(name);
+		person1.setName(name);
 		personRepository.save(person);
-
-		person = null;
-
-		person = personRepository.findPersonByName(name);
-
-		assertNotNull(person);
+		personRepository.save(person1);
+		persons = personRepository.findPersonByName(name);
+		assertNotNull(persons);
+		person = persons.get(0);
+		person1 = persons.get(1);
+		assertEquals(2, persons.size());
 		assertEquals(name, person.getName());
+		assertEquals(name, person1.getName());
 	}
 
 	@Test

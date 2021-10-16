@@ -8,7 +8,7 @@ import java.time.DayOfWeek;
 @Entity
 public class LibraryHour {
 	
-	private String libraryHourId;
+	private String id;
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
@@ -18,8 +18,8 @@ public class LibraryHour {
 
     public LibraryHour() {}
 
-    public LibraryHour(String libraryHourId, Time startTime, Time endTime, DayOfWeek dayOfWeek, Library library) {
-    	this.libraryHourId = libraryHourId;
+    public LibraryHour(String id, Time startTime, Time endTime, DayOfWeek dayOfWeek, Library library) {
+    	this.id = id;
     	this.startTime = startTime;
     	this.endTime = endTime;
     	this.dayOfWeek = dayOfWeek;
@@ -27,10 +27,13 @@ public class LibraryHour {
     }
 
     @Id
-    @Column(name="libraryHourId", updatable=false, nullable=false)
+    @Column(name="Id", updatable=false, nullable=false)
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public String getLibraryHourId() {
-    	return libraryHourId;
+    public String getId() {
+    	return id;
+    }
+    public void setId(String id){
+        this.id = id;
     }
 
     @ManyToOne(optional=false)
@@ -42,8 +45,8 @@ public class LibraryHour {
         this.library = library;
     }
 
-    public String setLibraryHourId() {
-    	return libraryHourId;
+    public String setId() {
+    	return id;
     }
     
     public Time getStartTime() {

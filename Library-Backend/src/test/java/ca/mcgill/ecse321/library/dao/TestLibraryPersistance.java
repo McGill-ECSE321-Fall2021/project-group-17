@@ -56,6 +56,14 @@ public class TestLibraryPersistance{
     private ReservationRepository reservationRepository;
     @Autowired
     private LoanRepository loanRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private LibrarianRepository librarianRepository;
+    @Autowired
+    private HeadLibrarianRepository headLibrarianRepository;
+    @Autowired
+    private ShiftRepository shiftRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -70,6 +78,10 @@ public class TestLibraryPersistance{
         libraryHourRepository.deleteAll();
         reservationRepository.deleteAll();
         loanRepository.deleteAll();
+        customerRepository.deleteAll();
+        librarianRepository.deleteAll();
+        headLibrarianRepository.deleteAll();
+        shiftRepository.deleteAll();
     }
     /*
     Read test for book class. Ensure a book and its attributes are properly stored and read from the database.
@@ -217,7 +229,7 @@ Written by Jerry Xia
     	libraryHour = null;
     	libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
 		assertNotNull(libraryHour);
-		assertEquals(libraryHourId, libraryHour.getLibraryHourId());
+		assertEquals(libraryHourId, libraryHour.getId());
 		assertEquals(startTime, libraryHour.getStartTime());
 		assertEquals(endTime, libraryHour.getEndTime());
 		assertEquals(dayOfWeek, libraryHour.getDayOfWeek());
@@ -629,6 +641,70 @@ Written by Jerry Xia
         assertEquals(item4, l2.getItemInstance());
     }*/
 
+    @Test
+    public void testPersistAndLoadCustomer(){
+        int penalty = 0;
+        String roleType = "Customer";
+        Person person = new Person();
+        Loan loan = new Loan();
+        List<Loan> loans = null;
+        loans.add(loan);
+        Address address = new Address();
+        OnlineAccount account = new OnlineAccount();
+        LibraryCard libCard = new LibraryCard();
+        Customer c = new Customer();
+        c.setAddress(address);
+        c.setLoans(loans);
+        c.setAccount(account);
+        c.setRoleType(roleType);
+        c.setLibraryCard(libCard);
+        c.setPerson(person);
+        c.setPenalty(0);
+        customerRepository.save(c);
+        c = null;
+        c = (Customer) customerRepository.findPersonRoleByRoleType(roleType);
+        assertNotNull(c);
+        assertEquals(roleType,c.getRoleType());
+        assertEquals(loans, c.getLoans());
+        assertEquals(account, c.getAccount());
+        assertEquals(person, c.getPerson());
+        assertEquals(0, c.getPenalty());
+        assertEquals(libCard, c.getLibraryCard());
+        assertEquals(address, c.getAddress());
+    }
+
+    @Test
+    public void testPersistAndLoadLibrarian(){
+
+    }
+    @Test
+    public void testPersistAndLoadHeadLibrarian(){
+
+    }
+    @Test
+    public void testPersistAndLoadShift(){
+        Integer shiftID = 5432;
+        Time startTime = java.sql.Time.valueOf(java.time.LocalTime.now());
+        Time endTime = java.sql.Time.valueOf(java.time.LocalTime.now());
+        Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
+        DayOfWeek DOW = java.time.DayOfWeek.valueOf("Monday");
+        Librarian librarian = new Librarian();
+        Shift shift = new Shift();
+        shift.setLibrarian(librarian);
+        shift.setDayOfWeek(DOW);
+        shift.setEndTime(endTime);
+        shift.setStartTime(startTime);
+        shift.setId(shiftID);
+        shiftRepository.save(shift);
+        shift = null;
+        shift = shiftRepository.findShiftById(shiftID);
+        assertNotNull(shift);
+        assertEquals(librarian, shift.getLibrarian());
+        assertEquals(shiftID, shift.getId());
+        assertEquals(startTime, shift.getStartTime());
+        assertEquals(endTime, shift.getEndTime());
+        assertEquals(DOW, shift.getDayOfWeek());
+    }
 }
 
 

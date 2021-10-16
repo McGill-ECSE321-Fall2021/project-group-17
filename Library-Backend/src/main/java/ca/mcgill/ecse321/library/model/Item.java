@@ -19,8 +19,6 @@ public abstract class Item {
         this.datePublished=datePublished;
     }
 
-    @ManyToOne
-    @JoinColumn()
     private LibraryManagementSystem system;
 
     @Id
@@ -49,6 +47,8 @@ public abstract class Item {
         this.datePublished = date;
     }
 
+    @ManyToOne
+    @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
