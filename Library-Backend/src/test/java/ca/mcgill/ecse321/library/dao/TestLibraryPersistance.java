@@ -48,6 +48,10 @@ public class TestLibraryPersistance{
     private CheckableItemRepository checkableItemRepository;
     @Autowired
     private NewspaperRepository newspaperRepository;
+    @Autowired
+    private LibraryCardRepository libraryCardRepository;
+    @Autowired
+    private OnlineAccountRepository onlineAccountRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -462,5 +466,40 @@ Written by Jerry Xia
         assertEquals(date, newspaper.getDatePublished());
         assertEquals(headline, newspaper.getHeadline());
     }
+
+    @Test
+    public void testPersistAndLoadLibraryCardId(){
+        String id = "123";
+        LibraryCard card = new LibraryCard();
+        card.setId(id);
+        libraryCardRepository.save(card);
+
+        String s = card.getId();
+
+        card = null;
+
+        card = libraryCardRepository.findLibraryCardById(s);
+        assertNotNull(card);
+        assertEquals(id, card.getId());
+    }
+
+    @Test
+    public void testPersistAndLoadOnlineAccountUsername(){
+        String username = "fiona";
+        String password = "abc123";
+        OnlineAccount acct = new OnlineAccount();
+        acct.setUsername(username);
+        acct.setPassword(password);
+        onlineAccountRepository.save(acct);
+
+        String s = acct.getUsername();
+
+        acct = null;
+
+        acct = onlineAccountRepository.findOnlineAccountByUsername(s);
+        assertNotNull(acct);
+        assertEquals(username, acct.getUsername());
+    }
 }
+
 

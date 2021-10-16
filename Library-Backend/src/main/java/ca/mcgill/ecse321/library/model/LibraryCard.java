@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class LibraryCard {
     @Id
     private String id;
+
     @ManyToOne
     @JoinColumn()
     private LibraryManagementSystem system;
