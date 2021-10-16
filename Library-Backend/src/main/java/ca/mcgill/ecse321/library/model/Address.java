@@ -12,9 +12,7 @@ public class Address {
     private String country;
     private LibraryManagementSystem system;
 
-    public Address() {
-
-    }
+    public Address() {}
 
 	public Address(int addressID, Integer streetNumber, String street, String city, String country) {
 		this.addressID = addressID;
