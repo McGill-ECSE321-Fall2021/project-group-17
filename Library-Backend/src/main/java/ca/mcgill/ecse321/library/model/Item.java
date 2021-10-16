@@ -19,6 +19,9 @@ public abstract class Item {
         this.datePublished=datePublished;
     }
 
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
 
     @Id
     @Column(name="id", updatable=false, nullable=false)
@@ -44,5 +47,13 @@ public abstract class Item {
 
     public void setDatePublished(Date date) {
         this.datePublished = date;
+    }
+
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
     }
 }

@@ -1,11 +1,10 @@
 package ca.mcgill.ecse321.library.dao;
 
-import ca.mcgill.ecse321.library.model.Book;
+import ca.mcgill.ecse321.library.model.*;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.mcgill.ecse321.library.model.Movie;
-import ca.mcgill.ecse321.library.model.Music;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +28,21 @@ public class TestLibraryPersistance{
     private MovieRepository movieRepository;
     @Autowired
     private MusicRepository musicRepository;
+    @Autowired
+    private ItemInstanceRepository itemInstanceRepository;
+    @Autowired
+    private CheckableItemRepository checkableItemRepository;
+    @Autowired
+    private NewspaperRepository newspaperRepository;
 
     @AfterEach
     public void clearDatabase() {
+        itemInstanceRepository.deleteAll();
         bookRepository.deleteAll();
         movieRepository.deleteAll();
         musicRepository.deleteAll();
+        checkableItemRepository.deleteAll();
+        newspaperRepository.deleteAll();
     }
     /*
     Read test for book class. Ensure a book and its attributes are properly stored and read from the database.
@@ -288,5 +296,94 @@ Written by Victoria Sanchez
     }
 
 
+    @Test
+    public void testPersistAndLoadItemInstance() {
+        String serialNum = "1234";
+        CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
+                java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
+        checkableItemRepository.save(checkableItem);
+        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
+        itemInstanceRepository.save(itemInstance);
+        itemInstance = itemInstanceRepository.findItemInstanceBySerialNum(serialNum);
+        assertNotNull(itemInstance);
+        assertEquals(serialNum, itemInstance.getSerialNum());
+        assertEquals(checkableItem.getId(), itemInstance.getCheckableItem().getId());
+    }
+
+    @Test
+    public void testFindItemInstanceByCheckableItem() {
+        String serialNum1 = "1234";
+        String serialNum2 = "5678";
+        CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
+                java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
+        checkableItemRepository.save(checkableItem);
+        ItemInstance itemInstance1 = new ItemInstance(serialNum1, checkableItem);
+        ItemInstance itemInstance2 = new ItemInstance(serialNum2, checkableItem);
+        itemInstanceRepository.save(itemInstance1);
+        itemInstanceRepository.save(itemInstance2);
+        List<ItemInstance> itemInstances = itemInstanceRepository.findByCheckableItem(checkableItem);
+        assertNotNull(itemInstances);
+        itemInstance1 = itemInstances.get(0);
+        assertEquals(serialNum1, itemInstance1.getSerialNum());
+        assertEquals(checkableItem.getId(), itemInstance1.getCheckableItem().getId());
+        itemInstance2 = itemInstances.get(1);
+        assertEquals(serialNum2, itemInstance2.getSerialNum());
+        assertEquals(checkableItem.getId(), itemInstance2.getCheckableItem().getId());
+    }
+
+    /*@Test
+    public void testFindCheckableItemByItemInstance() {
+        String serialNum = "1234";
+        Integer id = 1234;
+        String name = "My Brilliant Friend";
+        Date date = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
+        String musician = "Victoria";
+        String recordLabel = "Sony";
+        CheckableItem checkableItem = new Music(id,name,
+                date,musician,recordLabel);
+        checkableItemRepository.save(checkableItem);
+        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
+        checkableItem = checkableItemRepository.findCheckableItemByItemInstance(itemInstance);
+        assertNotNull(checkableItem);
+        assertEquals(checkableItem.getId(), id);
+        assertEquals(checkableItem.getName(), name);
+        assertEquals(checkableItem.getDatePublished(), date);
+
+        Music music = (Music) checkableItem;
+        assertEquals(music.getMusician(), musician);
+        assertEquals(music.getRecordLabel(), recordLabel);
+    }*/
+
+    @Test
+    public void testPersistAndLoadNewspaper() {
+        Integer id = 1234;
+        String name = "New York Times";
+        Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.MAY,24));
+        String headline = "US deaths near 100,000, an incalculable loss";
+        Newspaper newspaper = new Newspaper(id, name, date, headline);
+        newspaperRepository.save(newspaper);
+        newspaper = (Newspaper) newspaperRepository.findItemById(id);
+        assertNotNull(newspaper);
+        assertEquals(id,newspaper.getId());
+        assertEquals(name, newspaper.getName());
+        assertEquals(date, newspaper.getDatePublished());
+        assertEquals(headline, newspaper.getHeadline());
+    }
+
+    @Test
+    public void testFindNewspaperByHeadline() {
+        Integer id = 1234;
+        String name = "New York Times";
+        Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.MAY,24));
+        String headline = "US deaths near 100,000, an incalculable loss";
+        Newspaper newspaper = new Newspaper(id, name, date, headline);
+        newspaperRepository.save(newspaper);
+        newspaper = newspaperRepository.findNewspaperByHeadline(headline);
+        assertNotNull(newspaper);
+        assertEquals(id,newspaper.getId());
+        assertEquals(name, newspaper.getName());
+        assertEquals(date, newspaper.getDatePublished());
+        assertEquals(headline, newspaper.getHeadline());
+    }
 }
 
