@@ -1,19 +1,22 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 
 public class Person {
+    @Id
     private String name;
+
     @ManyToOne
     @JoinColumn()
     private LibraryManagementSystem system;
 
-    @Id
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    private Set<PersonRole> personRoleSet;
+
+
     public String getName() {
         return name;
     }
@@ -28,5 +31,13 @@ public class Person {
 
     public void setSystem(LibraryManagementSystem system) {
         this.system = system;
+    }
+
+    public Set<PersonRole> getPersonRoleSet() {
+        return personRoleSet;
+    }
+
+    public void setPersonRoleSet(Set<PersonRole> personRoleSet) {
+        this.personRoleSet = personRoleSet;
     }
 }

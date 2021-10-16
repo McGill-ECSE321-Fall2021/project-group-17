@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class ItemInstance {
@@ -12,6 +9,11 @@ public class ItemInstance {
     private CheckableItem checkableItem;
     //private Reservation reservation;
     //private Loan loan;
+
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
+
 
     @Id
     public int getId() {
@@ -56,4 +58,12 @@ public class ItemInstance {
     public void setLoan(Loan loan) {
         this.loan = loan;
     }*/
+
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
+    }
 }

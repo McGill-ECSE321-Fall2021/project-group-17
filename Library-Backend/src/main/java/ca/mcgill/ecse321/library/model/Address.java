@@ -13,6 +13,13 @@ public class Address {
     private String city;
     private String country;
 
+
+    @ManyToOne
+    @JoinColumn()
+    private LibraryManagementSystem system;
+
+
+
     public Integer getAddressID() {
         return addressID;
     }
@@ -47,6 +54,14 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
     }
 
 
