@@ -1,109 +1,109 @@
 package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class LibraryManagementSystem {
     private int id;
-    private Set<Address> addressSet;
-    private Set<Person> personSet;
-    private Set<Item> itemSet;
-    private Set<LibraryCard> libraryCardSet;
-    private Set<PersonRole> personRoleSet;
-    private Set<Shift> shiftSet;
-    private Set<ItemInstance> itemInstanceSet;
-    private Set<Reservation> reservationSet;
-    private Set<Loan> loanSet;
-    private Set<LibraryHour> libraryHourSet;
+    private List<Address> addressList;
+    private List<Person> personList;
+    private List<Item> itemList;
+    private List<LibraryCard> libraryCardList;
+    private List<PersonRole> personRoleList;
+    private List<Shift> shiftList;
+    private List<ItemInstance> itemInstanceList;
+    private List<Reservation> reservationList;
+    private List<Loan> loanList;
+    private List<LibraryHour> libraryHourList;
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "addressID")
-    public Set<Address> getAddressSet() {
-        return addressSet;
+    public List<Address> getAddressList() {
+        return addressList;
     }
 
-    public void setAddressSet(Set<Address> addressSet) {
-        this.addressSet = addressSet;
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "name")
-    public Set<Person> getPersonSet() {
-        return personSet;
+    public List<Person> getPersonList() {
+        return personList;
     }
 
-    public void setPersonSet(Set<Person> personSet) {
-        this.personSet = personSet;
-    }
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<Item> getItemSet() {
-        return itemSet;
-    }
-    public void setItemSet(Set<Item> itemSet) {
-        this.itemSet = itemSet;
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<LibraryCard> getLibraryCardSet() {
-        return libraryCardSet;
+    public List<Item> getItemList() {
+        return itemList;
     }
-
-    public void setLibraryCardSet(Set<LibraryCard> libraryCardSet) {
-        this.libraryCardSet = libraryCardSet;
-    }
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<PersonRole> getPersonRoleSet() {
-        return personRoleSet;
-    }
-
-    public void setPersonRoleSet(Set<PersonRole> personRoleSet) {
-        this.personRoleSet = personRoleSet;
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<Shift> getShiftSet() {
-        return shiftSet;
+    public List<LibraryCard> getLibraryCardList() {
+        return libraryCardList;
     }
 
-    public void setShiftSet(Set<Shift> shiftSet) {
-        this.shiftSet = shiftSet;
+    public void setLibraryCardList(List<LibraryCard> libraryCardList) {
+        this.libraryCardList = libraryCardList;
+    }
+
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    public List<PersonRole> getPersonRoleList() {
+        return personRoleList;
+    }
+
+    public void setPersonRoleList(List<PersonRole> personRoleList) {
+        this.personRoleList = personRoleList;
+    }
+
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    public List<Shift> getShiftList() {
+        return shiftList;
+    }
+
+    public void setShiftList(List<Shift> shiftList) {
+        this.shiftList = shiftList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "serialNum")
-    public Set<ItemInstance> getItemInstanceSet() {
-        return itemInstanceSet;
+    public List<ItemInstance> getItemInstanceList() {
+        return itemInstanceList;
     }
 
-    public void setItemInstanceSet(Set<ItemInstance> itemInstanceSet) {
-        this.itemInstanceSet = itemInstanceSet;
-    }
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<Reservation> getReservationSet() {
-        return reservationSet;
-    }
-
-    public void setReservationSet(Set<Reservation> reservationSet) {
-        this.reservationSet = reservationSet;
+    public void setItemInstanceList(List<ItemInstance> itemInstanceList) {
+        this.itemInstanceList = itemInstanceList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<Loan> getLoanSet() {
-        return loanSet;
+    public List<Reservation> getReservationList() {
+        return reservationList;
     }
 
-    public void setLoanSet(Set<Loan> loanSet) {
-        this.loanSet = loanSet;
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public Set<LibraryHour> getLibraryHourSet() {
-        return libraryHourSet;
+    public List<Loan> getLoanList() {
+        return loanList;
     }
 
-    public void setLibraryHourSet(Set<LibraryHour> libraryHourSet) {
-        this.libraryHourSet = libraryHourSet;
+    public void setLoanList(List<Loan> loanList) {
+        this.loanList = loanList;
+    }
+
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    public List<LibraryHour> getLibraryHourList() {
+        return libraryHourList;
+    }
+
+    public void setLibraryHourList(List<LibraryHour> libraryHourList) {
+        this.libraryHourList = libraryHourList;
     }
 
     @Id
