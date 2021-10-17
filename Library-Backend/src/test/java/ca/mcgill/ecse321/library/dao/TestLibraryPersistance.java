@@ -509,6 +509,24 @@ Written by Jerry Xia
     }
 
     @Test
+    public void testPersistAndLoadOnlineAccountPassword(){
+        String username = "fiona";
+        String password = "abc123";
+        OnlineAccount acct = new OnlineAccount();
+        acct.setUsername(username);
+        acct.setPassword(password);
+        onlineAccountRepository.save(acct);
+
+        String s = acct.getUsername();
+
+        acct = null;
+
+        acct = onlineAccountRepository.findOnlineAccountByUsername(s);
+        assertNotNull(acct);
+        assertEquals(password, acct.getPassword());
+    }
+
+    @Test
     public void testPersistAndLoadReservation() {
         String serialNum = "1234";
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
