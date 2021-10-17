@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -52,6 +53,8 @@ public class TestLibraryPersistance{
     private LibraryCardRepository libraryCardRepository;
     @Autowired
     private OnlineAccountRepository onlineAccountRepository;
+    @Autowired
+    private LibraryManagementSystemRepository libraryManagementSystemRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -65,9 +68,10 @@ public class TestLibraryPersistance{
         libraryRepository.deleteAll();
         libraryHourRepository.deleteAll();
         customerRepository.deleteAll();
-        //shiftRepository.deleteAll();
+        shiftRepository.deleteAll();
         librarianRepository.deleteAll();
         headLibrarianRepository.deleteAll();
+        libraryManagementSystemRepository.deleteAll();
     }
     /*
     Read test for book class. Ensure a book and its attributes are properly stored and read from the database.
@@ -555,6 +559,7 @@ Written by Jerry Xia
 
     }
     @Test
+    @Transactional
     public void testPersistAndLoadShift(){
         Integer shiftID = 5432;
         Time startTime = java.sql.Time.valueOf(java.time.LocalTime.now());
@@ -584,10 +589,18 @@ Written by Jerry Xia
     }
 
     @Test
+    @Transactional
     public void testPersistAndLoadLMS(){
         LibraryManagementSystem lms = new LibraryManagementSystem();
-        lms.setAddressSet(null);
-        lms.setLibraryHourSet(null);
+        lms.setAddressList(new ArrayList<>());
+        lms.setLibraryHourList(new ArrayList<>());
+        libraryManagementSystemRepository.save(lms);
+        int id = lms.getId();
+        lms = null;
+        lms = libraryManagementSystemRepository.findLibraryManagementSystemById(id);
+        assertNotNull(lms);
+        assertEquals(id, lms.getId());
+        assertEquals(0,lms.getAddressList().size());
     }
 }
 
