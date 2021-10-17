@@ -42,7 +42,7 @@ public class Person {
         this.system = system;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "roleType")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<PersonRole> getPersonRoleList() {
         return personRoleList;
     }

@@ -52,7 +52,7 @@ public class LibraryManagementSystem {
         this.libraryCardSet = libraryCardSet;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "roleType")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public Set<PersonRole> getPersonRoleSet() {
         return personRoleSet;
     }
