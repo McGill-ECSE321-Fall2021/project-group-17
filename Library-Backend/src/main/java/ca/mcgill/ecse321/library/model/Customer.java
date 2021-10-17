@@ -7,8 +7,6 @@ import javax.persistence.*;
 public class Customer extends PersonRole{
     private int penalty;
 
-    private List<Loan> loans;//0..5
-
     private Address address;
 
     private LibraryCard libCard;
@@ -17,11 +15,10 @@ public class Customer extends PersonRole{
 
     }
 
-    public Customer(String roleType, Person person, int penalty,
-                    List<Loan> loans, Address address, LibraryCard libCard, OnlineAccount account) {
-        super(roleType, person, account);
+    public Customer(String id, Person person, int penalty,
+                    Address address, LibraryCard libCard, OnlineAccount account) {
+        super(id, person, account);
         this.penalty = penalty;
-        this.loans = loans;
         this.address = address;
         this.libCard = libCard;
     }
@@ -30,9 +27,6 @@ public class Customer extends PersonRole{
     public int getPenalty(){
         return this.penalty;
     }
-    @OneToMany
-    @JoinColumn()
-    public List<Loan> getLoans(){ return this.loans;}
     @OneToOne
     @JoinColumn()
     public Address getAddress(){ return this.address;}
@@ -44,10 +38,7 @@ public class Customer extends PersonRole{
     public void setPenalty(int penalty){
         this.penalty = penalty;
     }
-    public void setLoans(List<Loan> loans){ this.loans = loans;}
     public void setAddress(Address address){this.address = address;}
     public void setLibraryCard(LibraryCard libCard){ this.libCard = libCard;}
-    public void addLoan(Loan loan){ this.loans.add(loan);}
-    public void removeLoan(Loan loan){ this.loans.remove(loan);}
 
 }

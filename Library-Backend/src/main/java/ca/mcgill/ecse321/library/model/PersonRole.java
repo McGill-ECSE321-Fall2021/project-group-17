@@ -7,23 +7,24 @@ import javax.persistence.*;
 public abstract class PersonRole {
 
 
+
     private Person person;
     private LibraryManagementSystem system;
-    private String roleType;
+    private String id;
     private OnlineAccount account;
 
     public PersonRole(){}
 
-    public PersonRole(String type, Person person, OnlineAccount account){
-        this.roleType = type;
+    public PersonRole(String id, Person person, OnlineAccount account){
+        this.id = id;
         this.person = person;
         this.account = account;
     }
 
     @Id
-    @Column (name="roleType", updatable = false, nullable = false)
-    public String getRoleType(){return this.roleType;}
-    public void setRoleType(String roleType){this.roleType = roleType;}
+    @Column (name="id", updatable = false, nullable = false)
+    public String getId(){return this.id;}
+    public void setId(String id){this.id = id;}
 
     @OneToOne
     @JoinColumn()
