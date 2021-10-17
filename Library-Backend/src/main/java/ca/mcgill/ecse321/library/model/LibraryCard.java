@@ -8,15 +8,14 @@ public class LibraryCard {
     private String id;
 
     private LibraryManagementSystem system;
+    private Customer customer;
 
     @Id
     public String getId() {
         return this.id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(String id) { this.id = id; }
 
     @ManyToOne
     @JoinColumn()
@@ -28,20 +27,11 @@ public class LibraryCard {
         this.system = system;
     }
 
-    /*
-    private User user;
 
+    @OneToOne
+    @JoinColumn
+    public Customer getCustomer(){ return this.customer; }
 
-    @OneToOne(optional=false)
-    public User getUser(){
-        return this.user;
-    }
-
-    public void setUser(User user){
-        this.user = user;
-    }
-
-     */
-
+    public void setCustomer(Customer customer){ this.customer = customer; }
 
 }
