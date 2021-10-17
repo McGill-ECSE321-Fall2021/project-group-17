@@ -10,7 +10,7 @@ import java.time.DayOfWeek;
 @Entity
 public class LibraryHour {
 	
-	private String id;
+	private int id;
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
@@ -20,8 +20,8 @@ public class LibraryHour {
 
     public LibraryHour() {}
 
-    public LibraryHour(String id, Time startTime, Time endTime, DayOfWeek dayOfWeek, Library library) {
-    	this.id = id;
+    public LibraryHour(int id, Time startTime, Time endTime, DayOfWeek dayOfWeek, Library library) {
+    	//this.id = id;
     	this.startTime = startTime;
     	this.endTime = endTime;
     	this.dayOfWeek = dayOfWeek;
@@ -29,27 +29,22 @@ public class LibraryHour {
     }
 
     @Id
-    @Column(name="Id", updatable=false, nullable=false)
+    @Column(name="Id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-    //@GenericGenerator(name="system-uuid", strategy = "uuid")
-    public String getId() {
+    public int getId() {
     	return id;
     }
-    public void setId(String id){
+    public void setId(int id){
         this.id = id;
     }
 
-    @ManyToOne(optional=false)
+    @ManyToOne(optional=false,fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     public Library getLibrary() {
         return this.library;
     }
 
     public void setLibrary(Library library) {
         this.library = library;
-    }
-
-    public String setId() {
-    	return id;
     }
     
     public Time getStartTime() {

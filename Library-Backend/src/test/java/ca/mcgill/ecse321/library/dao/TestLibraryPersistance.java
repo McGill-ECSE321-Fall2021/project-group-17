@@ -55,18 +55,21 @@ public class TestLibraryPersistance{
     private OnlineAccountRepository onlineAccountRepository;
     @Autowired
     private LibraryManagementSystemRepository libraryManagementSystemRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     @AfterEach
     public void clearDatabase() {
         itemInstanceRepository.deleteAll();
+        personRepository.deleteAll();
         bookRepository.deleteAll();
         movieRepository.deleteAll();
         musicRepository.deleteAll();
         checkableItemRepository.deleteAll();
         newspaperRepository.deleteAll();
         addressRepository.deleteAll();
-        libraryRepository.deleteAll();
         libraryHourRepository.deleteAll();
+        libraryRepository.deleteAll();
         customerRepository.deleteAll();
         shiftRepository.deleteAll();
         librarianRepository.deleteAll();
@@ -207,16 +210,17 @@ Read test for libraryHour class. Ensure libraryHour and their attributes are pro
 Written by Jerry Xia
  */
     @Test
+    @Transactional
     public void testPersistAndLoadLibraryHour() {
     	String name = "McLennen";
     	Library library = new Library(name);
-    	libraryRepository.save(library);
     	Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
 		Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
     	DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
-    	LibraryHour libraryHour = new LibraryHour("", startTime, endTime, dayOfWeek, library);
+    	LibraryHour libraryHour = new LibraryHour(0, startTime, endTime, dayOfWeek, null);
+    	libraryHour.setLibrary(library);
     	libraryHourRepository.save(libraryHour);
-    	String libraryHourId = libraryHour.getId();
+    	int libraryHourId = libraryHour.getId();
     	libraryHour = null;
     	libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
 		assertNotNull(libraryHour);
@@ -224,7 +228,7 @@ Written by Jerry Xia
 		assertEquals(startTime, libraryHour.getStartTime());
 		assertEquals(endTime, libraryHour.getEndTime());
 		assertEquals(dayOfWeek, libraryHour.getDayOfWeek());
-		assertEquals(library, libraryHour.getLibrary());
+		assertEquals(library.getName(), libraryHour.getLibrary().getName());
 	}
     
 //checks database can return a list of books with the same author
@@ -592,7 +596,10 @@ Written by Jerry Xia
     @Transactional
     public void testPersistAndLoadLMS(){
         LibraryManagementSystem lms = new LibraryManagementSystem();
-        lms.setAddressList(new ArrayList<>());
+        Address address = new Address();
+        ArrayList<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        lms.setAddressList(addresses);
         lms.setLibraryHourList(new ArrayList<>());
         libraryManagementSystemRepository.save(lms);
         int id = lms.getId();
@@ -600,7 +607,69 @@ Written by Jerry Xia
         lms = libraryManagementSystemRepository.findLibraryManagementSystemById(id);
         assertNotNull(lms);
         assertEquals(id, lms.getId());
-        assertEquals(0,lms.getAddressList().size());
+        assertEquals(1,lms.getAddressList().size());
+    }
+
+    @Test
+    @Transactional
+    public void testPersistAndLoadPerson(){
+        String name = "TestPerson";
+        List<Person> persons = null;
+        Person person = new Person();
+        Person person1 = new Person();
+        person.setName(name);
+        person1.setName(name);
+        personRepository.save(person);
+        personRepository.save(person1);
+        persons = personRepository.findPersonByName(name);
+        assertNotNull(persons);
+        person = persons.get(0);
+        person1 = persons.get(1);
+        assertEquals(2, persons.size());
+        assertEquals(name, person.getName());
+        assertEquals(name, person1.getName());
+    }
+
+    @Test
+    public void testPersistAndLoadAddressCity(){
+        String city = "Newark";
+        String street = "main";
+        String country = "US";
+        int streetNum = 1600;
+        Address add = new Address();
+        Integer i = add.getAddressID();
+        add.setStreetNumber(streetNum);
+        add.setStreet(street);
+        add.setCity(city);
+        add.setCountry(country);
+        addressRepository.save(add);
+
+        add = null;
+
+        add = addressRepository.findAddressByCity(city);
+        assertNotNull(add);
+        assertEquals(city,add.getCity());
+    }
+
+    @Test
+    public void testPersistAndLoadAddressStreetNum(){
+        String city = "Newark";
+        String street = "main";
+        String country = "US";
+        int streetNum = 1600;
+        Address add = new Address();
+
+        add.setStreetNumber(streetNum);
+        add.setStreet(street);
+        add.setCity(city);
+        add.setCountry(country);
+        addressRepository.save(add);
+
+        add = null;
+
+        add = addressRepository.findAddressByStreetNumber(streetNum);
+        assertNotNull(add);
+        assertEquals(city,add.getCity());
     }
 }
 

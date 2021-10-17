@@ -15,7 +15,7 @@ public class Library {
     }
 
     @Id
-    @Column(name="name", updatable=false, nullable=false)
+    @Column(name="name")
     public String getName() {
         return name;
     }

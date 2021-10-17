@@ -4,12 +4,12 @@ import javax.persistence.*;
 
 @Entity
 public class OnlineAccount {
-    @Id
+
     private String username;
     private String password;
 
 
-
+    @Id
     public String getUsername() {
         return this.username;
     }
