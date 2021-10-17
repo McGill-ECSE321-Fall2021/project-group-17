@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
@@ -45,4 +46,16 @@ public abstract class PersonRole {
     public void setSystem(LibraryManagementSystem system) {
         this.system = system;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PersonRole)) return false;
+        PersonRole that = (PersonRole) o;
+        return Objects.equals(getPerson(), that.getPerson()) &&
+                Objects.equals(getSystem(), that.getSystem()) &&
+                Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getAccount(), that.getAccount());
+    }
+
 }

@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -29,6 +31,7 @@ public class LibraryHour {
     @Id
     @Column(name="Id", updatable=false, nullable=false)
     @GeneratedValue(strategy=GenerationType.AUTO)
+    //@GenericGenerator(name="system-uuid", strategy = "uuid")
     public String getId() {
     	return id;
     }

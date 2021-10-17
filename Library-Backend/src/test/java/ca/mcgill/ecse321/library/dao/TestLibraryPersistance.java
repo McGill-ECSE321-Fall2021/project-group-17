@@ -65,9 +65,9 @@ public class TestLibraryPersistance{
         libraryRepository.deleteAll();
         libraryHourRepository.deleteAll();
         customerRepository.deleteAll();
+        //shiftRepository.deleteAll();
         librarianRepository.deleteAll();
         headLibrarianRepository.deleteAll();
-        shiftRepository.deleteAll();
     }
     /*
     Read test for book class. Ensure a book and its attributes are properly stored and read from the database.
@@ -166,13 +166,13 @@ Written by Jerry Xia
  */
     @Test
     public void testPersistAndLoadAddress() {
-    	int addressID = 4321;
     	Integer streetNumber = 1234;
     	String street = "Main st";
     	String city = "Montreal";
     	String country = "Canada";
-    	Address address = new Address(addressID, streetNumber, street, city, country);
+    	Address address = new Address(0, streetNumber, street, city, country);
     	addressRepository.save(address);
+    	int addressID = address.getAddressID();
     	address = null;
     	address = addressRepository.findAddressByAddressID(addressID);
 		assertNotNull(address);
@@ -206,12 +206,13 @@ Written by Jerry Xia
     public void testPersistAndLoadLibraryHour() {
     	String name = "McLennen";
     	Library library = new Library(name);
-    	String libraryHourId = "someId";
+    	libraryRepository.save(library);
     	Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
 		Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
     	DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
-    	LibraryHour libraryHour = new LibraryHour(libraryHourId, startTime, endTime, dayOfWeek, library);
+    	LibraryHour libraryHour = new LibraryHour("", startTime, endTime, dayOfWeek, library);
     	libraryHourRepository.save(libraryHour);
+    	String libraryHourId = libraryHour.getId();
     	libraryHour = null;
     	libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
 		assertNotNull(libraryHour);
@@ -559,8 +560,10 @@ Written by Jerry Xia
         Time startTime = java.sql.Time.valueOf(java.time.LocalTime.now());
         Time endTime = java.sql.Time.valueOf(java.time.LocalTime.now());
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-        DayOfWeek DOW = java.time.DayOfWeek.valueOf("Monday");
-        Librarian librarian = new Librarian();
+        DayOfWeek DOW = java.time.DayOfWeek.valueOf("MONDAY");
+        Librarian librarian = new Librarian("Librarian",null,null);
+        librarianRepository.save(librarian);
+
         Shift shift = new Shift();
         shift.setLibrarian(librarian);
         shift.setDayOfWeek(DOW);
@@ -569,13 +572,22 @@ Written by Jerry Xia
         shift.setId(shiftID);
         shiftRepository.save(shift);
         shift = null;
+        librarian = null;
         shift = shiftRepository.findShiftById(shiftID);
         assertNotNull(shift);
+        librarian = (Librarian) librarianRepository.findPersonRoleById("Librarian");
         assertEquals(librarian, shift.getLibrarian());
         assertEquals(shiftID, shift.getId());
         assertEquals(startTime, shift.getStartTime());
         assertEquals(endTime, shift.getEndTime());
         assertEquals(DOW, shift.getDayOfWeek());
+    }
+
+    @Test
+    public void testPersistAndLoadLMS(){
+        LibraryManagementSystem lms = new LibraryManagementSystem();
+        lms.setAddressSet(null);
+        lms.setLibraryHourSet(null);
     }
 }
 
