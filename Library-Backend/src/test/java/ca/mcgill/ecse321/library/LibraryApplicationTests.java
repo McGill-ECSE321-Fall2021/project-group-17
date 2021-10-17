@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class LibraryApplicationTests {
 
-	@Autowired
+	/*@Autowired
 	private PersonRepository personRepository;
 	@Autowired
 	private AddressRepository addressRepository;
@@ -192,6 +192,6 @@ class LibraryApplicationTests {
 		itemInstance2 = itemInstances.get(1);
 		assertEquals(serialNum2, itemInstance2.getSerialNum());
 		assertEquals(checkableItem.getId(), itemInstance2.getCheckableItem().getId());
-	}
+	}*/
 
 }
