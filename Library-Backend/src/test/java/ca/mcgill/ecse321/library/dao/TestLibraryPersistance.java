@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -70,6 +71,7 @@ public class TestLibraryPersistance{
     @AfterEach
     public void clearDatabase() {
         loanRepository.deleteAll();
+        reservationRepository.deleteAll();
         itemInstanceRepository.deleteAll();
         bookRepository.deleteAll();
         movieRepository.deleteAll();
@@ -79,7 +81,6 @@ public class TestLibraryPersistance{
         addressRepository.deleteAll();
         libraryRepository.deleteAll();
         libraryHourRepository.deleteAll();
-        reservationRepository.deleteAll();
         customerRepository.deleteAll();
         librarianRepository.deleteAll();
         headLibrarianRepository.deleteAll();
@@ -502,142 +503,135 @@ Written by Jerry Xia
         assertEquals(username, acct.getUsername());
     }
 
-    /*@Test
+    @Test
     public void testPersistAndLoadReservation() {
+        String serialNum = "1234";
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
                 java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
         checkableItemRepository.save(checkableItem);
-        checkableItemRepository.save(checkableItem);
-        ItemInstance itemInstance = new ItemInstance("1234", checkableItem);
+
+        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
         itemInstanceRepository.save(itemInstance);
 
-        Integer id = 5678;
-        Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
-        Date pickupDay = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
+        Customer customer = new Customer("customer", null, 0, null, null, null);
+        customerRepository.save(customer);
 
-        Reservation reservation = new Reservation(id, dateReserved, pickupDay, itemInstance);
-        reservationRepository.save(reservation);
+		int id = 6789;
+		Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
+		Date pickupDay = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
+		Reservation reservation = new Reservation(id, dateReserved, pickupDay, itemInstance, customer);
+		reservationRepository.save(reservation);
+		reservation = reservationRepository.findReservationById(id);
+		assertNotNull(reservation);
+		assertEquals(id, reservation.getId());
+		assertEquals(dateReserved, reservation.getDateReserved());
+		assertEquals(pickupDay, reservation.getPickupDay());
+		assertEquals(itemInstance.getSerialNum(), reservation.getItemInstance().getSerialNum());
+		assertEquals(customer.getId(), reservation.getCustomer().getId());
+    }
 
-        reservation = reservationRepository.findReservationById(id);
-        assertNotNull(reservation);
-        assertEquals(dateReserved, reservation.getDateReserved());
-        assertEquals(pickupDay, reservation.getPickupDay());
-        assertEquals(itemInstance, reservation.getItemInstance());
-    }*/
-
-    /*@Test
+    @Test
     public void testFindReservationByDateReserved() {
-        CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
-                java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
-        checkableItemRepository.save(checkableItem);
-        checkableItemRepository.save(checkableItem);
-        ItemInstance itemInstance1 = new ItemInstance("1234", checkableItem);
-        ItemInstance itemInstance2 = new ItemInstance("5678", checkableItem);
-        itemInstanceRepository.save(itemInstance1);
-        itemInstanceRepository.save(itemInstance2);
+        String serialnum = "1234";
+        String serialnum2 = "8888";
+        Book b1 = new Book(5678, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        CheckableItem checkableItem1 = b1;
+        checkableItemRepository.save(checkableItem1);
+        ItemInstance item1 = new ItemInstance(serialnum, checkableItem1);
+        itemInstanceRepository.save(item1);
+        Book b2 = new Book(5678, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        CheckableItem checkableItem2 = b2;
+        checkableItemRepository.save(checkableItem2);
+        ItemInstance item2 = new ItemInstance(serialnum2, checkableItem2);
+        itemInstanceRepository.save(item2);
+        Customer c = new Customer();
+        String customerId = "778";
+        c.setId(customerId);
+        customerRepository.save(c);
 
-        Integer id1 = 1234;
-        Integer id2 = 5678;
-        Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
-        Date pickupDay = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-
-        Reservation reservation1 = new Reservation(id1, dateReserved, pickupDay, itemInstance1);
-        Reservation reservation2 = new Reservation(id2, dateReserved, pickupDay, itemInstance2);
-        reservationRepository.save(reservation1);
-        reservationRepository.save(reservation2);
+        Integer id1 = 345;
+        Integer id2 = 456;
+        Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12));
+        Date pickupDay = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 17));
+        Reservation r1 = new Reservation(id1, dateReserved, pickupDay, item1, c);
+        Reservation r2 = new Reservation(id2, dateReserved, pickupDay, item2, c);
+        reservationRepository.save(r1);
+        reservationRepository.save(r2);
 
         List<Reservation> reservations = reservationRepository.findReservationByDateReserved(dateReserved);
-        reservation1 = reservations.get(0);
-        reservation2 = reservations.get(1);
+        assertNotNull(reservations);
+        assertEquals(2, reservations.size());
 
-        assertNotNull(reservation1);
-        assertEquals(dateReserved, reservation1.getDateReserved());
-        assertEquals(pickupDay, reservation1.getPickupDay());
-        assertEquals(itemInstance1, reservation1.getItemInstance());
+        r1 = reservations.get(0);
+        r2 = reservations.get(1);
 
-        assertNotNull(reservation2);
-        assertEquals(dateReserved, reservation2.getDateReserved());
-        assertEquals(pickupDay, reservation2.getPickupDay());
-        assertEquals(itemInstance2, reservation2.getItemInstance());
-    }*/
+        assertEquals(r1.getId(), id1);
+        assertEquals(r1.getDateReserved(), dateReserved);
+        assertEquals(r1.getPickupDay(), pickupDay);
+        assertEquals(r1.getItemInstance().getSerialNum(), item1.getSerialNum());
+        assertEquals(r1.getCustomer().getId(), c.getId());
+
+        assertEquals(r2.getId(), id2);
+        assertEquals(r2.getDateReserved(), dateReserved);
+        assertEquals(r2.getPickupDay(), pickupDay);
+        assertEquals(r2.getItemInstance().getSerialNum(), item2.getSerialNum());
+        assertEquals(r2.getCustomer().getId(), c.getId());
+    }
 
     @Test
 	public void testPersistAndLoadLoan() {
-		/*String serialNum = "1234";
-		CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
-				java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
-		checkableItemRepository.save(checkableItem);
+        String serialNum = "1234";
+        CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
+                java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
+        checkableItemRepository.save(checkableItem);
 
-		ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
-		itemInstanceRepository.save(itemInstance);
+        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
+        itemInstanceRepository.save(itemInstance);
 
-		Person person = new Person();
-		person.setId(12);
-		person.setName("Hana");
-		personRepository.save(person);
-
-        int addressID = 4321;
-        Integer streetNumber = 1234;
-        String street = "Main st";
-        String city = "Montreal";
-        String country = "Canada";
-        Address address = new Address(addressID, streetNumber, street, city, country);
-        addressRepository.save(address);
-
-        String cardId = "345";
-        LibraryCard  card = new LibraryCard();
-        card.setId(cardId);
-        libraryCardRepository.save(card);
-
-        String username = "hana";
-        String password = "012345";
-        OnlineAccount acct = new OnlineAccount();
-        acct.setUsername(username);
-        acct.setPassword(password);
-        onlineAccountRepository.save(acct);
-
-		Customer customer = new Customer("customer", person, 0, address, card, acct);
-		customerRepository.save(customer);*/
+        Customer customer = new Customer("customer", null, 0, null, null, null);
+        customerRepository.save(customer);
 
 		int id = 6789;
 		Date checkedOut = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
 		Date returnDate = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-		Loan loan = new Loan(id, checkedOut, returnDate, null, null);
+		Loan loan = new Loan(id, checkedOut, returnDate, itemInstance, customer);
 		loanRepository.save(loan);
 		loan = loanRepository.findLoanById(id);
 		assertNotNull(loan);
 		assertEquals(id, loan.getId());
 		assertEquals(checkedOut, loan.getCheckedOut());
 		assertEquals(returnDate, loan.getReturnDate());
-		//assertEquals(itemInstance, loan.getItemInstance());
-		//assertEquals(customer, loan.getCustomer());
+		assertEquals(itemInstance.getSerialNum(), loan.getItemInstance().getSerialNum());
+		assertEquals(customer.getId(), loan.getCustomer().getId());
 	}
 
-    /*@Test
+    @Test
     public void findLoanByCheckedOut() {
-        List<Loan> loans = new ArrayList<Loan>();
+        List<Loan> loans;
         String serialnum = "1234";
         String serialnum2 = "8888";
-        Book b = new Book(5678, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
-        CheckableItem item1 = b;
-        checkableItemRepository.save(item1);
-        ItemInstance item2 = new ItemInstance(serialnum, item1);
-        Book b3 = new Book(5678, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
-        CheckableItem item3 = b3;
-        checkableItemRepository.save(item1);
-        ItemInstance item4 = new ItemInstance(serialnum2, item3);
+        Book b1 = new Book(5678, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        CheckableItem checkableItem1 = b1;
+        checkableItemRepository.save(checkableItem1);
+        ItemInstance item1 = new ItemInstance(serialnum, checkableItem1);
+        itemInstanceRepository.save(item1);
+        Book b2 = new Book(5678, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        CheckableItem checkableItem2 = b2;
+        checkableItemRepository.save(checkableItem2);
+        ItemInstance item2 = new ItemInstance(serialnum2, checkableItem2);
+        itemInstanceRepository.save(item2);
         Date checkedOut = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12));
         Date returnDate = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 16));
         Date returnDate2 = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 16));
         Customer c = new Customer();
+        String customerId = "778";
+        c.setId(customerId);
         customerRepository.save(c);
-        Loan l1 = new Loan(6789, checkedOut, returnDate, item2, c);
-        Loan l2 = new Loan(8933, checkedOut, returnDate2, item4, c);
+        Loan l1 = new Loan(6789, checkedOut, returnDate, item1, c);
+        Loan l2 = new Loan(8933, checkedOut, returnDate2, item2, c);
 
         loanRepository.save(l1);
         loanRepository.save(l2);
-        l1 = null;
-        l2 = null;
         loans = loanRepository.findLoanByCheckedOut(checkedOut);
 
         assertNotNull(loans);
@@ -646,9 +640,11 @@ Written by Jerry Xia
         l2 = loans.get(1);
         assertEquals(checkedOut, l1.getCheckedOut());
         assertEquals(checkedOut, l2.getCheckedOut());
-        assertEquals(item2, l1.getItemInstance());
-        assertEquals(item4, l2.getItemInstance());
-    }*/
+        //assertEquals(item1.getSerialNum(), l1.getItemInstance().getSerialNum());
+        //assertEquals(item2.getSerialNum(), l2.getItemInstance().getSerialNum());
+        assertEquals(c.getId(), l1.getCustomer().getId());
+        assertEquals(c.getId(), l2.getCustomer().getId());
+    }
 
     @Test
     public void testPersistAndLoadCustomer(){

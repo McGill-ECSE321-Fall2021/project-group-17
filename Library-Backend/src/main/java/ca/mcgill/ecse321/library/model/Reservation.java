@@ -9,17 +9,18 @@ public class Reservation {
     private Date dateReserved;
     private Date pickupDay;
     private ItemInstance itemInstance;
-    //private Customer customer;
+    private Customer customer;
 
     private LibraryManagementSystem system;
 
     public Reservation() { }
 
-    public Reservation(Integer id, Date dateReserved, Date pickupDay, ItemInstance itemInstance) {
+    public Reservation(Integer id, Date dateReserved, Date pickupDay, ItemInstance itemInstance, Customer customer) {
         this.id = id;
         this.dateReserved = dateReserved;
         this.pickupDay = pickupDay;
         this.itemInstance = itemInstance;
+        this.customer = customer;
     }
 
     @Id
@@ -57,14 +58,15 @@ public class Reservation {
         this.itemInstance = itemInstance;
     }
 
-    /*@OneToOne
+    @OneToOne
+    @JoinColumn
     public Customer getCustomer() {
         return this.customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }*/
+    }
 
     @ManyToOne
     @JoinColumn()
