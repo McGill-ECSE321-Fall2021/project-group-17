@@ -22,7 +22,7 @@ public abstract class Item {
     private LibraryManagementSystem system;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    //@GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }

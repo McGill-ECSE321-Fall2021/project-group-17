@@ -10,23 +10,23 @@ public class Loan {
     private Date checkedOut;
     private Date returnDate;
     private ItemInstance itemInstance;
-  
-
+    private Customer customer;
     private LibraryManagementSystem system;
 
     public Loan() {
 
     }
 
-    public Loan(Integer id, Date checkedOut, Date returnDate, ItemInstance itemInstance) {
+    public Loan(Integer id, Date checkedOut, Date returnDate, ItemInstance itemInstance, Customer customer) {
         this.id = id;
         this.checkedOut = checkedOut;
         this.returnDate = returnDate;
         this.itemInstance = itemInstance;
+        this.customer = customer;
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    //@GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -52,12 +52,23 @@ public class Loan {
     }
 
     @OneToOne
+    @JoinColumn
     public ItemInstance getItemInstance() {
         return this.itemInstance;
     }
 
     public void setItemInstance(ItemInstance itemInstance) {
         this.itemInstance = itemInstance;
+    }
+
+    @OneToOne
+    @JoinColumn
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @ManyToOne
