@@ -8,14 +8,15 @@ import java.util.Set;
 
 public class Person {
 
-    private Integer id;
+    private int id;
     private String name;
 
     private LibraryManagementSystem system;
 
 
     @Id
-    public Integer getId() {return id;}
+    //@GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {return id;}
 
     public void setId(Integer Id){this.id = Id;}
 
