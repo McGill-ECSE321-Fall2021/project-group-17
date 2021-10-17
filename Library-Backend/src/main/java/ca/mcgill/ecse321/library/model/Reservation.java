@@ -1,12 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Date;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Reservation {
@@ -14,21 +9,22 @@ public class Reservation {
     private Date dateReserved;
     private Date pickupDay;
     private ItemInstance itemInstance;
-  
+    private Customer customer;
 
     private LibraryManagementSystem system;
 
     public Reservation() { }
 
-    public Reservation(Integer id, Date dateReserved, Date pickupDay, ItemInstance itemInstance) {
+    public Reservation(Integer id, Date dateReserved, Date pickupDay, ItemInstance itemInstance, Customer customer) {
         this.id = id;
         this.dateReserved = dateReserved;
         this.pickupDay = pickupDay;
         this.itemInstance = itemInstance;
+        this.customer = customer;
     }
 
     @Id
-    @Column(name="id", updatable=false, nullable=false)
+    //@GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -62,6 +58,16 @@ public class Reservation {
         this.itemInstance = itemInstance;
     }
 
+    @OneToOne
+    @JoinColumn
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @ManyToOne
     @JoinColumn()
     public LibraryManagementSystem getSystem() {
@@ -71,4 +77,5 @@ public class Reservation {
     public void setSystem(LibraryManagementSystem system) {
         this.system = system;
     }
+
 }

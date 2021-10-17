@@ -5,6 +5,8 @@ import javax.persistence.*;
 @Entity
 public class OnlineAccount {
 
+
+    private PersonRole personRole;
     private String username;
     private String password;
 
@@ -14,9 +16,7 @@ public class OnlineAccount {
         return this.username;
     }
 
-    public void setUsername(String username) {
-        this.username = username; }
-
+    public void setUsername(String username) { this.username = username; }
 
     public String getPassword() {
         return this.password;
@@ -26,18 +26,9 @@ public class OnlineAccount {
         this.password = password;
     }
 
-
-
-/*
     @OneToOne
-    private User user;
-    public User getUser(){
-        return this.user;
-    }
+    @JoinColumn
+    public PersonRole getPersonRole(){ return this.personRole; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
- */
+    public void setPersonRole(PersonRole role){ this.personRole = role; }
 }
