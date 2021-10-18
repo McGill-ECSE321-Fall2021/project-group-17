@@ -19,7 +19,7 @@
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
   | Aidan Jackson|      |  U2  |
-  | Hana Gustyn  |        |  U2  |
+  | Hana Gustyn  | Domain model, key design decisions, detailed use case scenarios, coding model classes, crud repositories, test cases for persistance |  20  |
   | Tomasz Mroz  |     |  U2  |
   | Fiona Ryan   |      |  U2  |
   | Victoria Sanchez| Requirements, use case diagram, detailed use case scenarios, meeting minutes, domain model, coding model classes, crud repositories, test cases for  persistance  |  20  |
