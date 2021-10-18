@@ -672,21 +672,20 @@ Written by Jerry Xia
     @Test
     @Transactional
     public void testPersistAndLoadCustomer(){
-        int pId = 1432;
         Person person = new Person();
-        person.setId(pId);
         person.setName("bob");
         person.setPersonRoleList(null);
         personRepository.save(person);
+        int pId = person.getId();
 
-        int aId = 123;
+
         Address address = new Address();
-        address.setAddressID(aId);
         address.setStreetNumber(1);
         address.setStreet(null);
         address.setCountry(null);
         address.setCity(null);
         addressRepository.save(address);
+        int aId = address.getAddressID();
 
         String libId = "542";
         LibraryCard libCard = new LibraryCard();
@@ -730,10 +729,10 @@ Written by Jerry Xia
     @Transactional
     public void testPersistAndLoadLibrarian(){
         Person person = new Person();
-        person.setId(1432);
         person.setName("bob");
         person.setPersonRoleList(null);
         personRepository.save(person);
+        int id = person.getId();
 
         OnlineAccount account = new OnlineAccount();
         account.setPassword("password");
@@ -750,7 +749,7 @@ Written by Jerry Xia
         l = (Librarian) librarianRepository.findPersonRoleById("3214");
         assertNotNull(l);
         account = onlineAccountRepository.findOnlineAccountByUsername("username");
-        person = personRepository.findPersonById(1432);
+        person = personRepository.findPersonById(id);
 
         assertEquals(person, l.getPerson());
         assertEquals(account, l.getAccount());
@@ -760,10 +759,11 @@ Written by Jerry Xia
     @Transactional
     public void testPersistAndLoadHeadLibrarian(){
         Person person = new Person();
-        person.setId(1432);
+        //person.setId(1432);
         person.setName("bob");
         person.setPersonRoleList(null);
         personRepository.save(person);
+        int id = person.getId();
 
         OnlineAccount account = new OnlineAccount();
         account.setPassword("password");
@@ -773,14 +773,14 @@ Written by Jerry Xia
 
         HeadLibrarian headLibrarian = new HeadLibrarian("3214", person, account);
         librarianRepository.save(headLibrarian);
-        headLibrarian = null;
+        /*headLibrarian = null;
         account = null;
-        person = null;
+        person = null;*/
 
         headLibrarian = (HeadLibrarian) librarianRepository.findPersonRoleById("3214");
         assertNotNull(headLibrarian);
         account = onlineAccountRepository.findOnlineAccountByUsername("username");
-        person = personRepository.findPersonById(1432);
+        person = personRepository.findPersonById(id);
 
         assertEquals(person, headLibrarian.getPerson());
         assertEquals(account, headLibrarian.getAccount());
