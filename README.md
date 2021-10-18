@@ -23,6 +23,6 @@
   | Tomasz Mroz  | Detailed use case scenarios, Coding model classes, Crud repositories, Test cases, Integration testing, Setting up application and db in heroku    |  25  |
   | Fiona Ryan   |      |  U2  |
   | Victoria Sanchez| Requirements, use case diagram, detailed use case scenarios, meeting minutes, domain model, coding model classes, crud repositories, test cases for  persistance  |  20  |
-  | Jerry Xia |  | U2 |
+  | Jerry Xia | Detailed use case scenarios, coding model classes, crud repositories, test cases for persistance	 | 20 |
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)
