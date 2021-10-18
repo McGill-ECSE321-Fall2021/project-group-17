@@ -13,7 +13,7 @@
   | Jerry Xia | Software Eng. | U2 |
     
 ### Project Scope
---Here
+The Library Management System aims to create an easy to use system which can bring together the needs of all stakeholders. This system allows for a seamless interface between the customers, librarians, and head librarians. Customers are capable for checking out and tracking various items in the libraries inventory. Librarians are capable of ensuring that the libraries inventory is up to date and ready to searve the customers from reservation to pickup. To conclude, this system changes the way both sides of the libraries occupents interact and grow their love for books, movies, music, and more.
 
 ### Effort Breakdown Sprint One
   |  Team Member |      Responsible For      | Time Allocated (hours) |
