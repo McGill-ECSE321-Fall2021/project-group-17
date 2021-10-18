@@ -18,7 +18,7 @@
 ### Effort Breakdown Sprint One
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
-  | Aidan Jackson|      |  U2  |
+  | Aidan Jackson| README.md and wiki intial setup, detailed use case scenerio, model classes, crud repositories, test cases | 20 |
   | Hana Gustyn  | Domain model, key design decisions, detailed use case scenarios, coding model classes, crud repositories, test cases for persistance |  20  |
   | Tomasz Mroz  | Detailed use case scenarios, Coding model classes, Crud repositories, Test cases, Integration testing, Setting up application and db in heroku    |  25  |
   | Fiona Ryan   | Detailed use case scenarios, coding model classes, crud repositories, test cases for persistance, build system & CI, logo design    |  20  |
