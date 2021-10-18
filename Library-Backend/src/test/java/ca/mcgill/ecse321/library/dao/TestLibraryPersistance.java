@@ -670,40 +670,121 @@ Written by Jerry Xia
     }
 
     @Test
+    @Transactional
     public void testPersistAndLoadCustomer(){
-        int penalty = 0;
-        String roleType = "Customer";
+        int pId = 1432;
         Person person = new Person();
-        Loan loan = new Loan();
+        person.setId(pId);
+        person.setName("bob");
+        person.setPersonRoleList(null);
+        personRepository.save(person);
+
+        int aId = 123;
         Address address = new Address();
-        OnlineAccount account = new OnlineAccount();
+        address.setAddressID(aId);
+        address.setStreetNumber(1);
+        address.setStreet(null);
+        address.setCountry(null);
+        address.setCity(null);
+        addressRepository.save(address);
+
+        String libId = "542";
         LibraryCard libCard = new LibraryCard();
-        Customer c = new Customer();
-        c.setAddress(address);
-        c.setAccount(account);
-        c.setId(roleType);
-        c.setLibraryCard(libCard);
-        c.setPerson(person);
-        c.setPenalty(0);
+        libCard.setId(libId);
+        libCard.setCustomer(null);
+        libraryCardRepository.save(libCard);
+
+        String username = "username";
+        OnlineAccount account = new OnlineAccount();
+        account.setPassword("password");
+        account.setUsername(username);
+        account.setPersonRole(null);
+        onlineAccountRepository.save(account);
+
+        int penalty = 0;
+        String customerId = "3234";
+        Customer c = new Customer(customerId, person, penalty, address, libCard, account);
         customerRepository.save(c);
         c = null;
-        c = (Customer) customerRepository.findPersonRoleById(roleType);
+        account = null;
+        person = null;
+        libCard = null;
+        address = null;
+
+        c = (Customer) customerRepository.findPersonRoleById(customerId);
         assertNotNull(c);
-        assertEquals(roleType,c.getId());
-        assertEquals(account, c.getAccount());
+        account = onlineAccountRepository.findOnlineAccountByUsername(username);
+        person = personRepository.findPersonById(pId);
+        libCard = libraryCardRepository.findLibraryCardById(libId);
+        address = addressRepository.findAddressByAddressID(aId);
+
         assertEquals(person, c.getPerson());
-        assertEquals(0, c.getPenalty());
+        assertEquals(account, c.getAccount());
         assertEquals(libCard, c.getLibraryCard());
         assertEquals(address, c.getAddress());
+        assertEquals(penalty, c.getPenalty());
+        assertEquals(customerId, c.getId());
     }
 
     @Test
+    @Transactional
     public void testPersistAndLoadLibrarian(){
+        Person person = new Person();
+        person.setId(1432);
+        person.setName("bob");
+        person.setPersonRoleList(null);
+        personRepository.save(person);
 
+        OnlineAccount account = new OnlineAccount();
+        account.setPassword("password");
+        account.setUsername("username");
+        account.setPersonRole(null);
+        onlineAccountRepository.save(account);
+
+        Librarian l = new Librarian("3214", person, account);
+        librarianRepository.save(l);
+        l = null;
+        account = null;
+        person = null;
+
+        l = (Librarian) librarianRepository.findPersonRoleById("3214");
+        assertNotNull(l);
+        account = onlineAccountRepository.findOnlineAccountByUsername("username");
+        person = personRepository.findPersonById(1432);
+
+        assertEquals(person, l.getPerson());
+        assertEquals(account, l.getAccount());
+        assertEquals("3214", l.getId());
     }
     @Test
+    @Transactional
     public void testPersistAndLoadHeadLibrarian(){
+        Person person = new Person();
+        person.setId(1432);
+        person.setName("bob");
+        person.setPersonRoleList(null);
+        personRepository.save(person);
 
+        OnlineAccount account = new OnlineAccount();
+        account.setPassword("password");
+        account.setUsername("username");
+        account.setPersonRole(null);
+        onlineAccountRepository.save(account);
+
+        HeadLibrarian headLibrarian = new HeadLibrarian("3214", person, account);
+        librarianRepository.save(headLibrarian);
+        headLibrarian = null;
+        account = null;
+        person = null;
+
+        headLibrarian = (HeadLibrarian) librarianRepository.findPersonRoleById("3214");
+        assertNotNull(headLibrarian);
+        account = onlineAccountRepository.findOnlineAccountByUsername("username");
+        person = personRepository.findPersonById(1432);
+
+        assertEquals(person, headLibrarian.getPerson());
+        assertEquals(account, headLibrarian.getAccount());
+        assertEquals("3214", headLibrarian.getId());
     }
     @Test
     @Transactional
