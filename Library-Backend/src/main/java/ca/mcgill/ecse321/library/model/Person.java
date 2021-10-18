@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.library.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 

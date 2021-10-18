@@ -739,18 +739,102 @@ Written by Jerry Xia
     @Transactional
     public void testPersistAndLoadLMS(){
         LibraryManagementSystem lms = new LibraryManagementSystem();
+
         Address address = new Address();
         ArrayList<Address> addresses = new ArrayList<>();
         addresses.add(address);
         lms.setAddressList(addresses);
-        lms.setLibraryHourList(new ArrayList<>());
+
+        LibraryHour hour = new LibraryHour();
+        hour.setLibrary(new Library("jawn"));
+        ArrayList<LibraryHour> hours = new ArrayList<>();
+        hours.add(hour);
+        lms.setLibraryHourList(hours);
+
+        Person person = new Person();
+        ArrayList<Person> persons = new ArrayList<>();
+        persons.add(person);
+        lms.setPersonList(persons);
+
+        Item item = new Book();
+        item.setId(120);
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(item);
+        lms.setItemList(items);
+
+        LibraryCard card = new LibraryCard();
+        card.setId("mr turbo");
+        ArrayList<LibraryCard> cards = new ArrayList<>();
+        cards.add(card);
+        lms.setLibraryCardList(cards);
+
+        PersonRole role = new Librarian();
+        role.setId("id");
+        ArrayList<PersonRole> roles = new ArrayList<>();
+        roles.add(role);
+        lms.setPersonRoleList(roles);
+
+        Shift shift = new Shift();
+        ArrayList<Shift> shifts = new ArrayList<>();
+        shifts.add(shift);
+        lms.setShiftList(shifts);
+
+        ItemInstance itemInstance = new ItemInstance();
+        itemInstance.setSerialNum("jawnie");
+        itemInstance.setCheckableItem((Book)item);
+        ArrayList<ItemInstance> itemInstances = new ArrayList<>();
+        itemInstances.add(itemInstance);
+        lms.setItemInstanceList(itemInstances);
+
+        Reservation reservation = new Reservation();
+        reservation.setId(12345);
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation);
+        lms.setReservationList(reservations);
+
+        Loan loan = new Loan();
+        loan.setId(12346);
+        ArrayList<Loan> loans = new ArrayList<>();
+        loans.add(loan);
+        lms.setLoanList(loans);
+
+
         libraryManagementSystemRepository.save(lms);
         int id = lms.getId();
         lms = null;
         lms = libraryManagementSystemRepository.findLibraryManagementSystemById(id);
         assertNotNull(lms);
         assertEquals(id, lms.getId());
-        assertEquals(1,lms.getAddressList().size());
+
+        assertEquals(addresses.size(),lms.getAddressList().size());
+        assertEquals(address,lms.getAddressList().get(0));
+
+        assertEquals(hours.size(),lms.getLibraryHourList().size());
+        assertEquals(hour,lms.getLibraryHourList().get(0));
+
+        assertEquals(persons.size(),lms.getPersonList().size());
+        assertEquals(person,lms.getPersonList().get(0));
+
+        assertEquals(items.size(),lms.getItemList().size());
+        assertEquals(item,lms.getItemList().get(0));
+
+        assertEquals(cards.size(),lms.getLibraryCardList().size());
+        assertEquals(card,lms.getLibraryCardList().get(0));
+
+        assertEquals(roles.size(),lms.getPersonRoleList().size());
+        assertEquals(role,lms.getPersonRoleList().get(0));
+
+        assertEquals(shifts.size(),lms.getShiftList().size());
+        assertEquals(shift,lms.getShiftList().get(0));
+
+        assertEquals(itemInstances.size(),lms.getItemInstanceList().size());
+        assertEquals(itemInstance,lms.getItemInstanceList().get(0));
+
+        assertEquals(reservations.size(),lms.getReservationList().size());
+        assertEquals(reservation,lms.getReservationList().get(0));
+
+        assertEquals(loans.size(),lms.getLoanList().size());
+        assertEquals(loan,lms.getLoanList().get(0));
     }
 
     @Test
