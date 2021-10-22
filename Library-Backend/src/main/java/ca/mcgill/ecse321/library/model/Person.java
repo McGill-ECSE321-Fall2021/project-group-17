@@ -12,6 +12,8 @@ public class Person {
 
     private LibraryManagementSystem system;
 
+    private List<PersonRole> personRoleList;
+
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -19,7 +21,6 @@ public class Person {
 
     public void setId(Integer Id){this.id = Id;}
 
-    private List<PersonRole> personRoleList;
 
 
     public String getName() {
