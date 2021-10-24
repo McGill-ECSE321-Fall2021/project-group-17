@@ -9,9 +9,8 @@ public class PersonDTO {
 
     public PersonDTO(){}
 
-    public PersonDTO(int id,String name){
+    public PersonDTO(int id){
         this.id = id;
-        this.name = name;
     }
 
     public String getName() {

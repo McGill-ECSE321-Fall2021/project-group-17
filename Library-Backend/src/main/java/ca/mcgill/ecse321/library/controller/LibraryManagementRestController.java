@@ -30,7 +30,7 @@ public class LibraryManagementRestController {
         if (p == null) {
             throw new IllegalArgumentException("There is no such Person!");
         }
-        PersonDTO personDto = new PersonDTO(p.getId(),p.getName());
+        PersonDTO personDto = new PersonDTO(p.getId());
         personDto.setSystem(p.getSystem());
         return personDto;
     }
