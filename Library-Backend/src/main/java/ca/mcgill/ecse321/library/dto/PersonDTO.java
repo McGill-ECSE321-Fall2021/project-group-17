@@ -1,11 +1,15 @@
 package ca.mcgill.ecse321.library.dto;
 
 import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
+import ca.mcgill.ecse321.library.model.PersonRole;
+
+import java.util.List;
 
 public class PersonDTO {
     private String name;
     private int id;
     private LibraryManagementSystem system;
+    private List<PersonRole> personRoleList;
 
     public PersonDTO(){}
 
@@ -35,5 +39,13 @@ public class PersonDTO {
 
     public int getId() {
         return id;
+    }
+
+    public List<PersonRole> getPersonRoleList() {
+        return personRoleList;
+    }
+
+    public void setPersonRoleList(List<PersonRole> personRoleList) {
+        this.personRoleList = personRoleList;
     }
 }
