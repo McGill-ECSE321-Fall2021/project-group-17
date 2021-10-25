@@ -28,7 +28,7 @@ public class NewspaperDTO {
     }
 
     public Date getDatePublished() {
-        return this.getDatePublished();
+        return this.datePublished;
     }
 
     public String getHeadline() {

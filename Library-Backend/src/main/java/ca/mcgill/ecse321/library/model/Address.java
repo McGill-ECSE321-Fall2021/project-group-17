@@ -11,15 +11,17 @@ public class Address {
     private String city;
     private String country;
     private LibraryManagementSystem system;
+    private Customer customer;
 
     public Address() {}
 
-	public Address(int addressID, Integer streetNumber, String street, String city, String country) {
+	public Address(int addressID, Integer streetNumber, String street, String city, String country, Customer customer) {
 		this.addressID = addressID;
 		this.streetNumber = streetNumber;
 		this.street = street;
 		this.city = city;
 		this.country = country;
+		this.customer = customer;
 	}
 
     @Id
@@ -73,19 +75,14 @@ public class Address {
         this.system = system;
     }
 
-    /*
-    private User user;
-
-
-    @OneToOne(optional=false)
-    public User getUser(){
-        return this.user;
+    @OneToOne
+    @JoinColumn
+    public Customer getCustomer(){
+        return this.customer;
     }
 
-    public void setUser(User user){
-        this.user = user;
+    public void setCustomer(Customer customer){
+        this.customer = customer;
     }
-
-     */
 
 }

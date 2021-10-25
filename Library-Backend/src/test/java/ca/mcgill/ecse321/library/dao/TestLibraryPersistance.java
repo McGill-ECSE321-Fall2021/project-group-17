@@ -191,7 +191,11 @@ Written by Jerry Xia
     	String street = "Main st";
     	String city = "Montreal";
     	String country = "Canada";
-    	Address address = new Address(0, streetNumber, street, city, country);
+    	Customer customer = new Customer();
+    	String custId = "1234";
+    	customer.setId("1234");
+    	customerRepository.save(customer);
+    	Address address = new Address(0, streetNumber, street, city, country, customer);
     	addressRepository.save(address);
     	int addressID = address.getAddressID();
     	address = null;
@@ -202,6 +206,7 @@ Written by Jerry Xia
 		assertEquals(street,address.getStreet());
 		assertEquals(city,address.getCity());
 		assertEquals(country,address.getCountry());
+		assertEquals(custId,address.getCustomer().getId());
     }
     
     /*
@@ -684,6 +689,7 @@ Written by Jerry Xia
         address.setStreet(null);
         address.setCountry(null);
         address.setCity(null);
+        address.setCustomer(null);
         addressRepository.save(address);
         int aId = address.getAddressID();
 
@@ -944,12 +950,16 @@ Written by Jerry Xia
         String street = "main";
         String country = "US";
         int streetNum = 1600;
+        Customer customer = new Customer();
+        customer.setId("1234");
+        customerRepository.save(customer);
         Address add = new Address();
         Integer i = add.getAddressID();
         add.setStreetNumber(streetNum);
         add.setStreet(street);
         add.setCity(city);
         add.setCountry(country);
+        add.setCustomer(customer);
         addressRepository.save(add);
 
         add = null;
