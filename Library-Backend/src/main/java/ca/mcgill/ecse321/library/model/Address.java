@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Address {
-    //address id as int
+    
     private int id;
     private int streetNumber;
     private String street;

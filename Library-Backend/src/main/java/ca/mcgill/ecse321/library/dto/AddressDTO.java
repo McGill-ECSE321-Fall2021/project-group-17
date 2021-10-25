@@ -6,21 +6,21 @@ import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 public class AddressDTO {
 	
 	public Customer customer;
-	public int addressID;
+	public int id;
     private LibraryManagementSystem system;
     
     public AddressDTO() {}
     
-    public AddressDTO(int addressID) {
-    	this.addressID = addressID;
+    public AddressDTO(int id) {
+    	this.id = id;
     }
     
     public int getAddressID() {
-        return addressID;
+        return id;
     }
     
     public void setAddressID(int id){
-        this.addressID = id;
+        this.id = id;
     }
     
     public LibraryManagementSystem getSystem() {
