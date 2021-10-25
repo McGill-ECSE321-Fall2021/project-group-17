@@ -191,17 +191,22 @@ Written by Jerry Xia
     	String street = "Main st";
     	String city = "Montreal";
     	String country = "Canada";
-    	Address address = new Address(0, streetNumber, street, city, country);
+    	Customer customer = new Customer();
+    	String custId = "1234";
+    	customer.setId("1234");
+    	customerRepository.save(customer);
+    	Address address = new Address(0, streetNumber, street, city, country, customer);
     	addressRepository.save(address);
-    	int addressID = address.getAddressID();
+    	int id = address.getId();
     	address = null;
-    	address = addressRepository.findAddressByAddressID(addressID);
+    	address = addressRepository.findAddressById(id);
 		assertNotNull(address);
-		assertEquals(addressID,address.getAddressID());
+		assertEquals(id,address.getId());
 		assertEquals(streetNumber, address.getStreetNumber());
 		assertEquals(street,address.getStreet());
 		assertEquals(city,address.getCity());
 		assertEquals(country,address.getCountry());
+		assertEquals(custId,address.getCustomer().getId());
     }
     
     /*
@@ -684,8 +689,9 @@ Written by Jerry Xia
         address.setStreet(null);
         address.setCountry(null);
         address.setCity(null);
+        address.setCustomer(null);
         addressRepository.save(address);
-        int aId = address.getAddressID();
+        int aId = address.getId();
 
         String libId = "542";
         LibraryCard libCard = new LibraryCard();
@@ -715,7 +721,7 @@ Written by Jerry Xia
         account = onlineAccountRepository.findOnlineAccountByUsername(username);
         person = personRepository.findPersonById(pId);
         libCard = libraryCardRepository.findLibraryCardById(libId);
-        address = addressRepository.findAddressByAddressID(aId);
+        address = addressRepository.findAddressById(aId);
 
         assertEquals(person, c.getPerson());
         assertEquals(account, c.getAccount());
@@ -944,12 +950,16 @@ Written by Jerry Xia
         String street = "main";
         String country = "US";
         int streetNum = 1600;
+        Customer customer = new Customer();
+        customer.setId("1234");
+        customerRepository.save(customer);
         Address add = new Address();
-        Integer i = add.getAddressID();
+        Integer i = add.getId();
         add.setStreetNumber(streetNum);
         add.setStreet(street);
         add.setCity(city);
         add.setCountry(country);
+        add.setCustomer(customer);
         addressRepository.save(add);
 
         add = null;

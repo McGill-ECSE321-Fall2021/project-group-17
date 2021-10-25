@@ -4,31 +4,33 @@ import javax.persistence.*;
 
 @Entity
 public class Address {
-    //address id as int
-    private int addressID;
+    
+    private int id;
     private int streetNumber;
     private String street;
     private String city;
     private String country;
     private LibraryManagementSystem system;
+    private Customer customer;
 
     public Address() {}
 
-	public Address(int addressID, Integer streetNumber, String street, String city, String country) {
-		this.addressID = addressID;
+	public Address(int id, Integer streetNumber, String street, String city, String country, Customer customer) {
+		this.id = id;
 		this.streetNumber = streetNumber;
 		this.street = street;
 		this.city = city;
 		this.country = country;
+		this.customer = customer;
 	}
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getAddressID() {
-        return addressID;
+    public int getId() {
+        return id;
     }
-    public void setAddressID(int id){
-        this.addressID = id;
+    public void setId(int id){
+        this.id = id;
     }
 
     public int getStreetNumber() {
@@ -73,19 +75,14 @@ public class Address {
         this.system = system;
     }
 
-    /*
-    private User user;
-
-
-    @OneToOne(optional=false)
-    public User getUser(){
-        return this.user;
+    @OneToOne
+    @JoinColumn
+    public Customer getCustomer(){
+        return this.customer;
     }
 
-    public void setUser(User user){
-        this.user = user;
+    public void setCustomer(Customer customer){
+        this.customer = customer;
     }
-
-     */
 
 }
