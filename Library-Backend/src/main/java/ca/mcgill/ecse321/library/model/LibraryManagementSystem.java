@@ -17,7 +17,7 @@ public class LibraryManagementSystem {
     private List<Loan> loanList;
     private List<LibraryHour> libraryHourList;
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "addressID")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Address> getAddressList() {
         return addressList;
     }

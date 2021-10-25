@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface AddressRepository extends CrudRepository<Address, Integer> {
-    Address findAddressByAddressID(int id);
+    Address findAddressById(int id);
     Address findAddressByCity(String street);
     Address findAddressByStreetNumber(int street);
 }

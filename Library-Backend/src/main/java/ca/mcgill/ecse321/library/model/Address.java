@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Address {
     //address id as int
-    private int addressID;
+    private int id;
     private int streetNumber;
     private String street;
     private String city;
@@ -15,8 +15,8 @@ public class Address {
 
     public Address() {}
 
-	public Address(int addressID, Integer streetNumber, String street, String city, String country, Customer customer) {
-		this.addressID = addressID;
+	public Address(int id, Integer streetNumber, String street, String city, String country, Customer customer) {
+		this.id = id;
 		this.streetNumber = streetNumber;
 		this.street = street;
 		this.city = city;
@@ -26,11 +26,11 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getAddressID() {
-        return addressID;
+    public int getId() {
+        return id;
     }
-    public void setAddressID(int id){
-        this.addressID = id;
+    public void setId(int id){
+        this.id = id;
     }
 
     public int getStreetNumber() {

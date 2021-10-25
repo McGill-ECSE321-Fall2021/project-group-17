@@ -197,11 +197,11 @@ Written by Jerry Xia
     	customerRepository.save(customer);
     	Address address = new Address(0, streetNumber, street, city, country, customer);
     	addressRepository.save(address);
-    	int addressID = address.getAddressID();
+    	int id = address.getId();
     	address = null;
-    	address = addressRepository.findAddressByAddressID(addressID);
+    	address = addressRepository.findAddressById(id);
 		assertNotNull(address);
-		assertEquals(addressID,address.getAddressID());
+		assertEquals(id,address.getId());
 		assertEquals(streetNumber, address.getStreetNumber());
 		assertEquals(street,address.getStreet());
 		assertEquals(city,address.getCity());
@@ -691,7 +691,7 @@ Written by Jerry Xia
         address.setCity(null);
         address.setCustomer(null);
         addressRepository.save(address);
-        int aId = address.getAddressID();
+        int aId = address.getId();
 
         String libId = "542";
         LibraryCard libCard = new LibraryCard();
@@ -721,7 +721,7 @@ Written by Jerry Xia
         account = onlineAccountRepository.findOnlineAccountByUsername(username);
         person = personRepository.findPersonById(pId);
         libCard = libraryCardRepository.findLibraryCardById(libId);
-        address = addressRepository.findAddressByAddressID(aId);
+        address = addressRepository.findAddressById(aId);
 
         assertEquals(person, c.getPerson());
         assertEquals(account, c.getAccount());
@@ -954,7 +954,7 @@ Written by Jerry Xia
         customer.setId("1234");
         customerRepository.save(customer);
         Address add = new Address();
-        Integer i = add.getAddressID();
+        Integer i = add.getId();
         add.setStreetNumber(streetNum);
         add.setStreet(street);
         add.setCity(city);
