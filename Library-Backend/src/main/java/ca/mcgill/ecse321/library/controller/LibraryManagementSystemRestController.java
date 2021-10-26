@@ -1,9 +1,7 @@
 package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.LibraryManagementSystemDTO;
-import ca.mcgill.ecse321.library.dto.PersonDTO;
 import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
-import ca.mcgill.ecse321.library.model.Person;
 import ca.mcgill.ecse321.library.service.LibraryManagementSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
