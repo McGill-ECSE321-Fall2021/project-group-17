@@ -7,14 +7,15 @@ import java.util.List;
 public class LibraryManagementSystem {
     private int id;
     private List<Address> addressList;
+
     private List<Person> personList;
     private List<Item> itemList;
-    private List<LibraryCard> libraryCardList;
+    private List<Loan> loanList;
     private List<PersonRole> personRoleList;
     private List<Shift> shiftList;
     private List<ItemInstance> itemInstanceList;
     private List<Reservation> reservationList;
-    private List<Loan> loanList;
+    private List<LibraryCard> libraryCardList;
     private List<LibraryHour> libraryHourList;
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
@@ -26,7 +27,7 @@ public class LibraryManagementSystem {
         this.addressList = addressList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "name")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Person> getPersonList() {
         return personList;
     }
@@ -43,7 +44,8 @@ public class LibraryManagementSystem {
         this.itemList = itemList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    @OneToMany(cascade={CascadeType.ALL})
+    @JoinColumn(name = "id", referencedColumnName = "id")
     public List<LibraryCard> getLibraryCardList() {
         return libraryCardList;
     }
