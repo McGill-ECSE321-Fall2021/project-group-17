@@ -6,7 +6,7 @@ import ca.mcgill.ecse321.library.model.Person;
 public class HeadLibrarianDTO extends LibrarianDTO{
 
     public HeadLibrarianDTO(){}
-    public HeadLibrarianDTO(String id, Person person, OnlineAccount account){
+    public HeadLibrarianDTO(int id, Person person, OnlineAccount account){
         super(id, person, account);
     }
 }
