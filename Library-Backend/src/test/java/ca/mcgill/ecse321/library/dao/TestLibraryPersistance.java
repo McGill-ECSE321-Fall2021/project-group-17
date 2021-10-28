@@ -18,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -192,9 +191,8 @@ Written by Jerry Xia
     	String city = "Montreal";
     	String country = "Canada";
     	Customer customer = new Customer();
-    	String custId = "1234";
-    	customer.setId("1234");
     	customerRepository.save(customer);
+    	int custId = customer.getId();
     	Address address = new Address(0, streetNumber, street, city, country, customer);
     	addressRepository.save(address);
     	int id = address.getId();
@@ -414,12 +412,12 @@ Written by Jerry Xia
 
     @Test
     public void testPersistAndLoadItemInstance() {
-        String serialNum = "1234";
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
                 java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
         checkableItemRepository.save(checkableItem);
-        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
+        ItemInstance itemInstance = new ItemInstance(checkableItem);
         itemInstanceRepository.save(itemInstance);
+        int serialNum = itemInstance.getSerialNum();
         itemInstance = itemInstanceRepository.findItemInstanceBySerialNum(serialNum);
         assertNotNull(itemInstance);
         assertEquals(serialNum, itemInstance.getSerialNum());
@@ -428,16 +426,17 @@ Written by Jerry Xia
 
     @Test
     public void testFindItemInstanceByCheckableItem() {
-        String serialNum1 = "1234";
-        String serialNum2 = "5678";
+
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
                 java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
         checkableItemRepository.save(checkableItem);
-        ItemInstance itemInstance1 = new ItemInstance(serialNum1, checkableItem);
-        ItemInstance itemInstance2 = new ItemInstance(serialNum2, checkableItem);
+        ItemInstance itemInstance1 = new ItemInstance(checkableItem);
+        ItemInstance itemInstance2 = new ItemInstance(checkableItem);
         itemInstanceRepository.save(itemInstance1);
         itemInstanceRepository.save(itemInstance2);
         List<ItemInstance> itemInstances = itemInstanceRepository.findByCheckableItem(checkableItem);
+        int serialNum1 = itemInstance1.getSerialNum();
+        int serialNum2 =  itemInstance2.getSerialNum();
         assertNotNull(itemInstances);
         itemInstance1 = itemInstances.get(0);
         assertEquals(serialNum1, itemInstance1.getSerialNum());
@@ -481,18 +480,16 @@ Written by Jerry Xia
 
     @Test
     public void testPersistAndLoadLibraryCardId(){
-        String id = "123";
-        LibraryCard card = new LibraryCard();
-        card.setId(id);
-        libraryCardRepository.save(card);
 
-        String s = card.getId();
+        LibraryCard card = new LibraryCard();
+        libraryCardRepository.save(card);
+        int s = card.getId();
 
         card = null;
 
         card = libraryCardRepository.findLibraryCardById(s);
         assertNotNull(card);
-        assertEquals(id, card.getId());
+        assertEquals(s, card.getId());
     }
 
     @Test
@@ -533,16 +530,17 @@ Written by Jerry Xia
 
     @Test
     public void testPersistAndLoadReservation() {
-        String serialNum = "1234";
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
                 java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
-        checkableItemRepository.save(checkableItem);
+        //checkableItemRepository.save(checkableItem);
 
-        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
+        ItemInstance itemInstance = new ItemInstance(checkableItem);
         itemInstanceRepository.save(itemInstance);
 
-        Customer customer = new Customer("customer", null, 0, null, null, null);
+        Customer customer = new Customer(0, null, 0, null, null, null);
         customerRepository.save(customer);
+
+        int serialNum = itemInstance.getSerialNum();
 
 		int id = 6789;
 		Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
@@ -559,23 +557,28 @@ Written by Jerry Xia
     }
 
     @Test
+    @Transactional
     public void testFindReservationByDateReserved() {
-        String serialnum = "1234";
-        String serialnum2 = "8888";
-        Book b1 = new Book(5678, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+
+        Book b1 = new Book(100, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
         CheckableItem checkableItem1 = b1;
-        checkableItemRepository.save(checkableItem1);
-        ItemInstance item1 = new ItemInstance(serialnum, checkableItem1);
+        //checkableItemRepository.save(checkableItem1);
+
+
+        ItemInstance item1 = new ItemInstance(checkableItem1);
         itemInstanceRepository.save(item1);
-        Book b2 = new Book(5678, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        int serialnum = item1.getSerialNum();
+        Book b2 = new Book(5679, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
         CheckableItem checkableItem2 = b2;
-        checkableItemRepository.save(checkableItem2);
-        ItemInstance item2 = new ItemInstance(serialnum2, checkableItem2);
+        //checkableItemRepository.save(checkableItem2);
+
+        ItemInstance item2 = new ItemInstance(checkableItem2);
+
         itemInstanceRepository.save(item2);
+        int serialnum2 =item2.getSerialNum();
         Customer c = new Customer();
-        String customerId = "778";
-        c.setId(customerId);
-        customerRepository.save(c);
+        //customerRepository.save(c);
+        int customerId = c.getId();
 
         Integer id1 = 345;
         Integer id2 = 456;
@@ -608,15 +611,16 @@ Written by Jerry Xia
 
     @Test
 	public void testPersistAndLoadLoan() {
-        String serialNum = "1234";
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
                 java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
         checkableItemRepository.save(checkableItem);
 
-        ItemInstance itemInstance = new ItemInstance(serialNum, checkableItem);
+        int serialNum = checkableItem.getId();
+
+        ItemInstance itemInstance = new ItemInstance(checkableItem);
         itemInstanceRepository.save(itemInstance);
 
-        Customer customer = new Customer("customer", null, 0, null, null, null);
+        Customer customer = new Customer(0, null, 0, null, null, null);
         customerRepository.save(customer);
 
 		int id = 6789;
@@ -636,24 +640,24 @@ Written by Jerry Xia
     @Test
     public void findLoanByCheckedOut() {
         List<Loan> loans;
-        String serialnum = "1234";
-        String serialnum2 = "8888";
+
+
         Book b1 = new Book(5678, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
         CheckableItem checkableItem1 = b1;
         checkableItemRepository.save(checkableItem1);
-        ItemInstance item1 = new ItemInstance(serialnum, checkableItem1);
+        int serialnum = checkableItem1.getId();
+        ItemInstance item1 = new ItemInstance(checkableItem1);
         itemInstanceRepository.save(item1);
         Book b2 = new Book(5678, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
         CheckableItem checkableItem2 = b2;
         checkableItemRepository.save(checkableItem2);
-        ItemInstance item2 = new ItemInstance(serialnum2, checkableItem2);
+        int serialnum2 = checkableItem2.getId();
+        ItemInstance item2 = new ItemInstance(checkableItem2);
         itemInstanceRepository.save(item2);
         Date checkedOut = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12));
         Date returnDate = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 16));
         Date returnDate2 = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 16));
         Customer c = new Customer();
-        String customerId = "778";
-        c.setId(customerId);
         customerRepository.save(c);
         Loan l1 = new Loan(6789, checkedOut, returnDate, item1, c);
         Loan l2 = new Loan(8933, checkedOut, returnDate2, item2, c);
@@ -693,23 +697,24 @@ Written by Jerry Xia
         addressRepository.save(address);
         int aId = address.getId();
 
-        String libId = "542";
+
         LibraryCard libCard = new LibraryCard();
-        libCard.setId(libId);
         libCard.setCustomer(null);
         libraryCardRepository.save(libCard);
+        int libId = libCard.getId();
 
         String username = "username";
         OnlineAccount account = new OnlineAccount();
         account.setPassword("password");
         account.setUsername(username);
         account.setPersonRole(null);
-        onlineAccountRepository.save(account);
+        //onlineAccountRepository.save(account);
 
         int penalty = 0;
-        String customerId = "3234";
-        Customer c = new Customer(customerId, person, penalty, address, libCard, account);
+
+        Customer c = new Customer(0, person, penalty, address, libCard, account);
         customerRepository.save(c);
+        int customerId = c.getId();
         c = null;
         account = null;
         person = null;
@@ -744,22 +749,23 @@ Written by Jerry Xia
         account.setPassword("password");
         account.setUsername("username");
         account.setPersonRole(null);
-        onlineAccountRepository.save(account);
+        //onlineAccountRepository.save(account);
 
-        Librarian l = new Librarian("3214", person, account);
+        Librarian l = new Librarian(0, person, account);
         librarianRepository.save(l);
+        int libId = l.getId();
         l = null;
         account = null;
         person = null;
 
-        l = (Librarian) librarianRepository.findPersonRoleById("3214");
+        l = (Librarian) librarianRepository.findPersonRoleById(libId);
         assertNotNull(l);
         account = onlineAccountRepository.findOnlineAccountByUsername("username");
         person = personRepository.findPersonById(id);
 
         assertEquals(person, l.getPerson());
         assertEquals(account, l.getAccount());
-        assertEquals("3214", l.getId());
+        assertEquals(libId, l.getId());
     }
     @Test
     @Transactional
@@ -775,22 +781,23 @@ Written by Jerry Xia
         account.setPassword("password");
         account.setUsername("username");
         account.setPersonRole(null);
-        onlineAccountRepository.save(account);
+        //onlineAccountRepository.save(account);
 
-        HeadLibrarian headLibrarian = new HeadLibrarian("3214", person, account);
+        HeadLibrarian headLibrarian = new HeadLibrarian(0, person, account);
         librarianRepository.save(headLibrarian);
+        int roleId = headLibrarian.getId();
         /*headLibrarian = null;
         account = null;
         person = null;*/
 
-        headLibrarian = (HeadLibrarian) librarianRepository.findPersonRoleById("3214");
+        headLibrarian = (HeadLibrarian) librarianRepository.findPersonRoleById(roleId);
         assertNotNull(headLibrarian);
         account = onlineAccountRepository.findOnlineAccountByUsername("username");
         person = personRepository.findPersonById(id);
 
         assertEquals(person, headLibrarian.getPerson());
         assertEquals(account, headLibrarian.getAccount());
-        assertEquals("3214", headLibrarian.getId());
+        assertEquals(roleId, headLibrarian.getId());
     }
     @Test
     @Transactional
@@ -800,8 +807,9 @@ Written by Jerry Xia
         Time endTime = java.sql.Time.valueOf(java.time.LocalTime.now());
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
         DayOfWeek DOW = java.time.DayOfWeek.valueOf("MONDAY");
-        Librarian librarian = new Librarian("Librarian",null,null);
+        Librarian librarian = new Librarian(0,null,null);
         librarianRepository.save(librarian);
+        int libId = librarian.getId();
 
         Shift shift = new Shift();
         shift.setLibrarian(librarian);
@@ -814,7 +822,7 @@ Written by Jerry Xia
         librarian = null;
         shift = shiftRepository.findShiftById(shiftID);
         assertNotNull(shift);
-        librarian = (Librarian) librarianRepository.findPersonRoleById("Librarian");
+        librarian = (Librarian) librarianRepository.findPersonRoleById(libId);
         assertEquals(librarian, shift.getLibrarian());
         assertEquals(shiftID, shift.getId());
         assertEquals(startTime, shift.getStartTime());
@@ -850,13 +858,11 @@ Written by Jerry Xia
         lms.setItemList(items);
 
         LibraryCard card = new LibraryCard();
-        card.setId("mr turbo");
         ArrayList<LibraryCard> cards = new ArrayList<>();
         cards.add(card);
         lms.setLibraryCardList(cards);
 
         PersonRole role = new Librarian();
-        role.setId("id");
         ArrayList<PersonRole> roles = new ArrayList<>();
         roles.add(role);
         lms.setPersonRoleList(roles);
@@ -867,8 +873,7 @@ Written by Jerry Xia
         lms.setShiftList(shifts);
 
         ItemInstance itemInstance = new ItemInstance();
-        itemInstance.setSerialNum("jawnie");
-        itemInstance.setCheckableItem((Book)item);
+        itemInstance.setCheckableItem(null);
         ArrayList<ItemInstance> itemInstances = new ArrayList<>();
         itemInstances.add(itemInstance);
         lms.setItemInstanceList(itemInstances);
@@ -951,7 +956,6 @@ Written by Jerry Xia
         String country = "US";
         int streetNum = 1600;
         Customer customer = new Customer();
-        customer.setId("1234");
         customerRepository.save(customer);
         Address add = new Address();
         Integer i = add.getId();

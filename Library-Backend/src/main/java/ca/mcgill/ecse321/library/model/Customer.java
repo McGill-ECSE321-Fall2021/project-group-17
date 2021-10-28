@@ -15,7 +15,7 @@ public class Customer extends PersonRole{
 
     }
 
-    public Customer(String id, Person person, int penalty,
+    public Customer(int id, Person person, int penalty,
                     Address address, LibraryCard libCard, OnlineAccount account) {
         super(id, person, account);
         this.penalty = penalty;

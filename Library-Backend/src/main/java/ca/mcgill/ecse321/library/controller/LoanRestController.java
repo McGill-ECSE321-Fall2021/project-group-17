@@ -12,6 +12,8 @@ import java.sql.Date;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 
 @RestController
 @CrossOrigin("*")
@@ -35,30 +37,30 @@ public class LoanRestController {
         loanDTO.setCheckedOut(loan.getCheckedOut());
         loanDTO.setCustomer(loan.getCustomer());
         loanDTO.setItemInstance(loan.getItemInstance());
-        loan.setReturnDate(loan.getReturnDate());
-        loan.setSystem(loan.getSystem());
+        loanDTO.setReturnDate(loan.getReturnDate());
+        loanDTO.setSystem(loan.getSystem());
         return loanDTO;
     }
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        private String itemId;
-        private String customerId;
+        private Integer itemId;
+        private Integer customerId;
         private Integer systemId;
         private Date date;
 
-        public String getItemId() {
+        public Integer getItemId() {
             return itemId;
         }
 
-        public void setItemId(String itemId) {
+        public void setItemId(Integer itemId) {
             this.itemId = itemId;
         }
 
-        public String getCustomerId() {
+        public Integer getCustomerId() {
             return customerId;
         }
 
-        public void setCustomerId(String customerId) {
+        public void setCustomerId(Integer customerId) {
             this.customerId = customerId;
         }
 

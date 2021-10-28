@@ -19,7 +19,7 @@ public class PersonService {
     private PersonRoleRepository personRoleRepository;
 
     @Transactional
-    public Person createPerson(String name,Integer systemId, List<String> personRoles){
+    public Person createPerson(String name, Integer systemId, List<Integer> personRoles){
         Person person = new Person();
         person.setName(name);
         person.setPersonRoleList(new ArrayList<>());
@@ -30,7 +30,7 @@ public class PersonService {
         }
 
         if(personRoles != null){
-            for(String s :personRoles){
+            for(int s :personRoles){
                 PersonRole role = personRoleRepository.findPersonRoleById(s);
                 List<PersonRole> roles = person.getPersonRoleList();
                 roles.add(role);

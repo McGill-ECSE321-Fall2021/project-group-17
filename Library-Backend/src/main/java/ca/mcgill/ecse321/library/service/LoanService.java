@@ -28,7 +28,7 @@ public class LoanService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Loan createLoan(Date start, String itemId, String customerId, Integer systemId){
+    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId){
         Loan loan = new Loan();
 
         if(systemId != null){

@@ -5,17 +5,18 @@ import javax.persistence.*;
 @Entity
 public class LibraryCard {
 
-    private String id;
+    private int id;
 
     private LibraryManagementSystem system;
     private Customer customer;
 
     @Id
-    public String getId() {
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
         return this.id;
     }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(int id) { this.id = id; }
 
     @ManyToOne
     @JoinColumn()

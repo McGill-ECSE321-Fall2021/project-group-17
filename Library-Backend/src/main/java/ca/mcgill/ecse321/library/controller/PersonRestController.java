@@ -51,14 +51,14 @@ public class PersonRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        List<String> personRoles;
+        List<Integer> personRoles;
         Integer systemId;
 
-        public List<String> getPersonRoles() {
+        public List<Integer > getPersonRoles() {
             return personRoles;
         }
 
-        public void setPersonRoles(List<String> personRoles) {
+        public void setPersonRoles(List<Integer> personRoles) {
             this.personRoles = personRoles;
         }
 

@@ -11,12 +11,12 @@ public class LibraryManagementSystem {
     private List<Person> personList;
     private List<Item> itemList;
     private List<Loan> loanList;
-    private List<PersonRole> personRoleList;
-    private List<Shift> shiftList;
-    private List<ItemInstance> itemInstanceList;
     private List<Reservation> reservationList;
-    private List<LibraryCard> libraryCardList;
     private List<LibraryHour> libraryHourList;
+    private List<Shift> shiftList;
+    private List<LibraryCard> libraryCardList;
+    private List<ItemInstance> itemInstanceList;
+    private List<PersonRole> personRoleList;
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Address> getAddressList() {
@@ -44,14 +44,22 @@ public class LibraryManagementSystem {
         this.itemList = itemList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL})
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy = "id")
     public List<LibraryCard> getLibraryCardList() {
         return libraryCardList;
     }
 
     public void setLibraryCardList(List<LibraryCard> libraryCardList) {
         this.libraryCardList = libraryCardList;
+    }
+
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
@@ -81,14 +89,7 @@ public class LibraryManagementSystem {
         this.itemInstanceList = itemInstanceList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public List<Reservation> getReservationList() {
-        return reservationList;
-    }
 
-    public void setReservationList(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
-    }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Loan> getLoanList() {
