@@ -1,9 +1,7 @@
 package ca.mcgill.ecse321.library.controller;
 
-import ca.mcgill.ecse321.library.dto.PersonDTO;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.dto.CustomerDTO;
-import ca.mcgill.ecse321.library.model.Person;
 import ca.mcgill.ecse321.library.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
