@@ -13,12 +13,12 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Customer createCustomer(String id){
+    public Customer createCustomer(int id){
         Customer customer = new Customer();
         customer.setId(id);
         customerRepository.save(customer);
         return customer;
     }
     @Transactional
-    public Customer getCustomer(String id){return (Customer) customerRepository.findPersonRoleById(id);}
+    public Customer getCustomer(int id){return (Customer) customerRepository.findPersonRoleById(id);}
 }

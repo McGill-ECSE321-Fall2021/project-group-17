@@ -12,13 +12,13 @@ public class LibrarianRestController {
     private LibrarianService librarianService;
 
     @PostMapping(value= {"/librarian/{id}","/librarian/{id}/"})
-    public LibrarianDTO createLibrarian(@PathVariable("id") String id) throws IllegalArgumentException{
+    public LibrarianDTO createLibrarian(@PathVariable("id") int id) throws IllegalArgumentException{
         Librarian librarian = librarianService.createLibrarian(id);
         return convertToDTO(librarian);
     }
 
     @GetMapping(value = {"/librarian/{id}", "/librarian/{id}/"})
-    public LibrarianDTO getLibrarian(@PathVariable("id") String id) throws IllegalArgumentException{
+    public LibrarianDTO getLibrarian(@PathVariable("id") int id) throws IllegalArgumentException{
         Librarian librarian = librarianService.createLibrarian(id);
         return convertToDTO(librarian);
     }

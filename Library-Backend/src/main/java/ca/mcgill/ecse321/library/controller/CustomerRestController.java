@@ -12,13 +12,13 @@ public class CustomerRestController {
     private CustomerService customerService;
 
     @PostMapping(value= {"/customer/{id}","/customer/{id}/"})
-    public CustomerDTO createCustomer(@PathVariable("id") String id) throws IllegalArgumentException{
+    public CustomerDTO createCustomer(@PathVariable("id") int id) throws IllegalArgumentException{
         Customer customer = customerService.createCustomer(id);
         return convertToDTO(customer);
     }
 
     @GetMapping(value = {"/customer/{id}", "/customer/{id}/"})
-    public CustomerDTO getCustomer(@PathVariable("id") String id) throws IllegalArgumentException{
+    public CustomerDTO getCustomer(@PathVariable("id") int id) throws IllegalArgumentException{
         Customer customer = customerService.createCustomer(id);
         return convertToDTO(customer);
     }

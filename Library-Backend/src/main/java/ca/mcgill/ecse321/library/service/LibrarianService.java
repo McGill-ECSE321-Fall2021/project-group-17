@@ -17,12 +17,12 @@ public class LibrarianService {
     private LibrarianRepository librarianRepository;
 
     @Transactional
-    public Librarian createLibrarian(String id){
+    public Librarian createLibrarian(int id){
         Librarian librarian = new Librarian();
         librarian.setId(id);
         librarianRepository.save(librarian);
         return librarian;
     }
     @Transactional
-    public Librarian getLibrarian(String id){return (Librarian) librarianRepository.findPersonRoleById(id);}
+    public Librarian getLibrarian(int id){return (Librarian) librarianRepository.findPersonRoleById(id);}
 }

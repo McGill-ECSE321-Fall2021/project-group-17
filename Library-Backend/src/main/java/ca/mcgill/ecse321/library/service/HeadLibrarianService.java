@@ -12,12 +12,12 @@ public class HeadLibrarianService {
     private HeadLibrarianRepository headLibrarianRepository;
 
     @Transactional
-    public HeadLibrarian createHeadLibrarian(String id){
+    public HeadLibrarian createHeadLibrarian(int id){
         HeadLibrarian headLibrarian = new HeadLibrarian();
         headLibrarian.setId(id);
         headLibrarianRepository.save(headLibrarian);
         return headLibrarian;
     }
     @Transactional
-    public HeadLibrarian getHeadLibrarian(String id){return (HeadLibrarian) headLibrarianRepository.findPersonRoleById(id);}
+    public HeadLibrarian getHeadLibrarian(int id){return (HeadLibrarian) headLibrarianRepository.findPersonRoleById(id);}
 }

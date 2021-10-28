@@ -12,13 +12,13 @@ public class HeadLibrarianRestController {
     private HeadLibrarianService headService;
 
     @PostMapping(value= {"/headLibrarian/{id}","/headLibrarian/{id}/"})
-    public HeadLibrarianDTO createHeadLibrarian(@PathVariable("id") String id) throws IllegalArgumentException{
+    public HeadLibrarianDTO createHeadLibrarian(@PathVariable("id") int id) throws IllegalArgumentException{
         HeadLibrarian headLibrarian = headService.createHeadLibrarian(id);
         return convertToDTO(headLibrarian);
     }
 
-    @GetMapping(value = {"/librarian/{id}", "/librarian/{id}/"})
-    public HeadLibrarianDTO getHeadLibrarian(@PathVariable("id") String id) throws IllegalArgumentException{
+    @GetMapping(value = {"/headLibrarian/{id}", "/headLibrarian/{id}/"})
+    public HeadLibrarianDTO getHeadLibrarian(@PathVariable("id") int id) throws IllegalArgumentException{
         HeadLibrarian headLibrarian = headService.createHeadLibrarian(id);
         return convertToDTO(headLibrarian);
     }
