@@ -4,29 +4,29 @@ import javax.persistence.*;
 
 @Entity
 public class ItemInstance {
-    private String serialNum;
+    private int serialNum;
     private CheckableItem checkableItem;
 
     public ItemInstance() {}
 
     private LibraryManagementSystem system;
 
-    public ItemInstance(String serialNum, CheckableItem item) {
-        this.serialNum = serialNum;
+    public ItemInstance(CheckableItem item) {
         this.checkableItem = item;
     }
 
     @Id
-    public String getSerialNum() {
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getSerialNum() {
         return this.serialNum;
     }
 
-    public void setSerialNum(String serialNum) {
+    public void setSerialNum(int serialNum) {
         this.serialNum = serialNum;
     }
 
     //had to remove optional tag to get tests to pass idk if this will be a problem later -tom
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne()
     public CheckableItem getCheckableItem() {
         return this.checkableItem;
     }

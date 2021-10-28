@@ -11,12 +11,12 @@ public abstract class PersonRole {
 
     private Person person;
     private LibraryManagementSystem system;
-    private String id;
+    private int id;
     private OnlineAccount account;
 
     public PersonRole(){}
 
-    public PersonRole(String id, Person person, OnlineAccount account){
+    public PersonRole(int id, Person person, OnlineAccount account){
         this.id = id;
         this.person = person;
         this.account = account;
@@ -24,10 +24,11 @@ public abstract class PersonRole {
 
     @Id
     @Column (name="id", updatable = false, nullable = false)
-    public String getId(){return this.id;}
-    public void setId(String id){this.id = id;}
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId(){return this.id;}
+    public void setId(int id){this.id = id;}
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn()
     public OnlineAccount getAccount(){return this.account;}
     public void setAccount(OnlineAccount account){this.account = account;}

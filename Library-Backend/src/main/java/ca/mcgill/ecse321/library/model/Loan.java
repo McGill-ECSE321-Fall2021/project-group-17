@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Entity
 public class Loan {
-    private Integer id;
+    private int id;
     private Date checkedOut;
     private Date returnDate;
     private ItemInstance itemInstance;

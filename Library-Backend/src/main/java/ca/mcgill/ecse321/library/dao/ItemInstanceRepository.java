@@ -7,6 +7,6 @@ import ca.mcgill.ecse321.library.model.ItemInstance;
 import java.util.List;
 
 public interface ItemInstanceRepository extends CrudRepository<ItemInstance, String> {
-    ItemInstance findItemInstanceBySerialNum(String serialNum);
+    ItemInstance findItemInstanceBySerialNum(int serialNum);
     List<ItemInstance> findByCheckableItem(CheckableItem checkableItem);
 }

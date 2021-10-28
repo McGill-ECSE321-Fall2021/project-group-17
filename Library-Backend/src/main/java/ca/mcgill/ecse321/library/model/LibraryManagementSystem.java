@@ -7,15 +7,16 @@ import java.util.List;
 public class LibraryManagementSystem {
     private int id;
     private List<Address> addressList;
+
     private List<Person> personList;
     private List<Item> itemList;
-    private List<LibraryCard> libraryCardList;
-    private List<PersonRole> personRoleList;
-    private List<Shift> shiftList;
-    private List<ItemInstance> itemInstanceList;
-    private List<Reservation> reservationList;
     private List<Loan> loanList;
+    private List<Reservation> reservationList;
     private List<LibraryHour> libraryHourList;
+    private List<Shift> shiftList;
+    private List<LibraryCard> libraryCardList;
+    private List<ItemInstance> itemInstanceList;
+    private List<PersonRole> personRoleList;
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Address> getAddressList() {
@@ -26,7 +27,7 @@ public class LibraryManagementSystem {
         this.addressList = addressList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "name")
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Person> getPersonList() {
         return personList;
     }
@@ -43,13 +44,22 @@ public class LibraryManagementSystem {
         this.itemList = itemList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy = "id")
     public List<LibraryCard> getLibraryCardList() {
         return libraryCardList;
     }
 
     public void setLibraryCardList(List<LibraryCard> libraryCardList) {
         this.libraryCardList = libraryCardList;
+    }
+
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
@@ -79,14 +89,7 @@ public class LibraryManagementSystem {
         this.itemInstanceList = itemInstanceList;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public List<Reservation> getReservationList() {
-        return reservationList;
-    }
 
-    public void setReservationList(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
-    }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Loan> getLoanList() {

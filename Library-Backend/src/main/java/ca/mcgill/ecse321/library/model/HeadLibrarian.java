@@ -7,7 +7,7 @@ public class HeadLibrarian extends Librarian{
     public HeadLibrarian(){
 
     }
-    public HeadLibrarian(String id, Person person, OnlineAccount account){
+    public HeadLibrarian(int id, Person person, OnlineAccount account){
         super(id, person, account);
     }
 }

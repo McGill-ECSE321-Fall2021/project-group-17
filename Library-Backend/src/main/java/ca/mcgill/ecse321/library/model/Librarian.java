@@ -12,7 +12,7 @@ public class Librarian extends PersonRole{
     public Librarian(){
 
     }
-    public Librarian(String id, Person person, OnlineAccount account){
+    public Librarian(int id, Person person, OnlineAccount account){
         super(id, person, account);
     }
 
