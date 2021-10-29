@@ -27,6 +27,11 @@ public class LoanRestController {
         return convertToDto(loan);
     }
 
+    @DeleteMapping(value={"/loan/{id}","/loan/{id}/"})
+    public void deleteLoan(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+        service.deleteLoan(id,customerId);
+    }
+
     //CONVERT TO DTO
 
     private LoanDTO convertToDto(Loan loan){

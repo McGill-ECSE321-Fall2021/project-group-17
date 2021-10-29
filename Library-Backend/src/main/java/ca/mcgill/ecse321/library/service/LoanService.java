@@ -8,6 +8,7 @@ import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import ca.mcgill.ecse321.library.model.Loan;
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +72,30 @@ public class LoanService {
             i++;
         }
         return i + 1;
+    }
+
+    /**
+     * Used to return item, which is equivalent to returning an item
+     * @param loanId
+     * @param customerId
+     */
+    @Transactional
+    public void deleteLoan(Integer loanId, Integer customerId){
+        if(loanId == null){
+            throw new LoanException("Cannot find loanId to delete");
+        }
+        Loan loan = loanRepository.findLoanById(loanId);
+        if(loan == null){
+            throw new LoanException("Cannot find loanId to delete");
+        }
+        if(customerId == null){
+            throw new LoanException("Cannot authorize customer to delete loan");
+        }
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        if(customer == null){
+            throw new LoanException("Owner of loan does not match customer in request");
+        }
+        loanRepository.delete(loan);
+        loan = null;
     }
 }
