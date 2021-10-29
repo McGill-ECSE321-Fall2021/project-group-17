@@ -9,6 +9,7 @@ public class OnlineAccount {
     private PersonRole personRole;
     private String username;
     private String password;
+    private LibraryManagementSystem system;
 
 
     @Id
@@ -31,4 +32,14 @@ public class OnlineAccount {
     public PersonRole getPersonRole(){ return this.personRole; }
 
     public void setPersonRole(PersonRole role){ this.personRole = role; }
+
+    @ManyToOne
+    @JoinColumn()
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
+    }
 }
