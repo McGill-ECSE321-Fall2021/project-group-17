@@ -11,7 +11,7 @@ public class CustomerDTO extends PersonRoleDTO{
     private LibraryCard libCard;
 
     public CustomerDTO(){}
-    public CustomerDTO(String id, Person person, int penalty, Address address, LibraryCard libCard, OnlineAccount account){
+    public CustomerDTO(int id, Person person, int penalty, Address address, LibraryCard libCard, OnlineAccount account){
         super(id, person, account);
         this.address = address;
         this.libCard = libCard;
