@@ -20,6 +20,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 public class PersonRestController {
     @Autowired
     private PersonService service;
+
+
+
     //MAPPING SECTION
     @GetMapping(value = {"/person/{name}", "/person/{name}/"})
     public PersonDTO getPerson(@PathVariable("name") String name) throws IllegalArgumentException{
@@ -34,6 +37,7 @@ public class PersonRestController {
         Person person = service.createPerson(name, body.getSystemId(), body.getPersonRoles());
         return convertToDTO(person);
     }
+
 
     //DTO CONVERSION SECTION
 
