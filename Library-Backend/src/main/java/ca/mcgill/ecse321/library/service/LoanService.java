@@ -4,16 +4,17 @@ import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
 import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
-import ca.mcgill.ecse321.library.model.Loan;
+import ca.mcgill.ecse321.library.dto.LoanDTO;
+import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,16 +30,18 @@ public class LoanService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId){
+    /**
+     * Assumes if no end date is given that it defaults to 21 days
+     */
+    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId, Date returnDate, Integer librarianId){
         Loan loan = new Loan();
 
-        if(systemId != null){
-            LibraryManagementSystem system = systemRepository.findLibraryManagementSystemById(systemId);
-            loan.setSystem(system);
+        if(systemId == null){
+            throw new LoanException("Cannot find valid LMS to create a loan in");
         }
-        else{
-            loan.setId(1);
-        }
+        LibraryManagementSystem system = systemRepository.findLibraryManagementSystemById(systemId);
+        loan.setSystem(system);
+        //system.getLoanList().add(loan);
 
         if(itemId != null){
             ItemInstance instance = itemInstanceRepository.findItemInstanceBySerialNum(itemId);
@@ -48,6 +51,18 @@ public class LoanService {
             Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
             loan.setCustomer(customer);
         }
+        if(start == null){
+            throw new LoanException("Cannot create loan with no start date");
+        }
+        if(returnDate == null){
+            returnDate = Date.valueOf(LocalDate.parse(start.toString()).plusDays(21));
+        }
+        if(start.after(returnDate)){
+            throw new LoanException("Cannot create loan with start date after end date");
+        }
+        loan.setCheckedOut(start);
+        loan.setReturnDate(returnDate);
+
         List<Loan> loans = (List<Loan>) loanRepository.findAll();
         loan.setId(generateId(loans));
         loanRepository.save(loan);
@@ -98,4 +113,66 @@ public class LoanService {
         loanRepository.delete(loan);
         loan = null;
     }
+
+    /**
+     * view active loans
+     * @param id
+     * @param customer
+     */
+
+    //TODO check if loan is active or not
+    @Transactional
+    public List<LoanDTO> viewActiveLoans(Integer id, Customer customer) throws Exception {
+        if(id == null) {
+            throw new Exception("Cannot find loan with that ID");
+        }
+
+        List<LoanDTO> loanDTOS = new ArrayList<>();
+
+        PersonRole customer1 = customerRepository.findPersonRoleById(customer.getId());
+
+        if(customer1 == null) {
+            throw new Exception("Customer not found");
+        }
+
+        List<Loan> customerLoans = customer1.getSystem().getLoanList();
+
+        for (Loan loan : customerLoans) {
+            LoanDTO loanDTO = LoanService.loantoDTO(loan);
+            loanDTOS.add(loanDTO);
+        }
+
+        return loanDTOS;
+    }
+
+    /**
+     * View loan return date
+     * @param loan
+     */
+    @Transactional
+    public Date viewLoanReturnDate(Loan loan) throws Exception {
+        if(loan == null){
+            throw new Exception("Loan does not exist");
+        }
+        Date date = loan.getReturnDate();
+        return date;
+    }
+
+
+    /**
+     * turn loan to loanDTO
+     * @param loan
+     */
+    public static LoanDTO loantoDTO(Loan loan){
+        LoanDTO loanDTO = new LoanDTO();
+        loanDTO.setCheckedOut(loan.getCheckedOut());
+        loanDTO.setCustomer(loan.getCustomer());
+        loanDTO.setId(loan.getId());
+        loanDTO.setItemInstance(loan.getItemInstance());
+        loanDTO.setReturnDate(loan.getReturnDate());
+        loanDTO.setSystem(loan.getSystem());
+        return loanDTO;
+    }
+
+
 }

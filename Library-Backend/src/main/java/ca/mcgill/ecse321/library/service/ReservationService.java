@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
+import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.ReservationRepository;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
@@ -21,8 +22,10 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private LibrarianRepository librarianRepository;
     @Transactional
-    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId){
+    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId){
         Reservation r = new Reservation();
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
@@ -33,6 +36,13 @@ public class ReservationService {
         }
         if(customerId == null){
             throw new ReservationException("Need to have a customer for a reservation");
+        }
+
+        if(librarianId != null){
+            //librarian creates reservation for customer
+            if(librarianRepository.findPersonRoleById(librarianId) == null){
+                throw new ReservationException("Invalid librarian creating the reservation");
+            }
         }
         r.setPickupDay(pickupDay);
         Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
