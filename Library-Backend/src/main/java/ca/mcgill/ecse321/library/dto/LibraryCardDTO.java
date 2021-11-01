@@ -1,23 +1,25 @@
 package ca.mcgill.ecse321.library.dto;
 
+import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 
 public class LibraryCardDTO {
 
-    private String id;
+    private int id;
     private LibraryManagementSystem system;
+    private Customer customer;
 
     public LibraryCardDTO(){}
 
-    public LibraryCardDTO(String id){
+    public LibraryCardDTO(int id){
         this.id = id;
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(int id) { this.id = id; }
 
     public LibraryManagementSystem getSystem(){
         return system;
@@ -26,4 +28,9 @@ public class LibraryCardDTO {
     public void setSystem(LibraryManagementSystem system){
         this.system = system;
     }
+
+    public Customer getCustomer(){ return this.customer; }
+
+    public void setCustomer(Customer customer){ this.customer = customer; }
 }
+
