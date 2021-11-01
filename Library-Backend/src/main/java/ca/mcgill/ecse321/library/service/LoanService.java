@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,16 +30,18 @@ public class LoanService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId){
+    /**
+     * Assumes if no end date is given that it defualts to 21 days
+     */
+    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId, Date returnDate, Integer librarianId){
         Loan loan = new Loan();
 
-        if(systemId != null){
-            LibraryManagementSystem system = systemRepository.findLibraryManagementSystemById(systemId);
-            loan.setSystem(system);
+        if(systemId == null){
+            throw new LoanException("Cannot find valid LMS to create a loan in");
         }
-        else{
-            loan.setId(1);
-        }
+        LibraryManagementSystem system = systemRepository.findLibraryManagementSystemById(systemId);
+        loan.setSystem(system);
+        //system.getLoanList().add(loan);
 
         if(itemId != null){
             ItemInstance instance = itemInstanceRepository.findItemInstanceBySerialNum(itemId);
@@ -48,6 +51,18 @@ public class LoanService {
             Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
             loan.setCustomer(customer);
         }
+        if(start == null){
+            throw new LoanException("Cannot create loan with no start date");
+        }
+        if(returnDate == null){
+            returnDate = Date.valueOf(LocalDate.parse(start.toString()).plusDays(21));
+        }
+        if(start.after(returnDate)){
+            throw new LoanException("Cannot create loan with start date after end date");
+        }
+        loan.setCheckedOut(start);
+        loan.setReturnDate(returnDate);
+
         List<Loan> loans = (List<Loan>) loanRepository.findAll();
         loan.setId(generateId(loans));
         loanRepository.save(loan);
