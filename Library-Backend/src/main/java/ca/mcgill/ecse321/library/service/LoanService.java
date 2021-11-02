@@ -121,7 +121,7 @@ public class LoanService {
 
     //TODO check if loan is active or not
     @Transactional
-    public List<Loan> viewActiveLoans(Integer id){
+    public List<LoanDTO> viewActiveLoans(Integer id){
 
         List<Loan> loans = new ArrayList<>();
 
@@ -138,7 +138,7 @@ public class LoanService {
             LoanDTO loanDTO = LoanService.loantoDTO(loan);
             customerLoansDTO.add(loanDTO);
         }
-        return customerLoans;
+        return customerLoansDTO;
     }
 
     /**

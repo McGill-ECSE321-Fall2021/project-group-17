@@ -42,14 +42,19 @@ public class LoanRestController {
         return convertToDto(service.viewLoanReturnDate(id));
     }
 
-
+    @GetMapping("/loan/customer/{id}")
+    public List<LoanDTO> viewActiveLoans(Integer id){
+        List<LoanDTO> activeLoans = service.viewActiveLoans(id);
+        return activeLoans;
+    }
+/*
     @GetMapping("/loan/customer/{id}")
     public List<LoanDTO> viewActiveLoans(Integer id){
         List<Loan> activeLoans = service.viewActiveLoans(id);
         return toList(activeLoans.stream().map(this::convertToDto).collect(Collectors.toList()));
     }
 
-
+ */
 
 
     //CONVERT TO DTO
