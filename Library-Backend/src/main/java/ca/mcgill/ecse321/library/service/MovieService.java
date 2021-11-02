@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.MovieRepository;
 
+import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +30,11 @@ public class MovieService {
     public Movie getMovie(Integer movieId){
         Movie m= (Movie) movieRepository.findItemById(movieId);
         return m;
+    }
+    @Transactional
+    public List<Item> getMovieByName(String name){
+        List<Item> results= movieRepository.findItemByName(name);
+        return results;
     }
     @Transactional
     public List<Movie> getMovieFromDirector(String director){
