@@ -31,7 +31,7 @@ public class LoanService {
 
     @Transactional
     /**
-     * Assumes if no end date is given that it defualts to 21 days
+     * Assumes if no end date is given that it defaults to 21 days
      */
     public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId, Date returnDate, Integer librarianId){
         Loan loan = new Loan();

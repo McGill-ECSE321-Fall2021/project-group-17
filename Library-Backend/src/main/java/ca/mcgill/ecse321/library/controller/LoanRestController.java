@@ -27,7 +27,7 @@ public class LoanRestController {
     }
 
     @DeleteMapping(value={"/loan/{id}","/loan/{id}/"})
-    public void deleteLoan(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+    public void deleteLoan(@PathVariable Integer id, @RequestParam(value = "customerId",required = false) Integer customerId){
         service.deleteLoan(id,customerId);
     }
 
