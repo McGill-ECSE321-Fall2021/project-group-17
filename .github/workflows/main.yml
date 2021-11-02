@@ -25,5 +25,5 @@ jobs:
       run: chmod +x gradlew
       working-directory: Library-Backend
     - name: Build with Gradle
-      run: ./gradlew build --args='--spring.jpa.hibernate.ddl-auto=create-drop'
+      run: ./gradlew build --args=--spring.jpa.hibernate.ddl-auto=create-drop
       working-directory: Library-Backend
