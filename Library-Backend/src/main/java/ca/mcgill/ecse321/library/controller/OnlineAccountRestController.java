@@ -6,17 +6,22 @@ import ca.mcgill.ecse321.library.service.OnlineAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @CrossOrigin(origins = "*")
 @RestController
 public class OnlineAccountRestController {
     @Autowired
     private OnlineAccountService service;
 
-    @GetMapping(value = { "/onlineaccounts/{username}", "/onlineaccounts/{username}/" })
-    public OnlineAccountDTO getOnlineAccount(@PathVariable("username") String username) throws IllegalArgumentException {
-        OnlineAccount account = service.getOnlineAccount(username);
-        return convertToDTO(account);
-    }
+    /*@GetMapping(value = { "/onlineaccounts", "/onlineaccounts/" })
+    public List<OnlineAccountDTO> getAllOnlineAccounts() {
+        List<OnlineAccountDTO> onlineAccountDTOList = new ArrayList<OnlineAccountDTO>();
+        for (OnlineAccount account : service.getAllOnlineAccounts()) {
+            onlineAccountDTOList.add(convertToDTO(account));
+        }
+        return onlineAccountDTOList;
+    }*/
 
     @PostMapping(value = { "/onlineaccounts/{username}", "/onlineaccounts/{username}/" })
     public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username) throws IllegalArgumentException {
