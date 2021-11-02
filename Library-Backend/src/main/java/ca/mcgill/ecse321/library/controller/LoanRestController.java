@@ -32,7 +32,7 @@ public class LoanRestController {
     }
 
 
-
+    @GetMapping("/")
     //CONVERT TO DTO
 
     private LoanDTO convertToDto(Loan loan){
