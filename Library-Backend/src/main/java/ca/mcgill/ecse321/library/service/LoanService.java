@@ -122,9 +122,9 @@ public class LoanService {
 
     //TODO check if loan is active or not
     @Transactional
-    public List<LoanDTO> viewActiveLoans(Integer id, Customer customer) throws Exception {
+    public List<LoanDTO> viewActiveLoans(Integer id, Customer customer){
         if(id == null) {
-            throw new Exception("Cannot find loan with that ID");
+            throw new LoanException("Cannot find loan with that ID");
         }
 
         List<LoanDTO> loanDTOS = new ArrayList<>();
@@ -132,7 +132,7 @@ public class LoanService {
         PersonRole customer1 = customerRepository.findPersonRoleById(customer.getId());
 
         if(customer1 == null) {
-            throw new Exception("Customer not found");
+            throw new LoanException("Customer not found");
         }
 
         List<Loan> customerLoans = customer1.getSystem().getLoanList();
@@ -147,15 +147,19 @@ public class LoanService {
 
     /**
      * View loan return date
-     * @param loan
+     * @param id
      */
     @Transactional
-    public Date viewLoanReturnDate(Loan loan) throws Exception {
-        if(loan == null){
-            throw new Exception("Loan does not exist");
+    public Loan viewLoanReturnDate(Integer id){
+        if(id == null){
+            throw new LoanException("Please provide a valid ID");
         }
-        Date date = loan.getReturnDate();
-        return date;
+        Loan loan = loanRepository.findLoanById(id);
+        if(loan == null){
+            throw new LoanException("Loan does not exist.");
+        }
+
+        return loan;
     }
 
 

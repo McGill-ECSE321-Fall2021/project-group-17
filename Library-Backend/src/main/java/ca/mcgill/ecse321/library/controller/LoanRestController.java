@@ -32,9 +32,13 @@ public class LoanRestController {
     }
 
 
-    @GetMapping("/")
-    //CONVERT TO DTO
+    @GetMapping("/returndate/{id}")
+    public LoanDTO viewLoanReturnDate(@PathVariable("id") Integer id){
+        return convertToDto(service.viewLoanReturnDate(id));
+    }
 
+
+    //CONVERT TO DTO
     private LoanDTO convertToDto(Loan loan){
         if (loan == null) {
             throw new IllegalArgumentException("There is no such loan!");
