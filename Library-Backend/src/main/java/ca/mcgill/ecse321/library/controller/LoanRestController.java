@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 
 @RestController
@@ -31,7 +34,7 @@ public class LoanRestController {
     }
 
     @DeleteMapping(value={"/loan/{id}","/loan/{id}/"})
-    public void deleteLoan(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+    public void deleteLoan(@PathVariable Integer id, @RequestParam(value = "customerId",required = false) Integer customerId){
         service.deleteLoan(id,customerId);
     }
 
@@ -58,6 +61,7 @@ public class LoanRestController {
 
 
     //CONVERT TO DTO
+
     private LoanDTO convertToDto(Loan loan){
         if (loan == null) {
             throw new IllegalArgumentException("There is no such loan!");

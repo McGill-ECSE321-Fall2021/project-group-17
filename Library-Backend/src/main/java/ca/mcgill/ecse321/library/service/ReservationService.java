@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
+import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
+import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.ReservationRepository;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
@@ -24,9 +26,12 @@ public class ReservationService {
     private CustomerRepository customerRepository;
     @Autowired
     private LibrarianRepository librarianRepository;
+    @Autowired
+    private ItemInstanceRepository itemInstanceRepository;
     @Transactional
     public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId){
         Reservation r = new Reservation();
+
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
         }
@@ -34,22 +39,30 @@ public class ReservationService {
         if(pickupDay == null){
             throw new ReservationException("Cannot have empty pickup day");
         }
-        if(customerId == null){
+        r.setPickupDay(pickupDay);
+        if(customerId == null) {
             throw new ReservationException("Need to have a customer for a reservation");
         }
-
         if(librarianId != null){
             //librarian creates reservation for customer
             if(librarianRepository.findPersonRoleById(librarianId) == null){
                 throw new ReservationException("Invalid librarian creating the reservation");
             }
         }
-        r.setPickupDay(pickupDay);
         Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
         if(c == null){
             throw new ReservationException("Invalid customer provided");
         }
         r.setCustomer(c);
+
+        if(itemInstanceId == null){
+            throw new ReservationException("Item instance serial number cannot be missing");
+        }
+        ItemInstance i = itemInstanceRepository.findItemInstanceBySerialNum(itemInstanceId);
+        if(i == null){
+            throw new ReservationException("Item instance does not exist");
+        }
+        //TODO add in check for item already on reservation
         r.setId(generateId((List<Reservation>) reservationRepository.findAll()));
         reservationRepository.save(r);
         return r;
