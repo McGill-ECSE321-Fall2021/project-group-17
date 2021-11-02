@@ -24,6 +24,14 @@ public class Address {
 		this.customer = customer;
 	}
 
+    public Address(int id, Integer streetNumber, String street, String city, String country) {
+        this.id = id;
+        this.streetNumber = streetNumber;
+        this.street = street;
+        this.city = city;
+        this.country = country;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
