@@ -20,7 +20,7 @@ public class AddressRestController {
         return convertToDTO(address);
     }*/
 
-    @PostMapping(value= {"/person/{name}","/person/{name}/"})
+    @PostMapping(value= {"/address/{name}","/address/{name}/"})
     @ResponseBody
     public AddressDTO createAddress(@PathVariable("id") int id,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
