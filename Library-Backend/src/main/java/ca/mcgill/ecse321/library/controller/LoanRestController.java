@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.LoanDTO;
+import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.service.LoanService;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,10 +36,20 @@ public class LoanRestController {
     }
 
 
-    @GetMapping("/returndate/{id}")
+    //TODO get vs return date get
+    @GetMapping("/loan/returndate/{id}")
     public LoanDTO viewLoanReturnDate(@PathVariable("id") Integer id){
         return convertToDto(service.viewLoanReturnDate(id));
     }
+
+
+    @GetMapping("/loan/customer/{id}")
+    public List<LoanDTO> viewActiveLoans(Integer id){
+        List<Loan> activeLoans = service.viewActiveLoans(id);
+        return toList(activeLoans.stream().map(this::convertToDto).collect(Collectors.toList()));
+    }
+
+
 
 
     //CONVERT TO DTO
@@ -51,6 +65,15 @@ public class LoanRestController {
         loanDTO.setSystem(loan.getSystem());
         return loanDTO;
     }
+
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
+    }
+
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private Integer itemId;
