@@ -3,16 +3,14 @@ package ca.mcgill.ecse321.library.controller;
 import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.service.LoanService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -22,13 +20,14 @@ public class LoanRestController {
     @Autowired
     private LoanService service;
     @PostMapping(value= {"/loan","/loan/"})
-    public LoanDTO createLoan(@RequestBody JsonBody body){
-        Loan loan = service.createLoan(body.getDate(), body.getItemId(), body.getCustomerId(), body.getSystemId());
+    public LoanDTO createLoan(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
+        Loan loan = service.createLoan(body.getCheckedOut(), body.getItemId(), body.getCustomerId(), body.getSystemId(),
+                body.getReturnDate() ,librarianId);
         return convertToDto(loan);
     }
 
     @DeleteMapping(value={"/loan/{id}","/loan/{id}/"})
-    public void deleteLoan(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+    public void deleteLoan(@PathVariable Integer id, @RequestParam(value = "customerId",required = false) Integer customerId){
         service.deleteLoan(id,customerId);
     }
 
@@ -51,7 +50,10 @@ public class LoanRestController {
         private Integer itemId;
         private Integer customerId;
         private Integer systemId;
-        private Date date;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        private Date checkedOut;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        private Date returnDate;
 
         public Integer getItemId() {
             return itemId;
@@ -77,12 +79,20 @@ public class LoanRestController {
             this.systemId = systemId;
         }
 
-        public Date getDate() {
-            return date;
+        public Date getCheckedOut() {
+            return checkedOut;
         }
 
-        public void setDate(Date date) {
-            this.date = date;
+        public void setCheckedOut(Date checkedOut) {
+            this.checkedOut = checkedOut;
+        }
+
+        public Date getReturnDate() {
+            return returnDate;
+        }
+
+        public void setReturnDate(Date returnDate) {
+            this.returnDate = returnDate;
         }
     }
 }
