@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class OnlineAccountService {
@@ -25,9 +24,4 @@ public class OnlineAccountService {
     public OnlineAccount getOnlineAccount(String username) {
         return onlineAccountRepository.findOnlineAccountByUsername(username);
     }
-
-    /*@Transactional
-    public List<OnlineAccount> getAllOnlineAccounts() {
-        return toList(onlineAccountRepository.findAll());
-    }*/
 }

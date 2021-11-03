@@ -16,6 +16,7 @@ public class OnlineAccountDTO {
         this.password = password;
     }
 
+
     public String getUsername() {
         return this.username;
     }

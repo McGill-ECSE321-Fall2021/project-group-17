@@ -14,7 +14,7 @@ public class MovieService {
     @Autowired
     MovieRepository movieRepository;
     @Transactional
-    public Movie createMovie(int id, String name, Date date, String director, Integer runningTime, String rating, String distributor){
+    public Movie createMovie(Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor){
         Movie m= new Movie();
         m.setId(id);
         m.setName(name);

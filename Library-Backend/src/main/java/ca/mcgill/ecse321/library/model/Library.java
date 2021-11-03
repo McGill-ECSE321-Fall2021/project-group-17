@@ -41,4 +41,14 @@ public class Library {
     public void setSystem(LibraryManagementSystem system) {
         this.system = system;
     }
+    
+    @ManyToOne
+    @JoinColumn()
+    public LibraryManagementSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(LibraryManagementSystem system) {
+        this.system = system;
+    }
 }

@@ -22,6 +22,11 @@ public class CustomerRestController {
         Customer customer = customerService.createCustomer(id);
         return convertToDTO(customer);
     }
+    @PutMapping(value = {"/customer/{id}", "/customer/{id}/"})
+    public void setIsVerified(@PathVariable("id") int id) throws IllegalArgumentException{
+        customerService.verifyAddress(id);
+
+    }
 
     private CustomerDTO convertToDTO(Customer customer){
         if (customer == null) {
