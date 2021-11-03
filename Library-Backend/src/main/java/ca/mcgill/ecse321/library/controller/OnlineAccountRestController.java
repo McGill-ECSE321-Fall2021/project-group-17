@@ -14,7 +14,7 @@ public class OnlineAccountRestController {
     @Autowired
     private OnlineAccountService service;
 
-    /*@GetMapping(value = { "/onlineaccounts", "/onlineaccounts/" })
+    /*@GetMapping(value = { "/onlineaccount", "/onlineaccount/" })
     public List<OnlineAccountDTO> getAllOnlineAccounts() {
         List<OnlineAccountDTO> onlineAccountDTOList = new ArrayList<OnlineAccountDTO>();
         for (OnlineAccount account : service.getAllOnlineAccounts()) {
@@ -23,10 +23,15 @@ public class OnlineAccountRestController {
         return onlineAccountDTOList;
     }*/
 
-    @PostMapping(value = { "/onlineaccounts/{username}", "/onlineaccounts/{username}/" })
-    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username) throws IllegalArgumentException {
-        OnlineAccount account = service.createOnlineAccount(username);
+    @PostMapping(value = { "/onlineaccount/{username}/{password}", "/onlineaccount/{username}/{password}/" })
+    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
+        OnlineAccount account = service.createOnlineAccount(username, password);
         return convertToDTO(account);
+    }
+
+    @DeleteMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/"})
+    public void deleteOnlineAccount(@PathVariable("username") String username, @RequestParam(value = "customerId",required = false) Integer customerId) {
+        service.deleteOnlineAccount(username, customerId);
     }
 
     private OnlineAccountDTO convertToDTO(OnlineAccount account) {
