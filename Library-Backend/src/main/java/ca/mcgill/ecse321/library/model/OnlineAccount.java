@@ -12,6 +12,7 @@ public class OnlineAccount {
     private LibraryManagementSystem system;
 
 
+
     @Id
     public String getUsername() {
         return this.username;
@@ -26,6 +27,7 @@ public class OnlineAccount {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @OneToOne
     @JoinColumn
