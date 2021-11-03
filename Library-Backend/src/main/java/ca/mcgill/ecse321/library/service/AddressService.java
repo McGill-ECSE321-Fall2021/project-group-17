@@ -20,31 +20,9 @@ public class AddressService {
     @Autowired
     private LibraryManagementSystemRepository lmsRepository;
 
-    /*@Transactional
+    @Transactional
     public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId, Integer systemId) {
         Address address = new Address(id, streetNumber, street, city, country);
-
-        if (systemId != null) {
-            LibraryManagementSystem lms = lmsRepository.findLibraryManagementSystemById(systemId);
-            address.setSystem(lms);
-        }
-
-        if (customerId != null) {
-            PersonRole personRole = customerRepository.findPersonRoleById(customerId);
-
-            if (personRole instanceof Customer) {
-                address.setCustomer((Customer) personRole);
-            }
-        }
-
-        addressRepository.save(address);
-        return address;
-    }*/
-
-    @Transactional
-    public Address createAddress(int id, Integer customerId, Integer systemId) {
-        Address address = new Address();
-        address.setId(id);
 
         if (systemId != null) {
             LibraryManagementSystem lms = lmsRepository.findLibraryManagementSystemById(systemId);
@@ -66,5 +44,29 @@ public class AddressService {
     @Transactional
     public Address getAddress(int id) {
         return addressRepository.findAddressById(id);
+    }
+
+    @Transactional
+    public Address updateAddress(int id, Integer streetNumber, String street, String city, String country) {
+        Address address = addressRepository.findAddressById(id);
+
+        if (streetNumber != null) {
+            address.setStreetNumber(streetNumber);
+        }
+
+        if (street != null) {
+            address.setStreet(street);
+        }
+
+        if (city != null) {
+            address.setCity(city);
+        }
+
+        if (country != null) {
+            address.setCountry(country);
+        }
+
+        addressRepository.save(address);
+        return address;
     }
 }

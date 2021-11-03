@@ -13,19 +13,28 @@ public class AddressRestController {
     @Autowired
     private AddressService service;
 
-    /*
-    @GetMapping(value = {"/address/{id}", "/address/{id}/"})
-    public AddressDTO getAddress(@PathVariable("name") int id) throws IllegalArgumentException{
-        Address address = service.createAddress(id,-1,-1);
-        return convertToDTO(address);
-    }*/
 
-    @PostMapping(value= {"/address/{name}","/address/{name}/"})
-    @ResponseBody
-    public AddressDTO createAddress(@PathVariable("id") int id,
-                                  @RequestBody JsonBody body) throws IllegalArgumentException{
-        Address address = service.createAddress(id, body.getCustomerId(), body.getSystemId());
+    @GetMapping(value = {"/address/{id}", "/address/{id}/"})
+    public AddressDTO getAddress(@PathVariable("id") int id) throws IllegalArgumentException{
+        Address address = service.getAddress(id);
         return convertToDTO(address);
+    }
+
+    @PostMapping(value= {"/address/{id}/{streetNum}/{street}/{city}/{country}","/address/{id}/{streetNum}/{street}/{city}/{country}/"})
+    @ResponseBody
+    public AddressDTO createAddress(@PathVariable("id") int id, @PathVariable("streetNum") int streetNum,
+                                    @PathVariable("street") String street, @PathVariable("city") String city,
+                                    @PathVariable("country") String country,
+                                  @RequestBody JsonBody body) throws IllegalArgumentException{
+        Address address = service.createAddress(id, streetNum, street, city, country, body.getCustomerId(), body.getSystemId());
+        return convertToDTO(address);
+    }
+
+    @PutMapping(value={"/address/{id}/{streetNum}/{street}/{city}/{country}","/address/{id}/{streetNum}/{street}/{city}/{country}/"})
+    public void updateAddress(@PathVariable("id") int id, @PathVariable("streetNum") int streetNum,
+                                    @PathVariable("street") String street, @PathVariable("city") String city,
+                                    @PathVariable("country") String country) throws IllegalArgumentException {
+        service.updateAddress(id, streetNum, street, city, country);
     }
 
     private AddressDTO convertToDTO(Address address) {
