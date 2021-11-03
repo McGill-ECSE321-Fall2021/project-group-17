@@ -18,8 +18,8 @@ public class ReservationRestController {
     private ReservationService service;
 
     @PostMapping({"/reservation/", "/reservation"})
-    public ReservationDTO createReservation(@RequestBody JsonBody body){
-        Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(), body.getItemInstanceId(), body.getCustomerId());
+    public ReservationDTO createReservation(@RequestParam("librarianId") Integer librarianId, @RequestBody JsonBody body){
+        Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(), body.getItemInstanceId(), body.getCustomerId(), librarianId);
         return convertToDTO(reservation);
     }
 
