@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.BookRepository;
 import ca.mcgill.ecse321.library.model.Book;
+import ca.mcgill.ecse321.library.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,11 @@ public class BookService {
     public Book getBook(Integer bookId){
         Book b= (Book) bookRepository.findItemById(bookId);
         return b;
+    }
+    @Transactional
+    public List<Item> getBookByName(String name){
+        List<Item> results= bookRepository.findItemByName(name);
+        return results;
     }
     @Transactional
     public List<Book> getBookFromAuthor(String author){
