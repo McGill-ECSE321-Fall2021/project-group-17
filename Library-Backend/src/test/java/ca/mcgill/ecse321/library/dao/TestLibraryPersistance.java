@@ -219,7 +219,7 @@ Written by Jerry Xia
     	library.setName(name);
     	libraryRepository.save(library);
     	library = null;
-    	library = libraryRepository.findLibraryByName(name);
+    	library = libraryRepository.findLibraryById(id);
 		assertNotNull(library);
 		assertEquals(name, library.getName());
 	}

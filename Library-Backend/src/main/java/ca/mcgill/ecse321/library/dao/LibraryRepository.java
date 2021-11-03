@@ -6,5 +6,5 @@ import ca.mcgill.ecse321.library.model.Library;
 
 
 public interface LibraryRepository extends CrudRepository<Library,String>{
-    Library findLibraryByName(String name);
+    Library findLibraryById(int id);
 }
