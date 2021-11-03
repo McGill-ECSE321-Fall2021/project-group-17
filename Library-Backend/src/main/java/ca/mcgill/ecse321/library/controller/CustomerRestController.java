@@ -27,6 +27,7 @@ public class CustomerRestController {
         customerService.verifyAddress(id);
 
     }
+    
 
     private CustomerDTO convertToDTO(Customer customer){
         if (customer == null) {
