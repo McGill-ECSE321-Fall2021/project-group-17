@@ -213,11 +213,13 @@ Written by Jerry Xia
  */
     @Test
     public void testPersistAndLoadLibrary() {
+    	int id = 1234;
     	String name = "McLennen";
-    	Library library = new Library(name);
+    	Library library = new Library(id);
+    	library.setName(name);
     	libraryRepository.save(library);
     	library = null;
-    	library = libraryRepository.findLibraryByName(name);
+    	library = libraryRepository.findLibraryById(id);
 		assertNotNull(library);
 		assertEquals(name, library.getName());
 	}
@@ -229,8 +231,10 @@ Written by Jerry Xia
     @Test
     @Transactional
     public void testPersistAndLoadLibraryHour() {
+    	int id = 1234;
     	String name = "McLennen";
-    	Library library = new Library(name);
+    	Library library = new Library(id);
+    	library.setName(name);
     	Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
 		Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
     	DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
@@ -839,7 +843,7 @@ Written by Jerry Xia
         lms.setAddressList(addresses);
 
         LibraryHour hour = new LibraryHour();
-        hour.setLibrary(new Library("jawn"));
+        hour.setLibrary(new Library(1234));
         ArrayList<LibraryHour> hours = new ArrayList<>();
         hours.add(hour);
         lms.setLibraryHourList(hours);
