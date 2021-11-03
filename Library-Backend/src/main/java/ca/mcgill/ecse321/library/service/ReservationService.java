@@ -8,10 +8,12 @@ import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.model.Reservation;
+import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.ReservationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
@@ -84,5 +86,31 @@ public class ReservationService {
             i++;
         }
         return i + 1;
+    }
+    @Transactional
+    public Reservation getReservation(Integer id, Integer customerId){
+        if(id == null){
+            throw new ReservationException("Reservation id cannot be null");
+        }
+        Reservation r = reservationRepository.findReservationById(id);
+        if(r == null){
+            throw new NotFoundException("Reservation with given id cannot be found");
+        }
+        if(customerId == null){
+            throw new ReservationException("Customer id cannot be null");
+        }
+        if(r.getCustomer().getId() == customerId ){
+            throw new ReservationException("Customer id does not match customer id in reservation");
+        }
+        return r;
+    }
+
+    @Transactional
+    public List<Reservation> getAllReservations(Integer customerId){
+        if(customerId == null){
+            throw new ReservationException("Customer id cannot be null");
+        }
+        Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
+        return reservationRepository.findByCustomer(c);
     }
 }

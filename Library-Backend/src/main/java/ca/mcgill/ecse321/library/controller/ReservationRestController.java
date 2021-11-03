@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -21,6 +23,14 @@ public class ReservationRestController {
     public ReservationDTO createReservation(@RequestParam("librarianId") Integer librarianId, @RequestBody JsonBody body){
         Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(), body.getItemInstanceId(), body.getCustomerId(), librarianId);
         return convertToDTO(reservation);
+    }
+    @GetMapping({"/reservation","/reservation/"})
+    public List<ReservationDTO> getAllReservations(@RequestParam("customerId") Integer customerId){
+        return service.getAllReservations(customerId).stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+    @GetMapping({"/reservation/{id}","/reservation/{id}"})
+    public ReservationDTO getAllReservations(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+        return convertToDTO(service.getReservation(id,customerId));
     }
 
     private ReservationDTO convertToDTO(Reservation r){
