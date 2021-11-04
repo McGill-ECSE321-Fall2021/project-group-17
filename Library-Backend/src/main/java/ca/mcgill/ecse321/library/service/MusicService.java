@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.MusicRepository;
+import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.Music;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class MusicService {
         m.setMusician(recordLabel);
         musicRepository.save(m);
         return m;
+    }
+    @Transactional
+    public List<Item> getMusicByName(String name){
+        List<Item> results= musicRepository.findItemByName(name);
+        return results;
     }
     @Transactional
     public Music getMusic(Integer musicId){
