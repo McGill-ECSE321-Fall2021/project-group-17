@@ -33,12 +33,15 @@ public class Library {
         this.name = name;
     }
 
+<<<<<<< HEAD
     @ManyToOne
     @JoinColumn()
     public LibraryManagementSystem getSystem() {
         return system;
     }
 
+=======
+>>>>>>> 9a7720efbb1033d69dba58ba1ce14911ae029177
     public void setSystem(LibraryManagementSystem system) {
         this.system = system;
     }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class OnlineAccountService {
@@ -33,13 +34,15 @@ public class OnlineAccountService {
 
     @Transactional
     public void logout(String username){
-        if(username==null){
-            throw new OnlineAccountException("no username found");
-        }
+
         OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
         if(o==null){
             throw new OnlineAccountException("no account with said username exists");
         }
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to delete account.");
+        }
+        
         o.setLoggedIn(false);
     }
     @Transactional
@@ -75,6 +78,10 @@ public class OnlineAccountService {
 
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
 
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find account by username.");
+        }
+
         if (password == null) {
             throw new OnlineAccountException("Cannot find password to login user.");
         }
@@ -90,8 +97,8 @@ public class OnlineAccountService {
         return account;
     }
 
-    /*@Transactional
-    public List<OnlineAccount> getAllOnlineAccounts() {
-        return toList(onlineAccountRepository.findAll());
-    }*/
+    @Transactional
+    public OnlineAccount getOnlineAccounts(String username) {
+        return onlineAccountRepository.findOnlineAccountByUsername(username);
+    }
 }
