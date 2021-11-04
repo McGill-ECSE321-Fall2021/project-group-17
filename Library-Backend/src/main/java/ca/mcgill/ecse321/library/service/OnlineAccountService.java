@@ -32,6 +32,11 @@ public class OnlineAccountService {
     }
 
     @Transactional
+    public void logout(String username){
+        OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
+        o.setLoggedIn(false);
+    }
+    @Transactional
     public void deleteOnlineAccount(String username, Integer customerId) {
         if (username == null) {
             throw new OnlineAccountException("Cannot find username to delete account.");
