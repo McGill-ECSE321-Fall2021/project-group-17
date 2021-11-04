@@ -29,7 +29,7 @@ public class CustomerRestController {
 
     @GetMapping(value = {"/customer/{id}", "/customer/{id}/"})
     public CustomerDTO getCustomer(@PathVariable("id") int id) throws IllegalArgumentException{
-        Customer customer = customerService.createCustomer(id, null, null, null, null);
+        Customer customer = customerService.getCustomer(id);
         return convertToDTO(customer);
     }
     @PutMapping(value = {"/customer/{id}", "/customer/{id}/"})
