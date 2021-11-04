@@ -56,6 +56,29 @@ public class OnlineAccountService {
         onlineAccountRepository.delete(account);
     }
 
+    @Transactional
+    public OnlineAccount logIn(String username, String password) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to login user.");
+        }
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+
+        if (password == null) {
+            throw new OnlineAccountException("Cannot find password to login user.");
+        }
+
+        if (account.getPassword() == password) {
+            account.setLoggedIn(true);
+        }
+
+        else {
+            throw new OnlineAccountException("Password is incorrect. User cannot be logged in.");
+        }
+
+        return account;
+    }
+
     /*@Transactional
     public List<OnlineAccount> getAllOnlineAccounts() {
         return toList(onlineAccountRepository.findAll());

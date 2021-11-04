@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.OnlineAccountDTO;
+import ca.mcgill.ecse321.library.dto.PersonRoleDTO;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.service.OnlineAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class OnlineAccountRestController {
     @DeleteMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/"})
     public void deleteOnlineAccount(@PathVariable("username") String username, @RequestParam(value = "customerId",required = false) Integer customerId) {
         service.deleteOnlineAccount(username, customerId);
+    }
+
+    @PutMapping(value = {"/login/{username}/{password}", "/login/{username}/{password}/"})
+    public OnlineAccountDTO login(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
+        return convertToDTO(service.logIn(username, password));
     }
 
     private OnlineAccountDTO convertToDTO(OnlineAccount account) {
