@@ -1,13 +1,7 @@
 package ca.mcgill.ecse321.library.service;
 
-import ca.mcgill.ecse321.library.dao.CustomerRepository;
-import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
-import ca.mcgill.ecse321.library.dao.LibrarianRepository;
-import ca.mcgill.ecse321.library.dao.ReservationRepository;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.Loan;
-import ca.mcgill.ecse321.library.model.Reservation;
+import ca.mcgill.ecse321.library.dao.*;
+import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.ReservationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +23,20 @@ public class ReservationService {
     private LibrarianRepository librarianRepository;
     @Autowired
     private ItemInstanceRepository itemInstanceRepository;
+    @Autowired
+    private LibraryManagementSystemRepository libraryManagementSystemRepository;
     @Transactional
-    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId){
+    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId, Integer systemId){
         Reservation r = new Reservation();
 
+        if(systemId == null){
+            throw new ReservationException("Cannot have null systemId");
+        }
+        LibraryManagementSystem s = libraryManagementSystemRepository.findLibraryManagementSystemById(systemId);
+        if(s == null){
+            throw new ReservationException("System not found");
+        }
+        r.setSystem(s);
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
         }
@@ -63,6 +67,7 @@ public class ReservationService {
         if(i == null){
             throw new ReservationException("Item instance does not exist");
         }
+        r.setItemInstance(i);
         //TODO add in check for item already on reservation
         r.setId(generateId((List<Reservation>) reservationRepository.findAll()));
         reservationRepository.save(r);
@@ -99,7 +104,11 @@ public class ReservationService {
         if(customerId == null){
             throw new ReservationException("Customer id cannot be null");
         }
-        if(r.getCustomer().getId() == customerId ){
+        Customer c = r.getCustomer();
+        if(c == null){
+            throw new ReservationException("Reservation has no customer cannot return properly");
+        }
+        if(c.getId() != customerId ){
             throw new ReservationException("Customer id does not match customer id in reservation");
         }
         return r;
