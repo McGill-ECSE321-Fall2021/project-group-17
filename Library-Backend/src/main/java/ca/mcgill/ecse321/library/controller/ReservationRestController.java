@@ -35,6 +35,12 @@ public class ReservationRestController {
         return convertToDTO(service.getReservation(id,customerId));
     }
 
+    @PatchMapping({"/reservation/{id}","/reservation/{id}/"})
+    public ReservationDTO updateReservation(@PathVariable Integer id, @RequestBody JsonBody body){
+        return convertToDTO(service.updateReservation(id,body.getDateReserved(),body.getPickupDay(), body.getCustomerId(),
+                body.getItemInstanceId(),body.getSystemId()));
+    }
+
     private ReservationDTO convertToDTO(Reservation r){
         if(r == null){
             throw new IllegalArgumentException("Cannot create Reservation");

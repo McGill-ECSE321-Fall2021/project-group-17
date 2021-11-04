@@ -122,4 +122,46 @@ public class ReservationService {
         Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
         return reservationRepository.findByCustomer(c);
     }
+
+    @Transactional
+    public Reservation updateReservation(Integer id,Date startDate, Date endDate, Integer customerId,
+                                         Integer itemInstanceId, Integer systemId){
+        if(id == null){
+            throw new ReservationException("Reservation id cannot be null");
+        }
+        Reservation r = reservationRepository.findReservationById(id);
+        if(r == null){
+            throw new NotFoundException("Reservation cannot be found");
+        }
+        if(startDate != null){
+            //TODO add validation if date is before now
+            r.setDateReserved(startDate);
+        }
+        if(endDate != null){
+            r.setPickupDay(endDate);
+        }
+        if(customerId != null){
+            Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
+            if(c == null){
+                throw new ReservationException("Cannot find person to update reservation to");
+            }
+            r.setCustomer(c);
+        }
+        if(itemInstanceId != null){
+            ItemInstance i = itemInstanceRepository.findItemInstanceBySerialNum(itemInstanceId);
+            if(i == null){
+                throw new ReservationException("Cannot find item instance to update reservation to");
+            }
+            r.setItemInstance(i);
+        }
+        if(systemId != null){
+            LibraryManagementSystem s = libraryManagementSystemRepository.findLibraryManagementSystemById(systemId);
+            if(s == null){
+                throw new ReservationException("Cannot find LMS to update reservation to");
+            }
+            r.setSystem(s);
+        }
+
+        return r;
+    }
 }
