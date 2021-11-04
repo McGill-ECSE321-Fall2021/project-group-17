@@ -7,15 +7,16 @@ public class Library {
     private int id;
     private String name;
     private LibraryManagementSystem system;
-    
-    public Library() {}
-    
+
+    public Library() {
+    }
+
     public Library(int id) {
-    	this.id = id;
+        this.id = id;
     }
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -23,25 +24,15 @@ public class Library {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getName() {
-    	return name;
-    }
-    
-    public void setName(String name) {
-    	this.name = name;
-    }
-    
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
+        return name;
     }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
+    public void setName(String name) {
+        this.name = name;
     }
-    
+
     @ManyToOne
     @JoinColumn()
     public LibraryManagementSystem getSystem() {
@@ -52,3 +43,4 @@ public class Library {
         this.system = system;
     }
 }
+

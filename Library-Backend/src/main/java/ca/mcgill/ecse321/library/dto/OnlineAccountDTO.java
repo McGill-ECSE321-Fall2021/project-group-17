@@ -18,9 +18,6 @@ public class OnlineAccountDTO {
         this.loggedIn=true;
     }
 
-<<<<<<< HEAD
-
-=======
     public void setLoggedIn(boolean b){
         this.loggedIn=b;
     }
@@ -28,7 +25,6 @@ public class OnlineAccountDTO {
     public boolean getLoggedIn(){
         return this.loggedIn;
     }
->>>>>>> account_management_usecases_victoria
     public String getUsername() {
         return this.username;
     }

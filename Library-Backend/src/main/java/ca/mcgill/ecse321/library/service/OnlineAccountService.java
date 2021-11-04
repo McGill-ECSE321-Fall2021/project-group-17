@@ -33,7 +33,13 @@ public class OnlineAccountService {
 
     @Transactional
     public void logout(String username){
+        if(username==null){
+            throw new OnlineAccountException("no username found");
+        }
         OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
+        if(o==null){
+            throw new OnlineAccountException("no account with said username exists");
+        }
         o.setLoggedIn(false);
     }
     @Transactional
