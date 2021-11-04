@@ -10,6 +10,7 @@ public class OnlineAccount {
     private String username;
     private String password;
     private LibraryManagementSystem system;
+    private boolean loggedIn;
 
 
     @Id
@@ -25,6 +26,13 @@ public class OnlineAccount {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setLoggedIn(boolean b){
+        this.loggedIn=b;
+    }
+    public boolean getLoggedIn(){
+        return this.loggedIn;
     }
 
     @OneToOne

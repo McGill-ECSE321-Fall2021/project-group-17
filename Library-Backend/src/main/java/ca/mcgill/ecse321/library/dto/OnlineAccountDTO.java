@@ -8,14 +8,23 @@ public class OnlineAccountDTO {
     private String username;
     private String password;
     private LibraryManagementSystem system;
+    private boolean loggedIn;
 
     public OnlineAccountDTO(){}
 
     public OnlineAccountDTO(String username,String password){
         this.username = username;
         this.password = password;
+        this.loggedIn=true;
     }
 
+    public void setLoggedIn(boolean b){
+        this.loggedIn=b;
+    }
+
+    public boolean getLoggedIn(){
+        return this.loggedIn;
+    }
     public String getUsername() {
         return this.username;
     }

@@ -34,6 +34,11 @@ public class OnlineAccountRestController {
         service.deleteOnlineAccount(username, customerId);
     }
 
+    @PutMapping(value={"/onlineaccount/{username}", "onlineaccoun/{username}/"})
+    public void logOut(@PathVariable("username") String username) {
+        service.logout(username);
+    }
+
     private OnlineAccountDTO convertToDTO(OnlineAccount account) {
         if (account == null) {
             throw new IllegalArgumentException("There is no such Online Account!");
@@ -43,6 +48,7 @@ public class OnlineAccountRestController {
         accountDTO.setPassword(account.getPassword());
         accountDTO.setPersonRole(account.getPersonRole());
         accountDTO.setSystem(account.getSystem());
+        accountDTO.setLoggedIn(account.getLoggedIn());
         return accountDTO;
     }
 }
