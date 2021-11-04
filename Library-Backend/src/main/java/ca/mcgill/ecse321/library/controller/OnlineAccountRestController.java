@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -15,14 +16,10 @@ public class OnlineAccountRestController {
     @Autowired
     private OnlineAccountService service;
 
-    /*@GetMapping(value = { "/onlineaccount", "/onlineaccount/" })
-    public List<OnlineAccountDTO> getAllOnlineAccounts() {
-        List<OnlineAccountDTO> onlineAccountDTOList = new ArrayList<OnlineAccountDTO>();
-        for (OnlineAccount account : service.getAllOnlineAccounts()) {
-            onlineAccountDTOList.add(convertToDTO(account));
-        }
-        return onlineAccountDTOList;
-    }*/
+    @GetMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/" })
+    public OnlineAccountDTO getAllOnlineAccounts(@PathVariable("username") String username) {
+        return convertToDTO(service.getOnlineAccounts(username));
+    }
 
     @PostMapping(value = { "/onlineaccount/{username}/{password}", "/onlineaccount/{username}/{password}/" })
     public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
@@ -40,7 +37,7 @@ public class OnlineAccountRestController {
         return convertToDTO(service.logIn(username, password));
     }
 
-    @PutMapping(value={"/onlineaccount/{username}", "onlineaccount/{username}/"})
+    @PutMapping(value={"/logout/{username}", "logout/{username}/"})
     public void logOut(@PathVariable("username") String username) {
         service.logout(username);
     }
