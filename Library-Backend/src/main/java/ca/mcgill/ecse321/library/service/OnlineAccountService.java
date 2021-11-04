@@ -74,6 +74,10 @@ public class OnlineAccountService {
 
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
 
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find account by username.");
+        }
+
         if (password == null) {
             throw new OnlineAccountException("Cannot find password to login user.");
         }
