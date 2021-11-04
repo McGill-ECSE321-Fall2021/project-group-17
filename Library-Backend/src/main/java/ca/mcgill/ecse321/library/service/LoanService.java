@@ -124,7 +124,9 @@ public class LoanService {
     @Transactional
     public List<LoanDTO> viewActiveLoans(Integer id){
 
-        List<Loan> loans = new ArrayList<>();
+        if(id == null){
+            throw new LoanException("Cannot find customer");
+        }
 
         PersonRole customer1 = customerRepository.findPersonRoleById(id);
 
@@ -144,16 +146,28 @@ public class LoanService {
 
     /**
      * View loan return date
-     * @param id
+     * @param loanID
+     * @param customerID
      */
     @Transactional
-    public Loan viewLoanReturnDate(Integer id){
-        if(id == null){
-            throw new LoanException("Please provide a valid ID");
+    public Loan viewLoanReturnDate(Integer loanID, Integer customerID){
+        if(loanID == null){
+            throw new LoanException("Please provide a valid loan ID");
         }
-        Loan loan = loanRepository.findLoanById(id);
+        if(customerID == null){
+            throw new LoanException("Please provide a valid customer ID");
+        }
+
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerID);
+
+        if(customer == null){
+            throw new LoanException("Customer does not exist");
+        }
+
+        Loan loan = loanRepository.findLoanById(loanID);
+
         if(loan == null){
-            throw new LoanException("Loan does not exist.");
+            throw new LoanException("Loan does not exist");
         }
 
         return loan;

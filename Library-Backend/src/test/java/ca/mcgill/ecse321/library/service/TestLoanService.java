@@ -1,8 +1,5 @@
 package ca.mcgill.ecse321.library.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
@@ -20,11 +17,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class ViewApplicationTests {
+public class TestLoanService {
     @Mock
     private LoanRepository loanRepository;
     @Mock
@@ -74,33 +73,33 @@ public class ViewApplicationTests {
 
     }
 
-    /*
+
     @Test
     public void testGetInventory(){
         int size = itemService.viewInventory().size();
         assertEquals(size,1);
     }
 
-     */
 
     @Test
     public void testGetLoan(){
         try{
-            loanService.viewActiveLoans(loanID);
-        } catch (LoanException e){
+            loanService.viewActiveLoans(CUSTOMER_KEY);
+        } catch (Exception e){
             fail();
         }
+
     }
 
     @Test
-    public void testGetLoanNotFound(){
+    public void testGetLoanCustomerNotFound(){
         String error = null;
         try{
-            loanService.viewActiveLoans(loanID);
-        } catch (LoanException e){
+            loanService.viewActiveLoans(LOAN_KEY);
+        } catch (Exception e){
             error = e.getMessage();
         }
-        assertEquals("This loan does not exist", error);
+        assertEquals("Customer not found", error);
     }
 
     @Test
@@ -108,42 +107,45 @@ public class ViewApplicationTests {
         String error = null;
         try{
             loanService.viewActiveLoans(null);
-        } catch (LoanException e){
+        } catch (Exception e){
             error = e.getMessage();
         }
-        assertEquals("Provide a valid ID", error);
+        assertEquals("Cannot find customer", error);
     }
 
 
     @Test
     public void testGetDate(){
+        Loan loan = null;
         try{
-            loanService.viewLoanReturnDate(loanID);
-        } catch (LoanException e){
+            loan = loanService.viewLoanReturnDate(LOAN_KEY,CUSTOMER_KEY);
+        } catch (Exception e){
             fail();
         }
+        assertNotNull(loan);
+        assertEquals(LOAN_KEY,loan.getId());
     }
 
     @Test
     public void testGetDateNotFound(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(loanID);
-        } catch (LoanException e){
+            loanService.viewLoanReturnDate(LOAN_KEY+1, CUSTOMER_KEY);
+        } catch (Exception e){
             error = e.getMessage();
         }
-        assertEquals("This loan does not exist", error);
+        assertEquals("Loan does not exist", error);
     }
 
     @Test
     public void testGetDateByEmptyId(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(null);
-        } catch (LoanException e){
+            loanService.viewLoanReturnDate(null,CUSTOMER_KEY);
+        } catch (Exception e){
             error = e.getMessage();
         }
-        assertEquals("Provide a valid ID", error);
+        assertEquals("Please provide a valid ID", error);
     }
 
 

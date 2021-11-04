@@ -41,15 +41,15 @@ public class LoanRestController {
 
     //TODO get vs return date get
     @GetMapping("/loan/returndate/{id}")
-    public LoanDTO viewLoanReturnDate(@PathVariable("id") Integer id){
-        return convertToDto(service.viewLoanReturnDate(id));
+    public LoanDTO viewLoanReturnDate(@PathVariable("id") Integer id, @RequestParam(value = "customerId", required = false) Integer customerId){
+        return convertToDto(service.viewLoanReturnDate(id,customerId));
     }
 
     @GetMapping("/loan/customer/{id}")
-    public List<LoanDTO> viewActiveLoans(Integer id){
-        List<LoanDTO> activeLoans = service.viewActiveLoans(id);
-        return activeLoans;
+    public List<LoanDTO> viewActiveLoans(@PathVariable("id") Integer id){
+        return service.viewActiveLoans(id);
     }
+
 /*
     @GetMapping("/loan/customer/{id}")
     public List<LoanDTO> viewActiveLoans(Integer id){
