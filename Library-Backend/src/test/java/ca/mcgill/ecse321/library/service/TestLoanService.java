@@ -2,10 +2,10 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
+import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +19,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.sql.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
 
@@ -30,6 +33,11 @@ public class TestLoanService {
     private CustomerRepository customerRepository;
     @Mock
     private ItemInstanceRepository itemInstanceRepository;
+    @Mock
+    private LibraryManagementSystemRepository libraryManagementSystemRepository;
+
+    @InjectMocks
+    private LoanService service;
 
     @InjectMocks
     private LoanService loanService;
@@ -40,6 +48,10 @@ public class TestLoanService {
     private static final int ITEM_INSTANCE_KEY = 3;
     private static final int loanID = 123;
     private static final int customerID = 456;
+    private static final int LIBRARY_MANAGEMENT_SYSTEM_KEY = 4;
+
+    private static final Date startDate = Date.valueOf("2021-10-11");
+    private static final Date endDate = Date.valueOf("2021-10-31");
 
     @BeforeEach
     public void setMockOutput() {
@@ -70,7 +82,109 @@ public class TestLoanService {
                 return null;
             }
         });
+        lenient().when(libraryManagementSystemRepository.findLibraryManagementSystemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(LIBRARY_MANAGEMENT_SYSTEM_KEY)) {
+                LibraryManagementSystem lms = new LibraryManagementSystem();
+                lms.setId(LIBRARY_MANAGEMENT_SYSTEM_KEY);
+                return lms;
+            } else {
+                return null;
+            }
+        });
+    }
 
+    @Test
+    public void testGetSystemById(){
+        /*int id = LOAN_KEY;
+        Loan loan = null;
+        try {
+            loan = loanRepository.findLoanById(LOAN_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(loan);
+        assertEquals(id, loan.getId());*/
+    }
+
+    @Test
+    public void testCreateLoan(){
+        int id = LOAN_KEY;
+
+        Loan loan = null;
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,LIBRARY_MANAGEMENT_SYSTEM_KEY,endDate,null);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(loan);
+        assertEquals(id,loan.getId());
+        assertNotNull(loan.getCustomer());
+        assertEquals(startDate, loan.getCheckedOut());
+        assertEquals(endDate, loan.getReturnDate());
+        assertNotNull(loan.getItemInstance());
+        assertNotNull(loan.getSystem());
+    }
+    /*@Test
+    public void testCreateLoanNoCustomer(){
+        int id = LOAN_KEY;
+
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,null,LIBRARY_MANAGEMENT_SYSTEM_KEY,endDate,null);
+        }
+        catch (Exception e){
+           error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("",error);
+    }*/
+    @Test
+    public void testCreateLoanNoSystem(){
+        int id = LOAN_KEY;
+
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null,endDate,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Cannot find valid LMS to create a loan in",error);
+    }
+    @Test
+    public void testCreateLoanNoStartDate(){
+        int id = LOAN_KEY;
+
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(null,ITEM_INSTANCE_KEY,CUSTOMER_KEY,LIBRARY_MANAGEMENT_SYSTEM_KEY,endDate,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Cannot create loan with no start date",error);
+    }
+    @Test
+    public void testCreateLoanStartAfterEnd(){
+        int id = LOAN_KEY;
+        Date startDate = Date.valueOf("2021-11-10");
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,LIBRARY_MANAGEMENT_SYSTEM_KEY,endDate,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Cannot create loan with start date after end date",error);
     }
 
 

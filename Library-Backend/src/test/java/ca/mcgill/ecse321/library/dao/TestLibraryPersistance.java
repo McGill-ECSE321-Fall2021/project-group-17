@@ -330,6 +330,7 @@ Written by Jerry Xia
     }
     //ensures database can return a list of movies with the same distributor
     @Test
+    @Transactional
     public void testFindMovieByFilmDistributor(){
         List<Movie> movies= new ArrayList<Movie>();
         String distributor = "Disney";
@@ -532,7 +533,7 @@ Written by Jerry Xia
     public void testPersistAndLoadReservation() {
         CheckableItem checkableItem = new Music(1234,"My Brilliant Friend",
                 java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12)),"Victoria","Sony");
-        //checkableItemRepository.save(checkableItem);
+        checkableItemRepository.save(checkableItem);
 
         ItemInstance itemInstance = new ItemInstance(checkableItem);
         itemInstanceRepository.save(itemInstance);
@@ -557,27 +558,24 @@ Written by Jerry Xia
     }
 
     @Test
-    @Transactional
     public void testFindReservationByDateReserved() {
 
-        Book b1 = new Book(100, "My Brilliant Friend", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
-        CheckableItem checkableItem1 = b1;
-        //checkableItemRepository.save(checkableItem1);
+        CheckableItem checkableItem1 = new Book(100, "My Brilliant Friend", Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        checkableItemRepository.save(checkableItem1);
 
 
         ItemInstance item1 = new ItemInstance(checkableItem1);
         itemInstanceRepository.save(item1);
         int serialnum = item1.getSerialNum();
-        Book b2 = new Book(5679, "The Lost Child", java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
-        CheckableItem checkableItem2 = b2;
-        //checkableItemRepository.save(checkableItem2);
+        CheckableItem checkableItem2 = new Book(5679, "The Lost Child", Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12)), "Victoria", "Harper", "horror");
+        checkableItemRepository.save(checkableItem2);
 
         ItemInstance item2 = new ItemInstance(checkableItem2);
 
         itemInstanceRepository.save(item2);
         int serialnum2 =item2.getSerialNum();
         Customer c = new Customer();
-        //customerRepository.save(c);
+        customerRepository.save(c);
         int customerId = c.getId();
 
         Integer id1 = 345;

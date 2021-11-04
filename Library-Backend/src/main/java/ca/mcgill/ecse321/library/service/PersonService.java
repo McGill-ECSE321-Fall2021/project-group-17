@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import ca.mcgill.ecse321.library.service.Exception.PersonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,11 @@ public class PersonService {
         person.setName(name);
         person.setPersonRoleList(new ArrayList<>());
 
-        if(systemId != null){
-            LibraryManagementSystem system = lmsRepository.findLibraryManagementSystemById(systemId);
-            person.setSystem(system);
+        if(systemId == null){
+           throw new PersonException("Cannot create a person without a system");
         }
+        LibraryManagementSystem system = lmsRepository.findLibraryManagementSystemById(systemId);
+        person.setSystem(system);
 
         if(personRoles != null){
             for(int s :personRoles){
