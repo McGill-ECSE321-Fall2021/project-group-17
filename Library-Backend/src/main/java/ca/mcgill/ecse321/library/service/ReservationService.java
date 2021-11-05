@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.ReservationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class ReservationService {
             throw new ReservationException("System not found");
         }
         r.setSystem(s);
+        s.getReservationList().add(r);
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
         }
@@ -71,6 +73,7 @@ public class ReservationService {
         //TODO add in check for item already on reservation
         r.setId(generateId((List<Reservation>) reservationRepository.findAll()));
         reservationRepository.save(r);
+        libraryManagementSystemRepository.save(s);
         return r;
     }
     private int generateId(List<Reservation> reservations){
@@ -161,7 +164,26 @@ public class ReservationService {
             }
             r.setSystem(s);
         }
-
+        reservationRepository.save(r);
         return r;
+    }
+
+    public void deleteReservation(Integer id, Integer customerId){
+        if(id == null){
+            throw new ReservationException("Cannot find reservationId to delete");
+        }
+        Reservation reservation = reservationRepository.findReservationById(id);
+        if(reservation == null){
+            throw new ReservationException("Cannot find reservation to delete");
+        }
+        if(customerId == null){
+            throw new ReservationException("Cannot authorize customer to delete loan");
+        }
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        if(customer == null){
+            throw new LoanException("Owner of loan does not match customer in request");
+        }
+        reservationRepository.delete(reservation);
+        reservation =  null;
     }
 }

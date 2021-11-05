@@ -206,7 +206,6 @@ public class TestReservationService {
     //END GET ALL RESERVATIONS TESTS
 
     //START CREATE RESERVATION TESTS
-    //TODO add valid test with librarian id
     @Test
     public void testCreateReservationValid(){
         Reservation r = null;

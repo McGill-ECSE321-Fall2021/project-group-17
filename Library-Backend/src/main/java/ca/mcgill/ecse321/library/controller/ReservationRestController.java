@@ -21,7 +21,7 @@ public class ReservationRestController {
     private ReservationService service;
 
     @PostMapping({"/reservation/", "/reservation"})
-    public ReservationDTO createReservation(@RequestParam("librarianId") Integer librarianId, @RequestBody JsonBody body){
+    public ReservationDTO createReservation(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
         Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(),
                 body.getItemInstanceId(), body.getCustomerId(), librarianId,body.getSystemId());
         return convertToDTO(reservation);
@@ -39,6 +39,11 @@ public class ReservationRestController {
     public ReservationDTO updateReservation(@PathVariable Integer id, @RequestBody JsonBody body){
         return convertToDTO(service.updateReservation(id,body.getDateReserved(),body.getPickupDay(), body.getCustomerId(),
                 body.getItemInstanceId(),body.getSystemId()));
+    }
+
+    @DeleteMapping({"/reservation/{id}","/reservation/{id}/"})
+    public void deleteReservation(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+        service.deleteReservation(id, customerId);
     }
 
     private ReservationDTO convertToDTO(Reservation r){
