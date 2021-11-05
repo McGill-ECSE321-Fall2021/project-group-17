@@ -2,12 +2,10 @@ package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.LibraryManagementSystemDTO;
 import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
+import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.LibraryManagementSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -21,11 +19,16 @@ public class LibraryManagementSystemRestController {
         return convertToDTO(system);
     }
 
+    @GetMapping(value={"/system/{id}","/system/{id}/"})
+    public LibraryManagementSystemDTO getLibraryManagementSystem(@PathVariable Integer id){
+        return convertToDTO(service.getSystem(id));
+    }
+
     //DTO CONVERSION SECTION
 
     private LibraryManagementSystemDTO convertToDTO(LibraryManagementSystem s){
         if (s == null) {
-            throw new IllegalArgumentException("There is no such System!");
+            throw new NotFoundException("There is no such System!");
         }
 
         LibraryManagementSystemDTO systemDTO = new LibraryManagementSystemDTO();

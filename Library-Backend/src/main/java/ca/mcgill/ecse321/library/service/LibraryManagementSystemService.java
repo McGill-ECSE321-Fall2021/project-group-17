@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.model.*;
+import ca.mcgill.ecse321.library.service.Exception.ReservationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,10 @@ public class LibraryManagementSystemService {
     }
 
     @Transactional
-    public LibraryManagementSystem getSystem(int id){
+    public LibraryManagementSystem getSystem(Integer id){
+        if(id == null){
+            throw new ReservationException("System id cannot be null");
+        }
         return systemRepository.findLibraryManagementSystemById(id);
     }
 }
