@@ -11,6 +11,8 @@ public class Customer extends PersonRole{
 
     private LibraryCard libCard;
 
+    private boolean isVerified;
+
     public Customer(){
 
     }
@@ -41,4 +43,10 @@ public class Customer extends PersonRole{
     public void setAddress(Address address){this.address = address;}
     public void setLibraryCard(LibraryCard libCard){ this.libCard = libCard;}
 
+    public boolean getIsVerified(){
+        return this.isVerified;
+    }
+    public void setIsVerified(boolean b){
+        this.isVerified=b;
+    }
 }

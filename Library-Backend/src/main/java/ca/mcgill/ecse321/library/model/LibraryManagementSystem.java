@@ -17,6 +17,16 @@ public class LibraryManagementSystem {
     private List<LibraryCard> libraryCardList;
     private List<ItemInstance> itemInstanceList;
     private List<PersonRole> personRoleList;
+    private List<Library> libraryList;
+    
+    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    public List<Library> getLibraryList() {
+        return libraryList;
+    }
+
+    public void setLibraryList(List<Library> libraryList) {
+        this.libraryList = libraryList;
+    }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<Address> getAddressList() {

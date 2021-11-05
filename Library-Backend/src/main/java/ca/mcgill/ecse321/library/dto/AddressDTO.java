@@ -8,6 +8,10 @@ public class AddressDTO {
 	public Customer customer;
 	public int id;
     private LibraryManagementSystem system;
+    private int streetNumber;
+    private String street;
+    private String city;
+    private String country;
     
     public AddressDTO() {}
     
@@ -21,6 +25,38 @@ public class AddressDTO {
     
     public void setAddressID(int id){
         this.id = id;
+    }
+
+    public int getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
     
     public LibraryManagementSystem getSystem() {
