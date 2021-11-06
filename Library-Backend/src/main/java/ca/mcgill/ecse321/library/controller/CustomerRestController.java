@@ -22,7 +22,7 @@ public class CustomerRestController {
     @ResponseBody
     public CustomerDTO createCustomer(@PathVariable("id") int id,
                                       @RequestBody JsonBody body) throws IllegalArgumentException{
-        Customer customer = customerService.createCustomer(body.getSystemId(), body.getPerson(), body.getPenalty(),
+        Customer customer = customerService.createCustomer(body.getPerson(), body.getPenalty(),
                 body.getAddress(), body.getLibCard());
         return convertToDTO(customer);
     }
@@ -40,7 +40,6 @@ public class CustomerRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        Integer systemId;
         Person person;
         Integer penalty;
         Address address;
@@ -58,12 +57,6 @@ public class CustomerRestController {
         public void setLibCard(LibraryCard libCard){this.libCard = libCard;}
         public LibraryCard getLibCard(){return libCard;}
 
-        public Integer getSystemId() {
-            return systemId;
-        }
-        public void setSystemId(int systemId) {
-            this.systemId = systemId;
-        }
         public JsonBody(){}
     }
 

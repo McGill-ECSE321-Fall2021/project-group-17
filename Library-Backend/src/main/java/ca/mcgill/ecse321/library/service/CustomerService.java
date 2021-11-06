@@ -12,22 +12,13 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private LibraryManagementSystemRepository lmsRepository;
 
     @Transactional
-    public Customer createCustomer(Integer systemId, Person person, Integer penalty, Address address, LibraryCard libCard){
+    public Customer createCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
         Customer customer = new Customer();
         customer.setPenalty(penalty);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
-
-        if(systemId != null){
-            LibraryManagementSystem lmsSystem = lmsRepository.findLibraryManagementSystemById(systemId);
-            customer.setSystem(lmsSystem);
-        }
-
-
         customerRepository.save(customer);
         return customer;
     }
