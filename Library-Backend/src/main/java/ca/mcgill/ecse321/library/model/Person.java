@@ -10,8 +10,6 @@ public class Person {
     private int id;
     private String name;
 
-    private LibraryManagementSystem system;
-
     private List<PersonRole> personRoleList;
 
 
@@ -31,16 +29,6 @@ public class Person {
         this.name = name;
     }
 
-
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 
     @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
     public List<PersonRole> getPersonRoleList() {

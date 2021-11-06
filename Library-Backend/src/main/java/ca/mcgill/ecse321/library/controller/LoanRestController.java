@@ -21,7 +21,7 @@ public class LoanRestController {
     private LoanService service;
     @PostMapping(value= {"/loan","/loan/"})
     public LoanDTO createLoan(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
-        Loan loan = service.createLoan(body.getCheckedOut(), body.getItemId(), body.getCustomerId(), body.getSystemId(),
+        Loan loan = service.createLoan(body.getCheckedOut(), body.getItemId(), body.getCustomerId(),
                 body.getReturnDate() ,librarianId);
         return convertToDto(loan);
     }
@@ -42,14 +42,12 @@ public class LoanRestController {
         loanDTO.setCustomer(loan.getCustomer());
         loanDTO.setItemInstance(loan.getItemInstance());
         loanDTO.setReturnDate(loan.getReturnDate());
-        loanDTO.setSystem(loan.getSystem());
         return loanDTO;
     }
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private Integer itemId;
         private Integer customerId;
-        private Integer systemId;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private Date checkedOut;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -69,14 +67,6 @@ public class LoanRestController {
 
         public void setCustomerId(Integer customerId) {
             this.customerId = customerId;
-        }
-
-        public Integer getSystemId() {
-            return systemId;
-        }
-
-        public void setSystemId(Integer systemId) {
-            this.systemId = systemId;
         }
 
         public Date getCheckedOut() {

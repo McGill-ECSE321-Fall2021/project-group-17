@@ -10,9 +10,6 @@ public class OnlineAccount {
     private String username;
     private String password;
     private boolean loggedIn;
-    private LibraryManagementSystem system;
-
-
 
     @Id
     public String getUsername() {
@@ -43,13 +40,5 @@ public class OnlineAccount {
 
     public void setPersonRole(PersonRole role){ this.personRole = role; }
 
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 }

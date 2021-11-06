@@ -7,7 +7,6 @@ public class LibraryCard {
 
     private int id;
 
-    private LibraryManagementSystem system;
     private Customer customer;
 
     @Id
@@ -17,16 +16,6 @@ public class LibraryCard {
     }
 
     public void setId(int id) { this.id = id; }
-
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem(){
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system){
-        this.system = system;
-    }
 
 
     @OneToOne

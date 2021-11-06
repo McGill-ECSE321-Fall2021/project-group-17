@@ -10,7 +10,6 @@ public abstract class PersonRole {
 
 
     private Person person;
-    private LibraryManagementSystem system;
     private int id;
     private OnlineAccount account;
 
@@ -38,23 +37,12 @@ public abstract class PersonRole {
     public Person getPerson(){return this.person;}
     public void setPerson(Person person){this.person = person;}
 
-
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PersonRole)) return false;
         PersonRole that = (PersonRole) o;
         return Objects.equals(getPerson(), that.getPerson()) &&
-                Objects.equals(getSystem(), that.getSystem()) &&
                 Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getAccount(), that.getAccount());
     }

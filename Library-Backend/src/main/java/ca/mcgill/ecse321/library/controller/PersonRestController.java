@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.PersonDTO;
 import ca.mcgill.ecse321.library.model.Person;
-import ca.mcgill.ecse321.library.service.LibraryManagementSystemService;
 import ca.mcgill.ecse321.library.service.PersonService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 
 @CrossOrigin(origins = "*")
@@ -26,7 +22,7 @@ public class PersonRestController {
     //MAPPING SECTION
     @GetMapping(value = {"/person/{name}", "/person/{name}/"})
     public PersonDTO getPerson(@PathVariable("name") String name) throws IllegalArgumentException{
-        Person person = service.createPerson(name,null,null);
+        Person person = service.createPerson(name,null);
         return convertToDTO(person);
     }
 
@@ -34,7 +30,7 @@ public class PersonRestController {
     @ResponseBody
     public PersonDTO createPerson(@PathVariable("name") String name,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
-        Person person = service.createPerson(name, body.getSystemId(), body.getPersonRoles());
+        Person person = service.createPerson(name, body.getPersonRoles());
         return convertToDTO(person);
     }
 
@@ -49,7 +45,6 @@ public class PersonRestController {
         PersonDTO personDto = new PersonDTO(p.getId());
         personDto.setId(p.getId());
         personDto.setName(p.getName());
-        personDto.setSystem(p.getSystem());
         personDto.setPersonRoleList(p.getPersonRoleList());
         return personDto;
     }
@@ -57,7 +52,6 @@ public class PersonRestController {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         List<Integer> personRoles;
-        Integer systemId;
 
         public List<Integer > getPersonRoles() {
             return personRoles;
@@ -67,13 +61,6 @@ public class PersonRestController {
             this.personRoles = personRoles;
         }
 
-        public Integer getSystemId() {
-            return systemId;
-        }
-
-        public void setSystemId(int systemId) {
-            this.systemId = systemId;
-        }
         public JsonBody(){}
     }
 
