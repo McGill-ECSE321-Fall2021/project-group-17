@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -18,9 +21,29 @@ public class ReservationRestController {
     private ReservationService service;
 
     @PostMapping({"/reservation/", "/reservation"})
-    public ReservationDTO createReservation(@RequestParam("librarianId") Integer librarianId, @RequestBody JsonBody body){
-        Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(), body.getItemInstanceId(), body.getCustomerId(), librarianId);
+    public ReservationDTO createReservation(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
+        Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(),
+                body.getItemInstanceId(), body.getCustomerId(), librarianId,body.getSystemId());
         return convertToDTO(reservation);
+    }
+    @GetMapping({"/reservation","/reservation/"})
+    public List<ReservationDTO> getAllReservations(@RequestParam("customerId") Integer customerId){
+        return service.getAllReservations(customerId).stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+    @GetMapping({"/reservation/{id}","/reservation/{id}"})
+    public ReservationDTO getAllReservations(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+        return convertToDTO(service.getReservation(id,customerId));
+    }
+
+    @PatchMapping({"/reservation/{id}","/reservation/{id}/"})
+    public ReservationDTO updateReservation(@PathVariable Integer id, @RequestBody JsonBody body){
+        return convertToDTO(service.updateReservation(id,body.getDateReserved(),body.getPickupDay(), body.getCustomerId(),
+                body.getItemInstanceId(),body.getSystemId()));
+    }
+
+    @DeleteMapping({"/reservation/{id}","/reservation/{id}/"})
+    public void deleteReservation(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
+        service.deleteReservation(id, customerId);
     }
 
     private ReservationDTO convertToDTO(Reservation r){
@@ -44,6 +67,7 @@ public class ReservationRestController {
         private Date pickupDay;
         private Integer itemInstanceId;
         private Integer customerId;
+        private Integer systemId;
 
         public Date getDateReserved() {
             return dateReserved;
@@ -75,6 +99,14 @@ public class ReservationRestController {
 
         public void setCustomerId(Integer customerId) {
             this.customerId = customerId;
+        }
+
+        public Integer getSystemId() {
+            return systemId;
+        }
+
+        public void setSystemId(Integer systemId) {
+            this.systemId = systemId;
         }
     }
 }
