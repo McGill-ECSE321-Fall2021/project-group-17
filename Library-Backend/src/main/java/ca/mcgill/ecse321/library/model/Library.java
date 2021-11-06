@@ -31,24 +31,4 @@ public class Library {
     public void setName(String name) {
     	this.name = name;
     }
-    
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
-    
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 }

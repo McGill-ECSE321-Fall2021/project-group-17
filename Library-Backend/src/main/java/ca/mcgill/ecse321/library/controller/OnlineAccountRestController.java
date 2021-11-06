@@ -25,8 +25,8 @@ public class OnlineAccountRestController {
     }*/
 
     @PostMapping(value = { "/onlineaccount/{username}/{password}", "/onlineaccount/{username}/{password}/" })
-    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
-        OnlineAccount account = service.createOnlineAccount(username, password);
+    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "customerId",required = false) Integer customerId) throws IllegalArgumentException {
+        OnlineAccount account = service.createOnlineAccount(username, password, customerId);
         return convertToDTO(account);
     }
 

@@ -23,8 +23,8 @@ public class LibraryService {
         library.setId(id);
         
         if(systemId != null){
-            LibraryManagementSystem system = lmsRepository.findLibraryManagementSystemById(systemId);
-            library.setSystem(system);
+            //LibraryManagementSystem system = lmsRepository.findLibraryManagementSystemById(systemId);
+            //library.setSystem(system);
         }
         
         libraryRepository.save(library);

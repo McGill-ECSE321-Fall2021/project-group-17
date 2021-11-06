@@ -43,7 +43,7 @@ public class LibraryRestController {
         LibraryDTO libraryDTO = new LibraryDTO();
         libraryDTO.setName(library.getName());
         libraryDTO.setId(library.getId());
-        libraryDTO.setSystem(library.getSystem());
+        //libraryDTO.setSystem(library.getSystem());
         return libraryDTO;
     }
 

@@ -18,10 +18,12 @@ public class OnlineAccountService {
     CustomerRepository customerRepository;
 
     @Transactional
-    public OnlineAccount createOnlineAccount(String username, String password) {
+    public OnlineAccount createOnlineAccount(String username, String password, int customerId) {
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        account.setPersonRole(customer);
         onlineAccountRepository.save(account);
         return account;
     }
