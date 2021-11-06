@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class TestLibrarySystemService {
+public class TestLoanService {
     @Mock
     private LoanRepository loanRepository;
     @Mock

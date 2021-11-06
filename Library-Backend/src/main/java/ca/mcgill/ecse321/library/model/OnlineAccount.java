@@ -9,8 +9,7 @@ public class OnlineAccount {
     private PersonRole personRole;
     private String username;
     private String password;
-
-
+    private boolean loggedIn;
 
     @Id
     public String getUsername() {
@@ -27,6 +26,13 @@ public class OnlineAccount {
         this.password = password;
     }
 
+    public boolean getLoggedIn() {
+        return this.loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
     @OneToOne
     @JoinColumn

@@ -1,58 +1,66 @@
 package ca.mcgill.ecse321.library.dto;
 
+import ca.mcgill.ecse321.library.model.Librarian;
+
 import java.sql.Time;
 import java.time.DayOfWeek;
 
-import ca.mcgill.ecse321.library.model.Librarian;
-
 public class ShiftDTO {
-	
     private int id;
     private Time startTime;
     private Time endTime;
     private DayOfWeek dayOfWeek;
     private Librarian librarian;
 
-    public ShiftDTO(){
-        this.startTime = null;
-        this.endTime = null;
-        this.dayOfWeek = null;
+    public ShiftDTO() {
     }
-    
-    public ShiftDTO(Time startTime, Time endTime, DayOfWeek dayOfWeek){
+
+    public ShiftDTO(int id, Time startTime, Time endTime, DayOfWeek dayOfWeek, Librarian librarian) {
+        this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
+        this.librarian = librarian;
     }
 
-    public int getId(){return this.id;}
-    
-    public Time getStartTime(){
-        return this.startTime;
-    }
-    
-    public Time getEndTime(){
-        return this.endTime;
-    }
-    
-    public DayOfWeek getDayOfWeek(){
-        return this.dayOfWeek;
+    public int getId() {
+        return id;
     }
 
-    public Librarian getLibrarian(){ return this.librarian;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void setId(Integer id){ this.id = id;}
-    
-    public void setStartTime(Time startTime){
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
-    
-    public void setEndTime(Time endTime){
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
-    
-    public void setDayOfWeek(DayOfWeek dayOfWeek){this.dayOfWeek = dayOfWeek;}
-    
-    public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public Librarian getLibrarian() {
+        return librarian;
+    }
+
+    public void setLibrarian(Librarian librarian) {
+        this.librarian = librarian;
+    }
 
 }
