@@ -23,7 +23,7 @@ public class LibraryRestController {
 
     @GetMapping(value = {"/library/{id}", "/library/{id}/"})
     public LibraryDTO getLibrary(@PathVariable("id") int id) throws IllegalArgumentException {
-        Library library = service.createLibrary(id, null);
+        Library library = service.createLibrary(id);
         return convertToDTO(library);
     }
 
@@ -31,7 +31,7 @@ public class LibraryRestController {
     @ResponseBody
     public LibraryDTO createLibrary(@PathVariable("id") int id,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
-        Library library = service.createLibrary(id, body.getSystemId());
+        Library library = service.createLibrary(id);
         return convertToDTO(library);
     }
 
@@ -43,7 +43,6 @@ public class LibraryRestController {
         LibraryDTO libraryDTO = new LibraryDTO();
         libraryDTO.setName(library.getName());
         libraryDTO.setId(library.getId());
-        libraryDTO.setSystem(library.getSystem());
         return libraryDTO;
     }
 

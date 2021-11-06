@@ -31,7 +31,6 @@ public class LibrarianRestController {
         lDTO.setId(librarian.getId());
         lDTO.setAccount(librarian.getAccount());
         lDTO.setPerson(librarian.getPerson());
-        lDTO.setSystem(librarian.getSystem());
         return lDTO;
     }
 }

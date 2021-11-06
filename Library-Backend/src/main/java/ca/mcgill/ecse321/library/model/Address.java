@@ -10,7 +10,6 @@ public class Address {
     private String street;
     private String city;
     private String country;
-    private LibraryManagementSystem system;
     private Customer customer;
 
     public Address() {}
@@ -71,16 +70,6 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
     }
 
     @OneToOne

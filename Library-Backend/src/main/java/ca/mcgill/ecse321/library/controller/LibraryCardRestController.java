@@ -31,7 +31,6 @@ public class LibraryCardRestController {
         LibraryCardDTO lDTO = new LibraryCardDTO();
         lDTO.setId(libraryCard.getId());
         lDTO.setCustomer(libraryCard.getCustomer());
-        lDTO.setSystem(libraryCard.getSystem());
         return lDTO;
     }
 }

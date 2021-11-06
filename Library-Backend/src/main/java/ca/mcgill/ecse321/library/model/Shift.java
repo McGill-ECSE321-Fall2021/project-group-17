@@ -7,7 +7,6 @@ import java.time.DayOfWeek;
 @Entity
 public class Shift {
 
-    private LibraryManagementSystem system;
     private int id;
     private Time startTime;
     private Time endTime;
@@ -41,11 +40,6 @@ public class Shift {
     }
     @ManyToOne
     @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-    @ManyToOne
-    @JoinColumn()
     public Librarian getLibrarian(){ return this.librarian;}
 
     //Setters
@@ -57,8 +51,5 @@ public class Shift {
         this.endTime = endTime;
     }
     public void setDayOfWeek(DayOfWeek dayOfWeek){this.dayOfWeek = dayOfWeek;}
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
     public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
 }

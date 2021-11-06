@@ -23,7 +23,7 @@ public class LibraryHourRestController {
 
     @GetMapping(value = {"/libraryhour/{id}", "/libraryhour/{id}/"})
     public LibraryHourDTO getLibraryHour(@PathVariable("id") int id) throws IllegalArgumentException {
-        LibraryHour libraryHour = service.createLibraryHour(id, null, null);
+        LibraryHour libraryHour = service.createLibraryHour(id, null);
         return convertToDTO(libraryHour);
     }
 
@@ -31,7 +31,7 @@ public class LibraryHourRestController {
     @ResponseBody
     public LibraryHourDTO createLibraryHour(@PathVariable("id") int id,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
-        LibraryHour libraryHour = service.createLibraryHour(id, body.getLibraryId(), body.getSystemId());
+        LibraryHour libraryHour = service.createLibraryHour(id, body.getLibraryId());
         return convertToDTO(libraryHour);
     }
 
@@ -43,7 +43,6 @@ public class LibraryHourRestController {
         LibraryHourDTO libraryHourDTO = new LibraryHourDTO();
         libraryHourDTO.setId(libraryHour.getId());
         libraryHourDTO.setLibrary(libraryHour.getLibrary());
-        libraryHourDTO.setSystem(libraryHour.getSystem());
         return libraryHourDTO;
     }
 

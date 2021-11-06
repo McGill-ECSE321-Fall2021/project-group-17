@@ -11,7 +11,6 @@ public class Reservation {
     private ItemInstance itemInstance;
     private Customer customer;
 
-    private LibraryManagementSystem system;
 
     public Reservation() { }
 
@@ -68,14 +67,5 @@ public class Reservation {
         this.customer = customer;
     }
 
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 
 }

@@ -37,7 +37,6 @@ public class CustomerRestController {
         cDTO.setId(customer.getId());
         cDTO.setAddress(customer.getAddress());
         cDTO.setLibCard(customer.getLibraryCard());
-        cDTO.setSystem(customer.getSystem());
         cDTO.setPenalty(customer.getPenalty());
         cDTO.setPerson(customer.getPerson());
         return cDTO;
