@@ -51,7 +51,6 @@ public class PersonRestController {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         List<Integer> personRoles;
-        Integer systemId;
 
         public List<Integer > getPersonRoles() {
             return personRoles;
@@ -61,13 +60,6 @@ public class PersonRestController {
             this.personRoles = personRoles;
         }
 
-        public Integer getSystemId() {
-            return systemId;
-        }
-
-        public void setSystemId(int systemId) {
-            this.systemId = systemId;
-        }
         public JsonBody(){}
     }
 

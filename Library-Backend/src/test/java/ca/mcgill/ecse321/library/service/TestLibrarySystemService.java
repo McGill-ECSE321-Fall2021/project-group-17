@@ -35,7 +35,6 @@ public class TestLibrarySystemService {
     private static final int LOAN_KEY = 1;
     private static final int CUSTOMER_KEY = 2;
     private static final int ITEM_INSTANCE_KEY = 3;
-    private static final int LIBRARY_MANAGEMENT_SYSTEM_KEY = 4;
 
     private static final Date startDate = Date.valueOf("2021-10-11");
     private static final Date endDate = Date.valueOf("2021-10-31");

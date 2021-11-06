@@ -59,13 +59,6 @@ public class LibraryHourRestController {
             this.libraryId = libraryId;
         }
 
-        public Integer getSystemId() {
-            return systemId;
-        }
-
-        public void setSystemId(int systemId) {
-            this.systemId = systemId;
-        }
         public JsonBody(){}
     }
 }

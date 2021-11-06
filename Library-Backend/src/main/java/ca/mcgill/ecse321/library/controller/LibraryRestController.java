@@ -48,15 +48,6 @@ public class LibraryRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        Integer systemId;
-
-        public Integer getSystemId() {
-            return systemId;
-        }
-
-        public void setSystemId(int systemId) {
-            this.systemId = systemId;
-        }
         public JsonBody(){}
     }
 
