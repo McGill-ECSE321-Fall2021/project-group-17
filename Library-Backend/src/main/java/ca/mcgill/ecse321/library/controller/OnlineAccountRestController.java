@@ -37,7 +37,6 @@ public class OnlineAccountRestController {
         accountDTO.setUsername(account.getUsername());
         accountDTO.setPassword(account.getPassword());
         accountDTO.setPersonRole(account.getPersonRole());
-        accountDTO.setSystem(account.getSystem());
         return accountDTO;
     }
 }

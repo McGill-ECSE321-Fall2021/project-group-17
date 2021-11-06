@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.library.dto;
 
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
-
 import java.sql.Date;
 
 public class NewspaperDTO {
@@ -9,7 +7,6 @@ public class NewspaperDTO {
     private String name;
     private Date datePublished;
     private String headline;
-    private LibraryManagementSystem system;
 
     public NewspaperDTO() {
 
@@ -38,10 +35,6 @@ public class NewspaperDTO {
         return this.headline;
     }
 
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -58,7 +51,4 @@ public class NewspaperDTO {
         this.headline = headline;
     }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 }

@@ -23,7 +23,7 @@ public class ItemInstanceRestController {
     @ResponseBody
     public ItemInstanceDTO createItemInstance(@PathVariable("serialNum") int serialNum,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
-        ItemInstance itemInstance = service.createItemInstance(serialNum, body.getCheckableItemId(), body.getSystemId());
+        ItemInstance itemInstance = service.createItemInstance(serialNum, body.getCheckableItemId());
         return convertToDTO(itemInstance);
     }
 
@@ -35,14 +35,12 @@ public class ItemInstanceRestController {
         ItemInstanceDTO itemInstanceDTO = new ItemInstanceDTO();
         itemInstanceDTO.setSerialNum(itemInstance.getSerialNum());
         itemInstanceDTO.setCheckableItem(itemInstanceDTO.getCheckableItem());
-        itemInstanceDTO.setSystem(itemInstance.getSystem());
         return itemInstanceDTO;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         Integer checkableItemId;
-        Integer systemId;
 
         public Integer getCheckableItemId() {
             return checkableItemId;
@@ -52,13 +50,7 @@ public class ItemInstanceRestController {
             this.checkableItemId = checkableItemId;
         }
 
-        public Integer getSystemId() {
-            return systemId;
-        }
 
-        public void setSystemId(int systemId) {
-            this.systemId = systemId;
-        }
         public JsonBody(){}
     }
 }

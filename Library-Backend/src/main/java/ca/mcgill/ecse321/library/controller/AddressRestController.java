@@ -26,7 +26,7 @@ public class AddressRestController {
                                     @PathVariable("street") String street, @PathVariable("city") String city,
                                     @PathVariable("country") String country,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
-        Address address = service.createAddress(id, streetNum, street, city, country, body.getCustomerId(), body.getSystemId());
+        Address address = service.createAddress(id, streetNum, street, city, country, body.getCustomerId());
         return convertToDTO(address);
     }
 
@@ -48,7 +48,6 @@ public class AddressRestController {
         addressDTO.setCity(addressDTO.getCity());
         addressDTO.setCountry(addressDTO.getCountry());
         addressDTO.setCustomer(address.getCustomer());
-        addressDTO.setSystem(address.getSystem());
 
         return addressDTO;
     }
@@ -56,7 +55,6 @@ public class AddressRestController {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private Integer customerId;
-        private Integer systemId;
 
         public Integer getCustomerId() {
             return customerId;
@@ -64,14 +62,6 @@ public class AddressRestController {
 
         public void setCustomerId(Integer customerId) {
             this.customerId = customerId;
-        }
-
-        public Integer getSystemId() {
-            return systemId;
-        }
-
-        public void setSystemId(Integer systemId) {
-            this.systemId = systemId;
         }
     }
 }

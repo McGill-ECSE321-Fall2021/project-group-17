@@ -14,20 +14,13 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
     @Autowired
-    private LibraryManagementSystemRepository lmsRepository;
-    @Autowired
     private PersonRoleRepository personRoleRepository;
 
     @Transactional
-    public Person createPerson(String name, Integer systemId, List<Integer> personRoles){
+    public Person createPerson(String name,List<Integer> personRoles){
         Person person = new Person();
         person.setName(name);
         person.setPersonRoleList(new ArrayList<>());
-
-        if(systemId != null){
-            LibraryManagementSystem system = lmsRepository.findLibraryManagementSystemById(systemId);
-            person.setSystem(system);
-        }
 
         if(personRoles != null){
             for(int s :personRoles){
