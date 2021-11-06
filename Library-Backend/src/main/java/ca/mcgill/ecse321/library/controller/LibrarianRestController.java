@@ -43,19 +43,6 @@ public class LibrarianRestController {
         Librarian librarian = librarianService.createLibrarian(id);
         return convertToDTO(librarian);
     }
-
-    @GetMapping(value = {"/librarian/{id}/shifts", "/librarian/{id}/shifts/"})
-    public List<ShiftDTO> viewShifts(@PathVariable("id") int id) throws IllegalArgumentException {
-    	Librarian librarian = librarianService.createLibrarian(id);
-    	List<Shift> shifts = librarian.getSystem().getShiftList();
-    	List<ShiftDTO> out = new ArrayList<ShiftDTO>();
-    	for (Shift shift : shifts) {
-    		if (shift.getLibrarian() == librarian) {
-    			out.add(new ShiftDTO(shift.getStartTime(), shift.getEndTime(), shift.getDayOfWeek()));
-    		}
-    	}
-    	return out;
-    }
     
     private LibrarianDTO convertToDTO(Librarian librarian){
         if (librarian == null) {
