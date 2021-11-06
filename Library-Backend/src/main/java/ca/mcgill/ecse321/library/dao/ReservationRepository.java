@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.dao;
 
+import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.model.Reservation;
 import org.springframework.data.repository.CrudRepository;
@@ -12,4 +13,5 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
     List<Reservation> findReservationByDateReserved(Date dateReserved);
     List<Reservation> findReservationByPickupDay(Date pickupDay);
     Reservation findByItemInstance(ItemInstance itemInstance);
+    List<Reservation> findByCustomer(Customer customer);
 }

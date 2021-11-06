@@ -23,6 +23,7 @@ public class OnlineAccountDTO {
     public boolean getLoggedIn(){
         return this.loggedIn;
     }
+
     public String getUsername() {
         return this.username;
     }

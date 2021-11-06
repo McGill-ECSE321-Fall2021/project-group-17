@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
+import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,7 +92,7 @@ public class LoanService {
         }
         Loan loan = loanRepository.findLoanById(loanId);
         if(loan == null){
-            throw new LoanException("Cannot find loanId to delete");
+            throw new NotFoundException("Cannot find loan to delete");
         }
         if(customerId == null){
             throw new LoanException("Cannot authorize customer to delete loan");

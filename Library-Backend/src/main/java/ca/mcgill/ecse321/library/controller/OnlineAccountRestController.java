@@ -33,6 +33,7 @@ public class OnlineAccountRestController {
         return convertToDTO(service.logIn(username, password));
     }
 
+
     @PutMapping(value={"/logout/{username}", "/logout/{username}/"})
     public void logOut(@PathVariable("username") String username) {
         service.logout(username);
