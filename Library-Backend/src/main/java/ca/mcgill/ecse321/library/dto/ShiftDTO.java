@@ -4,11 +4,9 @@ import java.sql.Time;
 import java.time.DayOfWeek;
 
 import ca.mcgill.ecse321.library.model.Librarian;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 
 public class ShiftDTO {
 	
-    private LibraryManagementSystem system;
     private int id;
     private Time startTime;
     private Time endTime;
@@ -41,10 +39,6 @@ public class ShiftDTO {
         return this.dayOfWeek;
     }
 
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
     public Librarian getLibrarian(){ return this.librarian;}
 
     public void setId(Integer id){ this.id = id;}
@@ -58,10 +52,6 @@ public class ShiftDTO {
     }
     
     public void setDayOfWeek(DayOfWeek dayOfWeek){this.dayOfWeek = dayOfWeek;}
-    
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
     
     public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
 

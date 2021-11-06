@@ -343,5 +343,32 @@ public class ItemRestController {
     
     // delete music, movie, book, newspaper
     
+    @PostMapping(value= {"/item/movie/{librarianId}/delete/{id}", "/item/movie/{librarianId}/delete/{newspaperId}/"})
+    @ResponseBody
+    public void deleteMovie(@PathVariable("librarianId") int librarianId,
+    		@PathVariable("id") int id) throws IllegalArgumentException{
+    	movieService.deleteMovie(id);
+    }
+    
+    @PostMapping(value= {"/item/book/{librarianId}/delete/{id}", "/item/book/{librarianId}/delete/{newspaperId}/"})
+    @ResponseBody
+    public void deleteBook(@PathVariable("librarianId") int librarianId,
+    		@PathVariable("id") int id) throws IllegalArgumentException{
+    	bookService.deleteBook(id);
+    }
+    
+    @PostMapping(value= {"/item/music/{librarianId}/delete/{id}", "/item/music/{librarianId}/delete/{newspaperId}/"})
+    @ResponseBody
+    public void deleteMusic(@PathVariable("librarianId") int librarianId,
+    		@PathVariable("id") int id) throws IllegalArgumentException{
+    	musicService.deleteMusic(id);
+    }
+    
+    @PostMapping(value= {"/item/newspaper/{librarianId}/delete/{id}", "/item/newspaper/{librarianId}/delete/{id}/"})
+    @ResponseBody
+    public void deleteNewspaper(@PathVariable("librarianId") int librarianId,
+    		@PathVariable("id") int id) throws IllegalArgumentException{
+    	newspaperService.deleteNewspaper(id);
+    }
     
 }

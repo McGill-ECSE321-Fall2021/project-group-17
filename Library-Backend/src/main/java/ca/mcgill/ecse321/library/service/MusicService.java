@@ -26,6 +26,10 @@ public class MusicService {
         return m;
     }
     @Transactional
+    public void deleteMusic(int id){
+        musicRepository.deleteById(id);;
+    }
+    @Transactional
     public List<Item> getMusicByName(String name){
         List<Item> results= musicRepository.findItemByName(name);
         return results;

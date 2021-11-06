@@ -57,23 +57,6 @@ public class LibrarianRestController {
     	return out;
     }
     
-    // remove items
-    @PostMapping(value= {"/librarian/{id}/delete/{itemId}",
-	"/librarian/{id}/delete/{itemId}/"})
-	public void deleteItem(@PathVariable("id") int id, @PathVariable("itemId") int itemId)
-	throws IllegalArgumentException, ParseException{
-    	Librarian librarian = librarianService.createLibrarian(id);
-//    	List<Item> items = librarian.getSystem().getItemList();
-    	List<ItemInstance> itemInstances = librarian.getSystem().getItemInstanceList();
-    	
-    	for(int i = 0; i < itemInstances.size(); i++) {
-    		if (itemInstances.get(i).getCheckableItem().getId() == itemId) {   
-    			itemInstances.remove(i);
-    			break;
-    		}
-    	}
-    }
-    
     private LibrarianDTO convertToDTO(Librarian librarian){
         if (librarian == null) {
             throw new IllegalArgumentException("There is no such Customer!");

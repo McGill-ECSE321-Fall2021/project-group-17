@@ -26,6 +26,12 @@ public class MovieService {
         movieRepository.save(m);
         return m;
     }
+    
+    @Transactional
+    public void deleteMovie(Integer id){
+        movieRepository.deleteById(id);;
+    }
+    
     @Transactional
     public Movie getMovie(Integer movieId){
         Movie m= (Movie) movieRepository.findItemById(movieId);

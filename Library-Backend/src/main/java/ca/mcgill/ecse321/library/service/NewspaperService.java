@@ -24,6 +24,12 @@ public class NewspaperService {
         newspaperRepository.save(n);
         return n;
     }
+    
+    @Transactional
+    public void deleteNewspaper(int id){
+        newspaperRepository.deleteById(id);
+    }
+    
     @Transactional
     public Newspaper getNewspaper(Integer newspaperId){
         Newspaper n= (Newspaper) newspaperRepository.findItemById(newspaperId);

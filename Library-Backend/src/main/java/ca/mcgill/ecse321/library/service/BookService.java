@@ -25,6 +25,10 @@ public class BookService {
         return b;
     }
     @Transactional
+    public void deleteBook(int id){
+    	bookRepository.deleteById(id);
+    }
+    @Transactional
     public Book getBook(Integer bookId){
         Book b= (Book) bookRepository.findItemById(bookId);
         return b;
