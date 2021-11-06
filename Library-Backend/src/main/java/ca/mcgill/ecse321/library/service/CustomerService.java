@@ -14,13 +14,11 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Customer createCustomer(Integer systemId, Person person, Integer penalty, Address address, LibraryCard libCard){
+    public Customer createCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
         Customer customer = new Customer();
         customer.setPenalty(penalty);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
-
-
         customerRepository.save(customer);
         return customer;
     }
