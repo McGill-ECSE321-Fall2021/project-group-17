@@ -2,11 +2,9 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
-import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.model.CheckableItem;
 import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +16,9 @@ public class ItemInstanceService {
     private ItemInstanceRepository itemInstanceRepository;
     @Autowired
     private CheckableItemRepository checkableItemRepository;
-    @Autowired
-    private LibraryManagementSystemRepository lmsRepository;
 
     @Transactional
-    public ItemInstance createItemInstance(int serialNum, Integer checkableItemId, Integer systemId) {
+    public ItemInstance createItemInstance(int serialNum, Integer checkableItemId) {
         ItemInstance itemInstance = new ItemInstance();
         itemInstance.setSerialNum(serialNum);
 
@@ -31,11 +27,6 @@ public class ItemInstanceService {
             if (item instanceof CheckableItem) {
                 itemInstance.setCheckableItem((CheckableItem) item);
             }
-        }
-
-        if(systemId != null){
-            LibraryManagementSystem system = lmsRepository.findLibraryManagementSystemById(systemId);
-            itemInstance.setSystem(system);
         }
 
         itemInstanceRepository.save(itemInstance);

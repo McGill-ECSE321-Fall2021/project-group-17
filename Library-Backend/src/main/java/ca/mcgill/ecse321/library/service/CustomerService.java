@@ -14,14 +14,23 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Customer createCustomer(int id){
+    public Customer createCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
         Customer customer = new Customer();
-        //customer.setId(id);
+        customer.setPenalty(penalty);
+        customer.setLibraryCard(libCard);
+        customer.setPerson(person);
         customerRepository.save(customer);
         return customer;
     }
     @Transactional
-    public Customer getCustomer(int id){return (Customer) customerRepository.findPersonRoleById(id);}
+    public Customer getCustomer(Integer id){
+        if(id == null || id < 0){
+            throw new CustomerException("Invalid Id");
+        }
+        Customer c = (Customer) customerRepository.findPersonRoleById(id);
+        if (c == null) throw new CustomerException("This customer does not exist");
+        return c;
+    }
 
     @Transactional
     public void verifyAddress(Integer id){

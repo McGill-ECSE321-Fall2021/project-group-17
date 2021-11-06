@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class OnlineAccountService {
@@ -31,6 +32,21 @@ public class OnlineAccountService {
     @Transactional
     public OnlineAccount getOnlineAccount(String username) {
         return onlineAccountRepository.findOnlineAccountByUsername(username);
+    }
+
+    @Transactional
+    public void logout(String username){
+
+        OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
+        if(o==null){
+            throw new OnlineAccountException("no account with said username exists");
+        }
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to delete account.");
+        }
+        
+        o.setLoggedIn(false);
+        onlineAccountRepository.save(o);
     }
 
     @Transactional
@@ -66,11 +82,15 @@ public class OnlineAccountService {
 
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
 
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find account by username.");
+        }
+
         if (password == null) {
             throw new OnlineAccountException("Cannot find password to login user.");
         }
 
-        if (account.getPassword() == password) {
+        if (account.getPassword().equals(password)) {
             account.setLoggedIn(true);
         }
 
@@ -78,11 +98,13 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Password is incorrect. User cannot be logged in.");
         }
 
+        //onlineAccountRepository.save(account);
+
         return account;
     }
 
-    /*@Transactional
-    public List<OnlineAccount> getAllOnlineAccounts() {
-        return toList(onlineAccountRepository.findAll());
-    }*/
+    @Transactional
+    public OnlineAccount getOnlineAccounts(String username) {
+        return onlineAccountRepository.findOnlineAccountByUsername(username);
+    }
 }

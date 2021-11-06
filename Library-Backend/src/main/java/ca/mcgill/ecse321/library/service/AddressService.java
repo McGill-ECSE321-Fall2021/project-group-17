@@ -2,10 +2,8 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.AddressRepository;
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
-import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.model.Address;
 import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +15,11 @@ public class AddressService {
     private AddressRepository addressRepository;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private LibraryManagementSystemRepository lmsRepository;
 
     @Transactional
-    public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId, Integer systemId) {
+    public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId) {
         Address address = new Address(id, streetNumber, street, city, country);
 
-        if (systemId != null) {
-            LibraryManagementSystem lms = lmsRepository.findLibraryManagementSystemById(systemId);
-            address.setSystem(lms);
-        }
 
         if (customerId != null) {
             PersonRole personRole = customerRepository.findPersonRoleById(customerId);
