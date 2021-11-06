@@ -56,7 +56,6 @@ public class ReservationRestController {
         reservationDTO.setId(r.getId());
         reservationDTO.setPickupDay(r.getPickupDay());
         reservationDTO.setItemInstance(r.getItemInstance());
-        reservationDTO.setSystem(r.getSystem());
         return reservationDTO;
     }
 

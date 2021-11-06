@@ -24,8 +24,6 @@ public class ReservationService {
     private LibrarianRepository librarianRepository;
     @Autowired
     private ItemInstanceRepository itemInstanceRepository;
-    @Autowired
-    private LibraryManagementSystemRepository libraryManagementSystemRepository;
     @Transactional
     public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId, Integer systemId){
         Reservation r = new Reservation();
@@ -33,12 +31,7 @@ public class ReservationService {
         if(systemId == null){
             throw new ReservationException("Cannot have null systemId");
         }
-        LibraryManagementSystem s = libraryManagementSystemRepository.findLibraryManagementSystemById(systemId);
-        if(s == null){
-            throw new ReservationException("System not found");
-        }
-        r.setSystem(s);
-        s.getReservationList().add(r);
+
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
         }
@@ -73,7 +66,6 @@ public class ReservationService {
         //TODO add in check for item already on reservation
         r.setId(generateId((List<Reservation>) reservationRepository.findAll()));
         reservationRepository.save(r);
-        libraryManagementSystemRepository.save(s);
         return r;
     }
     private int generateId(List<Reservation> reservations){
@@ -156,13 +148,6 @@ public class ReservationService {
                 throw new ReservationException("Cannot find item instance to update reservation to");
             }
             r.setItemInstance(i);
-        }
-        if(systemId != null){
-            LibraryManagementSystem s = libraryManagementSystemRepository.findLibraryManagementSystemById(systemId);
-            if(s == null){
-                throw new ReservationException("Cannot find LMS to update reservation to");
-            }
-            r.setSystem(s);
         }
         reservationRepository.save(r);
         return r;
