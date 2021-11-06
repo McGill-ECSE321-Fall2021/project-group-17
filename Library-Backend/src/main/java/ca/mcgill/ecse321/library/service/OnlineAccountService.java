@@ -40,7 +40,9 @@ public class OnlineAccountService {
 
         OnlineAccount o = onlineAccountRepository.findOnlineAccountByUsername(username);
         o.setLoggedIn(false);
+        onlineAccountRepository.save(o);
     }
+
     @Transactional
     public void deleteOnlineAccount(String username, Integer customerId) {
         if (username == null) {
@@ -89,6 +91,8 @@ public class OnlineAccountService {
         else {
             throw new OnlineAccountException("Password is incorrect. User cannot be logged in.");
         }
+
+        //onlineAccountRepository.save(account);
 
         return account;
     }

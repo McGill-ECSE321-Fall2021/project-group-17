@@ -1,14 +1,10 @@
 package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.OnlineAccountDTO;
-import ca.mcgill.ecse321.library.dto.PersonRoleDTO;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.service.OnlineAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -16,9 +12,9 @@ public class OnlineAccountRestController {
     @Autowired
     private OnlineAccountService service;
 
-    @GetMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/" })
-    public OnlineAccountDTO getAllOnlineAccounts(@PathVariable("username") String username) {
-        return convertToDTO(service.getOnlineAccounts(username));
+    @GetMapping(value = { "/getaccount/{username}", "/getaccount/{username}/" })
+    public OnlineAccountDTO getOnlineAccount(@PathVariable("username") String username) {
+        return convertToDTO(service.getOnlineAccount(username));
     }
 
     @PostMapping(value = { "/onlineaccount/{username}/{password}", "/onlineaccount/{username}/{password}/" })
@@ -33,7 +29,7 @@ public class OnlineAccountRestController {
     }
 
     @PutMapping(value = {"/login/{username}/{password}", "/login/{username}/{password}/"})
-    public OnlineAccountDTO login(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
+    public OnlineAccountDTO logIn(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
         return convertToDTO(service.logIn(username, password));
     }
 
