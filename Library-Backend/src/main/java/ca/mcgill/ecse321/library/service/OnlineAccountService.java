@@ -84,7 +84,7 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find password to login user.");
         }
 
-        if (account.getPassword() == password) {
+        if (account.getPassword().equals(password)) {
             account.setLoggedIn(true);
         }
 
