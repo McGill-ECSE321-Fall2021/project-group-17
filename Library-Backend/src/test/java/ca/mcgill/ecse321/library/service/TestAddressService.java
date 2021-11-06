@@ -1,2 +1,4 @@
-package ca.mcgill.ecse321.library.service;public class TestAddressService {
+package ca.mcgill.ecse321.library.service;
+
+public class TestAddressService {
 }

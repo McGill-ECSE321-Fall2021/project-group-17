@@ -23,10 +23,6 @@ public class OnlineAccountDTO {
     public boolean getLoggedIn(){
         return this.loggedIn;
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a7720efbb1033d69dba58ba1ce14911ae029177
     public String getUsername() {
         return this.username;
     }

@@ -32,7 +32,7 @@ public class CustomerRestController {
         Customer customer = customerService.getCustomer(id);
         return convertToDTO(customer);
     }
-    @PutMapping(value = {"/customer/{id}", "/customer/{id}/"})
+    @PutMapping(value = {"/verifyCustomer/{id}", "/verifyCustomer/{id}/"})
     public void setIsVerified(@PathVariable("id") int id) throws IllegalArgumentException{
         customerService.verifyAddress(id);
 
