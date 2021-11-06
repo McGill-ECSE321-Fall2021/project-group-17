@@ -18,14 +18,14 @@ public class OnlineAccountRestController {
     }
 
     @PostMapping(value = { "/onlineaccount/{username}/{password}", "/onlineaccount/{username}/{password}/" })
-    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "customerId",required = false) Integer customerId) throws IllegalArgumentException {
-        OnlineAccount account = service.createOnlineAccount(username, password, customerId);
+    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) throws IllegalArgumentException {
+        OnlineAccount account = service.createOnlineAccount(username, password, personRoleId);
         return convertToDTO(account);
     }
 
     @DeleteMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/"})
-    public void deleteOnlineAccount(@PathVariable("username") String username, @RequestParam(value = "customerId",required = false) Integer customerId) {
-        service.deleteOnlineAccount(username, customerId);
+    public void deleteOnlineAccount(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {
+        service.deleteOnlineAccount(username, personRoleId);
     }
 
     @PutMapping(value = {"/login/{username}/{password}", "/login/{username}/{password}/"})

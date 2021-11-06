@@ -2,8 +2,10 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
+import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
+import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +18,15 @@ public class OnlineAccountService {
     @Autowired
     OnlineAccountRepository onlineAccountRepository;
     @Autowired
-    CustomerRepository customerRepository;
+    PersonRoleRepository personRoleRepository;
 
     @Transactional
-    public OnlineAccount createOnlineAccount(String username, String password, int customerId) {
+    public OnlineAccount createOnlineAccount(String username, String password, int personRoleId) {
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
-        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
-        account.setPersonRole(customer);
+        PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
+        account.setPersonRole(personRole);
         onlineAccountRepository.save(account);
         return account;
     }
@@ -67,9 +69,9 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find customerId to delete account.");
         }
 
-        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        PersonRole personRole = personRoleRepository.findPersonRoleById(customerId);
 
-        if (customer == null) {
+        if (personRole == null) {
             throw new OnlineAccountException("Cannot find customer to delete account.");
         }
 
