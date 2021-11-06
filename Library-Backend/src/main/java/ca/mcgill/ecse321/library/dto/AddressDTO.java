@@ -1,13 +1,15 @@
 package ca.mcgill.ecse321.library.dto;
 
 import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 
 public class AddressDTO {
 	
 	public Customer customer;
 	public int id;
-    private LibraryManagementSystem system;
+    private int streetNumber;
+    private String street;
+    private String city;
+    private String country;
     
     public AddressDTO() {}
     
@@ -22,14 +24,39 @@ public class AddressDTO {
     public void setAddressID(int id){
         this.id = id;
     }
-    
-    public LibraryManagementSystem getSystem() {
-        return system;
+
+    public int getStreetNumber() {
+        return streetNumber;
     }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
+    public void setStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
     }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     
     public Customer getCustomer() {
     	return this.customer;

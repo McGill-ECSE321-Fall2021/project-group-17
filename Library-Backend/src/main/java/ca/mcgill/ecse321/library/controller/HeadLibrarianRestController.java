@@ -31,7 +31,6 @@ public class HeadLibrarianRestController {
         hDTO.setId(headLibrarian.getId());
         hDTO.setAccount(headLibrarian.getAccount());
         hDTO.setPerson(headLibrarian.getPerson());
-        hDTO.setSystem(headLibrarian.getSystem());
         return hDTO;
     }
 }

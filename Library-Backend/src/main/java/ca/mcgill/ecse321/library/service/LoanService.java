@@ -2,11 +2,9 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
-import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
@@ -16,15 +14,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class LoanService {
     @Autowired
     private LoanRepository loanRepository;
-    @Autowired
-    private LibraryManagementSystemRepository systemRepository;
     @Autowired
     private ItemInstanceRepository itemInstanceRepository;
     @Autowired
@@ -34,14 +29,9 @@ public class LoanService {
     /**
      * Assumes if no end date is given that it defaults to 21 days
      */
-    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId, Date returnDate, Integer librarianId){
+    public Loan createLoan(Date start, Integer itemId, Integer customerId, Date returnDate, Integer librarianId){
         Loan loan = new Loan();
 
-        if(systemId == null){
-            throw new LoanException("Cannot find valid LMS to create a loan in");
-        }
-        LibraryManagementSystem system = systemRepository.findLibraryManagementSystemById(systemId);
-        loan.setSystem(system);
         //system.getLoanList().add(loan);
 
         if(itemId != null){

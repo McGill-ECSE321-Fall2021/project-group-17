@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.library.dto;
 
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 
 import java.sql.Date;
 
@@ -12,7 +11,6 @@ public class LoanDTO {
     private Date returnDate;
     private ItemInstance itemInstance;
     private Customer customer;
-    private LibraryManagementSystem system;
 
     public LoanDTO() {
 
@@ -42,10 +40,6 @@ public class LoanDTO {
         return customer;
     }
 
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -64,9 +58,5 @@ public class LoanDTO {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
     }
 }

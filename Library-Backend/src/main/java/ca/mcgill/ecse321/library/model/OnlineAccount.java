@@ -9,8 +9,7 @@ public class OnlineAccount {
     private PersonRole personRole;
     private String username;
     private String password;
-    private LibraryManagementSystem system;
-
+    private boolean loggedIn;
 
     @Id
     public String getUsername() {
@@ -27,19 +26,19 @@ public class OnlineAccount {
         this.password = password;
     }
 
+    public boolean getLoggedIn() {
+        return this.loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
     @OneToOne
     @JoinColumn
     public PersonRole getPersonRole(){ return this.personRole; }
 
     public void setPersonRole(PersonRole role){ this.personRole = role; }
 
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
 
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 }

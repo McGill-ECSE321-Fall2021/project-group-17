@@ -1,21 +1,28 @@
 package ca.mcgill.ecse321.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.*;
 
 @Entity
 public class Library {
+    private int id;
     private String name;
     
     public Library() {}
-    
-    public Library(String name) {
-    	this.name = name;
+
+    public Library(int id) {
+        this.id = id;
     }
 
     @Id
-    @Column(name="name")
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -24,3 +31,4 @@ public class Library {
         this.name = name;
     }
 }
+
