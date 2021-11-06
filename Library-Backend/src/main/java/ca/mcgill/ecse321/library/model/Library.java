@@ -8,13 +8,13 @@ public class Library {
     private String name;
     
     public Library() {}
-    
+
     public Library(int id) {
-    	this.id = id;
+        this.id = id;
     }
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -22,12 +22,13 @@ public class Library {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getName() {
-    	return name;
+        return name;
     }
-    
+
     public void setName(String name) {
-    	this.name = name;
+        this.name = name;
     }
 }
+
