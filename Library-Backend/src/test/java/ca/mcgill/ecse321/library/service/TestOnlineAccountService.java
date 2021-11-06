@@ -108,4 +108,18 @@ public class TestOnlineAccountService {
         assertNotNull(account);
         assertEquals(true, account.getLoggedIn());
     }
+
+    @Test
+    public void logout() {
+        OnlineAccount account = null;
+
+        try {
+            account = service.logout(USERNAME);
+        } catch (Exception e) {
+            fail();
+        }
+
+        assertNotNull(account);
+        assertEquals(false, account.getLoggedIn());
+    }
 }

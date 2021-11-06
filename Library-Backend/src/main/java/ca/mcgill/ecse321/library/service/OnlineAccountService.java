@@ -35,7 +35,7 @@ public class OnlineAccountService {
     }
 
     @Transactional
-    public void logout(String username){
+    public OnlineAccount logout(String username){
 
         OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
         if(o==null){
@@ -47,6 +47,8 @@ public class OnlineAccountService {
         
         o.setLoggedIn(false);
         onlineAccountRepository.save(o);
+
+        return o;
     }
 
     @Transactional

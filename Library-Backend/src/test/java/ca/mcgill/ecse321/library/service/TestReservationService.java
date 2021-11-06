@@ -28,8 +28,6 @@ public class TestReservationService {
     @Mock
     private ItemInstanceRepository itemInstanceRepository;
     @Mock
-    private LibraryManagementSystemRepository libraryManagementSystemRepository;
-    @Mock
     private LibrarianRepository librarianRepository;
 
     @InjectMocks
@@ -84,15 +82,6 @@ public class TestReservationService {
                 ItemInstance itemInstance = new ItemInstance();
                 itemInstance.setSerialNum(ITEM_INSTANCE_KEY);
                 return itemInstance;
-            } else {
-                return null;
-            }
-        });
-        lenient().when(libraryManagementSystemRepository.findLibraryManagementSystemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(LIBRARY_MANAGEMENT_SYSTEM_KEY)) {
-                LibraryManagementSystem lms = new LibraryManagementSystem();
-                lms.setId(LIBRARY_MANAGEMENT_SYSTEM_KEY);
-                return lms;
             } else {
                 return null;
             }
@@ -220,7 +209,6 @@ public class TestReservationService {
         assertEquals(startDate, r.getDateReserved());
         assertEquals(endDate, r.getPickupDay());
         assertNotNull(r.getItemInstance());
-        assertNotNull(r.getSystem());
     }
 
     @Test
@@ -237,7 +225,6 @@ public class TestReservationService {
         assertEquals(startDate, r.getDateReserved());
         assertEquals(endDate, r.getPickupDay());
         assertNotNull(r.getItemInstance());
-        assertNotNull(r.getSystem());
     }
 
     @Test

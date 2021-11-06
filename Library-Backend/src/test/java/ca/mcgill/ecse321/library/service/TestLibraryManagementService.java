@@ -1,9 +1,9 @@
 package ca.mcgill.ecse321.library.service;
 
-import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
+//import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
+//import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import ca.mcgill.ecse321.library.model.Loan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class TestLibraryManagementService {
-    @Mock
+    /*@Mock
     private LibraryManagementSystemRepository libraryManagementSystemRepository;
 
     @InjectMocks
@@ -63,5 +63,5 @@ public class TestLibraryManagementService {
         }
         assertNotNull(system);
         assertEquals(LIBRARY_MANAGEMENT_SYSTEM_KEY, system.getId());
-    }
+    }*/
 }
