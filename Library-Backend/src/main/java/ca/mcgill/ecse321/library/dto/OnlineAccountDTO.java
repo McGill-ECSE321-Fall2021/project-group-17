@@ -6,15 +6,27 @@ public class OnlineAccountDTO {
     private PersonRole personRole;
     private String username;
     private String password;
+    private boolean loggedIn;
 
     public OnlineAccountDTO(){}
 
     public OnlineAccountDTO(String username,String password){
         this.username = username;
         this.password = password;
+        this.loggedIn=true;
     }
 
+    public void setLoggedIn(boolean b){
+        this.loggedIn=b;
+    }
 
+    public boolean getLoggedIn(){
+        return this.loggedIn;
+    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a7720efbb1033d69dba58ba1ce14911ae029177
     public String getUsername() {
         return this.username;
     }
