@@ -25,12 +25,8 @@ public class ReservationService {
     @Autowired
     private ItemInstanceRepository itemInstanceRepository;
     @Transactional
-    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId, Integer systemId){
+    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId){
         Reservation r = new Reservation();
-
-        if(systemId == null){
-            throw new ReservationException("Cannot have null systemId");
-        }
 
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
