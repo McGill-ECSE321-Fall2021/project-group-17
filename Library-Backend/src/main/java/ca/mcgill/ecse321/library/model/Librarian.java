@@ -9,9 +9,11 @@ import java.time.DayOfWeek;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Librarian extends PersonRole{
+		
     public Librarian(){
 
     }
+    
     public Librarian(int id, Person person, OnlineAccount account){
         super(id, person, account);
     }
