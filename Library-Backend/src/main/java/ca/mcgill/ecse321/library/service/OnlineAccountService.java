@@ -87,7 +87,7 @@ public class OnlineAccountService {
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
 
         if (account == null) {
-            throw new OnlineAccountException("Cannot find account by username.");
+            throw new OnlineAccountException("Username is: " + username  + "\nCannot find account by username.");
         }
 
         if (password == null) {
@@ -102,7 +102,9 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Password is incorrect. User cannot be logged in.");
         }
 
-        //onlineAccountRepository.save(account);
+        onlineAccountRepository.save(account);
+
+        System.out.println("Username is: " + account.getUsername() + " " + account.getPersonRole().getId());
 
         return account;
     }
