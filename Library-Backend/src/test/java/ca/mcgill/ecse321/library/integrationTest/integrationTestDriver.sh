@@ -15,7 +15,8 @@ fi
 
 path="$(pwd)/$(dirname  $0 )"
 
-for file in $path/*
+for file in $path/*.json
 do
   echo "$file"
+  newman run "$file"
 done
