@@ -8,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +21,7 @@ public class ReservationRestController {
     @PostMapping({"/reservation/", "/reservation"})
     public ReservationDTO createReservation(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
         Reservation reservation = service.createReservation(body.getDateReserved(), body.getPickupDay(),
-                body.getItemInstanceId(), body.getCustomerId(), librarianId,body.getSystemId());
+                body.getItemInstanceId(), body.getCustomerId(), librarianId);
         return convertToDTO(reservation);
     }
     @GetMapping({"/reservation","/reservation/"})
@@ -38,7 +36,7 @@ public class ReservationRestController {
     @PatchMapping({"/reservation/{id}","/reservation/{id}/"})
     public ReservationDTO updateReservation(@PathVariable Integer id, @RequestBody JsonBody body){
         return convertToDTO(service.updateReservation(id,body.getDateReserved(),body.getPickupDay(), body.getCustomerId(),
-                body.getItemInstanceId(),body.getSystemId()));
+                body.getItemInstanceId()));
     }
 
     @DeleteMapping({"/reservation/{id}","/reservation/{id}/"})
@@ -67,7 +65,6 @@ public class ReservationRestController {
         private Date pickupDay;
         private Integer itemInstanceId;
         private Integer customerId;
-        private Integer systemId;
 
         public Date getDateReserved() {
             return dateReserved;
@@ -101,12 +98,6 @@ public class ReservationRestController {
             this.customerId = customerId;
         }
 
-        public Integer getSystemId() {
-            return systemId;
-        }
 
-        public void setSystemId(Integer systemId) {
-            this.systemId = systemId;
-        }
     }
 }

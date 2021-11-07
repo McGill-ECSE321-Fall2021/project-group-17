@@ -23,8 +23,8 @@ public class Reservation {
     }
 
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public Integer getId() {
         return this.id;
     }
 
