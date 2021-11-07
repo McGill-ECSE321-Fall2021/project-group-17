@@ -21,4 +21,4 @@ jobs:
         with:
           arguments: |
             build
-            --spring.jpa.hibernate.ddl-auto=create-drop
+            -Pspring_jpa_hibernate_ddl-auto=create-drop
