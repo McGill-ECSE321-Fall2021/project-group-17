@@ -3,9 +3,8 @@ package ca.mcgill.ecse321.library.service;
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.Loan;
+import ca.mcgill.ecse321.library.dto.LoanDTO;
+import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,10 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -104,4 +107,80 @@ public class LoanService {
         loanRepository.delete(loan);
         loan = null;
     }
+
+    /**
+     * view active loans
+     * @param id
+     */
+
+    //TODO check if loan is active or not
+    @Transactional
+    public List<LoanDTO> viewActiveLoans(Integer id){
+
+        if(id == null){
+            throw new LoanException("Cannot find customer");
+        }
+
+        PersonRole customer1 = customerRepository.findPersonRoleById(id);
+
+        if(customer1 == null) {
+            throw new LoanException("Customer not found");
+        }
+
+        List<Loan> customerLoans = customer1.getSystem().getLoanList();
+
+        List<LoanDTO> customerLoansDTO = new ArrayList<>();
+        for (Loan loan: customerLoans){
+            LoanDTO loanDTO = LoanService.loantoDTO(loan);
+            customerLoansDTO.add(loanDTO);
+        }
+        return customerLoansDTO;
+    }
+
+    /**
+     * View loan return date
+     * @param loanID
+     * @param customerID
+     */
+    @Transactional
+    public Loan viewLoanReturnDate(Integer loanID, Integer customerID){
+        if(loanID == null){
+            throw new LoanException("Please provide a valid loan ID");
+        }
+        if(customerID == null){
+            throw new LoanException("Please provide a valid customer ID");
+        }
+
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerID);
+
+        if(customer == null){
+            throw new LoanException("Customer does not exist");
+        }
+
+        Loan loan = loanRepository.findLoanById(loanID);
+
+        if(loan == null){
+            throw new LoanException("Loan does not exist");
+        }
+
+        return loan;
+    }
+
+
+    /**
+     * turn loan to loanDTO
+     * @param loan
+     */
+    public static LoanDTO loantoDTO(Loan loan){
+        LoanDTO loanDTO = new LoanDTO();
+        loanDTO.setCheckedOut(loan.getCheckedOut());
+        loanDTO.setCustomer(loan.getCustomer());
+        loanDTO.setId(loan.getId());
+        loanDTO.setItemInstance(loan.getItemInstance());
+        loanDTO.setReturnDate(loan.getReturnDate());
+        loanDTO.setSystem(loan.getSystem());
+        return loanDTO;
+    }
+
+
 }
