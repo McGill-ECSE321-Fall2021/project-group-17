@@ -36,6 +36,10 @@ public class AddressRestController {
                                     @PathVariable("country") String country) throws IllegalArgumentException {
         service.updateAddress(id, streetNum, street, city, country);
     }
+    @DeleteMapping(value={"/address/{id}","/address/{id}/"})
+    public void deleteAddress(@PathVariable("id") int id) throws IllegalArgumentException {
+        service.deleteAddress(id);
+    }
 
     private AddressDTO convertToDTO(Address address) {
         if (address == null) {

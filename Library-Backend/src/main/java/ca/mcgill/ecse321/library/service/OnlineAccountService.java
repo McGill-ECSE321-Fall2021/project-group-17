@@ -42,7 +42,7 @@ public class OnlineAccountService {
         if (username == null) {
             throw new OnlineAccountException("Cannot find username to delete account.");
         }
-        
+
         o.setLoggedIn(false);
         onlineAccountRepository.save(o);
     }
