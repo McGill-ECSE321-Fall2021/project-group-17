@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "sup tom"
 NPM=$( npm | grep "command not found")
 echo "$NPM"
 if [[ -n $NPM ]]; then
@@ -17,6 +16,6 @@ path="$(pwd)/$(dirname  $0 )"
 
 for file in $path/*.json
 do
-  echo "$file"
+  echo "Executing test $file"
   newman run "$file"
 done
