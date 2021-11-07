@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "sup tom"
 NPM=$( npm | grep "command not found")
 echo "$NPM"
 if [[ -n $NPM ]]; then
@@ -15,8 +14,9 @@ fi
 
 path="$(pwd)/$(dirname  $0 )"
 
-for file in $path/*.json
+collection=$(find "$path" -name "*environment.json")
+for file in $path/*collection.json
 do
-  echo "$file"
-  newman run "$file"
+  echo "Executing test $file"
+  newman run "$file" -e "$collection" --bail
 done

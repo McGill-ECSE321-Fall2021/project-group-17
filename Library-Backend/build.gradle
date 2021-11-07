@@ -31,7 +31,7 @@ test {
 
 task integrationTest(type: Exec){
 	if (System.getProperty('os.name').toLowerCase().contains('windows')){
-		//idk yet
+		commandLine 'cmd', '/c', 'Powershell -File src/test/java/ca/mcgill/ecse321/library/integrationTest/integrationTestDriver.ps1'
 	}
 	else{
 		commandLine 'src/test/java/ca/mcgill/ecse321/library/integrationTest/integrationTestDriver.sh'
