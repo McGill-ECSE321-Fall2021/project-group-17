@@ -14,8 +14,9 @@ fi
 
 path="$(pwd)/$(dirname  $0 )"
 
-for file in $path/*.json
+collection=$(find "$path" -name "*environment.json")
+for file in $path/*collection.json
 do
   echo "Executing test $file"
-  newman run "$file"
+  newman run "$file" -e "$collection" --bail
 done

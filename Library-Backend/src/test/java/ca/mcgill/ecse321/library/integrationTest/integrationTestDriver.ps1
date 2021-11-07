@@ -6,7 +6,7 @@ if ($npm)
     exit 1
 }
 
-$newman = newman | Select-String -Pattern "is not recognized as the name of a cmdlet"
+$newman = newman --silent | Select-String -Pattern "is not recognized as the name of a cmdlet"
 if ( $newman)
 {
     Write-Output "Cannot run integration tests without newman installed\n Run npm install -g newman to install"
@@ -15,8 +15,9 @@ if ( $newman)
 
 $mypath = $MyInvocation.MyCommand.Path | Split-Path -Parent
 
-Get-ChildItem "$mypath" -Filter "*.json" |
+$collection = Get-ChildItem "$mypath" -Filter "*environment.json"
+Get-ChildItem "$mypath" -Filter "*collection.json" |
 ForEach-Object {
     Write-Output $_.FullName
-    newman run $_.FullName
+    newman run $_.FullName --bail -e $collection.FullName
 }
