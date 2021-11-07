@@ -1,13 +1,8 @@
 package ca.mcgill.ecse321.library.controller;
 
+import ca.mcgill.ecse321.library.model.Library;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -15,24 +10,35 @@ import ca.mcgill.ecse321.library.dto.LibraryHourDTO;
 import ca.mcgill.ecse321.library.model.LibraryHour;
 import ca.mcgill.ecse321.library.service.LibraryHourService;
 
+import java.sql.Time;
+import java.time.DayOfWeek;
+
 @CrossOrigin(origins = "*")
 @RestController
 public class LibraryHourRestController {
     @Autowired
     private LibraryHourService service;
 
-    @GetMapping(value = {"/libraryhour/{id}", "/libraryhour/{id}/"})
+    @GetMapping(value = {"/libraryhour/{id}", "/libraryhour/{id}/"})//
     public LibraryHourDTO getLibraryHour(@PathVariable("id") int id) throws IllegalArgumentException {
-        LibraryHour libraryHour = service.createLibraryHour(id, null);
+        LibraryHour libraryHour = service.getLibraryHour(id);
         return convertToDTO(libraryHour);
     }
 
-    @PostMapping(value= {"/libraryhour/{id}", "/libraryhour/{id}/"})
+    @PostMapping(value= {"/libraryhour/{accountid}/", "/libraryhour/{accountid}/"})//TODO use current user id
     @ResponseBody
-    public LibraryHourDTO createLibraryHour(@PathVariable("id") int id,
+    public LibraryHourDTO createLibraryHour(@PathVariable("accountid") int accountId,
                                   @RequestBody JsonBody body) throws IllegalArgumentException{
-        LibraryHour libraryHour = service.createLibraryHour(id, body.getLibraryId());
+        LibraryHour libraryHour = service.createLibraryHour(accountId, body.getLibrary(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek());
         return convertToDTO(libraryHour);
+    }
+
+    @PutMapping(value = {"/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/{libraryid}/", "/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/{libraryid}/"})
+    @ResponseBody
+    public void modifyLibraryHours(@PathVariable("accountid") int accountId, @PathVariable("libhourid") int libHourId,
+                                @PathVariable("starttime") Time startTime, @PathVariable("endtime") Time endTime,
+                                @PathVariable("dayofweek") DayOfWeek DOW, @PathVariable("libraryid") int libraryId){
+        service.updateLibraryHour(accountId, libHourId, startTime, endTime, DOW, libraryId);//do we need to use JsonBody or Path Variable??
     }
 
     private LibraryHourDTO convertToDTO(LibraryHour libraryHour) {
@@ -48,15 +54,41 @@ public class LibraryHourRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        Integer libraryId;
-        Integer systemId;
+        private Time startTime;
+        private Time endTime;
+        private DayOfWeek dayOfWeek;
+        private Library library;
 
-        public Integer getLibraryId() {
-            return libraryId;
+        public Time getStartTime() {
+            return startTime;
         }
 
-        public void setLibraryId(Integer libraryId) {
-            this.libraryId = libraryId;
+        public void setStartTime(Time startTime) {
+            this.startTime = startTime;
+        }
+
+        public Time getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(Time endTime) {
+            this.endTime = endTime;
+        }
+
+        public DayOfWeek getDayOfWeek() {
+            return dayOfWeek;
+        }
+
+        public void setDayOfWeek(DayOfWeek dayOfWeek) {
+            this.dayOfWeek = dayOfWeek;
+        }
+
+        public Library getLibrary() {
+            return library;
+        }
+
+        public void setLibrary(Library library) {
+            this.library = library;
         }
 
         public JsonBody(){}

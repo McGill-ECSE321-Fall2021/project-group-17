@@ -6,6 +6,7 @@ import ca.mcgill.ecse321.library.dao.ShiftRepository;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.Shift;
 import ca.mcgill.ecse321.library.service.Exception.LibraryHourException;
+import ca.mcgill.ecse321.library.service.Exception.ShiftException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,13 @@ public class ShiftService {
         shift.setDayOfWeek(DOW);
         shiftRepository.save(shift);
         return shift;
+    }
+    @Transactional
+    public Shift getShift(Integer id){
+        if(id == null || id < 0) throw new ShiftException("Invalid Id");
+        Shift s = shiftRepository.findShiftById(id);
+        if(s == null) throw new ShiftException("No Shift Exists with Provided Id");
+        return s;
     }
 
 }
