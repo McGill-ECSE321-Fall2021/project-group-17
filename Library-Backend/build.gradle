@@ -29,3 +29,12 @@ test {
 	useJUnitPlatform()
 }
 
+task integrationTest(type: Exec){
+	if (System.getProperty('os.name').toLowerCase().contains('windows')){
+		//idk yet
+	}
+	else{
+		commandLine 'src/test/java/ca/mcgill/ecse321/library/integrationTest/integrationTestDriver.sh'
+	}
+	//commandLine 'bash Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/integrationTestDriver.sh
+}
