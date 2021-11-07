@@ -4,7 +4,6 @@ import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
 import ca.mcgill.ecse321.library.dao.ItemRepository;
 import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

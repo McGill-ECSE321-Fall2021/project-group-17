@@ -127,7 +127,7 @@ public class LoanService {
             throw new LoanException("Customer not found");
         }
 
-        List<Loan> customerLoans = customer1.getSystem().getLoanList();
+        List<Loan> customerLoans = (List<Loan>) loanRepository.findAll();
 
         List<LoanDTO> customerLoansDTO = new ArrayList<>();
         for (Loan loan: customerLoans){
@@ -178,7 +178,6 @@ public class LoanService {
         loanDTO.setId(loan.getId());
         loanDTO.setItemInstance(loan.getItemInstance());
         loanDTO.setReturnDate(loan.getReturnDate());
-        loanDTO.setSystem(loan.getSystem());
         return loanDTO;
     }
 

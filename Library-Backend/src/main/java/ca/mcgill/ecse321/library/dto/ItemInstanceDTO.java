@@ -7,14 +7,12 @@ import ca.mcgill.ecse321.library.model.CheckableItem;
 public class ItemInstanceDTO {
     private int serialNum;
     private CheckableItem checkableItem;
-    private LibraryManagementSystem system;
 
     public ItemInstanceDTO(){}
 
-    public ItemInstanceDTO(int serialNum,CheckableItem checkableItem, LibraryManagementSystem system){
+    public ItemInstanceDTO(int serialNum,CheckableItem checkableItem){
         this.checkableItem = checkableItem;
         this.serialNum = serialNum;
-        this.system = system;
     }
 
     public int getSerialNum() { return this.serialNum; }
@@ -24,9 +22,5 @@ public class ItemInstanceDTO {
     public CheckableItem getCheckableItem() { return this.checkableItem; }
 
     public void setCheckableItem(CheckableItem item) { this.checkableItem = item; }
-
-    public LibraryManagementSystem getSystem() { return system; }
-
-    public void setSystem(LibraryManagementSystem system) { this.system = system; }
 
 }

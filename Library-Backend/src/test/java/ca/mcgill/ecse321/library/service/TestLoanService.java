@@ -2,9 +2,9 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
-import ca.mcgill.ecse321.library.dao.LoanRepository;=
+import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.model.*;
-import ca.mcgill.ecse321.library.service.Exception.LoanException;=
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

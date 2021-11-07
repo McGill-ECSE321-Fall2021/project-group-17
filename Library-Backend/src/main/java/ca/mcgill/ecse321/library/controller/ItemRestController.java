@@ -208,22 +208,6 @@ public class ItemRestController {
             this.datePublished = datePublished;
         }
 
-    @GetMapping(value = {"/items","/items/"})
-    public List<ItemInstanceDTO> viewInventory(){
-        return service.viewInventory().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
-    }
-
-    //TODO change to item
-    private ItemInstanceDTO convertToDto(ItemInstance item) {
-        if (item == null) {
-            throw new IllegalArgumentException("There is no such item");
-        }
-        ItemInstanceDTO itemInstanceDTO = new ItemInstanceDTO();
-        itemInstanceDTO.setSystem(item.getSystem());
-        itemInstanceDTO.setCheckableItem(item.getCheckableItem());
-        itemInstanceDTO.setSerialNum(item.getSerialNum());
-        return itemInstanceDTO;
-    }
         public String getAuthor() {
             return author;
         }
