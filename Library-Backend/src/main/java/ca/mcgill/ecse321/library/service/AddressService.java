@@ -5,6 +5,8 @@ import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.model.Address;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.PersonRole;
+import ca.mcgill.ecse321.library.service.Exception.AddressException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,17 @@ public class AddressService {
 
         addressRepository.save(address);
         return address;
+    }
+    @Transactional
+    public void deleteAddress(Integer id) {
+        if(id==null){
+            throw new AddressException("Cannot find address to delete.");}
+
+            Address address= addressRepository.findAddressById(id);
+        if(address==null){
+            throw new AddressException("Address does not exist");
+        }
+      addressRepository.delete(address);
     }
 
     @Transactional

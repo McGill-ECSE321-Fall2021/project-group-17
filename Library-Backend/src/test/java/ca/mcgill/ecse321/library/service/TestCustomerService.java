@@ -24,6 +24,8 @@ public class TestCustomerService {
     private CustomerRepository customerRepository;
     @Mock
     private AddressRepository addressRepository;
+    @Mock
+    private LibraryCardRepository libraryCardRepository;
 
 
     @InjectMocks
@@ -32,18 +34,32 @@ public class TestCustomerService {
     private PersonService service1;
     @InjectMocks
     private AddressService service2;
+    @InjectMocks
+    private LibraryCardService service3;
+
 
     private static final int PERSON_KEY = 3;
+    private static final int PERSONROLE_KEY = 7;
+    private static final int LIBRARYCARD_KEY = 7;
     private static final int ADDRESS_KEY = 5;
     private static final int ADDRESS_STREET_NUMBER = 3456;
     private static final boolean VERIFIED = true;
     private static final String ADDRESS_STREET = "Peel";
+    private static final String ADDRESS_CITY = "Montreal";
     private static final String ADDRESS_COUNTRY = "Canada";
     private static final String PERSON_NAME = "victoria";
     private static final int CUSTOMER_KEY = 2;
     @BeforeEach
     public void setMockOutput() {
-
+        lenient().when(libraryCardRepository.findLibraryCardById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(LIBRARYCARD_KEY)) {
+                LibraryCard libraryCard = new LibraryCard();
+                libraryCard.setId(LIBRARYCARD_KEY);
+                return libraryCard;
+            } else {
+                return null;
+            }
+        });
         lenient().when(customerRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(CUSTOMER_KEY)) {
                 Customer customer = new Customer();
@@ -71,6 +87,43 @@ public class TestCustomerService {
                 return null;
             }
         });
+    }
+    @Test
+    public void createCustomer(){
+        int id = CUSTOMER_KEY;
+        Person person=null;
+        try{
+            person= service1.createPerson(PERSON_NAME,null);
+        }
+        catch(Exception e){
+            fail();
+        }
+        Address address=null;
+        try{
+            address=service2.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        LibraryCard libraryCard=null;
+        try{
+            libraryCard=service3.createLibraryCard(LIBRARYCARD_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        Customer customer = null;
+        try{
+            customer = service.createCustomer(person,0,address,libraryCard);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(customer);
+        assertEquals(customer.getPerson(),person);
+        assertEquals(customer.getAddress(),address);
+        assertEquals(customer.getLibraryCard(),libraryCard);
+
     }
 
     @Test

@@ -39,6 +39,7 @@ public class TestAddressService {
     private static final boolean VERIFIED = true;
     private static final String ADDRESS_STREET = "Peel";
     private static final String ADDRESS_CITY = "Montreal";
+    private static final String ADDRESS_CITY2 = "Montreal";
     private static final String ADDRESS_COUNTRY = "Canada";
     private static final String PERSON_NAME = "victoria";
     private static final int CUSTOMER_KEY = 2;
@@ -93,6 +94,30 @@ public class TestAddressService {
         assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER);
         assertEquals(address.getStreet(),ADDRESS_STREET);
         assertEquals(address.getCity(),ADDRESS_CITY);
+        assertEquals(address.getCountry(),ADDRESS_COUNTRY);
+        assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
+    }
+    @Test
+    public void updateAddress(){
+        int id = CUSTOMER_KEY;
+        Address address=null;
+        try{
+            address= service2.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        try{
+            service2.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY2,ADDRESS_COUNTRY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(address);
+        assertEquals(address.getId(),ADDRESS_KEY);
+        assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER);
+        assertEquals(address.getStreet(),ADDRESS_STREET);
+        assertEquals(address.getCity(),ADDRESS_CITY2);
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
