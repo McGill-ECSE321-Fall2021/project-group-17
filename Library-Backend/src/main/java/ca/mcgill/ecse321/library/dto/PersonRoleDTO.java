@@ -1,11 +1,9 @@
 package ca.mcgill.ecse321.library.dto;
 
-import ca.mcgill.ecse321.library.model.LibraryManagementSystem;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.Person;
 
 public abstract class PersonRoleDTO {
-    private LibraryManagementSystem system;
     private int id;
     private Person person;
     private OnlineAccount account;
@@ -27,6 +25,4 @@ public abstract class PersonRoleDTO {
     public void setPerson(Person person){this.person = person;}
     public OnlineAccount getAccount(){return account;}
     public void setAccount(OnlineAccount account){this.account = account;}
-    public LibraryManagementSystem getSystem(){return system;}
-    public void setSystem(LibraryManagementSystem system){ this.system = system;}
 }

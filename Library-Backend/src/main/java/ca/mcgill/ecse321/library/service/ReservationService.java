@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.ReservationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +23,10 @@ public class ReservationService {
     private LibrarianRepository librarianRepository;
     @Autowired
     private ItemInstanceRepository itemInstanceRepository;
-    @Autowired
-    private LibraryManagementSystemRepository libraryManagementSystemRepository;
     @Transactional
-    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId, Integer systemId){
+    public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId){
         Reservation r = new Reservation();
 
-        if(systemId == null){
-            throw new ReservationException("Cannot have null systemId");
-        }
-        LibraryManagementSystem s = libraryManagementSystemRepository.findLibraryManagementSystemById(systemId);
-        if(s == null){
-            throw new ReservationException("System not found");
-        }
-        r.setSystem(s);
         if(dateReserved == null){
             throw new ReservationException("Cannot have empty reservation date");
         }
@@ -68,28 +59,8 @@ public class ReservationService {
         }
         r.setItemInstance(i);
         //TODO add in check for item already on reservation
-        r.setId(generateId((List<Reservation>) reservationRepository.findAll()));
         reservationRepository.save(r);
         return r;
-    }
-    private int generateId(List<Reservation> reservations){
-        int i = 0;
-        reservations.sort((o1, o2) -> {
-            if(o1.getId() == o2.getId()){
-                return 0;
-            }
-            else if(o1.getId() < o2.getId()){
-                return -1;
-            }
-            return 1;
-        });
-        for(Reservation reservation : reservations){
-            if(i != reservation.getId()){
-                return i;
-            }
-            i++;
-        }
-        return i + 1;
     }
     @Transactional
     public Reservation getReservation(Integer id, Integer customerId){
@@ -120,5 +91,58 @@ public class ReservationService {
         }
         Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
         return reservationRepository.findByCustomer(c);
+    }
+
+    @Transactional
+    public Reservation updateReservation(Integer id,Date startDate, Date endDate, Integer customerId, Integer itemInstanceId){
+        if(id == null){
+            throw new ReservationException("Reservation id cannot be null");
+        }
+        Reservation r = reservationRepository.findReservationById(id);
+        if(r == null){
+            throw new NotFoundException("Reservation cannot be found");
+        }
+        if(startDate != null){
+            //TODO add validation if date is before now
+            r.setDateReserved(startDate);
+        }
+        if(endDate != null){
+            r.setPickupDay(endDate);
+        }
+        if(customerId != null){
+            Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
+            if(c == null){
+                throw new ReservationException("Cannot find person to update reservation to");
+            }
+            r.setCustomer(c);
+        }
+        if(itemInstanceId != null){
+            ItemInstance i = itemInstanceRepository.findItemInstanceBySerialNum(itemInstanceId);
+            if(i == null){
+                throw new ReservationException("Cannot find item instance to update reservation to");
+            }
+            r.setItemInstance(i);
+        }
+        reservationRepository.save(r);
+        return r;
+    }
+
+    public void deleteReservation(Integer id, Integer customerId){
+        if(id == null){
+            throw new ReservationException("Cannot find reservationId to delete");
+        }
+        Reservation reservation = reservationRepository.findReservationById(id);
+        if(reservation == null){
+            throw new ReservationException("Cannot find reservation to delete");
+        }
+        if(customerId == null){
+            throw new ReservationException("Cannot authorize customer to delete loan");
+        }
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        if(customer == null){
+            throw new LoanException("Owner of loan does not match customer in request");
+        }
+        reservationRepository.delete(reservation);
+        reservation =  null;
     }
 }

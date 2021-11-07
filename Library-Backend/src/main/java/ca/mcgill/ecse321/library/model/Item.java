@@ -19,8 +19,6 @@ public abstract class Item {
         this.datePublished=datePublished;
     }
 
-    private LibraryManagementSystem system;
-
     @Id
     //@GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
@@ -47,13 +45,4 @@ public abstract class Item {
         this.datePublished = date;
     }
 
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 }

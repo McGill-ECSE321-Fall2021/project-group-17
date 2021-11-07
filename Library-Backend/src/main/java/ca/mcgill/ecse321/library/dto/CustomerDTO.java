@@ -9,6 +9,7 @@ public class CustomerDTO extends PersonRoleDTO{
     private int penalty;
     private Address address;
     private LibraryCard libCard;
+    private boolean isVerified;
 
     public CustomerDTO(){}
     public CustomerDTO(int id, Person person, int penalty, Address address, LibraryCard libCard, OnlineAccount account){
@@ -16,6 +17,14 @@ public class CustomerDTO extends PersonRoleDTO{
         this.address = address;
         this.libCard = libCard;
         this.penalty = penalty;
+    }
+
+    public boolean getIsVerified(){
+        return this.isVerified;
+    }
+
+    public void setIsVerified(boolean b){
+        this.isVerified=b;
     }
     public Address getAddress(){return address;}
     public void setAddress(Address address){this.address = address;}

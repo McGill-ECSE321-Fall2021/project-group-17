@@ -2,11 +2,11 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
-import ca.mcgill.ecse321.library.dao.LibraryManagementSystemRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
+import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,6 @@ public class LoanService {
     @Autowired
     private LoanRepository loanRepository;
     @Autowired
-    private LibraryManagementSystemRepository systemRepository;
-    @Autowired
     private ItemInstanceRepository itemInstanceRepository;
     @Autowired
     private CustomerRepository customerRepository;
@@ -34,14 +32,9 @@ public class LoanService {
     /**
      * Assumes if no end date is given that it defaults to 21 days
      */
-    public Loan createLoan(Date start, Integer itemId, Integer customerId, Integer systemId, Date returnDate, Integer librarianId){
+    public Loan createLoan(Date start, Integer itemId, Integer customerId, Date returnDate, Integer librarianId){
         Loan loan = new Loan();
 
-        if(systemId == null){
-            throw new LoanException("Cannot find valid LMS to create a loan in");
-        }
-        LibraryManagementSystem system = systemRepository.findLibraryManagementSystemById(systemId);
-        loan.setSystem(system);
         //system.getLoanList().add(loan);
 
         if(itemId != null){
@@ -102,7 +95,7 @@ public class LoanService {
         }
         Loan loan = loanRepository.findLoanById(loanId);
         if(loan == null){
-            throw new LoanException("Cannot find loanId to delete");
+            throw new NotFoundException("Cannot find loan to delete");
         }
         if(customerId == null){
             throw new LoanException("Cannot authorize customer to delete loan");

@@ -9,8 +9,6 @@ public class ItemInstance {
 
     public ItemInstance() {}
 
-    private LibraryManagementSystem system;
-
     public ItemInstance(CheckableItem item) {
         this.checkableItem = item;
     }
@@ -52,13 +50,4 @@ public class ItemInstance {
     public void setLoan(Loan loan) {
         this.loan = loan;
     }*/
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
 }

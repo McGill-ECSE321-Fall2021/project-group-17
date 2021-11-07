@@ -15,7 +15,6 @@ public class LibraryHour {
     private Time endTime;
     private DayOfWeek dayOfWeek;
     private Library library;
-    private LibraryManagementSystem system;
 
 
     public LibraryHour() {}
@@ -70,15 +69,6 @@ public class LibraryHour {
     public void setDayOfWeek(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
-    
-    @ManyToOne
-    @JoinColumn()
-    public LibraryManagementSystem getSystem() {
-        return system;
-    }
-    
-    public void setSystem(LibraryManagementSystem system) {
-        this.system = system;
-    }
+
 
 }

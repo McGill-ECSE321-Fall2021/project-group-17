@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.dto;
 
 import ca.mcgill.ecse321.library.model.*;
 
+import ca.mcgill.ecse321.library.model.CheckableItem;
 
 public class ItemInstanceDTO {
     private int serialNum;
@@ -27,4 +28,5 @@ public class ItemInstanceDTO {
     public LibraryManagementSystem getSystem() { return system; }
 
     public void setSystem(LibraryManagementSystem system) { this.system = system; }
+
 }
