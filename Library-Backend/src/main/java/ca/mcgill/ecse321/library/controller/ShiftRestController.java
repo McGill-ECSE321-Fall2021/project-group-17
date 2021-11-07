@@ -5,13 +5,7 @@ import ca.mcgill.ecse321.library.dto.ShiftDTO;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -27,10 +21,21 @@ public class ShiftRestController {
     @Autowired
     private ShiftService shiftService;
 
-    @PostMapping(value= {"/shift/{id}","/shift/{id}/"})
+    @PostMapping(value= {"/shift/{id}/","/shift/{id}/"})
     @ResponseBody
     public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body) throws IllegalArgumentException{
         return null;
+    }
+
+    @GetMapping(value = {"/shift/{id}/", "/shift/{id}/"})
+    public ShiftDTO getLibraryHour(@PathVariable("id") int id) throws IllegalArgumentException {
+        Shift shift = shiftService.getShift(id);
+        return convertToDTO(shift);
+    }
+    
+    @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
+    public void deleteLibraryHour(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountid", required = false)int accountId){
+        shiftService.deleteShift(accountId, shiftId);
     }
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{

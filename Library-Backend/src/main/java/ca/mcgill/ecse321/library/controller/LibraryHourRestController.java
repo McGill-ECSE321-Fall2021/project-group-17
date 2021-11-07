@@ -47,7 +47,7 @@ public class LibraryHourRestController {
     public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountid", required = false)int accountId){
         service.deleteLibraryHour(accountId, libraryHourid);
     }
-    
+
     private LibraryHourDTO convertToDTO(LibraryHour libraryHour) {
         if (libraryHour == null) {
             throw new IllegalArgumentException("There is no such LibraryHour!");
