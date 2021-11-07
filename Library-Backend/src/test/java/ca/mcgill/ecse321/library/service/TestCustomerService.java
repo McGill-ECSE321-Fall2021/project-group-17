@@ -1,10 +1,7 @@
 package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.ItemInstance;
-import ca.mcgill.ecse321.library.model.Loan;
-import ca.mcgill.ecse321.library.model.Person;
+import ca.mcgill.ecse321.library.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,9 +30,15 @@ public class TestCustomerService {
     private CustomerService service;
     @InjectMocks
     private PersonService service1;
+    @InjectMocks
+    private AddressService service2;
 
     private static final int PERSON_KEY = 3;
     private static final int ADDRESS_KEY = 5;
+    private static final int ADDRESS_STREET_NUMBER = 3456;
+    private static final boolean VERIFIED = true;
+    private static final String ADDRESS_STREET = "Peel";
+    private static final String ADDRESS_COUNTRY = "Canada";
     private static final String PERSON_NAME = "victoria";
     private static final int CUSTOMER_KEY = 2;
     @BeforeEach
@@ -60,10 +63,10 @@ public class TestCustomerService {
             }
         });
         lenient().when(addressRepository.findAddressById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(PERSON_KEY)) {
-                Address address = new Person();
-                person.setId(PERSON_KEY);
-                return person;
+            if(invocation.getArgument(0).equals(ADDRESS_KEY)) {
+                Address address = new Address();
+                address.setId(ADDRESS_KEY);
+                return address;
             } else {
                 return null;
             }
@@ -82,17 +85,19 @@ public class TestCustomerService {
         }
         Customer customer = null;
         try{
-            customer = service.createCustomer(null,person,null,null,null);
+            customer = service.createCustomer(person,0,null,null);
         }
         catch (Exception e){
             fail();
         }
-        assertNotNull(loan);
-        assertEquals(id,loan.getId());
-        assertNotNull(loan.getCustomer());
-        assertEquals(startDate, loan.getCheckedOut());
-        assertEquals(endDate, loan.getReturnDate());
-        assertNotNull(loan.getItemInstance());
+        try{
+            customer.setIsVerified(VERIFIED);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(customer);
+        assertEquals(customer.getIsVerified(),VERIFIED);
     }
 
 
