@@ -1,11 +1,13 @@
 package ca.mcgill.ecse321.library.controller;
 
 
-import ca.mcgill.ecse321.library.dto.*;
-import ca.mcgill.ecse321.library.model.*;
-import ca.mcgill.ecse321.library.service.*;
+import java.sql.Date;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.sql.Date;
-
+import ca.mcgill.ecse321.library.dto.BookDTO;
+import ca.mcgill.ecse321.library.dto.MovieDTO;
+import ca.mcgill.ecse321.library.dto.MusicDTO;
+import ca.mcgill.ecse321.library.dto.NewspaperDTO;
+import ca.mcgill.ecse321.library.model.Book;
+import ca.mcgill.ecse321.library.model.Customer;
+import ca.mcgill.ecse321.library.model.Loan;
+import ca.mcgill.ecse321.library.model.Movie;
+import ca.mcgill.ecse321.library.model.Music;
+import ca.mcgill.ecse321.library.model.Newspaper;
+import ca.mcgill.ecse321.library.service.BookService;
+import ca.mcgill.ecse321.library.service.ItemService;
+import ca.mcgill.ecse321.library.service.MovieService;
+import ca.mcgill.ecse321.library.service.MusicService;
+import ca.mcgill.ecse321.library.service.NewspaperService;
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
+import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 
 
 @CrossOrigin(origins = "*")
@@ -34,7 +51,7 @@ public class ItemRestController {
     @ResponseBody
     public MovieDTO addMovie(@PathVariable("librarianId") int librarianId,
                                   @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
-        Movie movie = movieService.createMovie(body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
+        Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
         		body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
@@ -126,7 +143,7 @@ public class ItemRestController {
     @ResponseBody
     public BookDTO addBook(@PathVariable("librarianId") int librarianId,
                             @RequestBody JsonBodyBook body) throws IllegalArgumentException{
-        Book book = bookService.createBook(body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
+        Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
                 body.getPublisher(), body.getGenre());
         return convertBookToDTO(book);
     }
@@ -210,7 +227,7 @@ public class ItemRestController {
     @ResponseBody
     public MusicDTO addMusic(@PathVariable("librarianId") int librarianId,
                              @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
-        Music music = musicService.createMusic(body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),
+        Music music = musicService.createMusic(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),
                 body.getRecordLabel());
         return convertMusicToDTO(music);
     }
@@ -283,7 +300,7 @@ public class ItemRestController {
     @ResponseBody
     public NewspaperDTO addNewspaper(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyNewspaper body) throws IllegalArgumentException{
-        Newspaper newspaper = newspaperService.createNewspaper(body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
+        Newspaper newspaper = newspaperService.createNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
         return convertNewspaperToDTO(newspaper);
     }
 
@@ -343,32 +360,32 @@ public class ItemRestController {
     
     // delete music, movie, book, newspaper
     
-    @PostMapping(value= {"/item/movie/{librarianId}/delete/{id}", "/item/movie/{librarianId}/delete/{newspaperId}/"})
+    @DeleteMapping(value= {"/item/movie/{librarianId}/{id}", "/item/movie/{librarianId}/{id}/"})
     @ResponseBody
     public void deleteMovie(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
-    	movieService.deleteMovie(id);
+    	movieService.deleteMovie(id, librarianId);
     }
     
-    @PostMapping(value= {"/item/book/{librarianId}/delete/{id}", "/item/book/{librarianId}/delete/{newspaperId}/"})
+    @DeleteMapping(value= {"/item/book/{librarianId}/{id}", "/item/book/{librarianId}/{id}/"})
     @ResponseBody
     public void deleteBook(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
-    	bookService.deleteBook(id);
+    	bookService.deleteBook(id, librarianId);
     }
     
-    @PostMapping(value= {"/item/music/{librarianId}/delete/{id}", "/item/music/{librarianId}/delete/{newspaperId}/"})
+    @DeleteMapping(value= {"/item/music/{librarianId}/{id}", "/item/music/{librarianId}/{id}/"})
     @ResponseBody
     public void deleteMusic(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
-    	musicService.deleteMusic(id);
+    	musicService.deleteMusic(id, librarianId);
     }
     
-    @PostMapping(value= {"/item/newspaper/{librarianId}/delete/{id}", "/item/newspaper/{librarianId}/delete/{id}/"})
+    @DeleteMapping(value= {"/item/newspaper/{librarianId}/{id}", "/item/newspaper/{librarianId}/{id}/"})
     @ResponseBody
     public void deleteNewspaper(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
-    	newspaperService.deleteNewspaper(id);
+    	newspaperService.deleteNewspaper(id, librarianId);
     }
     
 }

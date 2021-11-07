@@ -1,20 +1,40 @@
 package ca.mcgill.ecse321.library.service;
 
-import ca.mcgill.ecse321.library.dao.BookRepository;
-import ca.mcgill.ecse321.library.model.Book;
-import ca.mcgill.ecse321.library.model.Item;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ca.mcgill.ecse321.library.dao.BookRepository;
+import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
+import ca.mcgill.ecse321.library.dao.LibrarianRepository;
+import ca.mcgill.ecse321.library.model.Book;
+import ca.mcgill.ecse321.library.model.Item;
+import ca.mcgill.ecse321.library.model.Librarian;
+import ca.mcgill.ecse321.library.service.Exception.BookException;
+import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 public class BookService {
     @Autowired
     BookRepository bookRepository;
+    @Autowired
+    LibrarianRepository librarianRepository;
+    @Autowired
+    CheckableItemRepository checkableItemRepository;
     @Transactional
-    public Book createBook(int id, String name, Date date,String author, String publisher, String genre){
-        Book b= new Book();
+    public Book createBook(int librarianId, int id, String name, Date date,String author, String publisher, String genre){
+    	 Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+         if(librarian == null){
+             throw new PersonException("Librarian not found in request");
+         }
+         if (!(librarian instanceof Librarian)) {
+         	throw new PersonException("User must be a librarian");
+         }
+    	Book b= new Book();
         b.setId(id);
         b.setName(name);
         b.setDatePublished(date);
@@ -24,9 +44,36 @@ public class BookService {
         bookRepository.save(b);
         return b;
     }
-    @Transactional
+    /*@Transactional
     public void deleteBook(int id){
     	bookRepository.deleteById(id);
+    }*/
+    /**
+     * Used to delete item
+     * @param bookId
+     * @param customerId
+     */
+    @Transactional
+    public void deleteBook(Integer bookId, Integer librarianId){
+        if(bookId == null){
+            throw new BookException("Cannot find book with id to delete");
+        }
+        Optional<Item> book = bookRepository.findById(bookId);
+        if(book == null){
+            throw new NotFoundException("Cannot find book to delete");
+        }
+        if(librarianId == null){
+            throw new BookException("Cannot authorize librarian to delete book");
+        }
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if(librarian == null){
+            throw new PersonException("Librarian not found in request");
+        }
+        if (!(librarian instanceof Librarian)) {
+        	throw new PersonException("User must be a librarian");
+        }
+        checkableItemRepository.deleteById(bookId);
+        book = null;
     }
     @Transactional
     public Book getBook(Integer bookId){
