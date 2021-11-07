@@ -545,11 +545,12 @@ Written by Jerry Xia
 
         int serialNum = itemInstance.getSerialNum();
 
-		int id = 6789;
+
 		Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
 		Date pickupDay = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-		Reservation reservation = new Reservation(id, dateReserved, pickupDay, itemInstance, customer);
+		Reservation reservation = new Reservation(0, dateReserved, pickupDay, itemInstance, customer);
 		reservationRepository.save(reservation);
+        int id = reservation.getId();
 		reservation = reservationRepository.findReservationById(id);
 		assertNotNull(reservation);
 		assertEquals(id, reservation.getId());
@@ -580,14 +581,15 @@ Written by Jerry Xia
         customerRepository.save(c);
         int customerId = c.getId();
 
-        Integer id1 = 345;
-        Integer id2 = 456;
+
         Date dateReserved = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 12));
         Date pickupDay = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER, 17));
-        Reservation r1 = new Reservation(id1, dateReserved, pickupDay, item1, c);
-        Reservation r2 = new Reservation(id2, dateReserved, pickupDay, item2, c);
+        Reservation r1 = new Reservation(0, dateReserved, pickupDay, item1, c);
+        Reservation r2 = new Reservation(0, dateReserved, pickupDay, item2, c);
         reservationRepository.save(r1);
         reservationRepository.save(r2);
+        Integer id1 = r1.getId();
+        Integer id2 = r2.getId();
 
         List<Reservation> reservations = reservationRepository.findReservationByDateReserved(dateReserved);
         assertNotNull(reservations);
