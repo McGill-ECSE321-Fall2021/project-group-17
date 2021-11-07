@@ -18,6 +18,8 @@ import java.time.DayOfWeek;
 public class LibraryHourRestController {
     @Autowired
     private LibraryHourService service;
+    @Autowired
+    private LibraryRestController libraryService;
 
     @GetMapping(value = {"/libraryhour/{id}", "/libraryhour/{id}/"})//
     public LibraryHourDTO getLibraryHour(@PathVariable("id") int id) throws IllegalArgumentException {
@@ -33,14 +35,19 @@ public class LibraryHourRestController {
         return convertToDTO(libraryHour);
     }
 
-    @PutMapping(value = {"/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/{libraryid}/", "/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/{libraryid}/"})
-    @ResponseBody
+    @PutMapping(value = {"/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/", "/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/"})
     public void modifyLibraryHours(@PathVariable("accountid") int accountId, @PathVariable("libhourid") int libHourId,
                                 @PathVariable("starttime") Time startTime, @PathVariable("endtime") Time endTime,
-                                @PathVariable("dayofweek") DayOfWeek DOW, @PathVariable("libraryid") int libraryId){
-        service.updateLibraryHour(accountId, libHourId, startTime, endTime, DOW, libraryId);//do we need to use JsonBody or Path Variable??
+                                @PathVariable("dayofweek") DayOfWeek DOW){
+        //do we need to use JsonBody or Path Variable??
+        service.updateLibraryHour(accountId, libHourId, startTime, endTime, DOW);
     }
 
+    @DeleteMapping(value = {"/libraryhour/{libraryhourid}/", "/libraryhour/{libraryhourid}/"})
+    public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountid", required = false)int accountId){
+        service.deleteLibraryHour(accountId, libraryHourid);
+    }
+    
     private LibraryHourDTO convertToDTO(LibraryHour libraryHour) {
         if (libraryHour == null) {
             throw new IllegalArgumentException("There is no such LibraryHour!");

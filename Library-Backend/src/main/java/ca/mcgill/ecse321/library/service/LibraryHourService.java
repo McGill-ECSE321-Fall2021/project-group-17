@@ -31,8 +31,6 @@ public class LibraryHourService {
     private LibraryRepository libraryRepository;;
     @Autowired
     private PersonRoleRepository personRoleRepository;
-    @Autowired
-    private LibraryService libraryService;
 	
     @Transactional
     public LibraryHour createLibraryHour(Integer currentUserId, Library library, Time startTime, Time endTime, DayOfWeek DOW){
@@ -72,20 +70,16 @@ public class LibraryHourService {
     }
 
     @Transactional
-    public LibraryHour updateLibraryHour(Integer accountId, Integer libHourId, Time startTime, Time endTime, DayOfWeek DOW, Integer libraryId){
+    public LibraryHour updateLibraryHour(Integer accountId, Integer libHourId, Time startTime, Time endTime, DayOfWeek DOW){
         if(accountId < 0 || accountId == null) throw new OnlineAccountException("Invalid account id");
         PersonRole activeUser = personRoleRepository.findPersonRoleById(accountId);
         if(activeUser == null) throw new OnlineAccountException("There is no user by this account id");
         if(libHourId < 0 || libHourId == null) throw new LibraryHourException("Invalid Id");
         if(startTime.toLocalTime().isAfter(endTime.toLocalTime())) throw new LibraryHourException("Invalid Start or End Time");
         if(DOW == null)throw new LibraryHourException("Invalid Day of Week");
-        if(libraryId == null || libraryId < 0) throw new LibraryHourException("Invalid Library");
-        Library library = libraryService.getLibrary(libraryId);
-        if(library == null) throw new LibraryException("There exists no library by that id");
         LibraryHour libraryHour = libraryHourRepository.findLibraryHourById(libHourId);
         if(libraryHour == null) throw new LibraryHourException("There does not exist a Library Hour by the Id");
 
-        libraryHour.setLibrary(library);
         libraryHour.setDayOfWeek(DOW);
         libraryHour.setEndTime(endTime);
         libraryHour.setStartTime(startTime);
@@ -94,13 +88,16 @@ public class LibraryHourService {
     }
 
     @Transactional
-    public LibraryHour deleteLibraryHour(Integer id){
-        if(id < 0 || id == null) throw new LibraryHourException("Invalid Id");
+    public LibraryHour deleteLibraryHour(Integer accountId, Integer libraryHourId){
+        if(libraryHourId < 0 || libraryHourId == null) throw new LibraryHourException("Invalid Id");
 
-        LibraryHour libraryHour = libraryHourRepository.findLibraryHourById(id);
-        if(libraryHour == null) throw new LibraryHourException("There does not exist a Library hour by Id: " + id.toString());
+        LibraryHour libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
+        if(libraryHour == null) throw new LibraryHourException("There does not exist a Library hour by Id");
 
-        libraryHourRepository.deleteById(id);
+        if(accountId == null || accountId < 0) throw new OnlineAccountException("Invalid Account Id");
+        PersonRole account = personRoleRepository.findPersonRoleById(accountId);
+        if(!(account instanceof HeadLibrarian)) throw new OnlineAccountException("Active Account is Unauthorized for this Action");
+        libraryHourRepository.deleteById(accountId);
         return null;
     }
 
