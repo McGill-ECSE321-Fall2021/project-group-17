@@ -104,8 +104,6 @@ public class OnlineAccountService {
 
         onlineAccountRepository.save(account);
 
-        System.out.println("Username is: " + account.getUsername() + " " + account.getPersonRole().getId());
-
         return account;
     }
 
