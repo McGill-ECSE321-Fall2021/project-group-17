@@ -60,28 +60,8 @@ public class ReservationService {
         }
         r.setItemInstance(i);
         //TODO add in check for item already on reservation
-        r.setId(generateId((List<Reservation>) reservationRepository.findAll()));
         reservationRepository.save(r);
         return r;
-    }
-    private int generateId(List<Reservation> reservations){
-        int i = 0;
-        reservations.sort((o1, o2) -> {
-            if(o1.getId() == o2.getId()){
-                return 0;
-            }
-            else if(o1.getId() < o2.getId()){
-                return -1;
-            }
-            return 1;
-        });
-        for(Reservation reservation : reservations){
-            if(i != reservation.getId()){
-                return i;
-            }
-            i++;
-        }
-        return i + 1;
     }
     @Transactional
     public Reservation getReservation(Integer id, Integer customerId){
@@ -115,8 +95,7 @@ public class ReservationService {
     }
 
     @Transactional
-    public Reservation updateReservation(Integer id,Date startDate, Date endDate, Integer customerId,
-                                         Integer itemInstanceId, Integer systemId){
+    public Reservation updateReservation(Integer id,Date startDate, Date endDate, Integer customerId, Integer itemInstanceId){
         if(id == null){
             throw new ReservationException("Reservation id cannot be null");
         }
