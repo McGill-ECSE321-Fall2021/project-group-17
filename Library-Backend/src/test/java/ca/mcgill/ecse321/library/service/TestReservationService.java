@@ -694,6 +694,34 @@ public class TestReservationService {
         assertNull(r);
         assertEquals(error,"Invalid customer provided");
     }
+
+    @Test
+    public void testCreateReservationNullSystem(){
+        Reservation r = null;
+        String error = "";
+        try{
+            //r = service.createReservation(startDate,endDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot have null systemId");
+    }
+
+    @Test
+    public void testCreateReservationMissingSystem(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.createReservation(startDate,endDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"System not found");
+    }
     //END CREATE RESERVATION TESTS
 
 }

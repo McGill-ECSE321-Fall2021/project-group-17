@@ -17,7 +17,6 @@ public class LibraryService {
     public Library createLibrary(int id){
         Library library = new Library();
         library.setId(id);
-
         
         libraryRepository.save(library);
         return library;
