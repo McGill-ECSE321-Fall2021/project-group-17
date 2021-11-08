@@ -109,6 +109,52 @@ public class LoanService {
     }
 
     /**
+     * Update loan
+     * @param id
+     * @param checkedOut
+     * @param returnDate
+     * @param customerId
+     * @param itemInstanceId
+     * @return
+     */
+
+    @Transactional
+    public Loan updateLoan(Integer id,Date checkedOut, Date returnDate, Integer customerId, Integer itemInstanceId){
+        if(id == null){
+            throw new LoanException("Loan id cannot be null");
+        }
+        Loan r = loanRepository.findLoanById(id);
+        if(r == null){
+            throw new NotFoundException("Loan cannot be found");
+        }
+        if(checkedOut != null){
+            //TODO add validation if date is before now
+            r.setCheckedOut(checkedOut);
+        }
+        if(returnDate != null){
+            r.setReturnDate(returnDate);
+        }
+        if(customerId != null){
+            Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
+            if(c == null){
+                throw new LoanException("Cannot find person to update loan to");
+            }
+            r.setCustomer(c);
+        }
+        if(itemInstanceId != null){
+            ItemInstance i = itemInstanceRepository.findItemInstanceBySerialNum(itemInstanceId);
+            if(i == null){
+                throw new LoanException("Cannot find item instance to update loan to");
+            }
+            r.setItemInstance(i);
+        }
+        loanRepository.save(r);
+        return r;
+    }
+
+
+
+    /**
      * view active loans
      * @param id
      */

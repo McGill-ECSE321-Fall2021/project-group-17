@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.LoanDTO;
-import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.service.LoanService;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,11 +12,9 @@ import java.sql.Date;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.criteria.CriteriaBuilder;
 
 
 @RestController
@@ -38,6 +35,11 @@ public class LoanRestController {
         service.deleteLoan(id,customerId);
     }
 
+    @PatchMapping({"/loan/{id}","/loan/{id}/"})
+    public LoanDTO updateLoan(@PathVariable Integer id, @RequestBody LoanRestController.JsonBody body){
+        return convertToDto(service.updateLoan(id,body.getCheckedOut(),body.getReturnDate(), body.getCustomerId(),
+                body.getItemId()));
+    }
 
     //TODO get vs return date get
     @GetMapping("/loan/returndate/{id}")
