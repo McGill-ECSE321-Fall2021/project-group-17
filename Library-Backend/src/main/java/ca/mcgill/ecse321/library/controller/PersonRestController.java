@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -21,9 +23,13 @@ public class PersonRestController {
 
     //MAPPING SECTION
     @GetMapping(value = {"/person/{name}", "/person/{name}/"})
-    public PersonDTO getPerson(@PathVariable("name") String name) throws IllegalArgumentException{
-        Person person = service.createPerson(name,null);
-        return convertToDTO(person);
+    public List<PersonDTO> getPerson(@PathVariable("name") String name) throws IllegalArgumentException{
+        return service.getPerson(name).stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = {"/person/{id}", "/person/{id}/"})
+    public PersonDTO getPerson(@PathVariable("id") Integer id) throws IllegalArgumentException{
+        return convertToDTO( service.getPerson(id));
     }
 
     @PostMapping(value= {"/person/{name}","/person/{name}/"})
@@ -34,6 +40,10 @@ public class PersonRestController {
         return convertToDTO(person);
     }
 
+    @PatchMapping(value = {"/person/{id}", "/person/{id}/"})
+    public PersonDTO updatePerson(@PathVariable Integer id, @RequestBody JsonBody body){
+        return convertToDTO( service.updatePerson(id,body.getPersonRoles()));
+    }
 
 
     //DTO CONVERSION SECTION
