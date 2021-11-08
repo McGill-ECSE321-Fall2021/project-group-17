@@ -45,6 +45,10 @@ public class PersonRestController {
         return convertToDTO( service.updatePerson(id,body.getPersonRoles()));
     }
 
+    @DeleteMapping(value = {"/person/{id}", "/person/{id}/"})
+    public void deletePerson(@PathVariable Integer id){
+        service.deletePerson(id);
+    }
 
     //DTO CONVERSION SECTION
 

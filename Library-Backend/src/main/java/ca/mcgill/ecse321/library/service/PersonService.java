@@ -75,4 +75,9 @@ public class PersonService {
         }
         return p;
     }
+
+    @Transactional
+    public void deletePerson(Integer id){
+        personRepository.deleteById(id);
+    }
 }
