@@ -133,14 +133,14 @@ public class ReservationService {
         }
         Reservation reservation = reservationRepository.findReservationById(id);
         if(reservation == null){
-            throw new ReservationException("Cannot find reservation to delete");
+            throw new NotFoundException("Cannot find reservation to delete");
         }
         if(customerId == null){
             throw new ReservationException("Cannot authorize customer to delete loan");
         }
         Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
         if(customer == null){
-            throw new LoanException("Owner of loan does not match customer in request");
+            throw new ReservationException("Owner of loan does not match customer in request");
         }
         reservationRepository.delete(reservation);
         reservation =  null;

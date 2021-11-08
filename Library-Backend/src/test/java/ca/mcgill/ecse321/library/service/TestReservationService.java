@@ -414,6 +414,8 @@ public class TestReservationService {
 
     private static final Date startDate = Date.valueOf("2021-10-11");
     private static final Date endDate = Date.valueOf("2021-10-31");
+    private static final Date newStartDate = Date.valueOf("2021-11-11");
+    private static final Date newEndDate = Date.valueOf("2021-11-31");
 
     @BeforeEach
     public void setMockOutput() {
@@ -424,6 +426,11 @@ public class TestReservationService {
                 Customer customer = new Customer();
                 customer.setId(CUSTOMER_KEY);
                 reservation.setCustomer(customer);
+                reservation.setPickupDay(endDate);
+                reservation.setDateReserved(startDate);
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.setSerialNum(ITEM_INSTANCE_KEY);
+                reservation.setItemInstance(itemInstance);
                 return reservation;
             } else {
                 return null;
@@ -445,7 +452,13 @@ public class TestReservationService {
                 Customer customer = new Customer();
                 customer.setId(CUSTOMER_KEY);
                 return customer;
-            } else {
+            }
+            else if(invocation.getArgument(0).equals(CUSTOMER_KEY+10)) {
+                Customer customer = new Customer();
+                customer.setId(CUSTOMER_KEY+10);
+                return customer;
+            }
+            else {
                 return null;
             }
         });
@@ -453,6 +466,10 @@ public class TestReservationService {
             if(invocation.getArgument(0).equals(ITEM_INSTANCE_KEY)) {
                 ItemInstance itemInstance = new ItemInstance();
                 itemInstance.setSerialNum(ITEM_INSTANCE_KEY);
+                return itemInstance;
+            } else  if(invocation.getArgument(0).equals(ITEM_INSTANCE_KEY+10)) {
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.setSerialNum(ITEM_INSTANCE_KEY+10);
                 return itemInstance;
             } else {
                 return null;
@@ -694,35 +711,212 @@ public class TestReservationService {
         assertNull(r);
         assertEquals(error,"Invalid customer provided");
     }
-
-    @Test
-    public void testCreateReservationNullSystem(){
-        Reservation r = null;
-        String error = "";
-        try{
-            //r = service.createReservation(startDate,endDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null,null);
-        }
-        catch (Exception e){
-            error = e.getMessage();
-        }
-        assertNull(r);
-        assertEquals(error,"Cannot have null systemId");
-    }
-
-    @Test
-    public void testCreateReservationMissingSystem(){
-        Reservation r = null;
-        String error = "";
-        try{
-            r = service.createReservation(startDate,endDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null);
-        }
-        catch (Exception e){
-            error = e.getMessage();
-        }
-        assertNull(r);
-        assertEquals(error,"System not found");
-    }
     //END CREATE RESERVATION TESTS
+
+    //START UPDATE RESERVATION TESTS
+    @Test
+    public void testUpdateReservationValid(){
+        Reservation r = null;
+        try{
+            r = service.updateReservation(RESERVATION_KEY, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), RESERVATION_KEY);
+        assertEquals(r.getDateReserved(),newStartDate);
+        assertEquals(r.getPickupDay(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+    @Test
+    public void testUpdateReservationNoStartDate(){
+        Reservation r = null;
+        try{
+            r = service.updateReservation(RESERVATION_KEY, null,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), RESERVATION_KEY);
+        assertEquals(r.getDateReserved(),startDate);
+        assertEquals(r.getPickupDay(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+    @Test
+    public void testUpdateReservationNoEndDate(){
+        Reservation r = null;
+        try{
+            r = service.updateReservation(RESERVATION_KEY, newStartDate,null,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), RESERVATION_KEY);
+        assertEquals(r.getDateReserved(),newStartDate);
+        assertEquals(r.getPickupDay(),endDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+    @Test
+    public void testUpdateReservationNullItemInstance(){
+        Reservation r = null;
+        try{
+            r = service.updateReservation(RESERVATION_KEY, newStartDate,newEndDate,CUSTOMER_KEY+10, null);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), RESERVATION_KEY);
+        assertEquals(r.getDateReserved(),newStartDate);
+        assertEquals(r.getPickupDay(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY);
+    }
+
+    @Test
+    public void testUpdateReservationMissingItemInstance(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot find item instance to update reservation to");
+    }
+
+    @Test
+    public void testUpdateReservationNullCustomer(){
+        Reservation r = null;
+        try{
+            r = service.updateReservation(RESERVATION_KEY, newStartDate,newEndDate,null, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), RESERVATION_KEY);
+        assertEquals(r.getDateReserved(),newStartDate);
+        assertEquals(r.getPickupDay(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+    @Test
+    public void testUpdateReservationMissingCustomer(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY, newStartDate,newEndDate,CUSTOMER_KEY+1, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot find person to update reservation to");
+    }
+
+    @Test
+    public void testUpdateReservationNullReservation(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(null, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Reservation id cannot be null");
+    }
+
+    @Test
+    public void testUpdateReservationMissingReservation(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY+1, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Reservation cannot be found");
+    }
+
+
+    //END UPDATE RESERVATION TESTS
+
+    //START DELETE RESERVATION TESTS
+    @Test
+    public void testDeleteReservationValid(){
+        try{
+            service.deleteReservation(RESERVATION_KEY,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+    }
+
+    @Test
+    public void testDeleteReservationNullCustomer(){
+        String error = "";
+        try{
+            service.deleteReservation(RESERVATION_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot authorize customer to delete loan");
+    }
+
+    @Test
+    public void testDeleteReservationNotExistingCustomer(){
+        String error = "";
+        try{
+            service.deleteReservation(RESERVATION_KEY,CUSTOMER_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Owner of loan does not match customer in request");
+    }
+
+    @Test
+    public void testDeleteReservationNullReservation(){
+        String error = "";
+        try{
+            service.deleteReservation(null,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot find reservationId to delete");
+    }
+
+    @Test
+    public void testDeleteReservationMissingReservation(){
+        String error = "";
+        try{
+            service.deleteReservation(RESERVATION_KEY + 1,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot find reservation to delete");
+    }
+    //END DELETE RESERVATION TESTS
 
 }
 
