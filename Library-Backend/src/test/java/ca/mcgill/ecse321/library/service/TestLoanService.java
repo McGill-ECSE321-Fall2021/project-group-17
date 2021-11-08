@@ -157,6 +157,7 @@ public class TestLoanService {
         assertNull(loan);
         assertEquals("Cannot create loan with no start date",error);
     }
+
     @Test
     public void testCreateLoanStartAfterEnd(){
         int id = LOAN_KEY;
@@ -235,7 +236,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateNotFound(){
+    public void testGetDateLoanNotFound(){
         String error = null;
         try{
             loanService.viewLoanReturnDate(LOAN_KEY+1, CUSTOMER_KEY);
@@ -254,6 +255,28 @@ public class TestLoanService {
             error = e.getMessage();
         }
         assertEquals("Please provide a valid loan ID", error);
+    }
+
+    @Test
+    public void testGetDateByNullId(){
+        String error = null;
+        try{
+            loanService.viewLoanReturnDate(LOAN_KEY,null);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals("Please provide a valid customer ID", error);
+    }
+
+    @Test
+    public void testGetDateCustomerNotFound(){
+        String error = null;
+        try{
+            loanService.viewLoanReturnDate(LOAN_KEY, CUSTOMER_KEY+1);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals("Customer does not exist", error);
     }
 
 
