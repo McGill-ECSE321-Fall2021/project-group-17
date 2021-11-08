@@ -28,10 +28,8 @@ public class ShiftService {
 
     @Transactional
     public Shift createShift(Time startTime, Time endTime, DayOfWeek DOW, Librarian librarian){
-        Shift shift = new Shift();
+        Shift shift = new Shift(startTime, endTime, DOW);
         shift.setLibrarian(librarian);
-        shift.setStartTime(startTime);
-        shift.setDayOfWeek(DOW);
         shiftRepository.save(shift);
         return shift;
     }

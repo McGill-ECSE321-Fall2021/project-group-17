@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.library.controller;
 import ca.mcgill.ecse321.library.dto.CustomerDTO;
 import ca.mcgill.ecse321.library.dto.ShiftDTO;
 import ca.mcgill.ecse321.library.model.*;
+import ca.mcgill.ecse321.library.service.LibrarianService;
 import ca.mcgill.ecse321.library.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +21,19 @@ import java.time.DayOfWeek;
 public class ShiftRestController {
     @Autowired
     private ShiftService shiftService;
+    @Autowired
+    private LibrarianService librarianService;
 
     @PostMapping(value= {"/shift/{id}/","/shift/{id}/"})
     @ResponseBody
     public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body) throws IllegalArgumentException{
-        return null;
+        Librarian librarian = librarianService.getLibrarian(body.getLibrarianId());
+        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), librarian);
+        return convertToDTO(shift);
     }
 
     @GetMapping(value = {"/shift/{id}/", "/shift/{id}/"})
-    public ShiftDTO getLibraryHour(@PathVariable("id") int id) throws IllegalArgumentException {
+    public ShiftDTO getShift(@PathVariable("id") int id) throws IllegalArgumentException {
         Shift shift = shiftService.getShift(id);
         return convertToDTO(shift);
     }
@@ -42,7 +47,7 @@ public class ShiftRestController {
         private Time startTime;
         private Time endTime;
         private DayOfWeek dayOfWeek;
-        private Librarian librarian;
+        private Integer librarianId;
 
         public Time getStartTime() {
             return startTime;
@@ -68,12 +73,12 @@ public class ShiftRestController {
             this.dayOfWeek = dayOfWeek;
         }
 
-        public Librarian getLibrarian() {
-            return librarian;
+        public Integer getLibrarianId() {
+            return librarianId;
         }
 
-        public void setLibrarian(Librarian librarian) {
-            this.librarian = librarian;
+        public void setLibrarianId(Integer Id) {
+            this.librarianId = Id;
         }
 
         public JsonBody(){}
