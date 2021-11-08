@@ -39,21 +39,38 @@ public class TestLoanService {
 
     @InjectMocks
     private LoanService loanService;
-    private ItemService itemService;
 
     private static final int LOAN_KEY = 1;
     private static final int CUSTOMER_KEY = 2;
     private static final int ITEM_INSTANCE_KEY = 3;
-    private static final int loanID = 123;
-    private static final int customerID = 456;
-    private static final int LIBRARY_MANAGEMENT_SYSTEM_KEY = 4;
 
 
     private static final Date startDate = Date.valueOf("2021-10-11");
     private static final Date endDate = Date.valueOf("2021-10-31");
 
+    private static final Date newStartDate = Date.valueOf("2021-11-11");
+    private static final Date newEndDate = Date.valueOf("2021-11-31");
+
     @BeforeEach
     public void setMockOutput() {
+        lenient().when(loanRepository.findLoanById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(LOAN_KEY)) {
+                Loan loan = new Loan();
+                loan.setId(LOAN_KEY);
+                Customer customer = new Customer();
+                customer.setId(CUSTOMER_KEY);
+                loan.setCustomer(customer);
+                loan.setReturnDate(endDate);
+                loan.setCheckedOut(startDate);
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.setSerialNum(ITEM_INSTANCE_KEY);
+                loan.setItemInstance(itemInstance);
+                return loan;
+            } else {
+                return null;
+            }
+        });
+
         lenient().when(loanRepository.findLoanById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(LOAN_KEY)) {
                 Loan loan = new Loan();
@@ -80,7 +97,12 @@ public class TestLoanService {
                 Customer customer = new Customer();
                 customer.setId(CUSTOMER_KEY);
                 return customer;
-            } else {
+            } else if(invocation.getArgument(0).equals(CUSTOMER_KEY+10)) {
+                Customer customer = new Customer();
+                customer.setId(CUSTOMER_KEY+10);
+                return customer;
+            }
+            else {
                 return null;
             }
         });
@@ -89,11 +111,70 @@ public class TestLoanService {
                 ItemInstance itemInstance = new ItemInstance();
                 itemInstance.setSerialNum(ITEM_INSTANCE_KEY);
                 return itemInstance;
+            } else  if(invocation.getArgument(0).equals(ITEM_INSTANCE_KEY+10)) {
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.setSerialNum(ITEM_INSTANCE_KEY+10);
+                return itemInstance;
             } else {
                 return null;
             }
         });
     }
+
+    //UPDATE LOAN
+
+    @Test
+    public void testUpdateLoanValid(){
+        Loan r = null;
+        try{
+            r = service.updateLoan(LOAN_KEY, startDate,endDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), LOAN_KEY);
+        assertEquals(r.getCheckedOut(),startDate);
+        assertEquals(r.getReturnDate(),endDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+    @Test
+    public void testUpdateLoanNoCheckOutDate(){
+        Loan r = null;
+        try{
+            r = service.updateLoan(LOAN_KEY, null,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), LOAN_KEY);
+        assertEquals(r.getCheckedOut(),startDate);
+        assertEquals(r.getReturnDate(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+    @Test
+    public void testUpdateLoanNoReturnDate(){
+        Loan r = null;
+        try{
+            r = service.updateLoan(LOAN_KEY, newStartDate,null,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), LOAN_KEY);
+        assertEquals(r.getCheckedOut(),newStartDate);
+        assertEquals(r.getReturnDate(),endDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+
 
     @Test
     public void testGetSystemById(){
@@ -175,6 +256,8 @@ public class TestLoanService {
     }
 
 
+    // VIEW ACTIVE LOANS
+
     @Test
     public void testGetInventory(){
         List <LoanDTO> loans = null;
@@ -188,7 +271,6 @@ public class TestLoanService {
         assertEquals(loans.size(),1);
         assertEquals(loans.get(0).getId(),LOAN_KEY);
     }
-
 
     @Test
     public void testGetLoan(){
@@ -222,6 +304,9 @@ public class TestLoanService {
         assertEquals("Cannot find customer", error);
     }
 
+
+
+    // VIEW LOAN RETURN DATE
 
     @Test
     public void testGetDate(){
