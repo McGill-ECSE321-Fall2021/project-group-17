@@ -2,8 +2,10 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
+import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
 import ca.mcgill.ecse321.library.model.Customer;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
+import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,15 @@ public class OnlineAccountService {
     @Autowired
     OnlineAccountRepository onlineAccountRepository;
     @Autowired
-    CustomerRepository customerRepository;
+    PersonRoleRepository personRoleRepository;
 
     @Transactional
-    public OnlineAccount createOnlineAccount(String username, String password) {
+    public OnlineAccount createOnlineAccount(String username, String password, int personRoleId) {
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
+        account.setPersonRole(personRole);
         onlineAccountRepository.save(account);
         return account;
     }
@@ -33,7 +37,7 @@ public class OnlineAccountService {
     }
 
     @Transactional
-    public void logout(String username){
+    public OnlineAccount logout(String username){
 
         OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
         if(o==null){
@@ -42,9 +46,11 @@ public class OnlineAccountService {
         if (username == null) {
             throw new OnlineAccountException("Cannot find username to delete account.");
         }
-        
+
         o.setLoggedIn(false);
         onlineAccountRepository.save(o);
+
+        return o;
     }
 
     @Transactional
@@ -63,9 +69,9 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find customerId to delete account.");
         }
 
-        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        PersonRole personRole = personRoleRepository.findPersonRoleById(customerId);
 
-        if (customer == null) {
+        if (personRole == null) {
             throw new OnlineAccountException("Cannot find customer to delete account.");
         }
 
@@ -81,7 +87,7 @@ public class OnlineAccountService {
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
 
         if (account == null) {
-            throw new OnlineAccountException("Cannot find account by username.");
+            throw new OnlineAccountException("Username is: " + username  + "\nCannot find account by username.");
         }
 
         if (password == null) {
@@ -96,7 +102,7 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Password is incorrect. User cannot be logged in.");
         }
 
-        //onlineAccountRepository.save(account);
+        onlineAccountRepository.save(account);
 
         return account;
     }

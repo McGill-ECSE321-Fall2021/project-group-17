@@ -20,7 +20,7 @@ public class ItemInstanceService {
     @Transactional
     public ItemInstance createItemInstance(int serialNum, Integer checkableItemId) {
         ItemInstance itemInstance = new ItemInstance();
-        itemInstance.setSerialNum(serialNum);
+        //itemInstance.setSerialNum(serialNum);
 
         if (checkableItemId != null) {
             Item item = checkableItemRepository.findItemById(checkableItemId);

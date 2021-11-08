@@ -17,6 +17,7 @@ public class CustomerService {
     public Customer createCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
         Customer customer = new Customer();
         customer.setPenalty(penalty);
+        customer.setAddress(address);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
         customerRepository.save(customer);

@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "783d24b8-cb65-403c-bb34-d3b8e3db3110",
+		"name": "Collection 1 (reservation)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"person_id\", pm.response.json().id);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/person/tom",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"person",
+						"tom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Customer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"customer_id\", pm.response.json().id);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"penalty\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/customer/1",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"customer",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/customer/{{customer_id}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"customer",
+						"{{customer_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Item Instance",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"item_instance_id\", pm.response.json().serialNum);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/iteminstance/{{item_instance_id}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"iteminstance",
+						"{{item_instance_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Reservation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"reservation_id\", pm.response.json().id);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dateReserved\": \"2021-10-12\",\n    \"pickupDay\": \"2021-10-22\",\n    \"customerId\": {{customer_id}},\n    \"itemInstanceId\": {{item_instance_id}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/reservation/",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"reservation",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reservation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/reservation/{{reservation_id}}?customerId={{customer_id}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"reservation",
+						"{{reservation_id}}"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "{{customer_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -12,8 +12,11 @@ public class NewspaperDTO {
 
     }
 
-    public NewspaperDTO(int id) {
+    public NewspaperDTO(int id, String name, Date datePublished, String headline) {
         this.id = id;
+        this.name = name;
+        this.datePublished = datePublished;
+        this.headline = headline;
     }
 
     public int getId() {

@@ -15,7 +15,7 @@ public class Reservation {
     public Reservation() { }
 
     public Reservation(Integer id, Date dateReserved, Date pickupDay, ItemInstance itemInstance, Customer customer) {
-        this.id = id;
+        //this.id = id;
         this.dateReserved = dateReserved;
         this.pickupDay = pickupDay;
         this.itemInstance = itemInstance;
@@ -23,8 +23,8 @@ public class Reservation {
     }
 
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public Integer getId() {
         return this.id;
     }
 
