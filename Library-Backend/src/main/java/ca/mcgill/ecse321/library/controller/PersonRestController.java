@@ -32,17 +32,16 @@ public class PersonRestController {
         return convertToDTO( service.getPerson(id));
     }
 
-    @PostMapping(value= {"/person/{name}","/person/{name}/"})
+    @PostMapping(value= {"/person/","/person"})
     @ResponseBody
-    public PersonDTO createPerson(@PathVariable("name") String name,
-                                  @RequestBody JsonBody body) throws IllegalArgumentException{
-        Person person = service.createPerson(name, body.getPersonRoles());
+    public PersonDTO createPerson(@RequestBody JsonBody body) throws IllegalArgumentException{
+        Person person = service.createPerson(body.getName(), body.getPersonRoles());
         return convertToDTO(person);
     }
 
     @PatchMapping(value = {"/person/{id}", "/person/{id}/"})
     public PersonDTO updatePerson(@PathVariable Integer id, @RequestBody JsonBody body){
-        return convertToDTO( service.updatePerson(id,body.getPersonRoles()));
+        return convertToDTO( service.updatePerson(id,body.getName(),body.getPersonRoles()));
     }
 
     @DeleteMapping(value = {"/person/{id}", "/person/{id}/"})
@@ -66,6 +65,7 @@ public class PersonRestController {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         List<Integer> personRoles;
+        String name;
 
         public List<Integer > getPersonRoles() {
             return personRoles;
@@ -76,6 +76,14 @@ public class PersonRestController {
         }
 
         public JsonBody(){}
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
 }

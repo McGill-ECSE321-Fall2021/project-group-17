@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.library.service.Exception.PersonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,17 @@ public class PersonService {
     @Transactional
     public Person createPerson(String name,List<Integer> personRoles){
         Person person = new Person();
+        if(name == null){
+            throw new PersonException("Cannot have person with no name");
+        }
         person.setName(name);
         person.setPersonRoleList(new ArrayList<>());
 
         if(personRoles != null){
-            for(int s :personRoles){
+            for(Integer s :personRoles){
+                if (s == null){
+                    throw new PersonException("PersonRole id cannot be null");
+                }
                 PersonRole role = personRoleRepository.findPersonRoleById(s);
                 if(role == null){
                     throw new PersonException("Cannot find person role with that id");
@@ -56,19 +63,27 @@ public class PersonService {
     }
 
     @Transactional
-    public Person updatePerson(Integer id, List<Integer> roles){
+    public Person updatePerson(Integer id,String name, List<Integer> roles){
         Person p = personRepository.findPersonById(id);
         if(p == null){
             throw  new NotFoundException("Cannot find person with this id");
         }
+        if(name != null){
+            p.setName(name);
+        }
         if(roles != null){
-            for(int s :roles){
+            for(Integer s :roles){
+                if (s == null){
+                    throw new PersonException("PersonRole id cannot be null");
+                }
                 PersonRole role = personRoleRepository.findPersonRoleById(s);
                 if(role == null){
                     throw new PersonException("Cannot find person role with that id");
                 }
                 List<PersonRole> personRoles = p.getPersonRoleList();
-                personRoles.add(role);
+                if(!personRoles.contains(role)){
+                    personRoles.add(role);
+                }
                 role.setPerson(p);
                 p.setPersonRoleList(personRoles);
             }
