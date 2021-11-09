@@ -40,7 +40,10 @@ public class TestShiftService {
     private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("Monday");
     private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("Wednesday");
     private static final int LIBRARIAN_KEY = 3;
-    private static final int ACCOUNT_KEY = 5;
+    private static final String ACCOUNT_USERNAME = "username";
+    private static final String ACCOUNT_PASSWORD = "password";
+    private static final boolean LOGGED_IN = true;
+    private static final int HEAD_LIBRARIAN_KEY = 5;
     private static final int SHIFT_KEY = 7;
     @BeforeEach
     public void setMockOutput() {
@@ -65,8 +68,14 @@ public class TestShiftService {
         });
 
         lenient().when(onlineAccountRepository.findById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(ACCOUNT_KEY)){ //TODO figure this out
+            if(invocation.getArgument(0).equals(ACCOUNT_USERNAME)){
                 OnlineAccount account = new OnlineAccount();
+                account.setUsername(ACCOUNT_USERNAME);
+                account.setPassword(ACCOUNT_PASSWORD);
+                account.setLoggedIn(LOGGED_IN);
+                HeadLibrarian headLibrarian = new HeadLibrarian();
+                headLibrarian.setId(HEAD_LIBRARIAN_KEY);
+                account.setPersonRole(headLibrarian);
                 return account;
             } else {
                 return null;
@@ -77,10 +86,10 @@ public class TestShiftService {
     @Test
     public void createShift(){
         int id = LIBRARIAN_KEY;
-        int id2 = ACCOUNT_KEY;
+        String id2 = ACCOUNT_USERNAME;
         Shift shift=null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_KEY);
+            shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
@@ -96,16 +105,16 @@ public class TestShiftService {
     public void updateShift(){
         int id = LIBRARIAN_KEY;
         int id2 = SHIFT_KEY;
-        int id3 = ACCOUNT_KEY;
+        String id3 = ACCOUNT_USERNAME;
         Shift shift = null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_KEY);
+            shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
         try{
-            shiftService.updateShift(shift.getId(), SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK_2, LIBRARIAN_KEY, ACCOUNT_KEY);
+            shiftService.updateShift(shift.getId(), SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK_2, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();

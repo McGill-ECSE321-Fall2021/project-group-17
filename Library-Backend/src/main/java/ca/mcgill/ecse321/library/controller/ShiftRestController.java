@@ -34,8 +34,8 @@ public class ShiftRestController {
     @PostMapping(value = { "/shift/{id}/","/shift/{id}/"})
     @ResponseBody
     public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body,
-                                @RequestParam(value = "accountid", required = false)int accountId) throws IllegalArgumentException{
-        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountId);
+                                @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
 
@@ -46,8 +46,8 @@ public class ShiftRestController {
     }
     
     @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
-    public void deleteLibraryHour(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountid", required = false)int accountId){
-        shiftService.deleteShift(accountId, shiftId);
+    public void deleteLibraryHour(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
+        shiftService.deleteShift(accountUsername, shiftId);
     }
     @GetMapping(value= {"/shift/librarian/{librarianId}"})
     @ResponseBody
