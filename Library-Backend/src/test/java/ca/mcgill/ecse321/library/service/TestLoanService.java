@@ -71,7 +71,7 @@ public class TestLoanService {
             }
         });
 
-        lenient().when(loanRepository.findLoanById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+        /*lenient().when(loanRepository.findLoanById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(LOAN_KEY)) {
                 Loan loan = new Loan();
                 loan.setId(LOAN_KEY);
@@ -79,7 +79,7 @@ public class TestLoanService {
             } else {
                 return null;
             }
-        });
+        });*/
         lenient().when(loanRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             Customer customer = new Customer();
             customer.setId(CUSTOMER_KEY);
@@ -174,6 +174,99 @@ public class TestLoanService {
         assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
     }
 
+
+    @Test
+    public void testUpdateLoanNullItemInstance(){
+        Loan r = null;
+        try{
+            r = service.updateLoan(LOAN_KEY, newStartDate,newEndDate,CUSTOMER_KEY+10, null);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), LOAN_KEY);
+        assertEquals(r.getCheckedOut(),newStartDate);
+        assertEquals(r.getReturnDate(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY);
+    }
+
+
+
+    @Test
+    public void testUpdateLoanMissingItemInstance(){
+        Loan r = null;
+        String error = "";
+        try{
+            r = service.updateLoan(LOAN_KEY, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot find item instance to update loan to");
+    }
+
+    @Test
+    public void testUpdateLoanNullCustomer(){
+        Loan r = null;
+        try{
+            r = service.updateLoan(LOAN_KEY, newStartDate,newEndDate,null, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(r);
+        assertEquals(r.getId(), LOAN_KEY);
+        assertEquals(r.getCheckedOut(),newStartDate);
+        assertEquals(r.getReturnDate(),newEndDate);
+        assertEquals(r.getCustomer().getId(),CUSTOMER_KEY);
+        assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY +10);
+    }
+
+
+    @Test
+    public void testUpdateLoanMissingCustomer(){
+        Loan r = null;
+        String error = "";
+        try{
+            r = service.updateLoan(LOAN_KEY, newStartDate,newEndDate,CUSTOMER_KEY+1, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot find person to update loan to");
+    }
+
+    @Test
+    public void testUpdateLoanNullLoan(){
+        Loan r = null;
+        String error = "";
+        try{
+            r = service.updateLoan(null, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Loan id cannot be null");
+    }
+
+    @Test
+    public void testUpdateLoanMissingLoan(){
+        Loan r = null;
+        String error = "";
+        try{
+            r = service.updateLoan(LOAN_KEY+1, newStartDate,newEndDate,CUSTOMER_KEY+10, ITEM_INSTANCE_KEY+10);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Loan cannot be found");
+    }
 
 
     @Test
@@ -364,5 +457,64 @@ public class TestLoanService {
         assertEquals("Customer does not exist", error);
     }
 
+    //DELETE LOAN
+
+    @Test
+    public void testDeleteLoanValid(){
+        try{
+            service.deleteLoan(LOAN_KEY,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+    }
+
+    @Test
+    public void testDeleteLoanNullCustomer(){
+        String error = "";
+        try{
+            service.deleteLoan(LOAN_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot authorize customer to delete loan");
+    }
+
+    @Test
+    public void testDeleteLoanNotExistingCustomer(){
+        String error = "";
+        try{
+            service.deleteLoan(LOAN_KEY,CUSTOMER_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Owner of loan does not match customer in request");
+    }
+
+    @Test
+    public void testDeleteLoanNullReservation(){
+        String error = "";
+        try{
+            service.deleteLoan(null,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot find loanId to delete");
+    }
+
+    @Test
+    public void testDeleteLoanMissingReservation(){
+        String error = "";
+        try{
+            service.deleteLoan(LOAN_KEY + 1,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot find loan to delete");
+    }
 
 }
