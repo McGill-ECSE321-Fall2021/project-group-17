@@ -24,5 +24,15 @@ The Library Management System aims to create an easy to use system which can bri
   | Fiona Ryan   | Detailed use case scenarios, coding model classes, crud repositories, test cases for persistance, build system & CI, logo design    |  20  |
   | Victoria Sanchez| Requirements, use case diagram, detailed use case scenarios, meeting minutes, domain model, coding model classes, crud repositories, test cases for  persistance  |  20  |
   | Jerry Xia | Detailed use case scenarios, coding model classes, crud repositories, test cases for persistance	 | 20 |
+  
+  ### Effort Breakdown Sprint Two
+  |  Team Member |      Responsible For      | Time Allocated (hours) |
+  |--------------|---------------------|------|
+  | Aidan Jackson|                      |  |
+  | Hana Gustyn  |    | |
+  | Tomasz Mroz  |    |  |
+  | Fiona Ryan   |    |  |
+  | Victoria Sanchez|  |  |
+  | Jerry Xia |  |  |
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)
