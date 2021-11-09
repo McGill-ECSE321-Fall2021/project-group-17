@@ -1,27 +1,23 @@
 package ca.mcgill.ecse321.library.controller;
 
+import ca.mcgill.ecse321.library.dto.ShiftDTO;
+import ca.mcgill.ecse321.library.service.LibrarianService;
+import ca.mcgill.ecse321.library.service.ShiftService;
+
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
-import ca.mcgill.ecse321.library.dto.ShiftDTO;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.model.Shift;
-import ca.mcgill.ecse321.library.service.ShiftService;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @CrossOrigin(origins = "*")
@@ -30,12 +26,28 @@ public class ShiftRestController {
     @Autowired
     private ShiftService shiftService;
     @Autowired
+    private LibrarianService librarianService;
+    @Autowired
     private PersonRoleRepository personRoleRepository;
 
-    @PostMapping(value= {"/shift/{id}","/shift/{id}/"})
+
+    @PostMapping(value = { "/shift/{id}/","/shift/{id}/"})
     @ResponseBody
     public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body) throws IllegalArgumentException{
-        return null;
+        Librarian librarian = librarianService.getLibrarian(body.getLibrarianId());
+        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), librarian);
+        return convertToDTO(shift);
+    }
+
+    @GetMapping(value = {"/shift/{id}/", "/shift/{id}/"})
+    public ShiftDTO getShift(@PathVariable("id") int id) throws IllegalArgumentException {
+        Shift shift = shiftService.getShift(id);
+        return convertToDTO(shift);
+    }
+    
+    @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
+    public void deleteLibraryHour(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountid", required = false)int accountId){
+        shiftService.deleteShift(accountId, shiftId);
     }
     @GetMapping(value= {"/shift/librarian/{librarianId}"})
     @ResponseBody
@@ -54,7 +66,7 @@ public class ShiftRestController {
         private Time startTime;
         private Time endTime;
         private DayOfWeek dayOfWeek;
-        private Librarian librarian;
+        private Integer librarianId;
 
         public Time getStartTime() {
             return startTime;
@@ -80,12 +92,12 @@ public class ShiftRestController {
             this.dayOfWeek = dayOfWeek;
         }
 
-        public Librarian getLibrarian() {
-            return librarian;
+        public Integer getLibrarianId() {
+            return librarianId;
         }
 
-        public void setLibrarian(Librarian librarian) {
-            this.librarian = librarian;
+        public void setLibrarianId(Integer Id) {
+            this.librarianId = Id;
         }
 
         public JsonBody(){}

@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.library.service;
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
+import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,6 +62,18 @@ public class TestLoanService {
             } else {
                 return null;
             }
+        });
+        lenient().when(loanRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            Customer customer = new Customer();
+            customer.setId(CUSTOMER_KEY);
+            Loan loan = new Loan();
+            loan.setCustomer(customer);
+
+            List<Loan> loans = new ArrayList<>();
+            loans.add(loan);
+            loans.get(0).setId(LOAN_KEY);
+            return loans;
+
         });
         lenient().when(customerRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(CUSTOMER_KEY)) {
@@ -161,12 +174,19 @@ public class TestLoanService {
     }
 
 
-    /*@Test
+    @Test
     public void testGetInventory(){
-        int size = itemService.viewInventory().size();
-        assertEquals(size,1);
-    }*/
-
+        List <LoanDTO> loans = null;
+        try{
+            loans = service.viewActiveLoans(CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+        assertNotNull(loans);
+        assertEquals(loans.size(),1);
+        assertEquals(loans.get(0).getId(),LOAN_KEY);
+    }
 
     @Test
     public void testGetLoan(){

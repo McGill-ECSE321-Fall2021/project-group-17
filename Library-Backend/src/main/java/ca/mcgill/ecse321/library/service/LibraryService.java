@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.service.Exception.LibraryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,12 @@ public class LibraryService {
         
         libraryRepository.save(library);
         return library;
+    }
+    @Transactional
+    public Library getLibrary(Integer id){
+        if(id == null || id < 0) throw new LibraryException("Invalid id");
+        Library lib = libraryRepository.findLibraryById(id);
+        if(lib == null) throw new LibraryException("There exist no library by that Id");
+        return lib;
     }
 }
