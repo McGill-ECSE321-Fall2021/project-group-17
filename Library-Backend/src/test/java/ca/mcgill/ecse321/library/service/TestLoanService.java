@@ -188,7 +188,6 @@ public class TestLoanService {
         assertEquals(loans.get(0).getId(),LOAN_KEY);
     }
 
-
     @Test
     public void testGetLoan(){
         try{

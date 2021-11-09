@@ -27,25 +27,27 @@ public class LibraryHourRestController {
         return convertToDTO(libraryHour);
     }
 
-    @PostMapping(value= {"/libraryhour/{accountid}/", "/libraryhour/{accountid}/"})//TODO use current user id
+    @PostMapping(value= {"/libraryhour/{id}/", "/libraryhour/{id}/"})//TODO use current user id
     @ResponseBody
-    public LibraryHourDTO createLibraryHour(@PathVariable("accountid") int accountId,
-                                  @RequestBody JsonBody body) throws IllegalArgumentException{
-        LibraryHour libraryHour = service.createLibraryHour(accountId, body.getLibrary(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek());
+    public LibraryHourDTO createLibraryHour(@PathVariable("id") int Id,
+                                  @RequestBody JsonBody body,
+                                            @RequestParam(value = "accountid", required = false)int accountId) throws IllegalArgumentException{
+        LibraryHour libraryHour = service.createLibraryHour(body.getLibraryId(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), accountId);
         return convertToDTO(libraryHour);
     }
 
-    @PutMapping(value = {"/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/", "/libraryhour/{accountid}/{libhourid}/{starttime}/{endtime}/{dayofweek}/"})
-    public void modifyLibraryHours(@PathVariable("accountid") int accountId, @PathVariable("libhourid") int libHourId,
+    @PutMapping(value = {"/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}/", "/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}/"})
+    public void modifyLibraryHours(@PathVariable("libhourid") int libHourId,
                                 @PathVariable("starttime") Time startTime, @PathVariable("endtime") Time endTime,
-                                @PathVariable("dayofweek") DayOfWeek DOW){
+                                @PathVariable("dayofweek") DayOfWeek DOW,
+                                   @RequestParam(value = "accountId", required = false)int accountId){
         //do we need to use JsonBody or Path Variable??
-        service.updateLibraryHour(accountId, libHourId, startTime, endTime, DOW);
+        service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountId);
     }
 
     @DeleteMapping(value = {"/libraryhour/{libraryhourid}/", "/libraryhour/{libraryhourid}/"})
     public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountid", required = false)int accountId){
-        service.deleteLibraryHour(accountId, libraryHourid);
+        service.deleteLibraryHour(libraryHourid, accountId);
     }
 
     private LibraryHourDTO convertToDTO(LibraryHour libraryHour) {
@@ -64,7 +66,7 @@ public class LibraryHourRestController {
         private Time startTime;
         private Time endTime;
         private DayOfWeek dayOfWeek;
-        private Library library;
+        private Integer libraryId;
 
         public Time getStartTime() {
             return startTime;
@@ -90,12 +92,12 @@ public class LibraryHourRestController {
             this.dayOfWeek = dayOfWeek;
         }
 
-        public Library getLibrary() {
-            return library;
+        public Integer getLibraryId() {
+            return libraryId;
         }
 
-        public void setLibrary(Library library) {
-            this.library = library;
+        public void setLibraryId(Integer libraryId) {
+            this.libraryId = libraryId;
         }
 
         public JsonBody(){}
