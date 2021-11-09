@@ -33,9 +33,9 @@ public class ShiftRestController {
 
     @PostMapping(value = { "/shift/{id}/","/shift/{id}/"})
     @ResponseBody
-    public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body) throws IllegalArgumentException{
-        Librarian librarian = librarianService.getLibrarian(body.getLibrarianId());
-        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), librarian);
+    public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body,
+                                @RequestParam(value = "accountid", required = false)int accountId) throws IllegalArgumentException{
+        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountId);
         return convertToDTO(shift);
     }
 
