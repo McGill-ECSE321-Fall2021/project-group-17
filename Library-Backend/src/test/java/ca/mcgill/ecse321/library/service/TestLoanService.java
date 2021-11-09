@@ -161,11 +161,11 @@ public class TestLoanService {
     }
 
 
-    @Test
+    /*@Test
     public void testGetInventory(){
         int size = itemService.viewInventory().size();
         assertEquals(size,1);
-    }
+    }*/
 
 
     @Test
@@ -232,7 +232,7 @@ public class TestLoanService {
         } catch (Exception e){
             error = e.getMessage();
         }
-        assertEquals("Please provide a valid ID", error);
+        assertEquals("Please provide a valid loan ID", error);
     }
 
 
