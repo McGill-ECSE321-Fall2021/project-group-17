@@ -31,8 +31,8 @@ public class LibraryHourRestController {
     @ResponseBody
     public LibraryHourDTO createLibraryHour(@PathVariable("id") int Id,
                                   @RequestBody JsonBody body,
-                                            @RequestParam(value = "accountid", required = false)int accountId) throws IllegalArgumentException{
-        LibraryHour libraryHour = service.createLibraryHour(body.getLibraryId(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), accountId);
+                                            @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+        LibraryHour libraryHour = service.createLibraryHour(body.getLibraryId(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), accountUsername);
         return convertToDTO(libraryHour);
     }
 
@@ -40,9 +40,9 @@ public class LibraryHourRestController {
     public void modifyLibraryHours(@PathVariable("libhourid") int libHourId,
                                 @PathVariable("starttime") Time startTime, @PathVariable("endtime") Time endTime,
                                 @PathVariable("dayofweek") DayOfWeek DOW,
-                                   @RequestParam(value = "accountId", required = false)int accountId){
+                                   @RequestParam(value = "accountUsername", required = false)String accountUsername){
         //do we need to use JsonBody or Path Variable??
-        service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountId);
+        service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountUsername);
     }
 
     @DeleteMapping(value = {"/libraryhour/{libraryhourid}/", "/libraryhour/{libraryhourid}/"})

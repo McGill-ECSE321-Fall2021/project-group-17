@@ -40,7 +40,10 @@ public class TestLibraryHourService {
     private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("Monday");
     private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("Wednesday");
     private static final int LIBRARY_KEY = 4;
-    private static final int ACCOUNT_KEY = 5;
+    private static final String ACCOUNT_USERNAME = "username";
+    private static final String ACCOUNT_PASSWORD = "password";
+    private static final boolean LOGGED_IN = true;
+    private static final int HEAD_LIBRARIAN_KEY = 5;
     private static final int LIBRARYHOUR_KEY = 7;
     @BeforeEach
     public void setMockOutput() {
@@ -65,8 +68,14 @@ public class TestLibraryHourService {
         });
 
         lenient().when(onlineAccountRepository.findById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(ACCOUNT_KEY)){ //TODO figure this out
+            if(invocation.getArgument(0).equals(ACCOUNT_USERNAME)){
                 OnlineAccount account = new OnlineAccount();
+                account.setUsername(ACCOUNT_USERNAME);
+                account.setPassword(ACCOUNT_PASSWORD);
+                account.setLoggedIn(LOGGED_IN);
+                HeadLibrarian headLibrarian = new HeadLibrarian();
+                headLibrarian.setId(HEAD_LIBRARIAN_KEY);
+                account.setPersonRole(headLibrarian);
                 return account;
             } else {
                 return null;
@@ -77,10 +86,10 @@ public class TestLibraryHourService {
     @Test
     public void createLibraryHour(){
         int id = LIBRARYHOUR_KEY;
-        int id2 = ACCOUNT_KEY;
+        String id2 = ACCOUNT_USERNAME;
         LibraryHour libraryHour = null;
         try{
-            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY, LH_START_TIME, LH_END_TIME, DAY_OF_WEEK, ACCOUNT_KEY);
+            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY, LH_START_TIME, LH_END_TIME, DAY_OF_WEEK, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
@@ -96,16 +105,16 @@ public class TestLibraryHourService {
     public void updateLibraryHour(){
         int id = LIBRARY_KEY;
         int id2 = LIBRARYHOUR_KEY;
-        int id3 = ACCOUNT_KEY;
+        String id3 = ACCOUNT_USERNAME;
         LibraryHour libraryHour = null;
         try{
-            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY,LH_START_TIME, LH_END_TIME, DAY_OF_WEEK, ACCOUNT_KEY);
+            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY,LH_START_TIME, LH_END_TIME, DAY_OF_WEEK, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
         try{
-            libraryHourService.updateLibraryHour(libraryHour.getId(), LH_START_TIME, LH_END_TIME, DAY_OF_WEEK_2, ACCOUNT_KEY);
+            libraryHourService.updateLibraryHour(libraryHour.getId(), LH_START_TIME, LH_END_TIME, DAY_OF_WEEK_2, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
