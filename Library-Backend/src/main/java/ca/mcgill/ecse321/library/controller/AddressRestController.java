@@ -31,10 +31,10 @@ public class AddressRestController {
     }
 
     @PutMapping(value={"/address/{id}/{streetNum}/{street}/{city}/{country}","/address/{id}/{streetNum}/{street}/{city}/{country}/"})
-    public void updateAddress(@PathVariable("id") int id, @PathVariable("streetNum") int streetNum,
+    public AddressDTO updateAddress(@PathVariable("id") int id, @PathVariable("streetNum") int streetNum,
                                     @PathVariable("street") String street, @PathVariable("city") String city,
                                     @PathVariable("country") String country) throws IllegalArgumentException {
-        service.updateAddress(id, streetNum, street, city, country);
+        return convertToDTO(service.updateAddress(id, streetNum, street, city, country));
     }
     @DeleteMapping(value={"/address/{id}","/address/{id}/"})
     public void deleteAddress(@PathVariable("id") int id) throws IllegalArgumentException {
@@ -49,8 +49,8 @@ public class AddressRestController {
         addressDTO.setAddressID(address.getId());
         addressDTO.setStreetNumber(address.getStreetNumber());
         addressDTO.setStreet(address.getStreet());
-        addressDTO.setCity(addressDTO.getCity());
-        addressDTO.setCountry(addressDTO.getCountry());
+        addressDTO.setCity(address.getCity());
+        addressDTO.setCountry(address.getCountry());
         addressDTO.setCustomer(address.getCustomer());
 
         return addressDTO;
