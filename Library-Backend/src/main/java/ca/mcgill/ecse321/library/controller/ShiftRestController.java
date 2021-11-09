@@ -46,7 +46,7 @@ public class ShiftRestController {
     }
     
     @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
-    public void deleteLibraryHour(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
+    public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
     }
     @GetMapping(value= {"/shift/librarian/{librarianId}"})
@@ -63,32 +63,32 @@ public class ShiftRestController {
     }
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        private Time startTime;
-        private Time endTime;
-        private DayOfWeek dayOfWeek;
+        private String startTime;
+        private String endTime;
+        private String dayOfWeek;
         private Integer librarianId;
 
-        public Time getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Time startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Time getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Time endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
-        public DayOfWeek getDayOfWeek() {
+        public String getDayOfWeek() {
             return dayOfWeek;
         }
 
-        public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        public void setDayOfWeek(String dayOfWeek) {
             this.dayOfWeek = dayOfWeek;
         }
 

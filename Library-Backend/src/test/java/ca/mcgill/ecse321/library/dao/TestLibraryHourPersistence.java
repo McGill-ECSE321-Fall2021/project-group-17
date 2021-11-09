@@ -37,10 +37,13 @@ Written by Jerry Xia
         String name = "McLennen";
         Library library = new Library(id);
         library.setName(name);
-        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-        Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
-        DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
-        LibraryHour libraryHour = new LibraryHour(0, startTime, endTime, dayOfWeek, null);
+        Time startTime = Time.valueOf("12:42:53");
+        Time endTime = Time.valueOf("13:43:12");
+        DayOfWeek DOW = DayOfWeek.valueOf("MONDAY");
+        String startTimeAsString = startTime.toString();
+        String endTimeAsString= endTime.toString();
+        String DOWAsString= DOW.toString();
+        LibraryHour libraryHour = new LibraryHour(0, startTimeAsString, endTimeAsString, DOWAsString, null);
         libraryHour.setLibrary(library);
         libraryHourRepository.save(libraryHour);
         int libraryHourId = libraryHour.getId();
@@ -50,7 +53,7 @@ Written by Jerry Xia
         assertEquals(libraryHourId, libraryHour.getId());
         assertEquals(startTime, libraryHour.getStartTime());
         assertEquals(endTime, libraryHour.getEndTime());
-        assertEquals(dayOfWeek, libraryHour.getDayOfWeek());
+        assertEquals(DOW, libraryHour.getDayOfWeek());
         assertEquals(library.getName(), libraryHour.getLibrary().getName());
     }
 }

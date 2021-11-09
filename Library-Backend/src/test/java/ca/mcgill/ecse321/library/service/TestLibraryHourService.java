@@ -36,9 +36,13 @@ public class TestLibraryHourService {
     private LibraryService libraryService;
 
     private static final Time LH_START_TIME = Time.valueOf("18:45:20");
+    private static final String LH_START_TIME_AS_STRING = LH_START_TIME.toString();
     private static final Time LH_END_TIME = Time.valueOf("19:52:19");
-    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("Monday");
-    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("Wednesday");
+    private static final String LH_END_TIME_AS_STRING = LH_END_TIME.toString();
+    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("MONDAY");
+    private static final String DAY_OF_WEEK_AS_STRING = DAY_OF_WEEK.toString();
+    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("WEDNESDAY");
+    private static final String DAY_OF_WEEK_2_AS_STRING = DAY_OF_WEEK_2.toString();
     private static final int LIBRARY_KEY = 4;
     private static final String ACCOUNT_USERNAME = "username";
     private static final String ACCOUNT_PASSWORD = "password";
@@ -89,7 +93,8 @@ public class TestLibraryHourService {
         String id2 = ACCOUNT_USERNAME;
         LibraryHour libraryHour = null;
         try{
-            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY, LH_START_TIME, LH_END_TIME, DAY_OF_WEEK, ACCOUNT_USERNAME);
+            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY, LH_START_TIME_AS_STRING,
+                    LH_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
@@ -108,13 +113,15 @@ public class TestLibraryHourService {
         String id3 = ACCOUNT_USERNAME;
         LibraryHour libraryHour = null;
         try{
-            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY,LH_START_TIME, LH_END_TIME, DAY_OF_WEEK, ACCOUNT_USERNAME);
+            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY,LH_START_TIME_AS_STRING,
+                    LH_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
         try{
-            libraryHourService.updateLibraryHour(libraryHour.getId(), LH_START_TIME, LH_END_TIME, DAY_OF_WEEK_2, ACCOUNT_USERNAME);
+            libraryHourService.updateLibraryHour(libraryHour.getId(), LH_START_TIME_AS_STRING,
+                    LH_END_TIME_AS_STRING, DAY_OF_WEEK_2_AS_STRING, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();

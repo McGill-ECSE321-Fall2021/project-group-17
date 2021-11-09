@@ -19,10 +19,10 @@ public class Shift {
         this.dayOfWeek = null;
     }
 
-    public Shift(Time startTime, Time endTime, DayOfWeek dayOfWeek){
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.dayOfWeek = dayOfWeek;
+    public Shift(String startTime, String endTime, String dayOfWeek){
+        this.startTime = Time.valueOf(startTime);
+        this.endTime = Time.valueOf(endTime);
+        this.dayOfWeek = DayOfWeek.valueOf(dayOfWeek);
     }
 
     //Getters
@@ -44,12 +44,15 @@ public class Shift {
 
     //Setters
     public void setId(Integer id){this.id = id;}
-    public void setStartTime(Time startTime){
-        this.startTime = startTime;
+    public void updateStartTime(String startTime){
+        this.startTime = Time.valueOf(startTime);
     }
-    public void setEndTime(Time endTime){
-        this.endTime = endTime;
+    public void setStartTime(Time startTime){this.startTime = startTime;}
+    public void updateEndTime(String endTime){
+        this.endTime = Time.valueOf(endTime);
     }
+    public void setEndTime(Time endTime){this.endTime = endTime;}
+    public void updateDayOfWeek(String dayOfWeek){this.dayOfWeek = DayOfWeek.valueOf(dayOfWeek);}
     public void setDayOfWeek(DayOfWeek dayOfWeek){this.dayOfWeek = dayOfWeek;}
     public void setLibrarian(Librarian librarian){ this.librarian = librarian;}
 }

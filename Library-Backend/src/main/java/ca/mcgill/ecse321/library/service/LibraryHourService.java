@@ -33,10 +33,10 @@ public class LibraryHourService {
     private OnlineAccountRepository onlineAccountRepository;
 	
     @Transactional
-    public LibraryHour createLibraryHour(Integer libraryId, Time startTime, Time endTime, DayOfWeek DOW, String accountUsername){
+    public LibraryHour createLibraryHour(Integer libraryId, String startTime, String endTime, String DOW, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(libraryId < 0 || libraryId == null) throw new LibraryException("Invalid Id");
-        if(startTime.toLocalTime().isAfter(endTime.toLocalTime())) throw new LibraryHourException("Invalid Start or End Time");
+
         if(DOW == null)throw new LibraryHourException("Invalid Day of Week");
         Library library = libraryRepository.findLibraryById(libraryId);
         if(library == null) throw new LibraryException("No library by that Id");
@@ -45,9 +45,9 @@ public class LibraryHourService {
 
         LibraryHour libraryHour = new LibraryHour();
         libraryHour.setLibrary(library);
-        libraryHour.setStartTime(startTime);
-        libraryHour.setEndTime(endTime);
-        libraryHour.setDayOfWeek(DOW);
+        libraryHour.updateStartTime(startTime);
+        libraryHour.updateEndTime(endTime);
+        libraryHour.updateDayOfWeek(DOW);
         
         libraryHourRepository.save(libraryHour);
         return libraryHour;
@@ -71,19 +71,19 @@ public class LibraryHourService {
     }
 
     @Transactional
-    public LibraryHour updateLibraryHour(Integer libHourId, Time startTime, Time endTime, DayOfWeek DOW, String accountUsername){
+    public LibraryHour updateLibraryHour(Integer libHourId, String startTime, String endTime, String DOW, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(libHourId < 0 || libHourId == null) throw new LibraryHourException("Invalid Id");
-        if(startTime.toLocalTime().isAfter(endTime.toLocalTime())) throw new LibraryHourException("Invalid Start or End Time");
+
         if(DOW == null)throw new LibraryHourException("Invalid Day of Week");
 
         LibraryHour libraryHour = libraryHourRepository.findLibraryHourById(libHourId);
         if(libraryHour == null) throw new LibraryHourException("There does not exist a Library Hour by the Id");
 
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Account not authorized for this action");
-        libraryHour.setDayOfWeek(DOW);
-        libraryHour.setEndTime(endTime);
-        libraryHour.setStartTime(startTime);
+        libraryHour.updateDayOfWeek(DOW);
+        libraryHour.updateEndTime(endTime);
+        libraryHour.updateStartTime(startTime);
         libraryHourRepository.save(libraryHour);
         return libraryHour;
     }

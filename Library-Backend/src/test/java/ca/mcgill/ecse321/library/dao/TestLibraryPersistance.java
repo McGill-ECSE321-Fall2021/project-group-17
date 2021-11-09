@@ -901,10 +901,13 @@ Written by Jerry Xia
     	String name = "McLennen";
     	Library library = new Library(id);
     	library.setName(name);
-    	Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-		Time endTime = java.sql.Time.valueOf(LocalTime.of(13, 25));
-    	DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
-    	LibraryHour libraryHour = new LibraryHour(0, startTime, endTime, dayOfWeek, null);
+        Time startTime = Time.valueOf("12:42:53");
+        Time endTime = Time.valueOf("13:43:12");
+        DayOfWeek DOW = DayOfWeek.valueOf("MONDAY");
+        String startTimeAsString = startTime.toString();
+        String endTimeAsString= endTime.toString();
+        String DOWAsString= DOW.toString();
+    	LibraryHour libraryHour = new LibraryHour(0, startTimeAsString, endTimeAsString, DOWAsString, null);
     	libraryHour.setLibrary(library);
     	libraryHourRepository.save(libraryHour);
     	int libraryHourId = libraryHour.getId();
@@ -914,7 +917,7 @@ Written by Jerry Xia
 		assertEquals(libraryHourId, libraryHour.getId());
 		assertEquals(startTime, libraryHour.getStartTime());
 		assertEquals(endTime, libraryHour.getEndTime());
-		assertEquals(dayOfWeek, libraryHour.getDayOfWeek());
+		assertEquals(DOW, libraryHour.getDayOfWeek());
 		assertEquals(library.getName(), libraryHour.getLibrary().getName());
 	}
     
@@ -1473,19 +1476,21 @@ Written by Jerry Xia
     @Transactional
     public void testPersistAndLoadShift(){
         Integer shiftID = 5432;
-        Time startTime = java.sql.Time.valueOf(java.time.LocalTime.now());
-        Time endTime = java.sql.Time.valueOf(java.time.LocalTime.now());
-        Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-        DayOfWeek DOW = java.time.DayOfWeek.valueOf("MONDAY");
+        Time startTime = Time.valueOf("12:42:53");
+        Time endTime = Time.valueOf("13:43:12");
+        DayOfWeek DOW = DayOfWeek.valueOf("MONDAY");
+        String startTimeAsString = startTime.toString();
+        String endTimeAsString= endTime.toString();
+        String DOWAsString= DOW.toString();
         Librarian librarian = new Librarian(0,null,null);
         librarianRepository.save(librarian);
         int libId = librarian.getId();
 
         Shift shift = new Shift();
         shift.setLibrarian(librarian);
-        shift.setDayOfWeek(DOW);
-        shift.setEndTime(endTime);
-        shift.setStartTime(startTime);
+        shift.updateDayOfWeek(DOWAsString);
+        shift.updateEndTime(endTimeAsString);
+        shift.updateStartTime(startTimeAsString);
         shift.setId(shiftID);
         shiftRepository.save(shift);
         shift = null;

@@ -36,9 +36,13 @@ public class TestShiftService {
     private OnlineAccountService onlineAccountService;
 
     private static final Time SHIFT_START_TIME = Time.valueOf("18:45:20");
+    private static final String SHIFT_START_TIME_AS_STRING = SHIFT_START_TIME.toString();
     private static final Time SHIFT_END_TIME = Time.valueOf("19:52:19");
-    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("Monday");
-    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("Wednesday");
+    private static final String SHIFT_END_TIME_AS_STRING = SHIFT_END_TIME.toString();
+    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("MONDAY");
+    private static final String DAY_OF_WEEK_AS_STRING = DAY_OF_WEEK.toString();
+    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("WEDNESDAY");
+    private static final String DAY_OF_WEEK_2_AS_STRING = DAY_OF_WEEK_2.toString();
     private static final int LIBRARIAN_KEY = 3;
     private static final String ACCOUNT_USERNAME = "username";
     private static final String ACCOUNT_PASSWORD = "password";
@@ -89,7 +93,8 @@ public class TestShiftService {
         String id2 = ACCOUNT_USERNAME;
         Shift shift=null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_USERNAME);
+            shift = shiftService.createShift(SHIFT_START_TIME_AS_STRING, SHIFT_END_TIME_AS_STRING
+                    , DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
@@ -108,13 +113,15 @@ public class TestShiftService {
         String id3 = ACCOUNT_USERNAME;
         Shift shift = null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_USERNAME);
+            shift = shiftService.createShift(SHIFT_START_TIME_AS_STRING,
+                    SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
         try{
-            shiftService.updateShift(shift.getId(), SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK_2, LIBRARIAN_KEY, ACCOUNT_USERNAME);
+            shiftService.updateShift(shift.getId(), SHIFT_START_TIME_AS_STRING,
+                    SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_2_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
