@@ -1,29 +1,19 @@
 package ca.mcgill.ecse321.library.controller;
 
-import ca.mcgill.ecse321.library.dto.ItemInstanceDTO;
-import ca.mcgill.ecse321.library.model.Item;
-import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 import java.sql.Date;
 
-import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -33,18 +23,13 @@ import ca.mcgill.ecse321.library.dto.MovieDTO;
 import ca.mcgill.ecse321.library.dto.MusicDTO;
 import ca.mcgill.ecse321.library.dto.NewspaperDTO;
 import ca.mcgill.ecse321.library.model.Book;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.Loan;
 import ca.mcgill.ecse321.library.model.Movie;
 import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.BookService;
-import ca.mcgill.ecse321.library.service.ItemService;
 import ca.mcgill.ecse321.library.service.MovieService;
 import ca.mcgill.ecse321.library.service.MusicService;
 import ca.mcgill.ecse321.library.service.NewspaperService;
-import ca.mcgill.ecse321.library.service.Exception.LoanException;
-import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 
 
 @CrossOrigin(origins = "*")
