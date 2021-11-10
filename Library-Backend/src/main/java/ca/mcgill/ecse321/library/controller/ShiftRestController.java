@@ -44,7 +44,15 @@ public class ShiftRestController {
         Shift shift = shiftService.getShift(id);
         return convertToDTO(shift);
     }
-    
+
+    @PutMapping(value = {"/shift/{shiftid}/", "/shift/{shiftid}/"})
+    public void modifyLibraryHours(@PathVariable("shiftid") int shiftId,
+                                    @RequestBody JsonBody body,
+                                   @RequestParam(value = "accountUsername", required = false)String accountUsername){
+        //do we need to use JsonBody or Path Variable??
+        shiftService.updateShift(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
+                body.getLibrarianId(), accountUsername);
+    }
     @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
     public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
