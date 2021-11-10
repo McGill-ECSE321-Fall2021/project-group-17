@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,8 +39,8 @@ public class TestLibraryHourService {
 
     private static final Time LH_START_TIME = Time.valueOf("18:45:20");
     private static final Time LH_END_TIME = Time.valueOf("19:52:19");
-    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("Monday");
-    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("Wednesday");
+    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("MONDAY");
+    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("WEDNESDAY");
     private static final int LIBRARY_KEY = 4;
     private static final int ACCOUNT_KEY = 5;
     private static final int LIBRARYHOUR_KEY = 7;
@@ -72,6 +74,12 @@ public class TestLibraryHourService {
                 return null;
             }
         });
+    }
+    @AfterEach
+    public void clearDatabase() {
+        libraryHourRepository.deleteAll();
+        onlineAccountRepository.deleteAll();
+        libraryRepository.deleteAll();
     }
 
     @Test

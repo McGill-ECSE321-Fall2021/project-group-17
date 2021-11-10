@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -114,6 +115,15 @@ public class TestItemService {
  		lenient().when(bookRepository.save(any(Book.class))).thenAnswer(returnParameterAsAnswer);
  		lenient().when(musicRepository.save(any(Music.class))).thenAnswer(returnParameterAsAnswer);
  		lenient().when(newspaperRepository.save(any(Newspaper.class))).thenAnswer(returnParameterAsAnswer);
+    }
+
+    @AfterEach
+    public void clearDatabase() {
+        movieRepository.deleteAll();
+        bookRepository.deleteAll();
+        musicRepository.deleteAll();
+        newspaperRepository.deleteAll();
+
     }
 
     @Test

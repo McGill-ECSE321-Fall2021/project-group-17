@@ -22,7 +22,7 @@ public class CustomerRestController {
     @ResponseBody
     public CustomerDTO createCustomer(@PathVariable("id") int id,
                                       @RequestBody JsonBody body) throws IllegalArgumentException{
-        Customer customer = customerService.createCustomer(body.getPerson(), body.getPenalty(),
+        Customer customer = customerService.createCustomer(id,body.getPerson(), body.getPenalty(),
                 body.getAddress(), body.getLibCard());
         return convertToDTO(customer);
     }

@@ -21,11 +21,29 @@ public class OnlineAccountService {
     PersonRoleRepository personRoleRepository;
 
     @Transactional
-    public OnlineAccount createOnlineAccount(String username, String password, int personRoleId) {
+    public OnlineAccount createOnlineAccount(String username, String password, Integer personRoleId) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot create account with null username.");
+        }
+
+        if (password == null) {
+            throw new OnlineAccountException("Cannot create account with null password.");
+        }
+
+        if (personRoleId == null) {
+            throw new OnlineAccountException("Cannot create an account without a user.");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+
         PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
+
+        if (personRole == null) {
+            throw new OnlineAccountException("No user exists with the personRoleId given");
+        }
+
         account.setPersonRole(personRole);
         onlineAccountRepository.save(account);
         return account;
@@ -33,18 +51,28 @@ public class OnlineAccountService {
 
     @Transactional
     public OnlineAccount getOnlineAccount(String username) {
-        return onlineAccountRepository.findOnlineAccountByUsername(username);
+        if (username == null) {
+            throw new OnlineAccountException("Cannot get account with a null username");
+        }
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find the account for the given username");
+        }
+
+        return account;
     }
 
     @Transactional
     public OnlineAccount logout(String username){
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to delete account.");
+        }
 
         OnlineAccount o= onlineAccountRepository.findOnlineAccountByUsername(username);
         if(o==null){
-            throw new OnlineAccountException("no account with said username exists");
-        }
-        if (username == null) {
-            throw new OnlineAccountException("Cannot find username to delete account.");
+            throw new OnlineAccountException("No account with said username exists");
         }
 
         o.setLoggedIn(false);
@@ -54,7 +82,7 @@ public class OnlineAccountService {
     }
 
     @Transactional
-    public void deleteOnlineAccount(String username, Integer customerId) {
+    public void deleteOnlineAccount(String username, Integer personRoleId) {
         if (username == null) {
             throw new OnlineAccountException("Cannot find username to delete account.");
         }
@@ -65,14 +93,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find account.");
         }
 
-        if (customerId == null) {
-            throw new OnlineAccountException("Cannot find customerId to delete account.");
+        if (personRoleId == null) {
+            throw new OnlineAccountException("Cannot find personRoleId to delete account.");
         }
 
-        PersonRole personRole = personRoleRepository.findPersonRoleById(customerId);
+        PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
 
         if (personRole == null) {
-            throw new OnlineAccountException("Cannot find customer to delete account.");
+            throw new OnlineAccountException("Cannot find personRole to delete account.");
         }
 
         onlineAccountRepository.delete(account);
@@ -87,7 +115,7 @@ public class OnlineAccountService {
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
 
         if (account == null) {
-            throw new OnlineAccountException("Username is: " + username  + "\nCannot find account by username.");
+            throw new OnlineAccountException("Cannot find account by username.");
         }
 
         if (password == null) {
@@ -105,10 +133,5 @@ public class OnlineAccountService {
         onlineAccountRepository.save(account);
 
         return account;
-    }
-
-    @Transactional
-    public OnlineAccount getOnlineAccounts(String username) {
-        return onlineAccountRepository.findOnlineAccountByUsername(username);
     }
 }
