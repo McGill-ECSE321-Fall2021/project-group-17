@@ -29,10 +29,11 @@ public class TestReservationPersistence {
     private CheckableItemRepository checkableItemRepository;
     @AfterEach
     public void clearDatabase() {
-        reservationRepository.deleteAll();
         customerRepository.deleteAll();
         itemInstanceRepository.deleteAll();
         checkableItemRepository.deleteAll();
+
+        reservationRepository.deleteAll();
     }
     @Test
     public void testPersistAndLoadReservation() {

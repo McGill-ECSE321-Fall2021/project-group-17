@@ -375,6 +375,7 @@ package ca.mcgill.ecse321.library.service;
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.ReservationService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -484,6 +485,12 @@ public class TestReservationService {
                 return null;
             }
         });
+    }
+    @AfterEach
+    public void clearDatabase() {
+        reservationRepository.deleteAll();
+        customerRepository.deleteAll();
+        itemInstanceRepository.deleteAll();
     }
     //START GET RESERVATION TESTS
     @Test

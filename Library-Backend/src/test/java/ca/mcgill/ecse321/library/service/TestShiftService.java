@@ -37,8 +37,8 @@ public class TestShiftService {
 
     private static final Time SHIFT_START_TIME = Time.valueOf("18:45:20");
     private static final Time SHIFT_END_TIME = Time.valueOf("19:52:19");
-    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("Monday");
-    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("Wednesday");
+    private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("MONDAY");
+    private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("WEDNESDAY");
     private static final int LIBRARIAN_KEY = 3;
     private static final int ACCOUNT_KEY = 5;
     private static final int SHIFT_KEY = 7;

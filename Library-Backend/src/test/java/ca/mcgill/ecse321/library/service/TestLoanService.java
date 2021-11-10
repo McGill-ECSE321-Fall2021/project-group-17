@@ -6,6 +6,7 @@ import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,7 @@ public class TestLoanService {
     @InjectMocks
     private LoanService loanService;
 
-    private static final int LOAN_KEY = 1;
+    private static final int LOAN_KEY = 0;
     private static final int CUSTOMER_KEY = 2;
     private static final int ITEM_INSTANCE_KEY = 3;
 
@@ -120,6 +121,13 @@ public class TestLoanService {
             }
         });
     }
+    @AfterEach
+    public void clearDatabase() {
+        loanRepository.deleteAll();
+        customerRepository.deleteAll();
+        itemInstanceRepository.deleteAll();
+    }
+
 
     //UPDATE LOAN
 
@@ -270,23 +278,7 @@ public class TestLoanService {
 
 
     @Test
-    public void testGetSystemById(){
-        /*int id = LOAN_KEY;
-        Loan loan = null;
-        try {
-            loan = loanRepository.findLoanById(LOAN_KEY);
-        }
-        catch (Exception e){
-            fail();
-        }
-        assertNotNull(loan);
-        assertEquals(id, loan.getId());*/
-    }
-
-    @Test
     public void testCreateLoan(){
-        int id = LOAN_KEY;
-
         Loan loan = null;
         try{
             loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
@@ -295,7 +287,6 @@ public class TestLoanService {
             fail();
         }
         assertNotNull(loan);
-        assertEquals(id,loan.getId());
         assertNotNull(loan.getCustomer());
         assertEquals(startDate, loan.getCheckedOut());
         assertEquals(endDate, loan.getReturnDate());

@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,6 +82,15 @@ public class TestItemService {
                 return null;
             }
         });
+    }
+
+    @AfterEach
+    public void clearDatabase() {
+        movieRepository.deleteAll();
+        bookRepository.deleteAll();
+        musicRepository.deleteAll();
+        newspaperRepository.deleteAll();
+
     }
 
     @Test
