@@ -6,6 +6,97 @@
   },
   "item": [
     {
+      "name": "Create Person",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.globals.set(\"personId\", pm.response.json().id());\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Hana\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/person",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "person"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Address",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.globals.set(\"addressId\", pm.response.json().id());",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"customerId\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "address",
+            "1",
+            "234",
+            "Peel Street",
+            "Montreal",
+            "Canada"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Make Customer",
       "event": [
         {
@@ -26,7 +117,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"id\": 2,\r\n    \"penalty\": 0\r\n}",
+          "raw": "{\r\n    \"id\": 2,\r\n    \"person\": {{personId}},\r\n    \"penalty\": 0,\r\n    \"address\": {{addressId}}\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -264,6 +355,49 @@
               "key": "{{personRoleId}}",
               "value": null
             }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://library-backend-534a.herokuapp.com/person",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.environment.set(\"person_id\", pm.response.json().id);\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Hana\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/person",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "person"
           ]
         }
       },
