@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -21,20 +23,31 @@ public class PersonRestController {
 
     //MAPPING SECTION
     @GetMapping(value = {"/person/{name}", "/person/{name}/"})
-    public PersonDTO getPerson(@PathVariable("name") String name) throws IllegalArgumentException{
-        Person person = service.createPerson(name,null);
-        return convertToDTO(person);
+    public List<PersonDTO> getPerson(@PathVariable("name") String name) throws IllegalArgumentException{
+        return service.getPerson(name).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    @PostMapping(value= {"/person/{name}","/person/{name}/"})
+    @GetMapping(value = {"/person/{id}", "/person/{id}/"})
+    public PersonDTO getPerson(@PathVariable("id") Integer id) throws IllegalArgumentException{
+        return convertToDTO( service.getPerson(id));
+    }
+
+    @PostMapping(value= {"/person/","/person"})
     @ResponseBody
-    public PersonDTO createPerson(@PathVariable("name") String name,
-                                  @RequestBody JsonBody body) throws IllegalArgumentException{
-        Person person = service.createPerson(name, body.getPersonRoles());
+    public PersonDTO createPerson(@RequestBody JsonBody body) throws IllegalArgumentException{
+        Person person = service.createPerson(body.getName(), body.getPersonRoles());
         return convertToDTO(person);
     }
 
+    @PatchMapping(value = {"/person/{id}", "/person/{id}/"})
+    public PersonDTO updatePerson(@PathVariable Integer id, @RequestBody JsonBody body){
+        return convertToDTO( service.updatePerson(id,body.getName(),body.getPersonRoles()));
+    }
 
+    @DeleteMapping(value = {"/person/{id}", "/person/{id}/"})
+    public void deletePerson(@PathVariable Integer id){
+        service.deletePerson(id);
+    }
 
     //DTO CONVERSION SECTION
 
@@ -52,6 +65,7 @@ public class PersonRestController {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         List<Integer> personRoles;
+        String name;
 
         public List<Integer > getPersonRoles() {
             return personRoles;
@@ -62,6 +76,14 @@ public class PersonRestController {
         }
 
         public JsonBody(){}
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
 }

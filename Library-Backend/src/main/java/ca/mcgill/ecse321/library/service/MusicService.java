@@ -41,7 +41,7 @@ public class MusicService {
         m.setName(name);
         m.setDatePublished(date);
         m.setMusician(musician);
-        m.setMusician(recordLabel);
+        m.setRecordLabel(recordLabel);
         musicRepository.save(m);
         return m;
     }
