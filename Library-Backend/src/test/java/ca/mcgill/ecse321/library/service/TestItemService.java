@@ -9,18 +9,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.ArgumentMatchers.any;
+import org.mockito.stubbing.Answer;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.time.DayOfWeek;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class TestItemService {
+	@Mock
+    private LibrarianRepository librarianRepository;
     @Mock
     private MovieRepository movieRepository;
     @Mock
@@ -30,6 +31,8 @@ public class TestItemService {
     @Mock
     private NewspaperRepository newspaperRepository;
 
+    @InjectMocks
+    private LibrarianService librarianService;
     @InjectMocks
     private MovieService movieService;
     @InjectMocks
@@ -42,12 +45,12 @@ public class TestItemService {
     private static final String MEDIA_NAME = "Good Will Hunting";
     private static final String AUTHOR_DIRECTOR_MUSICIAN = "Someone";
     private static final String GENRE = "Genre";
-    private static final int RUNNING_TIME = 120;
     private static final String RATING = "Fantastic";
     private static final String HEADLINE = "Headline";
     private static final String RECORD_LABEL = "Some record label";
     private static final String PUBLISHER_DISTRIBUTOR = "Lionsgate Films";
     private static final Date DATE_PUBLISHED = Date.valueOf("2021-10-11");
+    private static final int RUNNING_TIME = 120;
     private static final int LIBRARIAN_KEY = 5;
     private static final int MEDIA_KEY = 7;
     
@@ -81,6 +84,24 @@ public class TestItemService {
                 return null;
             }
         });
+        lenient().when(librarianRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(MEDIA_KEY)){
+                Librarian librarian = new Librarian();
+                librarian.setId(MEDIA_KEY);
+                return librarian;
+            } else {
+                return null;
+            }
+        });
+        
+        // Whenever anything is saved, just return the parameter object
+ 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+ 			return invocation.getArgument(0);
+ 		};
+ 		lenient().when(movieRepository.save(any(Movie.class))).thenAnswer(returnParameterAsAnswer);
+ 		lenient().when(bookRepository.save(any(Book.class))).thenAnswer(returnParameterAsAnswer);
+ 		lenient().when(musicRepository.save(any(Music.class))).thenAnswer(returnParameterAsAnswer);
+ 		lenient().when(newspaperRepository.save(any(Newspaper.class))).thenAnswer(returnParameterAsAnswer);
     }
 
     @Test
@@ -123,7 +144,7 @@ public class TestItemService {
         Book book = null;
         
         try{
-            book = bookService.createBook(id, id2, name, datePublished, author, publisher, genre);
+            book = bookService.createBook(id2, id, name, datePublished, author, publisher, genre);
         }
         catch(Exception e){
             fail();
@@ -148,7 +169,7 @@ public class TestItemService {
         Music music = null;
         
         try{
-            music = musicService.createMusic(id, id2, name, datePublished, musician, recordLabel);
+            music = musicService.createMusic(id2, id, name, datePublished, musician, recordLabel);
         }
         catch(Exception e){
             fail();
@@ -171,7 +192,7 @@ public class TestItemService {
         Newspaper newspaper = null;
         
         try{
-            newspaper = newspaperService.createNewspaper(id, id2, name, datePublished, headline);
+            newspaper = newspaperService.createNewspaper(id2, id, name, datePublished, headline);
         }
         catch(Exception e){
             fail();

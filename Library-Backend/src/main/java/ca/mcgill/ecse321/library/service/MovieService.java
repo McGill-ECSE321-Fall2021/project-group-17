@@ -33,24 +33,58 @@ public class MovieService {
     ItemInstanceRepository itemInstanceRepository;
     
     @Transactional
-    public Movie createMovie(int librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor){
-        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-    	if(librarian == null){
-            throw new PersonException("Librarian not found in request");
+    public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor){
+    	
+    	String error = "";
+        if (librarianId == null) {
+        	throw new PersonException("Librarian not found in request");
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+            error = error + "Librarian does not exist! ";
         }
+        if (id == null) {
+            error = error + "Id needs to be provided!";
+        } else if (movieRepository.findItemById(id) != null) {
+            error = error + "Item with " + id + " already exists! ";
+        }
+        if (name == null) {
+            error = error + "Name needs to be provided!";
+        }
+        if (date == null) {
+            error = error + "Date needs to be provided!";
+        }
+        if (director == null) {
+            error = error + "Director needs to be provided!";
+        }
+        if (runningTime == null) {
+            error = error + "Running time needs to be provided!";
+        }
+        if (rating == null) {
+            error = error + "Rating needs to be provided!";
+        }
+        if (distributor == null) {
+            error = error + "Distributor needs to be provided!";
+        }
+        error = error.trim();
+
+        if (error.length() > 0) {
+            throw new IllegalArgumentException(error);
+        }
+    	
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-    	Movie m= new Movie();
-        m.setId(id);
-        m.setName(name);
-        m.setDatePublished(date);
-        m.setFilmDistributor(distributor);
-        m.setRating(rating);
-        m.setDirector(director);
-        m.setRunningTime(runningTime);
-        movieRepository.save(m);
-        return m;
+        
+    	Movie movie = new Movie();
+        movie.setId(id);
+        movie.setName(name);
+        movie.setDatePublished(date);
+        movie.setFilmDistributor(distributor);
+        movie.setRating(rating);
+        movie.setDirector(director);
+        movie.setRunningTime(runningTime);
+        movieRepository.save(movie);
+        return movie;
     }
     
     /*@Transactional

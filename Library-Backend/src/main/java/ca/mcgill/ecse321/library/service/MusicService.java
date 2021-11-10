@@ -28,14 +28,42 @@ public class MusicService {
     @Autowired
     CheckableItemRepository checkableItemRepository;
     @Transactional
-    public Music createMusic(int librarianId, int id, String name, Date date, String musician, String recordLabel){
-        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-        if(librarian == null){
-            throw new PersonException("Librarian not found in request");
+    public Music createMusic(Integer librarianId, Integer id, String name, Date date, String musician, String recordLabel){
+    	
+    	String error = "";
+        if (librarianId == null) {
+        	throw new PersonException("Librarian not found in request");
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+            error = error + "Librarian does not exist! ";
         }
+        if (id == null) {
+            error = error + "Id needs to be provided!";
+        } else if (musicRepository.findItemById(id) != null) {
+            error = error + "Item with " + id + " already exists! ";
+        }
+        if (name == null) {
+            error = error + "Name needs to be provided!";
+        }
+        if (date == null) {
+            error = error + "Date needs to be provided!";
+        }
+        if (musician == null) {
+            error = error + "Musician needs to be provided!";
+        }
+        if (recordLabel == null) {
+            error = error + "Record label needs to be provided!";
+        }
+        error = error.trim();
+
+        if (error.length() > 0) {
+            throw new IllegalArgumentException(error);
+        }
+    	
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
+
         Music m= new Music();
         m.setId(id);
         m.setName(name);
