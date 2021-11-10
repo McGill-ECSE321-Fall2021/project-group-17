@@ -66,9 +66,11 @@ public class AddressService {
     @Transactional
     public Address updateAddress(int id, Integer streetNumber, String street, String city, String country) {
         Address address = addressRepository.findAddressById(id);
-        if(address==null){
+
+        if (address == null) {
             throw new AddressException("Can't update address because no address exists for the given id.");
         }
+
         if (streetNumber != null) {
             address.setStreetNumber(streetNumber);
         }
