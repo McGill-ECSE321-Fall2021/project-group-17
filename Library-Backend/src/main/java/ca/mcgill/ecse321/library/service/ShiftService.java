@@ -43,7 +43,7 @@ public class ShiftService {
     }
     
     @Transactional
-    public List<Shift> getShifts(Integer id) {
+    public List<Shift> getLibrarianShifts(Integer id) {
     	List<Shift> shifts = new ArrayList<Shift>();
         for(Shift s : shiftRepository.findAll()) {
         	if(s.getLibrarian().getId() == id) {

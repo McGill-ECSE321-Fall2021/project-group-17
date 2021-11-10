@@ -10,9 +10,9 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -117,4 +117,15 @@ public class TestShiftService {
         assertEquals(shift.getEndTime(),SHIFT_END_TIME);
         assertEquals(shift.getLibrarian().getId(), LIBRARIAN_KEY);
     }
+    @Test
+    public void getLibrarianShifts(){
+        List<Shift> shifts = null;
+        try{
+            shifts = shiftService.getLibrarianShifts(LIBRARIAN_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+    }
+    
 }

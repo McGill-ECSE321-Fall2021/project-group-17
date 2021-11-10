@@ -45,7 +45,7 @@ public class ItemRestController {
 
     @PostMapping(value= {"/item/movie/{librarianId}", "/item/movie/{librarianId}/"})
     @ResponseBody
-    public MovieDTO addMovie(@PathVariable("librarianId") int librarianId,
+    public MovieDTO addMovie(@PathVariable("librarianId") Integer librarianId,
                                   @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
         Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
         		body.getRunningTime(), body.getRating(), body.getFilmDistributor());
