@@ -409,13 +409,15 @@ public class TestReservationService {
 
     private static final int RESERVATION_KEY = 1;
     private static final int CUSTOMER_KEY = 2;
+    private static final int CUSTOMER_GREEDY_KEY = 102;
     private static final int ITEM_INSTANCE_KEY = 3;
     private static final int LIBRARIAN_KEY = 5;
     private static final Customer CUSTOMER = new Customer(2,null,0,null,null,null);
+    private static final Customer GREEDY_CUSTOMER = new Customer(CUSTOMER_GREEDY_KEY,null,0,null,null,null);
 
     private static final Date startDate = Date.valueOf("2021-10-11");
     private static final Date endDate = Date.valueOf("2021-10-31");
-    private static final Date newStartDate = Date.valueOf("2021-11-11");
+    private static final Date newStartDate = Date.valueOf("2021-10-21");
     private static final Date newEndDate = Date.valueOf("2021-11-31");
 
     @BeforeEach
@@ -444,7 +446,17 @@ public class TestReservationService {
                 reservation1.setId(RESERVATION_KEY);
                 reservations.add(reservation1);
                 return reservations;
-            } else {
+            }
+            else if(invocation.getArgument(0).equals(GREEDY_CUSTOMER)) {
+                List<Reservation> reservations = new ArrayList<>();
+                for(int i =0; i <6; i++){
+                    Reservation reservation1 = new Reservation();
+                    reservation1.setId(RESERVATION_KEY);
+                    reservations.add(reservation1);
+                }
+                return reservations;
+            }
+            else {
                 return null;
             }
         });
@@ -457,6 +469,11 @@ public class TestReservationService {
             else if(invocation.getArgument(0).equals(CUSTOMER_KEY+10)) {
                 Customer customer = new Customer();
                 customer.setId(CUSTOMER_KEY+10);
+                return customer;
+            }
+            else if(invocation.getArgument(0).equals(CUSTOMER_GREEDY_KEY)) {
+                Customer customer = new Customer();
+                customer.setId(CUSTOMER_GREEDY_KEY);
                 return customer;
             }
             else {
@@ -718,6 +735,32 @@ public class TestReservationService {
         assertNull(r);
         assertEquals(error,"Invalid customer provided");
     }
+    @Test
+    public void testCreateReservationPickupAfterStart(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.createReservation(Date.valueOf(startDate.toLocalDate().plusMonths(3)),endDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot have pickup date before reservation date");
+    }
+    @Test
+    public void testCreateReservationTooManyReservations(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.createReservation(startDate,endDate,ITEM_INSTANCE_KEY,CUSTOMER_GREEDY_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"This customer already has the maximum number of loans");
+    }
     //END CREATE RESERVATION TESTS
 
     //START UPDATE RESERVATION TESTS
@@ -860,6 +903,48 @@ public class TestReservationService {
         }
         assertNull(r);
         assertEquals(error,"Reservation cannot be found");
+    }
+
+    @Test
+    public void testUpdateReservationPickupAfterStartStartProvided(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY,Date.valueOf(startDate.toLocalDate().plusMonths(3)),endDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot have pickup date before reservation date");
+    }
+
+    @Test
+    public void testUpdateReservationPickupAfterStartPickupProvided(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY,startDate,Date.valueOf(endDate.toLocalDate().minusMonths(3)),ITEM_INSTANCE_KEY,CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Cannot have pickup date before reservation date");
+    }
+
+    @Test
+    public void testUpdateReservationTooManyReservations(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY,startDate,endDate,CUSTOMER_GREEDY_KEY,ITEM_INSTANCE_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"This customer already has the maximum number of loans");
     }
 
 
