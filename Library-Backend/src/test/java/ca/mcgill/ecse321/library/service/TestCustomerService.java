@@ -129,7 +129,7 @@ public class TestCustomerService {
         }
         Customer customer = null;
         try{
-            customer = service.createCustomer(CUSTOMER_KEY2,person,0,address,libraryCard);
+            customer = service.createCustomer(CUSTOMER_KEY2,person.getId(),0,address.getId(),libraryCard);
         }
         catch (Exception e){
             fail();
@@ -161,7 +161,7 @@ public class TestCustomerService {
         }
         Customer customer = null;
         try{
-            customer = service.createCustomer(CUSTOMER_KEY2,null,0,address,libraryCard);
+            customer = service.createCustomer(CUSTOMER_KEY2,null,0,address.getId(),libraryCard);
         }
         catch (Exception e){
            error= e.getMessage();
@@ -211,7 +211,7 @@ public class TestCustomerService {
         }
         Customer customer = null;
         try{
-            customer = service.createCustomer(CUSTOMER_KEY,person,0,service2.getAddress(ADDRESS_KEY),null);
+            customer = service.createCustomer(CUSTOMER_KEY,person.getId(),0,service2.getAddress(ADDRESS_KEY).getId(),null);
         }
         catch (Exception e){
             fail();

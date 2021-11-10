@@ -12,8 +12,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "//pm.environment.set(\"customer_id\", pm.response.json().id);\r",
-              "pm.globals.set(\"personRoleId\", pm.response.json().id);\r",
+              "pm.environment.set(\"personRoleId\", pm.response.json().id);\r",
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
               "});"
@@ -91,8 +90,8 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.globals.set(\"username\", pm.response.json().username);\r",
-              "pm.globals.set(\"password\", pm.response.json().password);\r",
+              "pm.environment.set(\"username\", pm.response.json().username);\r",
+              "pm.environment.set(\"password\", pm.response.json().password);\r",
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
               "});"
@@ -105,7 +104,7 @@
         "method": "POST",
         "header": [],
         "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/bob/1234/{{personRoleId}}",
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/bob/1234?{{personRoleId}}",
           "protocol": "https",
           "host": [
             "library-backend-534a",
@@ -115,8 +114,13 @@
           "path": [
             "onlineaccount",
             "bob",
-            "1234",
-            "{{personRoleId}}"
+            "1234"
+          ],
+          "query": [
+            {
+              "key": "{{personRoleId}}",
+              "value": null
+            }
           ]
         }
       },
@@ -244,7 +248,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/{{username}}",
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/{{username}}?{{personRoleId}}",
           "protocol": "https",
           "host": [
             "library-backend-534a",
@@ -254,6 +258,12 @@
           "path": [
             "onlineaccount",
             "{{username}}"
+          ],
+          "query": [
+            {
+              "key": "{{personRoleId}}",
+              "value": null
+            }
           ]
         }
       },

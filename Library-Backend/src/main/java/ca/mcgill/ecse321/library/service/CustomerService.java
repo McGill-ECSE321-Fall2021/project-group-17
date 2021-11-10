@@ -13,10 +13,18 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Transactional
-    public Customer createCustomer(Integer id,Person person, Integer penalty, Address address, LibraryCard libCard){
+    public Customer createCustomer(Integer id,Integer personId, Integer penalty, Integer addressId, LibraryCard libCard){
         Customer customer = new Customer();
+
+        Person person = personRepository.findPersonById(personId);
+        Address address = addressRepository.findAddressById(addressId);
+
         if(person==null||address==null){
             throw new CustomerException("cannot create Customer");
         }
