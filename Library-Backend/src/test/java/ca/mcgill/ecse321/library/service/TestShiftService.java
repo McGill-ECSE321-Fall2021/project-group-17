@@ -10,9 +10,9 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -38,11 +38,13 @@ public class TestShiftService {
     private static final Time SHIFT_START_TIME = Time.valueOf("18:45:20");
     private static final String SHIFT_START_TIME_AS_STRING = SHIFT_START_TIME.toString();
     private static final Time SHIFT_END_TIME = Time.valueOf("19:52:19");
+
     private static final String SHIFT_END_TIME_AS_STRING = SHIFT_END_TIME.toString();
     private static final DayOfWeek DAY_OF_WEEK = DayOfWeek.valueOf("MONDAY");
     private static final String DAY_OF_WEEK_AS_STRING = DAY_OF_WEEK.toString();
     private static final DayOfWeek DAY_OF_WEEK_2 = DayOfWeek.valueOf("WEDNESDAY");
     private static final String DAY_OF_WEEK_2_AS_STRING = DAY_OF_WEEK_2.toString();
+
     private static final int LIBRARIAN_KEY = 3;
     private static final String ACCOUNT_USERNAME = "username";
     private static final String ACCOUNT_PASSWORD = "password";
@@ -133,4 +135,15 @@ public class TestShiftService {
         assertEquals(shift.getEndTime(),SHIFT_END_TIME);
         assertEquals(shift.getLibrarian().getId(), LIBRARIAN_KEY);
     }
+    @Test
+    public void getLibrarianShifts(){
+        List<Shift> shifts = null;
+        try{
+            shifts = shiftService.getLibrarianShifts(LIBRARIAN_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+    }
+    
 }
