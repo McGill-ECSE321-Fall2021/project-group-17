@@ -20,8 +20,13 @@ public class AddressService {
 
     @Transactional
     public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId) {
+        if(addressRepository.findAddressById(id)!=null){
+            throw new AddressException("address with this ID already exists");
+        }
+        if(streetNumber==0 || street==null||city==null||country==null ){
+            throw new AddressException("incompleteAddressGiven");
+        }
         Address address = new Address(id, streetNumber, street, city, country);
-
 
         if (customerId != null) {
             PersonRole personRole = customerRepository.findPersonRoleById(customerId);
@@ -54,7 +59,9 @@ public class AddressService {
     @Transactional
     public Address updateAddress(int id, Integer streetNumber, String street, String city, String country) {
         Address address = addressRepository.findAddressById(id);
-
+        if(address==null){
+            throw new AddressException("cannot update an address that does not exist");
+        }
         if (streetNumber != null) {
             address.setStreetNumber(streetNumber);
         }

@@ -27,20 +27,24 @@ public class TestAddressService {
 
 
     @InjectMocks
-    private CustomerService service;
+    private CustomerService customerService;
     @InjectMocks
-    private PersonService service1;
+    private PersonService personService;
     @InjectMocks
-    private AddressService service2;
+    private AddressService addressService;
 
     private static final int PERSON_KEY = 3;
     private static final int ADDRESS_KEY = 5;
+    private static final int ADDRESS_KEY2 = 2;
     private static final int ADDRESS_STREET_NUMBER = 3456;
+    private static final int ADDRESS_STREET_NUMBER2 = 3453;
     private static final boolean VERIFIED = true;
     private static final String ADDRESS_STREET = "Peel";
+    private static final String ADDRESS_STREET2 = "Park";
     private static final String ADDRESS_CITY = "Montreal";
     private static final String ADDRESS_CITY2 = "Montreal";
     private static final String ADDRESS_COUNTRY = "Canada";
+    private static final String ADDRESS_COUNTRY2 = "US";
     private static final String PERSON_NAME = "victoria";
     private static final int CUSTOMER_KEY = 2;
     @BeforeEach
@@ -84,7 +88,7 @@ public class TestAddressService {
         int id = CUSTOMER_KEY;
         Address address=null;
         try{
-            address= service2.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
         }
         catch(Exception e){
             fail();
@@ -98,17 +102,17 @@ public class TestAddressService {
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
     @Test
-    public void updateAddress(){
+    public void updateAddressCity(){
         int id = CUSTOMER_KEY;
         Address address=null;
         try{
-            address= service2.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
         }
         catch(Exception e){
             fail();
         }
         try{
-            service2.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY2,ADDRESS_COUNTRY);
+            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY2,ADDRESS_COUNTRY);
         }
         catch(Exception e){
             fail();
@@ -121,8 +125,106 @@ public class TestAddressService {
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
+    @Test
+    public void updateAddressCountry(){
+        int id = CUSTOMER_KEY;
+        Address address=null;
+        try{
+            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        try{
+            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY2);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(address);
+        assertEquals(address.getId(),ADDRESS_KEY);
+        assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER);
+        assertEquals(address.getStreet(),ADDRESS_STREET);
+        assertEquals(address.getCity(),ADDRESS_CITY);
+        assertEquals(address.getCountry(),ADDRESS_COUNTRY2);
+        assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
+    }
+    @Test
+    public void updateAddressStreetNumber(){
+        int id = CUSTOMER_KEY;
+        Address address=null;
+        try{
+            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        try{
+            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER2,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(address);
+        assertEquals(address.getId(),ADDRESS_KEY);
+        assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER2);
+        assertEquals(address.getStreet(),ADDRESS_STREET);
+        assertEquals(address.getCity(),ADDRESS_CITY);
+        assertEquals(address.getCountry(),ADDRESS_COUNTRY);
+        assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
+    }
+    @Test
+    public void updateAddressStreet(){
+        int id = CUSTOMER_KEY;
+        Address address=null;
+        try{
+            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        try{
+            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET2,ADDRESS_CITY,ADDRESS_COUNTRY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(address);
+        assertEquals(address.getId(),ADDRESS_KEY);
+        assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER2);
+        assertEquals(address.getStreet(),ADDRESS_STREET);
+        assertEquals(address.getCity(),ADDRESS_CITY);
+        assertEquals(address.getCountry(),ADDRESS_COUNTRY);
+        assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
+    }
+    @Test
+    public void updateAddressNotFound(){
+        String error = null;
+        Address address=null;
+        try{
+            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        try{
+            addressService.updateAddress(ADDRESS_KEY2, ADDRESS_STREET_NUMBER,ADDRESS_STREET2,ADDRESS_CITY,ADDRESS_COUNTRY);
+        }
+        catch(Exception e){
+           error=e.getMessage();
+        }
+        assertEquals(error,"cannot update an address that does not exist");
+    }
 
-
+    @Test
+    public void getAddress(){
+        String error = null;
+        try{
+           addressService.getAddress(ADDRESS_KEY);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+    }
 
 }
 
