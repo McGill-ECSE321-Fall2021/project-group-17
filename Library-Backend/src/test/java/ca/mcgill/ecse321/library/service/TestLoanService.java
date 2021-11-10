@@ -5,7 +5,6 @@ import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.*;
-import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +48,7 @@ public class TestLoanService {
     private static final Date startDate = Date.valueOf("2021-10-11");
     private static final Date endDate = Date.valueOf("2021-10-31");
 
-    private static final Date newStartDate = Date.valueOf("2021-11-11");
+    private static final Date newStartDate = Date.valueOf("2021-10-21");
     private static final Date newEndDate = Date.valueOf("2021-11-31");
 
     @BeforeEach
