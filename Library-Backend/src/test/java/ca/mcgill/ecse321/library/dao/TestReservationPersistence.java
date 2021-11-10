@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Month;
@@ -29,6 +30,7 @@ public class TestReservationPersistence {
     private CheckableItemRepository checkableItemRepository;
     @AfterEach
     public void clearDatabase() {
+
         reservationRepository.deleteAll();
         customerRepository.deleteAll();
         itemInstanceRepository.deleteAll();

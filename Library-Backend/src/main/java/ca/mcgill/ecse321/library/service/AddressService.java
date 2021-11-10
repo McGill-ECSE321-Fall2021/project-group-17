@@ -20,8 +20,13 @@ public class AddressService {
 
     @Transactional
     public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId) {
+        if(addressRepository.findAddressById(id)!=null){
+            throw new AddressException("cannot have two addresses with the same ID");
+        }
+        if(streetNumber==0 || street==null||city==null||country==null ){
+            throw new AddressException("incomplete Address given");
+        }
         Address address = new Address(id, streetNumber, street, city, country);
-
 
         if (customerId != null) {
             PersonRole personRole = customerRepository.findPersonRoleById(customerId);
@@ -48,7 +53,14 @@ public class AddressService {
 
     @Transactional
     public Address getAddress(int id) {
-        return addressRepository.findAddressById(id);
+        Address address=addressRepository.findAddressById(id);
+        if(address==null){
+            throw new AddressException("Address not found");
+        }
+        else{
+            return address;
+        }
+
     }
 
     @Transactional

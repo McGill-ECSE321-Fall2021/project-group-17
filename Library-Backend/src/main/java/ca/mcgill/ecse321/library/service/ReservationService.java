@@ -34,6 +34,9 @@ public class ReservationService {
         if(pickupDay == null){
             throw new ReservationException("Cannot have empty pickup day");
         }
+        if(dateReserved.toLocalDate().isAfter(pickupDay.toLocalDate())){
+            throw new ReservationException("Cannot have pickup date before reservation date");
+        }
         r.setPickupDay(pickupDay);
         if(customerId == null) {
             throw new ReservationException("Need to have a customer for a reservation");
@@ -47,6 +50,9 @@ public class ReservationService {
         Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
         if(c == null){
             throw new ReservationException("Invalid customer provided");
+        }
+        if(reservationRepository.findByCustomer(c) != null && reservationRepository.findByCustomer(c).size() > 4){
+            throw new ReservationException("This customer already has the maximum number of loans");
         }
         r.setCustomer(c);
 
@@ -103,16 +109,24 @@ public class ReservationService {
             throw new NotFoundException("Reservation cannot be found");
         }
         if(startDate != null){
-            //TODO add validation if date is before now
+            if(startDate.toLocalDate().isAfter(r.getPickupDay().toLocalDate())){
+                throw new ReservationException("Cannot have pickup date before reservation date");
+            }
             r.setDateReserved(startDate);
         }
         if(endDate != null){
+            if(r.getDateReserved().toLocalDate().isAfter(endDate.toLocalDate())){
+                throw new ReservationException("Cannot have pickup date before reservation date");
+            }
             r.setPickupDay(endDate);
         }
         if(customerId != null){
             Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
             if(c == null){
                 throw new ReservationException("Cannot find person to update reservation to");
+            }
+            if(reservationRepository.findByCustomer(c) != null && reservationRepository.findByCustomer(c).size() > 4){
+                throw new ReservationException("This customer already has the maximum number of loans");
             }
             r.setCustomer(c);
         }

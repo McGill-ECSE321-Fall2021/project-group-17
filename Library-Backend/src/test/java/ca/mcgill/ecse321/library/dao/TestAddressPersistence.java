@@ -23,7 +23,6 @@ public class TestAddressPersistence {
     public void clearDatabase() {
         addressRepository.deleteAll();
         customerRepository.deleteAll();
-
     }
     @Test
     public void testPersistAndLoadAddress() {

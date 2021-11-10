@@ -55,29 +55,8 @@ public class LoanService {
         loan.setReturnDate(returnDate);
 
         List<Loan> loans = (List<Loan>) loanRepository.findAll();
-        loan.setId(generateId(loans));
         loanRepository.save(loan);
         return loan;
-    }
-
-    private int generateId(List<Loan> loans){
-        int i = 0;
-        loans.sort((o1, o2) -> {
-            if(o1.getId() == o2.getId()){
-                return 0;
-            }
-            else if(o1.getId() < o2.getId()){
-                return -1;
-            }
-            return 1;
-        });
-        for(Loan l : loans){
-            if(i != l.getId()){
-                return i;
-            }
-            i++;
-        }
-        return i + 1;
     }
 
     /**

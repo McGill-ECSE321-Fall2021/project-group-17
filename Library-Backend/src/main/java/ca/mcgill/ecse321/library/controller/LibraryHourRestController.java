@@ -27,22 +27,22 @@ public class LibraryHourRestController {
         return convertToDTO(libraryHour);
     }
 
-    @PostMapping(value= {"/libraryhour/{id}/", "/libraryhour/{id}/"})//TODO use current user id
+    @PostMapping(value= {"/libraryhour/{id}/", "/libraryhour/{id}/"})
     @ResponseBody
     public LibraryHourDTO createLibraryHour(@PathVariable("id") int Id,
                                   @RequestBody JsonBody body,
-                                            @RequestParam(value = "accountid", required = false)int accountId) throws IllegalArgumentException{
-        LibraryHour libraryHour = service.createLibraryHour(body.getLibraryId(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), accountId);
+                                            @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+        LibraryHour libraryHour = service.createLibraryHour(body.getLibraryId(), body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), accountUsername);
         return convertToDTO(libraryHour);
     }
 
     @PutMapping(value = {"/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}/", "/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}/"})
     public void modifyLibraryHours(@PathVariable("libhourid") int libHourId,
-                                @PathVariable("starttime") Time startTime, @PathVariable("endtime") Time endTime,
-                                @PathVariable("dayofweek") DayOfWeek DOW,
-                                   @RequestParam(value = "accountId", required = false)int accountId){
+                                @PathVariable("starttime") String startTime, @PathVariable("endtime") String endTime,
+                                @PathVariable("dayofweek") String DOW,
+                                   @RequestParam(value = "accountUsername", required = false)String accountUsername){
         //do we need to use JsonBody or Path Variable??
-        service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountId);
+        service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountUsername);
     }
 
     @DeleteMapping(value = {"/libraryhour/{libraryhourid}/", "/libraryhour/{libraryhourid}/"})
@@ -63,32 +63,32 @@ public class LibraryHourRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        private Time startTime;
-        private Time endTime;
-        private DayOfWeek dayOfWeek;
+        private String startTime;
+        private String endTime;
+        private String dayOfWeek;
         private Integer libraryId;
 
-        public Time getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Time startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Time getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Time endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
-        public DayOfWeek getDayOfWeek() {
+        public String getDayOfWeek() {
             return dayOfWeek;
         }
 
-        public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        public void setDayOfWeek(String dayOfWeek) {
             this.dayOfWeek = dayOfWeek;
         }
 
