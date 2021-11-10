@@ -38,13 +38,16 @@ public class ItemRestController {
 
     @Autowired
     private ItemService service;
+    @Autowired
     private MovieService movieService;
+    @Autowired
     private BookService bookService;
+    @Autowired
     private MusicService musicService;
+    @Autowired
     private NewspaperService newspaperService;
 
     @PostMapping(value= {"/item/movie/{librarianId}", "/item/movie/{librarianId}/"})
-    @ResponseBody
     public MovieDTO addMovie(@PathVariable("librarianId") Integer librarianId,
                                   @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
         Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),

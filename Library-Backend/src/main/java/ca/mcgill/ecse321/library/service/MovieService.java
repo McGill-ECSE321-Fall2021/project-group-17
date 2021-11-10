@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
@@ -21,17 +22,18 @@ import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
+@Service
 public class MovieService {
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @Autowired
-    CheckableItemRepository checkableItemRepository;
+    private CheckableItemRepository checkableItemRepository;
     @Autowired
-    LibrarianRepository librarianRepository;
+    private LibrarianRepository librarianRepository;
     @Autowired
-    ItemInstanceRepository itemInstanceRepository;
+    private ItemInstanceRepository itemInstanceRepository;
     
     @Transactional
     public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor){
@@ -104,7 +106,7 @@ public class MovieService {
             throw new NotFoundException("Cannot find movie to delete");
         }
         if(librarianId == null){
-            throw new MovieException("Cannot authorize customer to delete movie");
+            throw new MovieException("Cannot authorize librarian to delete movie");
         }
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null){
