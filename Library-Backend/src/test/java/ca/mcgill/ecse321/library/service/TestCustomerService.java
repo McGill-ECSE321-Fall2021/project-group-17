@@ -39,16 +39,23 @@ public class TestCustomerService {
 
 
     private static final int PERSON_KEY = 3;
-    private static final int PERSONROLE_KEY = 7;
+    private static final int PENALTY = 3;
     private static final int LIBRARYCARD_KEY = 7;
     private static final int ADDRESS_KEY = 5;
-    private static final int ADDRESS_STREET_NUMBER = 3456;
     private static final boolean VERIFIED = true;
-    private static final String ADDRESS_STREET = "Peel";
-    private static final String ADDRESS_CITY = "Montreal";
-    private static final String ADDRESS_COUNTRY = "Canada";
     private static final String PERSON_NAME = "victoria";
     private static final int CUSTOMER_KEY = 2;
+    private static final int CUSTOMER_KEY2 = 8;
+    private static final int CUSTOMER_KEY3 = -5;
+    private static final int ADDRESS_KEY2 = 2;
+    private static final int ADDRESS_STREET_NUMBER = 3456;
+    private static final int ADDRESS_STREET_NUMBER2 = 3453;
+    private static final String ADDRESS_STREET = "Peel";
+    private static final String ADDRESS_STREET2 = "Park";
+    private static final String ADDRESS_CITY = "Montreal";
+    private static final String ADDRESS_CITY2 = "Toronto";
+    private static final String ADDRESS_COUNTRY = "Canada";
+    private static final String ADDRESS_COUNTRY2 = "US";
     @BeforeEach
     public void setMockOutput() {
         lenient().when(libraryCardRepository.findLibraryCardById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
@@ -93,28 +100,28 @@ public class TestCustomerService {
         int id = CUSTOMER_KEY;
         Person person=null;
         try{
-            person= service1.createPerson(PERSON_NAME,null);
+            person= service1.getPerson(PERSON_KEY);
         }
         catch(Exception e){
             fail();
         }
         Address address=null;
         try{
-            address=service2.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+            address=service2.getAddress(ADDRESS_KEY);
         }
         catch(Exception e){
             fail();
         }
         LibraryCard libraryCard=null;
         try{
-            libraryCard=service3.createLibraryCard(LIBRARYCARD_KEY);
+            libraryCard=service3.getLibraryCard(LIBRARYCARD_KEY);
         }
         catch(Exception e){
             fail();
         }
         Customer customer = null;
         try{
-            customer = service.createCustomer(person,0,address,libraryCard);
+            customer = service.createCustomer(CUSTOMER_KEY2,person,0,address,libraryCard);
         }
         catch (Exception e){
             fail();
@@ -124,6 +131,64 @@ public class TestCustomerService {
         assertEquals(customer.getAddress(),address);
         assertEquals(customer.getLibraryCard(),libraryCard);
 
+    }
+    @Test
+    public void createCustomerNotEnoughInfo(){
+        String error=null;
+
+        Person person=null;
+        Address address=null;
+        try{
+            address=service2.getAddress(ADDRESS_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        LibraryCard libraryCard=null;
+        try{
+            libraryCard=service3.getLibraryCard(LIBRARYCARD_KEY);
+        }
+        catch(Exception e){
+            fail();
+        }
+        Customer customer = null;
+        try{
+            customer = service.createCustomer(CUSTOMER_KEY2,null,0,address,libraryCard);
+        }
+        catch (Exception e){
+           error= e.getMessage();
+        }
+        assertEquals(error,"cannot create Customer");
+
+    }
+    @Test
+    public void getCustomer(){
+        String error = null;
+        try{
+            service.getCustomer(CUSTOMER_KEY);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+    }
+    @Test
+    public void getCustomerNotFound(){
+        String error = null;
+        try{
+            service.getCustomer(CUSTOMER_KEY2);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"This customer does not exist");
+    }
+    @Test
+    public void getCustomerInvalid(){
+        String error = null;
+        try{
+            service.getCustomer(CUSTOMER_KEY3);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Invalid Id");
     }
 
     @Test
@@ -138,7 +203,7 @@ public class TestCustomerService {
         }
         Customer customer = null;
         try{
-            customer = service.createCustomer(person,0,null,null);
+            customer = service.createCustomer(CUSTOMER_KEY,person,0,service2.getAddress(ADDRESS_KEY),null);
         }
         catch (Exception e){
             fail();
@@ -151,6 +216,98 @@ public class TestCustomerService {
         }
         assertNotNull(customer);
         assertEquals(customer.getIsVerified(),VERIFIED);
+    }
+    @Test
+    public void updateCustomerPenalty(){
+       Customer customer=null;
+        try{
+            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,service2.getAddress(ADDRESS_KEY),service3.getLibraryCard(LIBRARYCARD_KEY));
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(customer);
+        assertEquals(customer.getId(),CUSTOMER_KEY);
+        assertEquals(customer.getLibraryCard().getId(),service3.getLibraryCard(LIBRARYCARD_KEY).getId());
+        assertEquals(customer.getAddress().getId(),service2.getAddress(ADDRESS_KEY).getId());
+        assertEquals(customer.getPenalty(),PENALTY);
+    }
+    @Test
+    public void updateCustomerAddress(){
+        Customer customer=null;
+        Address address= null;
+        try{
+            address= service2.createAddress(ADDRESS_KEY2, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY );
+        }
+        catch(Exception e){
+            fail();
+        }
+        try{
+            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,address,service3.getLibraryCard(LIBRARYCARD_KEY));
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(customer);
+        assertEquals(customer.getId(),CUSTOMER_KEY);
+        assertEquals(customer.getLibraryCard().getId(),service3.getLibraryCard(LIBRARYCARD_KEY).getId());
+        assertEquals(customer.getAddress().getId(),address.getId());
+        assertEquals(customer.getPenalty(),PENALTY);
+    }
+
+    @Test
+    public void updateCustomerNotFound(){
+        Customer customer=null;
+        String error=null;
+        try{
+            customer= service.updateCustomer(CUSTOMER_KEY2,PENALTY,service2.getAddress(ADDRESS_KEY),service3.getLibraryCard(LIBRARYCARD_KEY));
+        }
+        catch(Exception e){
+            error= e.getMessage();
+        }
+        assertEquals(error,"cannot find customer");
+    }
+    @Test
+    public void testDeleteCustomer(){
+        try{
+            service.deleteCustomer(CUSTOMER_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+    }
+    @Test
+    public void testDeleteCustomerNotFound(){
+        String error=null;
+        try{
+            service.deleteCustomer(CUSTOMER_KEY2);
+        }
+        catch (Exception e){
+            error=e.getMessage();
+        }
+        assertEquals(error,"Customer does not exist");
+    }
+    @Test
+    public void testDeleteCustomerInvalid(){
+        String error=null;
+        try{
+            service.deleteCustomer(null);
+        }
+        catch (Exception e){
+            error=e.getMessage();
+        }
+        assertEquals(error,"Cannot find customer to delete.");
+    }
+    @Test
+    public void testVerifyCustomerInvalid(){
+        String error=null;
+        try{
+            service.verifyAddress(CUSTOMER_KEY2);
+        }
+        catch (Exception e){
+            error=e.getMessage();
+        }
+        assertEquals(error,"Customer not found in system. Address could not be verified");
     }
 
 
