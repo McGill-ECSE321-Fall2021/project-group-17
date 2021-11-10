@@ -38,9 +38,10 @@ public class NewspaperService {
         }
         if (id == null) {
             error = error + "Id needs to be provided!";
-        } else if (newspaperRepository.findItemById(id) != null) {
-            error = error + "Item with " + id + " already exists! ";
-        }
+        } 
+//        else if (newspaperRepository.findItemById(id) != null) {
+//            error = error + "Item with id " + id + " already exists! ";
+//        }
         if (name == null) {
             error = error + "Name needs to be provided!";
         }
@@ -97,7 +98,7 @@ public class NewspaperService {
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        checkableItemRepository.deleteById(newspaperId);
+        newspaperRepository.deleteById(newspaperId);
         newspaper = null;
     }
     

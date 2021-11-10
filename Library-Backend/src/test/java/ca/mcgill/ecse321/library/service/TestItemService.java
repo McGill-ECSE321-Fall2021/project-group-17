@@ -52,42 +52,54 @@ public class TestItemService {
     private static final Date DATE_PUBLISHED = Date.valueOf("2021-10-11");
     private static final int RUNNING_TIME = 120;
     private static final int LIBRARIAN_KEY = 5;
-    private static final int MEDIA_KEY = 7;
+    private static final int NEWSPAPER_KEY = 121212;
+    private static final int MOVIE_KEY = 232323;
+    private static final int BOOK_KEY = 343434;
+    private static final int MUSIC_KEY = 454545;
     
     @BeforeEach
     public void setMockOutput() {
 
         lenient().when(movieRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(MEDIA_KEY)) {
+            if(invocation.getArgument(0).equals(MOVIE_KEY)) {
                 Movie movie = new Movie();
-                movie.setId(MEDIA_KEY);
+                movie.setId(MOVIE_KEY);
                 return movie;
             } else {
                 return null;
             }
         });
         lenient().when(bookRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(MEDIA_KEY)) {
+            if(invocation.getArgument(0).equals(BOOK_KEY)) {
                 Book book = new Book();
-                book.setId(MEDIA_KEY);
+                book.setId(BOOK_KEY);
                 return book;
             } else {
                 return null;
             }
         });
         lenient().when(musicRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(MEDIA_KEY)){
+            if(invocation.getArgument(0).equals(MUSIC_KEY)){
                 Music music = new Music();
-                music.setId(MEDIA_KEY);
+                music.setId(MUSIC_KEY);
                 return music;
+            } else {
+            	return null;
+            }
+        });
+        lenient().when(newspaperRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(NEWSPAPER_KEY)){
+                Newspaper newspaper = new Newspaper();
+                newspaper.setId(NEWSPAPER_KEY);
+                return newspaper;
             } else {
                 return null;
             }
         });
         lenient().when(librarianRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(MEDIA_KEY)){
+            if(invocation.getArgument(0).equals(LIBRARIAN_KEY)){
                 Librarian librarian = new Librarian();
-                librarian.setId(MEDIA_KEY);
+                librarian.setId(LIBRARIAN_KEY);
                 return librarian;
             } else {
                 return null;
@@ -106,24 +118,17 @@ public class TestItemService {
 
     @Test
     public void createMovie(){
-        int id = MEDIA_KEY;
-        int id2 = LIBRARIAN_KEY;
-        String name = MEDIA_NAME;
-        Date datePublished = DATE_PUBLISHED;
-        String director = AUTHOR_DIRECTOR_MUSICIAN;
-        int runningTime = RUNNING_TIME;
-        String rating = RATING;
-        String distributor = PUBLISHER_DISTRIBUTOR;
         Movie movie = null;
         
         try{
-            movie = movieService.createMovie(id2, id, name, datePublished, director, runningTime, rating, distributor);
+            movie = movieService.createMovie(LIBRARIAN_KEY, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
         }
         catch(Exception e){
+        	System.out.println(e);
             fail();
         }
         assertNotNull(movie);
-        assertEquals(movie.getId(), MEDIA_KEY);
+        assertEquals(movie.getId(), MOVIE_KEY);
         assertEquals(movie.getName(), MEDIA_NAME);
         assertEquals(movie.getDatePublished(), DATE_PUBLISHED);
         assertEquals(movie.getDirector(), AUTHOR_DIRECTOR_MUSICIAN);
@@ -134,23 +139,17 @@ public class TestItemService {
 
     @Test
     public void createBook(){
-    	int id = MEDIA_KEY;
-        int id2 = LIBRARIAN_KEY;
-        String name = MEDIA_NAME;
-        Date datePublished = DATE_PUBLISHED;
-        String author = AUTHOR_DIRECTOR_MUSICIAN;
-        String genre = GENRE;
-        String publisher = PUBLISHER_DISTRIBUTOR;
         Book book = null;
         
         try{
-            book = bookService.createBook(id2, id, name, datePublished, author, publisher, genre);
+            book = bookService.createBook(LIBRARIAN_KEY, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
         }
         catch(Exception e){
+        	System.out.println(e);
             fail();
         }
         assertNotNull(book);
-        assertEquals(book.getId(), MEDIA_KEY);
+        assertEquals(book.getId(), BOOK_KEY);
         assertEquals(book.getName(), MEDIA_NAME);
         assertEquals(book.getDatePublished(), DATE_PUBLISHED);
         assertEquals(book.getAuthor(), AUTHOR_DIRECTOR_MUSICIAN);
@@ -160,22 +159,17 @@ public class TestItemService {
     
     @Test
     public void createMusic(){
-    	int id = MEDIA_KEY;
-        int id2 = LIBRARIAN_KEY;
-        String name = MEDIA_NAME;
-        Date datePublished = DATE_PUBLISHED;
-        String musician = AUTHOR_DIRECTOR_MUSICIAN;
-        String recordLabel = RECORD_LABEL;
         Music music = null;
         
         try{
-            music = musicService.createMusic(id2, id, name, datePublished, musician, recordLabel);
+            music = musicService.createMusic(LIBRARIAN_KEY, MUSIC_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL);
         }
         catch(Exception e){
+        	System.out.println(e);
             fail();
         }
         assertNotNull(music);
-        assertEquals(music.getId(), MEDIA_KEY);
+        assertEquals(music.getId(), MUSIC_KEY);
         assertEquals(music.getName(), MEDIA_NAME);
         assertEquals(music.getDatePublished(), DATE_PUBLISHED);
         assertEquals(music.getMusician(), AUTHOR_DIRECTOR_MUSICIAN);
@@ -184,23 +178,62 @@ public class TestItemService {
     
     @Test
     public void createNewspaper(){
-    	int id = MEDIA_KEY;
-        int id2 = LIBRARIAN_KEY;
-        String name = MEDIA_NAME;
-        Date datePublished = DATE_PUBLISHED;
-        String headline = HEADLINE;
         Newspaper newspaper = null;
         
         try{
-            newspaper = newspaperService.createNewspaper(id2, id, name, datePublished, headline);
+            newspaper = newspaperService.createNewspaper(LIBRARIAN_KEY, NEWSPAPER_KEY, MEDIA_NAME, DATE_PUBLISHED, HEADLINE);
         }
         catch(Exception e){
+        	System.out.println(e);
             fail();
         }
         assertNotNull(newspaper);
-        assertEquals(newspaper.getId(), MEDIA_KEY);
+        assertEquals(newspaper.getId(), NEWSPAPER_KEY);
         assertEquals(newspaper.getName(), MEDIA_NAME);
         assertEquals(newspaper.getDatePublished(), DATE_PUBLISHED);
         assertEquals(newspaper.getHeadline(), HEADLINE);
     }
+    
+    //START DELETE PERSON TESTS
+    @Test
+    public void testDeleteMovie(){
+        try{
+            movieService.deleteMovie(MOVIE_KEY, LIBRARIAN_KEY);
+        }
+        catch (Exception e){        	
+        	System.out.println(e);
+            fail();
+        }
+    }
+    @Test
+    public void testDeleteBook(){
+        try{
+            bookService.deleteBook(BOOK_KEY, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+        	System.out.println(e);
+            fail();
+        }
+    }
+    @Test
+    public void testDeleteMusic(){
+        try{
+            bookService.deleteBook(MUSIC_KEY, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+        	System.out.println(e);
+            fail();
+        }
+    }
+    @Test
+    public void testDeleteNewspaper(){
+        try{
+            newspaperService.deleteNewspaper(NEWSPAPER_KEY, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+        	System.out.println(e);
+            fail();
+        }
+    }
+    
 }

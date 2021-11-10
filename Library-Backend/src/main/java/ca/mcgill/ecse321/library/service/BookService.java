@@ -13,6 +13,7 @@ import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.model.Book;
 import ca.mcgill.ecse321.library.model.Item;
+import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
@@ -36,9 +37,10 @@ public class BookService {
         }
         if (id == null) {
             error = error + "Id needs to be provided!";
-        } else if (bookRepository.findItemById(id) != null) {
-            error = error + "Item with " + id + " already exists! ";
-        }
+        } 
+//        else if (bookRepository.findItemById(id) != null) {
+//            error = error + "Item with id " + id + " already exists! ";
+//        }
         if (name == null) {
             error = error + "Name needs to be provided!";
         }
@@ -103,7 +105,7 @@ public class BookService {
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        checkableItemRepository.deleteById(bookId);
+        bookRepository.deleteById(bookId);
         book = null;
     }
     @Transactional

@@ -38,9 +38,10 @@ public class MusicService {
         }
         if (id == null) {
             error = error + "Id needs to be provided!";
-        } else if (musicRepository.findItemById(id) != null) {
-            error = error + "Item with " + id + " already exists! ";
-        }
+        } 
+//        else if (musicRepository.findItemById(id) != null) {
+//            error = error + "Item with id " + id + " already exists! ";
+//        }
         if (name == null) {
             error = error + "Name needs to be provided!";
         }
@@ -64,14 +65,14 @@ public class MusicService {
         	throw new PersonException("User must be a librarian");
         }
 
-        Music m= new Music();
-        m.setId(id);
-        m.setName(name);
-        m.setDatePublished(date);
-        m.setMusician(musician);
-        m.setRecordLabel(recordLabel);
-        musicRepository.save(m);
-        return m;
+        Music music = new Music();
+        music.setId(id);
+        music.setName(name);
+        music.setDatePublished(date);
+        music.setMusician(musician);
+        music.setRecordLabel(recordLabel);
+        musicRepository.save(music);
+        return music;
     }
     /*@Transactional
     public void deleteMusic(int id){
@@ -101,7 +102,7 @@ public class MusicService {
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        checkableItemRepository.deleteById(musicId);
+        musicRepository.deleteById(musicId);
         music = null;
     }
     @Transactional
