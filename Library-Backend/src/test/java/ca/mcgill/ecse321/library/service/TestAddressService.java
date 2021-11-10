@@ -42,7 +42,7 @@ public class TestAddressService {
     private static final String ADDRESS_STREET = "Peel";
     private static final String ADDRESS_STREET2 = "Park";
     private static final String ADDRESS_CITY = "Montreal";
-    private static final String ADDRESS_CITY2 = "Montreal";
+    private static final String ADDRESS_CITY2 = "Toronto";
     private static final String ADDRESS_COUNTRY = "Canada";
     private static final String ADDRESS_COUNTRY2 = "US";
     private static final String PERSON_NAME = "victoria";
@@ -88,13 +88,13 @@ public class TestAddressService {
         int id = CUSTOMER_KEY;
         Address address=null;
         try{
-            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+            address= addressService.createAddress(ADDRESS_KEY2,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
         }
         catch(Exception e){
             fail();
         }
         assertNotNull(address);
-        assertEquals(address.getId(),ADDRESS_KEY);
+        assertEquals(address.getId(),ADDRESS_KEY2);
         assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER);
         assertEquals(address.getStreet(),ADDRESS_STREET);
         assertEquals(address.getCity(),ADDRESS_CITY);
@@ -102,17 +102,37 @@ public class TestAddressService {
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
     @Test
-    public void updateAddressCity(){
+    public void createAddressDuplicateID(){
+        String error=null;
         int id = CUSTOMER_KEY;
         Address address=null;
         try{
             address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
         }
         catch(Exception e){
-            fail();
+            error=e.getMessage();
         }
+        assertEquals("cannot have two addresses with the same ID",error);
+    }
+    @Test
+    public void createAddressIncompleteInfo(){
+        int id = CUSTOMER_KEY;
+        String error=null;
+        Address address=null;
         try{
-            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY2,ADDRESS_COUNTRY);
+            address= addressService.createAddress(ADDRESS_KEY2,ADDRESS_STREET_NUMBER,null,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
+        }
+        catch(Exception e){
+            error=e.getMessage();
+        }
+       assertEquals(error,"incomplete Address given");
+    }
+    @Test
+    public void updateAddressCity(){
+        int id = CUSTOMER_KEY;
+        Address address=null;
+        try{
+            address= addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY2,ADDRESS_COUNTRY);
         }
         catch(Exception e){
             fail();
@@ -129,14 +149,9 @@ public class TestAddressService {
     public void updateAddressCountry(){
         int id = CUSTOMER_KEY;
         Address address=null;
+
         try{
-            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
-        }
-        catch(Exception e){
-            fail();
-        }
-        try{
-            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY2);
+           address= addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY2);
         }
         catch(Exception e){
             fail();
@@ -154,13 +169,7 @@ public class TestAddressService {
         int id = CUSTOMER_KEY;
         Address address=null;
         try{
-            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
-        }
-        catch(Exception e){
-            fail();
-        }
-        try{
-            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER2,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY);
+            address=addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER2,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY);
         }
         catch(Exception e){
             fail();
@@ -178,21 +187,15 @@ public class TestAddressService {
         int id = CUSTOMER_KEY;
         Address address=null;
         try{
-            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
-        }
-        catch(Exception e){
-            fail();
-        }
-        try{
-            addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET2,ADDRESS_CITY,ADDRESS_COUNTRY);
+           address= addressService.updateAddress(ADDRESS_KEY, ADDRESS_STREET_NUMBER,ADDRESS_STREET2,ADDRESS_CITY,ADDRESS_COUNTRY);
         }
         catch(Exception e){
             fail();
         }
         assertNotNull(address);
         assertEquals(address.getId(),ADDRESS_KEY);
-        assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER2);
-        assertEquals(address.getStreet(),ADDRESS_STREET);
+        assertEquals(address.getStreetNumber(),ADDRESS_STREET_NUMBER);
+        assertEquals(address.getStreet(),ADDRESS_STREET2);
         assertEquals(address.getCity(),ADDRESS_CITY);
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
@@ -201,12 +204,6 @@ public class TestAddressService {
     public void updateAddressNotFound(){
         String error = null;
         Address address=null;
-        try{
-            address= addressService.createAddress(ADDRESS_KEY,ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY);
-        }
-        catch(Exception e){
-            fail();
-        }
         try{
             addressService.updateAddress(ADDRESS_KEY2, ADDRESS_STREET_NUMBER,ADDRESS_STREET2,ADDRESS_CITY,ADDRESS_COUNTRY);
         }
@@ -225,6 +222,48 @@ public class TestAddressService {
             error = e.getMessage();
         }
     }
+    @Test
+    public void getAddressNotFound(){
+        String error = null;
+        try{
+            addressService.getAddress(ADDRESS_KEY2);
+        } catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Address not found");
+    }
+    @Test
+    public void testDeleteAddressValid(){
+        try{
+            addressService.deleteAddress(ADDRESS_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+    }
+    @Test
+    public void testDeleteAddressNotFound(){
+        String error=null;
+        try{
+            addressService.deleteAddress(ADDRESS_KEY2);
+        }
+        catch (Exception e){
+            error=e.getMessage();
+        }
+        assertEquals(error,"Address does not exist");
+    }
+    @Test
+    public void testDeleteAddressNullId(){
+        String error=null;
+        try{
+            addressService.deleteAddress(null);
+        }
+        catch (Exception e){
+            error=e.getMessage();
+        }
+        assertEquals(error,"Cannot find address to delete.");
+    }
+
 
 }
 
