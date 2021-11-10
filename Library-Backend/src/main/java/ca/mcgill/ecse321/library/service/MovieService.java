@@ -42,6 +42,7 @@ public class MovieService {
         if (librarianId == null) {
         	throw new PersonException("Librarian not found in request");
         } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+//        } else if (librarianRepository.findById(librarianId) == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
@@ -73,7 +74,9 @@ public class MovieService {
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
         }
+//    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
     	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
