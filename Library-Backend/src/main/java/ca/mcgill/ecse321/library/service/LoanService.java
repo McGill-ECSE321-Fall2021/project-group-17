@@ -28,6 +28,11 @@ public class LoanService {
     @Transactional
     /**
      * Assumes if no end date is given that it defaults to 21 days
+     * @param start
+     * @param itemId
+     * @param customerId
+     * @param returnDate
+     * @return loan with parameters given
      */
     public Loan createLoan(Date start, Integer itemId, Integer customerId, Date returnDate, Integer librarianId){
         Loan loan = new Loan();
@@ -91,7 +96,7 @@ public class LoanService {
      * @param returnDate
      * @param customerId
      * @param itemInstanceId
-     * @return
+     * @return updated loan
      */
 
     @Transactional
@@ -133,6 +138,7 @@ public class LoanService {
     /**
      * view active loans
      * @param id
+     * @return all loans of customer with the id
      */
 
     //TODO check if loan is active or not
@@ -163,6 +169,7 @@ public class LoanService {
      * View loan return date
      * @param loanID
      * @param customerID
+     * @return loan of the customer with customerID and the loanID
      */
     @Transactional
     public Loan viewLoanReturnDate(Integer loanID, Integer customerID){
@@ -192,6 +199,7 @@ public class LoanService {
     /**
      * turn loan to loanDTO
      * @param loan
+     * @return loan DTO
      */
     public static LoanDTO loantoDTO(Loan loan){
         LoanDTO loanDTO = new LoanDTO();
