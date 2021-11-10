@@ -76,8 +76,6 @@ public class TestShiftService {
 
     @Test
     public void createShift(){
-        int id = LIBRARIAN_KEY;
-        int id2 = ACCOUNT_KEY;
         Shift shift=null;
         try{
             shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_KEY);
@@ -94,9 +92,6 @@ public class TestShiftService {
 
     @Test
     public void updateShift(){
-        int id = LIBRARIAN_KEY;
-        int id2 = SHIFT_KEY;
-        int id3 = ACCOUNT_KEY;
         Shift shift = null;
         try{
             shift = shiftService.createShift(SHIFT_START_TIME, SHIFT_END_TIME, DAY_OF_WEEK, LIBRARIAN_KEY, ACCOUNT_KEY);
