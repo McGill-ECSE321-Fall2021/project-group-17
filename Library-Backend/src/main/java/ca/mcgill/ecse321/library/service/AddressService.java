@@ -67,7 +67,7 @@ public class AddressService {
     public Address updateAddress(int id, Integer streetNumber, String street, String city, String country) {
         Address address = addressRepository.findAddressById(id);
         if(address==null){
-            throw new AddressException("cannot update an address that does not exist");
+            throw new AddressException("Can't update address because no address exists for the given id.");
         }
         if (streetNumber != null) {
             address.setStreetNumber(streetNumber);

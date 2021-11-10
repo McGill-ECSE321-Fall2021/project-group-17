@@ -209,7 +209,7 @@ public class TestAddressService {
         catch(Exception e){
            error=e.getMessage();
         }
-        assertEquals(error,"cannot update an address that does not exist");
+        assertEquals(error,"Can't update address because no address exists for the given id.");
     }
 
     @Test
