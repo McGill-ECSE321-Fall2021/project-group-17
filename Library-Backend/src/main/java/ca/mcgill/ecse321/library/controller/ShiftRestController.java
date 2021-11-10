@@ -54,7 +54,7 @@ public class ShiftRestController {
     public List<ShiftDTO> getShifts(@PathVariable("librarianId") Integer librarianId) throws IllegalArgumentException{
     	PersonRole l = personRoleRepository.findPersonRoleById(librarianId);
         if (!(l instanceof Librarian)) throw new PersonException("Unauthorized Current User");
-    	List<Shift> shifts = shiftService.getShifts(librarianId);
+    	List<Shift> shifts = shiftService.getLibrarianShifts(librarianId);
         List<ShiftDTO> out = new ArrayList<ShiftDTO>();
         for(Shift s : shifts) {
         	out.add(convertToDTO(s));
