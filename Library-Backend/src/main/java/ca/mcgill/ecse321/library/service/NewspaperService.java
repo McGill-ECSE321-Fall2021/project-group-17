@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.Exception.NewspaperException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @Service
@@ -93,7 +94,7 @@ public class NewspaperService {
         }
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null){
-            throw new NewspaperException("Librarian not found in request");
+            throw new OnlineAccountException("Librarian not found in request");
         }
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");

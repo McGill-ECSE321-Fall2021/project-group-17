@@ -17,6 +17,7 @@ import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @Service
@@ -97,7 +98,7 @@ public class MusicService {
         }
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null){
-            throw new PersonException("Librarian not found in request");
+            throw new OnlineAccountException("Librarian not found in request");
         }
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");

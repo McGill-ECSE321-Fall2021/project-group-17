@@ -13,10 +13,10 @@ import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.model.Book;
 import ca.mcgill.ecse321.library.model.Item;
-import ca.mcgill.ecse321.library.model.ItemInstance;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 public class BookService {
@@ -100,7 +100,7 @@ public class BookService {
         }
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null){
-            throw new PersonException("Librarian not found in request");
+            throw new OnlineAccountException("Librarian not found in request");
         }
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
