@@ -61,7 +61,7 @@ public class TestOnlineAccountService {
     }
 
     @Test
-    public void createOnlineAccount() {
+    public void testCreateOnlineAccountValid() {
         OnlineAccount account = null;
 
         try {
@@ -78,7 +78,63 @@ public class TestOnlineAccountService {
     }
 
     @Test
-    public void getOnlineAccount() {
+    public void testCreateOnlineAccountNoUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccount(null, PASSWORD, CUSTOMER_KEY);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("Cannot create account with null username.", error);
+    }
+
+    @Test
+    public void testCreateOnlineAccountNoPassword() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccount(USERNAME, null, CUSTOMER_KEY);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("Cannot create account with null password.", error);
+    }
+
+    @Test
+    public void testCreateOnlineAccountNoPersonRoleId() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccount(USERNAME, PASSWORD, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("Cannot create an account without a user.", error);
+    }
+
+    @Test
+    public void testCreateOnlineAccountInvalidPersonRoleId() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccount(USERNAME, PASSWORD, 4321);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("No user exists with the personRoleId given", error);
+    }
+
+    @Test
+    public void testGetOnlineAccountValid() {
         OnlineAccount account = null;
 
         try {
@@ -96,7 +152,37 @@ public class TestOnlineAccountService {
     }
 
     @Test
-    public void logIn() {
+    public void testGetOnlineAccountNoUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.getOnlineAccount(null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("Cannot get account with a null username", error);
+    }
+
+    @Test
+    public void testGetOnlineAccountInvalidUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.getOnlineAccount("john");
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("Cannot find the account for the given username", error);
+    }
+
+    @Test
+    public void testLogInValid() {
         OnlineAccount account = null;
 
         try {
@@ -110,7 +196,52 @@ public class TestOnlineAccountService {
     }
 
     @Test
-    public void logout() {
+    public void testLogInNoUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.logIn(null, PASSWORD);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("Cannot find username to login user.", error);
+    }
+
+    @Test
+    public void testLogInNoPassword() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.logIn(USERNAME, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("Cannot find password to login user.", error);
+    }
+
+    @Test
+    public void testLogInInvalidUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.logIn("john", PASSWORD);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("Cannot find account by username.", error);
+    }
+
+    @Test
+    public void testLogoutValid() {
         OnlineAccount account = null;
 
         try {
@@ -121,5 +252,102 @@ public class TestOnlineAccountService {
 
         assertNotNull(account);
         assertEquals(false, account.getLoggedIn());
+    }
+
+    @Test
+    public void testLogoutNoUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.logout(null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("Cannot find username to delete account.", error);
+    }
+
+    @Test
+    public void testLogoutInvalidUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.logout("john");
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertNull(account);
+        assertEquals("No account with said username exists", error);
+    }
+
+    @Test
+    public void testDeleteAccountValid() {
+        OnlineAccount account = null;
+
+        try {
+            service.deleteOnlineAccount(USERNAME, CUSTOMER_KEY);
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testDeleteAccountNoUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            service.deleteOnlineAccount(null, CUSTOMER_KEY);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Cannot find username to delete account.", error);
+    }
+
+    @Test
+    public void testDeleteAccountInvalidUsername() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            service.deleteOnlineAccount("john", CUSTOMER_KEY);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Cannot find account.", error);
+    }
+
+    @Test
+    public void testDeleteAccountNoPersonRoleId() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            service.deleteOnlineAccount(USERNAME, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Cannot find personRoleId to delete account.", error);
+    }
+
+    @Test
+    public void testDeleteAccountInvalidPersonRoleId() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            service.deleteOnlineAccount(USERNAME, 4321);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Cannot find personRole to delete account.", error);
     }
 }
