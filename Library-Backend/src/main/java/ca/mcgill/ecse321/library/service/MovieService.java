@@ -36,8 +36,8 @@ public class MovieService {
     private ItemInstanceRepository itemInstanceRepository;
     
     @Transactional
-    public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor){
-    	
+    public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) throws Exception{
+    	try {
     	String error = "";
         if (librarianId == null) {
         	throw new PersonException("Librarian not found in request");
@@ -73,7 +73,6 @@ public class MovieService {
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
         }
-    	
     	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
@@ -89,6 +88,10 @@ public class MovieService {
         movie.setRunningTime(runningTime);
         movieRepository.save(movie);
         return movie;
+    	}
+    	catch (Exception e) {
+    		throw new Exception(e.getMessage());
+    	}
     }
     
     /*@Transactional

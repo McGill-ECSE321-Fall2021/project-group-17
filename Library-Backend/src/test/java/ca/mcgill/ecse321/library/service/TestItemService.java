@@ -124,7 +124,6 @@ public class TestItemService {
             movie = movieService.createMovie(LIBRARIAN_KEY, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(movie);
@@ -145,7 +144,6 @@ public class TestItemService {
             book = bookService.createBook(LIBRARIAN_KEY, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(book);
@@ -165,7 +163,6 @@ public class TestItemService {
             music = musicService.createMusic(LIBRARIAN_KEY, MUSIC_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(music);
@@ -184,7 +181,6 @@ public class TestItemService {
             newspaper = newspaperService.createNewspaper(LIBRARIAN_KEY, NEWSPAPER_KEY, MEDIA_NAME, DATE_PUBLISHED, HEADLINE);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(newspaper);
@@ -200,7 +196,6 @@ public class TestItemService {
             movieService.deleteMovie(MOVIE_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){        	
-        	System.out.println(e);
             fail();
         }
     }
@@ -210,7 +205,6 @@ public class TestItemService {
             bookService.deleteBook(BOOK_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){
-        	System.out.println(e);
             fail();
         }
     }
@@ -220,7 +214,6 @@ public class TestItemService {
             musicService.deleteMusic(MUSIC_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){
-        	System.out.println(e);
             fail();
         }
     }
@@ -230,7 +223,6 @@ public class TestItemService {
             newspaperService.deleteNewspaper(NEWSPAPER_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){
-        	System.out.println(e);
             fail();
         }
     }

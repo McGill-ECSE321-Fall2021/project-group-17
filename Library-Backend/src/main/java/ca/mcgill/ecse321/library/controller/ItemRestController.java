@@ -48,10 +48,12 @@ public class ItemRestController {
     private NewspaperService newspaperService;
 
     @PostMapping(value= {"/item/movie/{librarianId}", "/item/movie/{librarianId}/"})
+    @ResponseBody
     public MovieDTO addMovie(@PathVariable("librarianId") Integer librarianId,
-                                  @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
-        Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
-        		body.getRunningTime(), body.getRating(), body.getFilmDistributor());
+                                  @RequestBody JsonBodyMovie body) throws Exception{
+        Movie movie;
+			movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
+					body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
 
@@ -136,6 +138,8 @@ public class ItemRestController {
         public void setFilmDistributor(String filmDistributor) {
             this.filmDistributor = filmDistributor;
         }
+        
+        public JsonBodyMovie(){}
     }
 
     @PostMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
@@ -219,6 +223,8 @@ public class ItemRestController {
         public void setGenre(String genre) {
             this.genre = genre;
         }
+        
+        public JsonBodyBook(){}
     }
 
 
@@ -293,6 +299,8 @@ public class ItemRestController {
         public void setRecordLabel(String recordLabel) {
             this.recordLabel = recordLabel;
         }
+        
+        public JsonBodyMusic(){}
     }
 
     @PostMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
@@ -355,6 +363,8 @@ public class ItemRestController {
         public void setHeadline(String headline) {
             this.headline = headline;
         }
+        
+        public JsonBodyNewspaper(){}
     }
     
     // delete music, movie, book, newspaper
