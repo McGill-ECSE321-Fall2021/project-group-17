@@ -31,6 +31,7 @@ public class LibrarianService {
     	librarian.setPerson(p);
         librarian.setId(id);
         librarianRepository.save(librarian);
+        personRoleRepository.save(librarian);
         return librarian;
     }
     
