@@ -281,7 +281,7 @@ public class TestLoanService {
     public void testCreateLoan(){
         Loan loan = null;
         try{
-            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
         }
         catch (Exception e){
             fail();
@@ -314,7 +314,7 @@ public class TestLoanService {
         Loan loan = null;
         String error = "";
         try{
-            loan = service.createLoan(null,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
+            loan = service.createLoan(null,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
         }
         catch (Exception e){
             error = e.getMessage();
@@ -330,7 +330,7 @@ public class TestLoanService {
         Loan loan = null;
         String error = "";
         try{
-            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
         }
         catch (Exception e){
             error = e.getMessage();

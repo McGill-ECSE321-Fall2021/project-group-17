@@ -24,9 +24,9 @@ public class LoanRestController {
     @Autowired
     private LoanService service;
     @PostMapping(value= {"/loan","/loan/"})
-    public LoanDTO createLoan(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
+    public LoanDTO createLoan(@RequestBody JsonBody body){
         Loan loan = service.createLoan(body.getCheckedOut(), body.getItemId(), body.getCustomerId(),
-                body.getReturnDate() ,librarianId);
+                body.getReturnDate());
         return convertToDto(loan);
     }
 

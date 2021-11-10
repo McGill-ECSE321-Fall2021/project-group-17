@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.ReservationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,19 +30,34 @@ public class LoanService {
     /**
      * Assumes if no end date is given that it defaults to 21 days
      */
-    public Loan createLoan(Date start, Integer itemId, Integer customerId, Date returnDate, Integer librarianId){
+    public Loan createLoan(Date start, Integer itemId, Integer customerId, Date returnDate){
         Loan loan = new Loan();
 
-        //system.getLoanList().add(loan);
 
-        if(itemId != null){
-            ItemInstance instance = itemInstanceRepository.findItemInstanceBySerialNum(itemId);
-            loan.setItemInstance(instance);
+        if(itemId == null){
+            throw new LoanException("Need to have a item instance for a loan");
         }
-        if(customerId != null){
-            Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
-            loan.setCustomer(customer);
+        ItemInstance instance = itemInstanceRepository.findItemInstanceBySerialNum(itemId);
+        if(instance == null){
+            throw new LoanException("Invalid item instance provided");
         }
+        if(loanRepository.findByItemInstance(instance) != null){
+            throw new LoanException("Item is already on loan");
+        }
+        loan.setItemInstance(instance);
+
+        if(customerId == null){
+            throw new LoanException("Need to have a customer for a loan");
+        }
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
+        if(customer == null){
+            throw new LoanException("Invalid customer provided");
+        }
+        if(loanRepository.findLoansByCustomer(customer) != null && loanRepository.findLoansByCustomer(customer).size() > 4){
+            throw new ReservationException("This customer already has the maximum number of loans");
+        }
+        loan.setCustomer(customer);
+
         if(start == null){
             throw new LoanException("Cannot create loan with no start date");
         }
@@ -54,7 +70,6 @@ public class LoanService {
         loan.setCheckedOut(start);
         loan.setReturnDate(returnDate);
 
-        List<Loan> loans = (List<Loan>) loanRepository.findAll();
         loanRepository.save(loan);
         return loan;
     }
@@ -99,33 +114,44 @@ public class LoanService {
         if(id == null){
             throw new LoanException("Loan id cannot be null");
         }
-        Loan r = loanRepository.findLoanById(id);
-        if(r == null){
+        Loan loan = loanRepository.findLoanById(id);
+        if(loan == null){
             throw new NotFoundException("Loan cannot be found");
         }
         if(checkedOut != null){
-            //TODO add validation if date is before now
-            r.setCheckedOut(checkedOut);
+            if(checkedOut.toLocalDate().isAfter(loan.getReturnDate().toLocalDate())){
+                throw new ReservationException("Cannot have pickup date before loan date");
+            }
+            loan.setCheckedOut(checkedOut);
         }
         if(returnDate != null){
-            r.setReturnDate(returnDate);
+            if(loan.getCheckedOut().toLocalDate().isAfter(returnDate.toLocalDate())){
+                throw new LoanException("Cannot have pickup date before loan date");
+            }
+            loan.setReturnDate(returnDate);
         }
         if(customerId != null){
             Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
             if(c == null){
                 throw new LoanException("Cannot find person to update loan to");
             }
-            r.setCustomer(c);
+            if(loanRepository.findLoansByCustomer(c) != null && loanRepository.findLoansByCustomer(c).size() > 4){
+                throw new ReservationException("This customer already has the maximum number of loans");
+            }
+            loan.setCustomer(c);
         }
         if(itemInstanceId != null){
             ItemInstance i = itemInstanceRepository.findItemInstanceBySerialNum(itemInstanceId);
             if(i == null){
                 throw new LoanException("Cannot find item instance to update loan to");
             }
-            r.setItemInstance(i);
+            if(loanRepository.findByItemInstance(i) != null){
+                throw new LoanException("Item is already on loan");
+            }
+            loan.setItemInstance(i);
         }
-        loanRepository.save(r);
-        return r;
+        loanRepository.save(loan);
+        return loan;
     }
 
 
