@@ -8,6 +8,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 
+import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
 import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
 import ca.mcgill.ecse321.library.dao.ShiftRepository;
 import ca.mcgill.ecse321.library.model.*;
@@ -25,17 +26,17 @@ public class ShiftService {
     private ShiftRepository shiftRepository;
     @Autowired
     private PersonRoleRepository personRoleRepository;
+    @Autowired
+    private OnlineAccountRepository onlineAccountRepository;
 
     @Transactional
-    public Shift createShift(Time startTime, Time endTime, DayOfWeek DOW, Integer librarianId, Integer accountId){
+    public Shift createShift(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("This account is not authorized for this action");
+
         Shift shift = new Shift(startTime, endTime, DOW);
-        if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
-        Librarian librarian = (Librarian) personRoleRepository.findPersonRoleById(librarianId);
-        if(librarian == null) throw new OnlineAccountException("No existing account with this Id");
-        if(accountId == null || accountId < 0) throw new OnlineAccountException("Invalid Id");
-        PersonRole account = personRoleRepository.findPersonRoleById(accountId);
-        if(account == null) throw new OnlineAccountException("No existing account with this Id");
-        if(!(account instanceof HeadLibrarian)) throw new OnlineAccountException("Not Authorized for this action");
+        Librarian librarian = findLibrarian(librarianId);
+
         shift.setLibrarian(librarian);
         shiftRepository.save(shift);
         return shift;
@@ -60,36 +61,41 @@ public class ShiftService {
         return s;
     }
     @Transactional
-    public Shift updateShift(Integer shiftId, Time startTime, Time endTime, DayOfWeek DOW, Integer librarianId, Integer accountId){
-        if(shiftId == null || shiftId < 0) throw new ShiftException("Invalid Id");
-        Shift shift = shiftRepository.findShiftById(shiftId);
-        if(shift == null) throw new ShiftException("No existing shift by that Id");
-        if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
-        Librarian librarian = (Librarian) personRoleRepository.findPersonRoleById(librarianId);
-        if(librarian == null) throw new OnlineAccountException("No existing account with this Id");
-        if(accountId == null || accountId < 0) throw new OnlineAccountException("Invalid Id");
-        PersonRole account = personRoleRepository.findPersonRoleById(accountId);
-        if(account == null) throw new OnlineAccountException("No existing account with this Id");
-        if(!(account instanceof HeadLibrarian)) throw new OnlineAccountException("Not Authorized for this action");
+    public Shift updateShift(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active User is unauthorized for this action");
 
-        shift.setStartTime(startTime);
-        shift.setDayOfWeek(DOW);
-        shift.setEndTime(endTime);
+        Shift shift = getShift(shiftId);
+        Librarian librarian = findLibrarian(librarianId);
+
+        shift.updateStartTime(startTime);
+        shift.updateDayOfWeek(DOW);
+        shift.updateEndTime(endTime);
         shift.setLibrarian(librarian);
         shiftRepository.save(shift);
         return shift;
     }
     @Transactional
-    public void deleteShift(Integer accountId, Integer shiftId){
-        if(shiftId == null || shiftId < 0) throw new ShiftException("Invalid id");
-        Shift shift = shiftRepository.findShiftById(shiftId);
-        if(shift == null) throw new ShiftException("No shift by that Id");
-        if(accountId == null || accountId < 0) throw new OnlineAccountException("Invalid accountId");
-        PersonRole account = personRoleRepository.findPersonRoleById(accountId);
-        if(account == null) throw new OnlineAccountException("There is no account by this Id");
-        if(!(account instanceof HeadLibrarian)) throw new OnlineAccountException("This account does not have " +
-                "the authorization to perform this action");
+    public void deleteShift(String accountUsername, Integer shiftId){
+        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized forthis action");
+
+        Shift shift = getShift(shiftId);
+
         shiftRepository.deleteById(shiftId);
     }
 
+    private OnlineAccount getActiveUser(String accountUsername){
+        if(accountUsername == null) throw new OnlineAccountException("Invalid account id");
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(accountUsername);
+        if(account == null) throw new OnlineAccountException("No account by that username");
+        if(account.getLoggedIn() == false) throw new OnlineAccountException("This account is not the active user");
+        return account;
+    }
+    private Librarian findLibrarian(Integer librarianId){
+        if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
+        Librarian librarian = (Librarian) personRoleRepository.findPersonRoleById(librarianId);
+        if(librarian == null) throw new OnlineAccountException("No existing account with this Id");
+        return librarian;
+    }
 }
