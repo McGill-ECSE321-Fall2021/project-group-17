@@ -15,7 +15,7 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Customer createCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
+    public Customer createCustomer(Integer id,Person person, Integer penalty, Address address, LibraryCard libCard){
         Customer customer = new Customer();
         if(person==null||address==null){
             throw new CustomerException("cannot create Customer");
@@ -24,11 +24,12 @@ public class CustomerService {
         customer.setAddress(address);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
+        customer.setId(id);
         customerRepository.save(customer);
         return customer;
     }
-    public Customer updateCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
-        Customer customer = (Customer) customerRepository.findPersonRoleById(person.getId());
+    public Customer updateCustomer(Integer id, Integer penalty, Address address, LibraryCard libCard){
+        Customer customer = (Customer) customerRepository.findPersonRoleById(id);
         if(customer==null){
             throw new CustomerException("cannot find customer");
         }
@@ -68,11 +69,11 @@ public class CustomerService {
     @Transactional
     public void deleteCustomer(Integer id) {
         if(id==null){
-            throw new AddressException("Cannot find customer to delete.");}
+            throw new CustomerException("Cannot find customer to delete.");}
 
         Customer customer =(Customer)customerRepository.findPersonRoleById(id);
         if(customer==null){
-            throw new AddressException("Address does not exist");
+            throw new CustomerException("Customer does not exist");
         }
         customerRepository.delete(customer);
     }
