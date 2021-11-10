@@ -1,0 +1,263 @@
+{
+  "info": {
+    "_postman_id": "320518d1-af71-4c3a-932f-5c211e7e4cb4",
+    "name": "OnlineAccount",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Make Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "//pm.environment.set(\"customer_id\", pm.response.json().id);\r",
+              "pm.globals.set(\"personRoleId\", pm.response.json().id);\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 2,\r\n    \"penalty\": 0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/customer/2",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "customer",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/customer/{{personRoleId}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "customer",
+            "{{personRoleId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Make Online Account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.globals.set(\"username\", pm.response.json().username);\r",
+              "pm.globals.set(\"password\", pm.response.json().password);\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/bob/1234/{{personRoleId}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "onlineaccount",
+            "bob",
+            "1234",
+            "{{personRoleId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Online Account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/getaccount/{{username}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "getaccount",
+            "{{username}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login to Online Account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/login/{{username}}/{{password}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "login",
+            "{{username}}",
+            "{{password}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout from Online Account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/logout/{{username}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "logout",
+            "{{username}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Online Account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/{{username}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "onlineaccount",
+            "{{username}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
