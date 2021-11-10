@@ -17,7 +17,7 @@ public class Loan {
     }
 
     public Loan(Integer id, Date checkedOut, Date returnDate, ItemInstance itemInstance, Customer customer) {
-        this.id = id;
+        //this.id = id;
         this.checkedOut = checkedOut;
         this.returnDate = returnDate;
         this.itemInstance = itemInstance;
