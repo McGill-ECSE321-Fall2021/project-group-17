@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import ca.mcgill.ecse321.library.service.Exception.AddressException;
 import ca.mcgill.ecse321.library.service.Exception.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,30 @@ public class CustomerService {
     @Transactional
     public Customer createCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
         Customer customer = new Customer();
+        if(person==null||address==null){
+            throw new CustomerException("cannot create Customer");
+        }
         customer.setPenalty(penalty);
         customer.setAddress(address);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
+        customerRepository.save(customer);
+        return customer;
+    }
+    public Customer updateCustomer(Person person, Integer penalty, Address address, LibraryCard libCard){
+        Customer customer = (Customer) customerRepository.findPersonRoleById(person.getId());
+        if(customer==null){
+            throw new CustomerException("cannot find customer");
+        }
+        if(penalty!=null){
+            customer.setPenalty(penalty);
+        }
+        if(address!=null){
+            customer.setAddress(address);
+        }
+        if(libCard!=null){
+            customer.setLibraryCard(libCard);
+        }
         customerRepository.save(customer);
         return customer;
     }
@@ -42,5 +63,17 @@ public class CustomerService {
         else{
             throw new CustomerException("Customer not found in system. Address could not be verified");
         }
+
+    }
+    @Transactional
+    public void deleteCustomer(Integer id) {
+        if(id==null){
+            throw new AddressException("Cannot find customer to delete.");}
+
+        Customer customer =(Customer)customerRepository.findPersonRoleById(id);
+        if(customer==null){
+            throw new AddressException("Address does not exist");
+        }
+        customerRepository.delete(customer);
     }
 }
