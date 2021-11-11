@@ -18,6 +18,15 @@ public class CustomerService {
     @Autowired
     private AddressRepository addressRepository;
 
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * @param personId
+     * @param penalty
+     * @param addressId
+     * @param libCard
+     * @return customer given valid input
+     */
     @Transactional
     public Customer createCustomer(Integer id,Integer personId, Integer penalty, Integer addressId, LibraryCard libCard){
         Customer customer = new Customer();
@@ -39,6 +48,15 @@ public class CustomerService {
         customerRepository.save(customer);
         return customer;
     }
+
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * @param penalty
+     * @param addressId
+     * @param libCard
+     * @return customer with new information
+     */
     public Customer updateCustomer(Integer id, Integer penalty, Integer addressId, LibraryCard libCard){
         Customer customer = (Customer) customerRepository.findPersonRoleById(id);
         Address address= addressRepository.findAddressById(addressId);
@@ -57,6 +75,12 @@ public class CustomerService {
         customerRepository.save(customer);
         return customer;
     }
+
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * @return customer corresponding to the id
+     */
     @Transactional
     public Customer getCustomer(Integer id){
         if(id == null || id < 0){
@@ -66,6 +90,12 @@ public class CustomerService {
         if (c == null) throw new CustomerException("This customer does not exist");
         return c;
     }
+
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * method sets customer status as address verified
+     */
 
     @Transactional
     public void verifyAddress(Integer id){
@@ -78,6 +108,11 @@ public class CustomerService {
         }
 
     }
+
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     */
     @Transactional
     public void deleteCustomer(Integer id) {
         if(id==null){

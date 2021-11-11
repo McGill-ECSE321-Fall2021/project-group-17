@@ -28,10 +28,6 @@ public class TestAddressService {
 
 
     @InjectMocks
-    private CustomerService customerService;
-    @InjectMocks
-    private PersonService personService;
-    @InjectMocks
     private AddressService addressService;
 
     private static final int PERSON_KEY = 3;
@@ -45,7 +41,6 @@ public class TestAddressService {
     private static final String ADDRESS_CITY2 = "Toronto";
     private static final String ADDRESS_COUNTRY = "Canada";
     private static final String ADDRESS_COUNTRY2 = "US";
-    private static final String PERSON_NAME = "victoria";
     private static final int CUSTOMER_KEY = 2;
     @BeforeEach
     public void setMockOutput() {
@@ -90,7 +85,9 @@ public class TestAddressService {
         personRepository.deleteAll();
     }
 
-
+    /**
+     * tests functionality of create address
+     */
     @Test
     public void createAddress(){
         int id = CUSTOMER_KEY;
@@ -109,6 +106,10 @@ public class TestAddressService {
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
+
+    /**
+     * tests what happens when an address with a duplicate Id is passed in
+     */
     @Test
     public void createAddressDuplicateID(){
         String error=null;
@@ -122,6 +123,10 @@ public class TestAddressService {
         }
         assertEquals("cannot have two addresses with the same ID",error);
     }
+
+    /**
+     * tests what happens when an address with incomplete info is created
+     */
     @Test
     public void createAddressIncompleteInfo(){
         int id = CUSTOMER_KEY;
@@ -135,6 +140,10 @@ public class TestAddressService {
         }
        assertEquals(error,"incomplete Address given");
     }
+
+    /**
+     * tests updating the address city
+     */
     @Test
     public void updateAddressCity(){
         int id = CUSTOMER_KEY;
@@ -153,6 +162,10 @@ public class TestAddressService {
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
+
+    /**
+     * tests updating the address country
+     */
     @Test
     public void updateAddressCountry(){
         int id = CUSTOMER_KEY;
@@ -172,6 +185,10 @@ public class TestAddressService {
         assertEquals(address.getCountry(),ADDRESS_COUNTRY2);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
+
+    /**
+     * tests updating the address street number
+     */
     @Test
     public void updateAddressStreetNumber(){
         int id = CUSTOMER_KEY;
@@ -190,6 +207,10 @@ public class TestAddressService {
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
+
+    /**
+     * tests updating the address street
+     */
     @Test
     public void updateAddressStreet(){
         int id = CUSTOMER_KEY;
@@ -208,6 +229,10 @@ public class TestAddressService {
         assertEquals(address.getCountry(),ADDRESS_COUNTRY);
         assertEquals(address.getCustomer().getId(),CUSTOMER_KEY);
     }
+
+    /**
+     * tests updating an address that does not exist
+     */
     @Test
     public void updateAddressNotFound(){
         String error = null;
@@ -221,15 +246,22 @@ public class TestAddressService {
         assertEquals(error,"Can't update address because no address exists for the given id.");
     }
 
+    /**
+     * tests retrieving an address
+     */
+
     @Test
     public void getAddress(){
-        String error = null;
         try{
            addressService.getAddress(ADDRESS_KEY);
         } catch (Exception e){
-            error = e.getMessage();
+            fail();
         }
     }
+
+    /**
+     * tests retrieving an address that has not been found
+     */
     @Test
     public void getAddressNotFound(){
         String error = null;
@@ -240,6 +272,10 @@ public class TestAddressService {
         }
         assertEquals(error,"Address not found");
     }
+
+    /**
+     * tests deleting an address
+     */
     @Test
     public void testDeleteAddressValid(){
         try{
@@ -249,6 +285,10 @@ public class TestAddressService {
             fail();
         }
     }
+
+    /**
+     * tests deleting an address that does not exist
+     */
     @Test
     public void testDeleteAddressNotFound(){
         String error=null;
@@ -260,6 +300,10 @@ public class TestAddressService {
         }
         assertEquals(error,"Address does not exist");
     }
+
+    /**
+     * tests deleting an address when a null id is passed
+     */
     @Test
     public void testDeleteAddressNullId(){
         String error=null;
