@@ -30,7 +30,7 @@ public class OnlineAccountService {
 
 
     @Transactional
-    public OnlineAccount createOnlineAccountLibrarian(String username, String password, Integer librarianId) {
+    public OnlineAccount createOnlineAccountLibrarian(String username, String password, Integer librarianId, String email) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -43,9 +43,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
+        if (email == null) {
+            throw new OnlineAccountException("Cannot create an account without an email");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        account.setEmail(email);
 
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if (librarian == null) {
@@ -58,7 +63,7 @@ public class OnlineAccountService {
     }
     
     @Transactional
-    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer customerId) {
+    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer customerId, String email) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -71,9 +76,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
+        if (email == null) {
+            throw new OnlineAccountException("Cannot create an account without an email");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        account.setEmail(email);
 
         Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
         if (customer == null) {
@@ -86,7 +96,7 @@ public class OnlineAccountService {
     }
     
     @Transactional
-    public OnlineAccount createOnlineAccountHeadLibrarian(String username, String password, Integer librarianId) {
+    public OnlineAccount createOnlineAccountHeadLibrarian(String username, String password, Integer librarianId, String email) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -99,9 +109,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
+        if (email == null) {
+            throw new OnlineAccountException("Cannot create an account without an email");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        account.setEmail(email);
 
         HeadLibrarian headLibrarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(librarianId);
 

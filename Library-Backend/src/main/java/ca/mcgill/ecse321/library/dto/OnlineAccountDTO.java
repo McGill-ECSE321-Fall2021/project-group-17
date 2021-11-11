@@ -7,6 +7,7 @@ public class OnlineAccountDTO {
     private String username;
     private String password;
     private boolean loggedIn;
+    private String email;
 
     public OnlineAccountDTO(){}
 
@@ -42,5 +43,12 @@ public class OnlineAccountDTO {
         this.personRole = personRole;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
 

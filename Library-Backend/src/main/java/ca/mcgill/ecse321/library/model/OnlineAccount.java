@@ -10,6 +10,7 @@ public class OnlineAccount {
     private String username;
     private String password;
     private boolean loggedIn;
+    private String email;
 
     @Id
     public String getUsername() {
@@ -32,6 +33,14 @@ public class OnlineAccount {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @OneToOne
