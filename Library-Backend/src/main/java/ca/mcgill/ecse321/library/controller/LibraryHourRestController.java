@@ -60,6 +60,9 @@ public class LibraryHourRestController {
         LibraryHourDTO libraryHourDTO = new LibraryHourDTO();
         libraryHourDTO.setId(libraryHour.getId());
         libraryHourDTO.setLibrary(libraryHour.getLibrary());
+        libraryHourDTO.setDayOfWeek(libraryHour.getDayOfWeek());
+        libraryHourDTO.setEndTime(libraryHour.getEndTime());
+        libraryHourDTO.setStartTime(libraryHour.getStartTime());
         return libraryHourDTO;
     }
 

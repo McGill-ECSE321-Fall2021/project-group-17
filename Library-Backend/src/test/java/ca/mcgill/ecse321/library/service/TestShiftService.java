@@ -26,14 +26,12 @@ public class TestShiftService {
     @Mock
     private LibrarianRepository librarianRepository;
     @Mock
+    private HeadLibrarianRepository headLibrarianRepository;
+    @Mock
     private OnlineAccountRepository onlineAccountRepository;
 
     @InjectMocks
     private ShiftService shiftService;
-    @InjectMocks
-    private LibrarianService librarianService;
-    @InjectMocks
-    private OnlineAccountService onlineAccountService;
 
     private static final Time SHIFT_START_TIME = Time.valueOf("18:45:20");
     private static final String SHIFT_START_TIME_AS_STRING = SHIFT_START_TIME.toString();
@@ -72,7 +70,15 @@ public class TestShiftService {
                 return null;
             }
         });
-
+        lenient().when(headLibrarianRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(LIBRARIAN_KEY)) {
+                HeadLibrarian librarian = new HeadLibrarian();
+                librarian.setId(LIBRARIAN_KEY);
+                return librarian;
+            } else {
+                return null;
+            }
+        });
         lenient().when(onlineAccountRepository.findById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(ACCOUNT_USERNAME)){
                 OnlineAccount account = new OnlineAccount();
@@ -87,6 +93,41 @@ public class TestShiftService {
                 return null;
             }
         });
+
+        lenient().when(onlineAccountRepository.findOnlineAccountByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(ACCOUNT_USERNAME)){
+                OnlineAccount account = new OnlineAccount();
+                account.setUsername(ACCOUNT_USERNAME);
+                account.setPassword(ACCOUNT_PASSWORD);
+                account.setLoggedIn(LOGGED_IN);
+                HeadLibrarian headLibrarian = new HeadLibrarian();
+                headLibrarian.setId(HEAD_LIBRARIAN_KEY);
+                account.setPersonRole(headLibrarian);
+                return account;
+            } else {
+                return null;
+            }
+        });
+
+    }
+
+    @Test
+    public void createShiftHeadLibrarian(){
+        int id = LIBRARIAN_KEY;
+        String id2 = ACCOUNT_USERNAME;
+        Shift shift=null;
+        try{
+            shift = shiftService.createShiftHeadLibrarian(SHIFT_START_TIME_AS_STRING, SHIFT_END_TIME_AS_STRING
+                    , DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(shift);
+        assertEquals(shift.getDayOfWeek(),DAY_OF_WEEK);
+        assertEquals(shift.getStartTime(),SHIFT_START_TIME);
+        assertEquals(shift.getEndTime(),SHIFT_END_TIME);
+        assertEquals(shift.getLibrarian().getId(), LIBRARIAN_KEY);
     }
 
     @Test
@@ -109,26 +150,37 @@ public class TestShiftService {
     }
 
     @Test
-    public void updateShift(){
+    public void updateShiftLibrarian(){
         int id = LIBRARIAN_KEY;
         int id2 = SHIFT_KEY;
         String id3 = ACCOUNT_USERNAME;
         Shift shift = null;
         try{
-            shift = shiftService.createShiftLibrarian(SHIFT_START_TIME_AS_STRING,
-                    SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
-        }
-        catch(Exception e){
-            fail();
-        }
-        try{
-            shiftService.updateShiftLibrarian(shift.getId(), SHIFT_START_TIME_AS_STRING,
+            shift = shiftService.updateShiftLibrarian(SHIFT_KEY, SHIFT_START_TIME_AS_STRING,
                     SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_2_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
         assertNotNull(shift);
+        assertEquals(shift.getDayOfWeek(),DAY_OF_WEEK_2);
+        assertEquals(shift.getStartTime(),SHIFT_START_TIME);
+        assertEquals(shift.getEndTime(),SHIFT_END_TIME);
+        assertEquals(shift.getLibrarian().getId(), LIBRARIAN_KEY);
+    }
+    @Test
+    public void updateShiftHeadLibrarian(){
+        int id = LIBRARIAN_KEY;
+        int id2 = SHIFT_KEY;
+        String id3 = ACCOUNT_USERNAME;
+        Shift shift = null;
+        try{
+            shift = shiftService.updateShiftHeadLibrarian(SHIFT_KEY, SHIFT_START_TIME_AS_STRING,
+                    SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_2_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
+        }
+        catch(Exception e){
+            fail();
+        }
         assertNotNull(shift);
         assertEquals(shift.getDayOfWeek(),DAY_OF_WEEK_2);
         assertEquals(shift.getStartTime(),SHIFT_START_TIME);
@@ -169,7 +221,18 @@ public class TestShiftService {
         catch(Exception e){
             error = e.getMessage();
         }
-        assertEquals(error, "Librarian not found in request");
+        assertEquals(error, "Librarian not found in requestInvalid Id");
+    }
+
+    @Test
+    public void deleteShiftValid(){
+        try{
+            shiftService.deleteShift(ACCOUNT_USERNAME,SHIFT_KEY);
+        }
+        catch (Exception e){
+            fail();
+        }
+
     }
     
 }

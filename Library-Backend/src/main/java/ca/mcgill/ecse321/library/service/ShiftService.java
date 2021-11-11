@@ -118,7 +118,7 @@ public class ShiftService {
     @Transactional
     public void deleteShift(String accountUsername, Integer shiftId){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
-        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized forthis action");
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized for this action");
         shiftRepository.deleteById(shiftId);
     }
 
