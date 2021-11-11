@@ -13,11 +13,11 @@ public class ItemInstanceRestController {
     @Autowired
     private ItemInstanceService service;
 
-    /*@GetMapping(value = {"/iteminstance/{serialNum}", "/iteminstance/{serialNum}/"})
+    @GetMapping(value = {"/iteminstance/{serialNum}", "/iteminstance/{serialNum}/"})
     public ItemInstanceDTO getItemInstance(@PathVariable("serialNum") int serialNum) throws IllegalArgumentException {
-        ItemInstance itemInstance = service.createItemInstance(serialNum, null, null);
+        ItemInstance itemInstance = service.getItemInstance(serialNum);
         return convertToDTO(itemInstance);
-    }*/
+    }
 
     @PostMapping(value= {"/iteminstance/", "/iteminstance"})
     @ResponseBody
