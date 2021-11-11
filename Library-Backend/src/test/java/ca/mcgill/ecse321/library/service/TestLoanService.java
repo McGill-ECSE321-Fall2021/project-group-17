@@ -14,12 +14,16 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.sql.Date;
+
+
+import static org.mockito.ArgumentMatchers.any;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
@@ -42,12 +46,15 @@ public class TestLoanService {
     private static final int LOAN_KEY = 0;
     private static final int CUSTOMER_KEY = 2;
     private static final int ITEM_INSTANCE_KEY = 3;
+    private static final int TAKEN_ITEM_INSTANCE_KEY = 103;
+
+    private static final int GREEDY_CUSTOMER_KEY = 102;
 
 
     private static final Date startDate = Date.valueOf("2021-10-11");
     private static final Date endDate = Date.valueOf("2021-10-31");
 
-    private static final Date newStartDate = Date.valueOf("2021-11-11");
+    private static final Date newStartDate = Date.valueOf("2021-10-21");
     private static final Date newEndDate = Date.valueOf("2021-11-31");
 
     @BeforeEach
@@ -70,6 +77,16 @@ public class TestLoanService {
             }
         });
 
+        lenient().when(loanRepository.findByItemInstance(any())).thenAnswer((InvocationOnMock invocation) -> {
+            if(((ItemInstance)invocation.getArgument(0)).getSerialNum() == (TAKEN_ITEM_INSTANCE_KEY)) {
+                Loan loan = new Loan();
+                loan.setItemInstance(new ItemInstance());
+                loan.setId(LOAN_KEY);
+                return loan;
+            } else {
+                return null;
+            }
+        });
         lenient().when(loanRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             Customer customer = new Customer();
             customer.setId(CUSTOMER_KEY);
@@ -82,6 +99,17 @@ public class TestLoanService {
             return loans;
 
         });
+        lenient().when(loanRepository.findLoansByCustomer(any())).thenAnswer((InvocationOnMock invocation) -> {
+            if(((Customer)invocation.getArgument(0)).getId() == (GREEDY_CUSTOMER_KEY)) {
+                List<Loan> loans = new ArrayList<>();
+                for(int i = 0; i < 6; i++){
+                    loans.add(new Loan());
+                }
+                return loans;
+            } else {
+                return null;
+            }
+        });
         lenient().when(customerRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(CUSTOMER_KEY)) {
                 Customer customer = new Customer();
@@ -90,6 +118,11 @@ public class TestLoanService {
             } else if(invocation.getArgument(0).equals(CUSTOMER_KEY+10)) {
                 Customer customer = new Customer();
                 customer.setId(CUSTOMER_KEY+10);
+                return customer;
+            }
+            else if(invocation.getArgument(0).equals(GREEDY_CUSTOMER_KEY)) {
+                Customer customer = new Customer();
+                customer.setId(GREEDY_CUSTOMER_KEY);
                 return customer;
             }
             else {
@@ -105,7 +138,13 @@ public class TestLoanService {
                 ItemInstance itemInstance = new ItemInstance();
                 itemInstance.setSerialNum(ITEM_INSTANCE_KEY+10);
                 return itemInstance;
-            } else {
+            }
+            else  if(invocation.getArgument(0).equals(TAKEN_ITEM_INSTANCE_KEY)) {
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.setSerialNum(TAKEN_ITEM_INSTANCE_KEY);
+                return itemInstance;
+            }
+            else {
                 return null;
             }
         });
@@ -263,13 +302,71 @@ public class TestLoanService {
         assertEquals(error,"Loan cannot be found");
     }
 
+    @Test
+    public void testUpdateReservationPickupAfterStartStartProvided(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.updateLoan(LOAN_KEY,Date.valueOf(startDate.toLocalDate().plusMonths(3)),endDate,CUSTOMER_KEY,ITEM_INSTANCE_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals(error,"Cannot have pickup date before loan date");
+    }
+
+    @Test
+    public void testUpdateReservationPickupAfterStartPickupProvided(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.updateLoan(LOAN_KEY,startDate,Date.valueOf(endDate.toLocalDate().minusMonths(3)),CUSTOMER_KEY,ITEM_INSTANCE_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals(error,"Cannot have pickup date before loan date");
+    }
+
+    @Test
+    public void testUpdateLoanItemInstanceAlreadyLoaned(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.updateLoan(LOAN_KEY,startDate,endDate,CUSTOMER_KEY,TAKEN_ITEM_INSTANCE_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Item is already on loan",error);
+    }
+
+    @Test
+    public void testUpdateLoanCustomerMaxedOut(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.updateLoan(LOAN_KEY,startDate,endDate,GREEDY_CUSTOMER_KEY,ITEM_INSTANCE_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("This customer already has the maximum number of loans",error);
+    }
+
+
     // TESTS FOR CREATE LOAN
+
 
     @Test
     public void testCreateLoan(){
         Loan loan = null;
         try{
-            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
         }
         catch (Exception e){
             fail();
@@ -288,7 +385,7 @@ public class TestLoanService {
         Loan loan = null;
         String error = "";
         try{
-            loan = service.createLoan(null,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
+            loan = service.createLoan(null,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
         }
         catch (Exception e){
             error = e.getMessage();
@@ -298,19 +395,119 @@ public class TestLoanService {
     }
 
     @Test
+    public void testCreateLoanNoEndDate(){
+        int id = LOAN_KEY;
+
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNotNull(loan);
+        assertEquals(loan.getReturnDate(), Date.valueOf(LocalDate.parse(startDate.toString()).plusDays(21)));
+    }
+
+    @Test
     public void testCreateLoanStartAfterEnd(){
         int id = LOAN_KEY;
         Date startDate = Date.valueOf("2021-11-10");
         Loan loan = null;
         String error = "";
         try{
-            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate,null);
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
         }
         catch (Exception e){
             error = e.getMessage();
         }
         assertNull(loan);
         assertEquals("Cannot create loan with start date after end date",error);
+    }
+
+    @Test
+    public void testCreateLoanNullItemInstanceId(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,null,CUSTOMER_KEY,endDate);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Need to have a item instance for a loan",error);
+    }
+
+    @Test
+    public void testCreateLoanMissingItemInstance(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY+1,CUSTOMER_KEY,endDate);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Invalid item instance provided",error);
+    }
+
+    @Test
+    public void testCreateLoanItemInstanceAlreadyLoaned(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,TAKEN_ITEM_INSTANCE_KEY,CUSTOMER_KEY,endDate);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Item is already on loan",error);
+    }
+
+    @Test
+    public void testCreateLoanNullCustomerId(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,null,endDate);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Need to have a customer for a loan",error);
+    }
+
+    @Test
+    public void testCreateLoanMissingCustomer(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,CUSTOMER_KEY+1,endDate);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("Invalid customer provided",error);
+    }
+
+    @Test
+    public void testCreateLoanCustomerMaxedOut(){
+        Loan loan = null;
+        String error = "";
+        try{
+            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,GREEDY_CUSTOMER_KEY,endDate);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(loan);
+        assertEquals("This customer already has the maximum number of loans",error);
     }
 
 
