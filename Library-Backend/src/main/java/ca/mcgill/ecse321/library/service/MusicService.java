@@ -14,6 +14,7 @@ import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
+import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
@@ -29,9 +30,11 @@ public class MusicService {
     public Music createMusic(Integer librarianId, Integer id, String name, Date date, String musician, String recordLabel){
     	
     	String error = "";
-        if (librarianId == null) {
-        	throw new PersonException("Librarian not found in request");
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+    	if (librarianId == null) {
+    		throw new IllegalArgumentException("Librarian does not exist! ");
+    	}
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if (librarian == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
@@ -45,11 +48,6 @@ public class MusicService {
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
         }
-    	
-    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-        if (!(librarian instanceof Librarian)) {
-        	throw new PersonException("User must be a librarian");
-        }
 
         Music music = new Music();
         music.setId(id);
@@ -60,6 +58,43 @@ public class MusicService {
         musicRepository.save(music);
         return music;
     }
+    
+    @Transactional
+    public Music updateMusic(Integer librarianId, Integer id, String name, Date date, String musician, String recordLabel) {
+    	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
+        	throw new PersonException("Librarian does not exist!");
+    	}
+    	
+    	Music music = (Music) musicRepository.findItemById(id);
+        
+        if (music == null) {
+            throw new MovieException("Can't update music because no music exists for the given id.");
+        }
+
+        if (id != null) {
+        	music.setId(id);
+        }
+
+        if (name != null) {
+        	music.setName(name);
+        }
+
+        if (date != null) {
+        	music.setDatePublished(date);
+        }
+
+        if (musician != null) {
+        	music.setMusician(musician);
+        }
+        
+        if (recordLabel != null) {
+        	music.setRecordLabel(recordLabel);
+        }
+        
+        musicRepository.save(music);
+        return music;
+    }
+    
 
     /**
      * Used to delete item

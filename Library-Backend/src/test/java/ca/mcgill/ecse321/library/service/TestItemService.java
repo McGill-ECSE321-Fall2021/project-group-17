@@ -46,13 +46,19 @@ public class TestItemService {
     @InjectMocks
     private NewspaperService newspaperService;
 
-    private static final String MEDIA_NAME = "Good Will Hunting";
+    private static final String MEDIA_NAME = "Somename";
     private static final String AUTHOR_DIRECTOR_MUSICIAN = "Someone";
+    private static final String AUTHOR_DIRECTOR_MUSICIAN2 = "Someone2";
     private static final String GENRE = "Genre";
-    private static final String RATING = "Fantastic";
+    private static final String GENRE2 = "Genre2";
+    private static final String RATING = "9/10";
+    private static final String RATING2 = "10/10";
     private static final String HEADLINE = "Headline";
+    private static final String HEADLINE2 = "Headline2";
     private static final String RECORD_LABEL = "Some record label";
+    private static final String RECORD_LABEL2 = "Some record label2";
     private static final String PUBLISHER_DISTRIBUTOR = "Lionsgate Films";
+    private static final String PUBLISHER_DISTRIBUTOR2 = "Disney";
     private static final Date DATE_PUBLISHED = Date.valueOf("2021-10-11");
     private static final int RUNNING_TIME = 120;
     private static final int LIBRARIAN_KEY = 5;
@@ -380,7 +386,7 @@ public class TestItemService {
 		catch (Exception e){
 		    error = e.getMessage();
 		}
-		assertEquals(error, "Librarian not found in request");
+		assertEquals(error, "Librarian does not exist! ");
     }
     @Test
     public void createBookNoLibrarian(){
@@ -391,7 +397,7 @@ public class TestItemService {
 		catch (Exception e){
 		    error = e.getMessage();
 		}
-		assertEquals(error, "Librarian not found in request");
+		assertEquals(error, "Librarian does not exist! ");
     }
     @Test
     public void createMusicNoLibrarian(){
@@ -402,7 +408,7 @@ public class TestItemService {
 		catch (Exception e){
 		    error = e.getMessage();
 		}
-		assertEquals(error, "Librarian not found in request");
+		assertEquals(error, "Librarian does not exist! ");
     }
     @Test
     public void createNewspaperNoLibrarian(){
@@ -413,7 +419,7 @@ public class TestItemService {
 		catch (Exception e){
 		    error = e.getMessage();
 		}
-		assertEquals(error, "Librarian not found in request");
+		assertEquals(error, "Librarian does not exist! ");
     }
     
 
@@ -472,6 +478,219 @@ public class TestItemService {
         assertEquals(newspaper.getDatePublished(), DATE_PUBLISHED);
         assertEquals(newspaper.getHeadline(), HEADLINE);
     }
+    
+    @Test
+    public void updateMovieDirector(){
+        Movie movie = null;
+        
+        try{
+            movie = movieService.updateMovie(LIBRARIAN_KEY, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN2, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(movie);
+        assertEquals(movie.getId(), MOVIE_KEY);
+        assertEquals(movie.getName(), MEDIA_NAME);
+        assertEquals(movie.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(movie.getDirector(), AUTHOR_DIRECTOR_MUSICIAN2);
+        assertEquals(movie.getRunningTime(), RUNNING_TIME);
+        assertEquals(movie.getRating(), RATING);
+        assertEquals(movie.getFilmDistributor(), PUBLISHER_DISTRIBUTOR);
+    }
+    
+    @Test
+    public void updateMovieDistributor(){
+        Movie movie = null;
+        
+        try{
+            movie = movieService.updateMovie(LIBRARIAN_KEY, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR2);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(movie);
+        assertEquals(movie.getId(), MOVIE_KEY);
+        assertEquals(movie.getName(), MEDIA_NAME);
+        assertEquals(movie.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(movie.getDirector(), AUTHOR_DIRECTOR_MUSICIAN);
+        assertEquals(movie.getRunningTime(), RUNNING_TIME);
+        assertEquals(movie.getRating(), RATING);
+        assertEquals(movie.getFilmDistributor(), PUBLISHER_DISTRIBUTOR2);
+    }
+    
+    @Test
+    public void updateMovieRating(){
+        Movie movie = null;
+        
+        try{
+            movie = movieService.updateMovie(LIBRARIAN_KEY, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING2, PUBLISHER_DISTRIBUTOR);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(movie);
+        assertEquals(movie.getId(), MOVIE_KEY);
+        assertEquals(movie.getName(), MEDIA_NAME);
+        assertEquals(movie.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(movie.getDirector(), AUTHOR_DIRECTOR_MUSICIAN);
+        assertEquals(movie.getRunningTime(), RUNNING_TIME);
+        assertEquals(movie.getRating(), RATING2);
+        assertEquals(movie.getFilmDistributor(), PUBLISHER_DISTRIBUTOR);
+    }
+    @Test
+    public void updateMovieNotFound(){
+        String error = null;
+        try{
+            movieService.updateMovie(LIBRARIAN_KEY, MOVIE_KEY+1, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING2, PUBLISHER_DISTRIBUTOR);
+        }
+        catch(Exception e){
+           error=e.getMessage();
+        }
+        assertEquals(error,"Can't update movie because no movie exists for the given id.");
+    }
+    
+    @Test
+    public void updateBookAuthor(){
+        Book book = null;
+        
+        try{
+            book = bookService.updateBook(LIBRARIAN_KEY, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN2, PUBLISHER_DISTRIBUTOR, GENRE);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(book);
+        assertEquals(book.getId(), BOOK_KEY);
+        assertEquals(book.getName(), MEDIA_NAME);
+        assertEquals(book.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(book.getAuthor(), AUTHOR_DIRECTOR_MUSICIAN2);
+        assertEquals(book.getPublisher(), PUBLISHER_DISTRIBUTOR);
+        assertEquals(book.getGenre(), GENRE);
+    }
+    @Test
+    public void updateBookPublisher(){
+        Book book = null;
+        
+        try{
+            book = bookService.updateBook(LIBRARIAN_KEY, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR2, GENRE);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(book);
+        assertEquals(book.getId(), BOOK_KEY);
+        assertEquals(book.getName(), MEDIA_NAME);
+        assertEquals(book.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(book.getAuthor(), AUTHOR_DIRECTOR_MUSICIAN);
+        assertEquals(book.getPublisher(), PUBLISHER_DISTRIBUTOR2);
+        assertEquals(book.getGenre(), GENRE);
+    }
+    @Test
+    public void updateBookGenre(){
+        Book book = null;
+        
+        try{
+            book = bookService.updateBook(LIBRARIAN_KEY, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE2);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(book);
+        assertEquals(book.getId(), BOOK_KEY);
+        assertEquals(book.getName(), MEDIA_NAME);
+        assertEquals(book.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(book.getAuthor(), AUTHOR_DIRECTOR_MUSICIAN);
+        assertEquals(book.getPublisher(), PUBLISHER_DISTRIBUTOR);
+        assertEquals(book.getGenre(), GENRE2);
+    }
+    @Test
+    public void updateBookNotFound(){
+        String error = "";
+        try{
+            bookService.updateBook(LIBRARIAN_KEY, BOOK_KEY+1, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
+        }
+        catch(Exception e){
+            error=e.getMessage();
+         }
+         assertEquals(error,"Can't update book because no book exists for the given id.");
+    }
+    
+    @Test
+    public void updateMusicMusician(){
+        Music music = null;
+        
+        try{
+            music = musicService.updateMusic(LIBRARIAN_KEY, MUSIC_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN2, RECORD_LABEL);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(music);
+        assertEquals(music.getId(), MUSIC_KEY);
+        assertEquals(music.getName(), MEDIA_NAME);
+        assertEquals(music.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(music.getMusician(), AUTHOR_DIRECTOR_MUSICIAN2);
+        assertEquals(music.getRecordLabel(), RECORD_LABEL);
+    }
+    @Test
+    public void updateMusicRecordLabel(){
+        Music music = null;
+        
+        try{
+            music = musicService.updateMusic(LIBRARIAN_KEY, MUSIC_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL2);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(music);
+        assertEquals(music.getId(), MUSIC_KEY);
+        assertEquals(music.getName(), MEDIA_NAME);
+        assertEquals(music.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(music.getMusician(), AUTHOR_DIRECTOR_MUSICIAN);
+        assertEquals(music.getRecordLabel(), RECORD_LABEL2);
+    }
+    @Test
+    public void updateMusicNotFound(){
+        String error = "";
+        
+        try{
+            musicService.updateMusic(LIBRARIAN_KEY, MUSIC_KEY+1, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL2);
+        }
+        catch(Exception e){
+            error=e.getMessage();
+         }
+         assertEquals(error,"Can't update music because no music exists for the given id.");
+    }
+    
+    @Test
+    public void updateNewspaperHeadline(){
+        Newspaper newspaper = null;
+        
+        try{
+            newspaper = newspaperService.updateNewspaper(LIBRARIAN_KEY, NEWSPAPER_KEY, MEDIA_NAME, DATE_PUBLISHED, HEADLINE2);
+        }
+        catch(Exception e){
+            fail();
+        }
+        assertNotNull(newspaper);
+        assertEquals(newspaper.getId(), NEWSPAPER_KEY);
+        assertEquals(newspaper.getName(), MEDIA_NAME);
+        assertEquals(newspaper.getDatePublished(), DATE_PUBLISHED);
+        assertEquals(newspaper.getHeadline(), HEADLINE2);
+    }
+    public void updateNewspaperNotFound(){
+        String error = "";
+        
+        try{
+            newspaperService.updateNewspaper(LIBRARIAN_KEY, NEWSPAPER_KEY, MEDIA_NAME, DATE_PUBLISHED, HEADLINE2);
+        }
+        catch(Exception e){
+            error=e.getMessage();
+         }
+         assertEquals(error,"Can't update newspaper because no newspaper exists for the given id.");
+    }
+    
     
     @Test
     public void testDeleteMovieValid(){

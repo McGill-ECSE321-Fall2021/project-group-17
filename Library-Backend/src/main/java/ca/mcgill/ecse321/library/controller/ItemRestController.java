@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -380,6 +381,42 @@ public class ItemRestController {
         public JsonBodyNewspaper(){}
     }
     
+    
+    // update music, movie, book, newspaper
+    
+    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @ResponseBody
+    public MovieDTO updateMovie(@PathVariable("librarianId") int librarianId,
+                                 @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
+        Movie movie = movieService.updateMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
+				body.getRunningTime(), body.getRating(), body.getFilmDistributor());
+        return convertMovieToDTO(movie);
+    }
+    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @ResponseBody
+    public MusicDTO updateMusic(@PathVariable("librarianId") int librarianId,
+                                 @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
+        Music music = musicService.updateMusic(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),
+                body.getRecordLabel());
+        return convertMusicToDTO(music);
+    }
+    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @ResponseBody
+    public BookDTO updateBook(@PathVariable("librarianId") int librarianId,
+                                 @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+    	Book book = bookService.updateBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
+                body.getPublisher(), body.getGenre());
+        return convertBookToDTO(book);
+    }
+    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @ResponseBody
+    public NewspaperDTO updateNewspaper(@PathVariable("librarianId") int librarianId,
+                                 @RequestBody JsonBodyNewspaper body) throws IllegalArgumentException{
+        Newspaper newspaper = newspaperService.updateNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
+        return convertNewspaperToDTO(newspaper);
+    }
+    
+    
     // delete music, movie, book, newspaper
     
     @DeleteMapping(value= {"/item/movie/{librarianId}/{id}", "/item/movie/{librarianId}/{id}/"})
@@ -447,7 +484,7 @@ public class ItemRestController {
     
     @GetMapping(value= {"/item/{type}/{name}", "/item/{type}/{name}/"})
     public List<ItemDTO> getItemByVariable(@PathVariable("type") String type, @PathVariable("name") String name) throws IllegalArgumentException{
-    	if(type.toLowerCase().equals("director")) { 
+    	if(type.toLowerCase().equals("director")) {
     		return movieService.getMovieFromDirector(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     	}
     	else if(type.toLowerCase().equals("musician")) {
