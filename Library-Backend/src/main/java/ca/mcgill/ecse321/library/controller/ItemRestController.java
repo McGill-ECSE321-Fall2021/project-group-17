@@ -28,7 +28,7 @@ import ca.mcgill.ecse321.library.model.Movie;
 import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.BookService;
-import ca.mcgill.ecse321.library.service.ItemService;
+//import ca.mcgill.ecse321.library.service.ItemService;
 import ca.mcgill.ecse321.library.service.MovieService;
 import ca.mcgill.ecse321.library.service.MusicService;
 import ca.mcgill.ecse321.library.service.NewspaperService;
@@ -38,8 +38,8 @@ import ca.mcgill.ecse321.library.service.NewspaperService;
 @RestController
 public class ItemRestController {
 
-    @Autowired
-    private ItemService service;
+//    @Autowired
+//    private ItemService service;
     @Autowired
     private MovieService movieService;
     @Autowired
@@ -406,43 +406,72 @@ public class ItemRestController {
     	newspaperService.deleteNewspaper(id, librarianId);
     }
     
-    @GetMapping(value= {"/item/movie/{id}", "/item/movie/{id}/"})
+    @GetMapping(value= {"/item/movie/id/{id}", "/item/movie/id/{id}/"})
     public MovieDTO getMovieById(@PathVariable("id") int id) throws IllegalArgumentException{
     	Movie movie = movieService.getMovie(id);
     	return convertMovieToDTO(movie);    
     }
-    @GetMapping(value= {"/item/book/{id}", "/item/book/{id}/"})
+    @GetMapping(value= {"/item/book/id/{id}", "/item/book/id/{id}/"})
     public BookDTO getBookById(@PathVariable("id") int id) throws IllegalArgumentException{
     	Book book = bookService.getBook(id);
     	return convertBookToDTO(book);
     }
-    @GetMapping(value= {"/item/music/{id}", "/item/music/{id}/"})
+    @GetMapping(value= {"/item/music/id/{id}", "/item/music/id/{id}/"})
     public MusicDTO getMusicById(@PathVariable("id") int id) throws IllegalArgumentException{
     	Music music = musicService.getMusic(id);
     	return convertMusicToDTO(music);
     }
-    @GetMapping(value= {"/item/newspaper/{id}", "/item/newspaper/{id}/"})
+    @GetMapping(value= {"/item/newspaper/id/{id}", "/item/newspaper/id/{id}/"})
     public NewspaperDTO getNewspaperById(@PathVariable("id") int id) throws IllegalArgumentException{
     	Newspaper newspaper = newspaperService.getNewspaper(id);
     	return convertNewspaperToDTO(newspaper);
     }
     
-    @GetMapping(value= {"/item/movie/{name}", "/item/movie/{name}/"})
+    @GetMapping(value= {"/item/movie/name/{name}", "/item/movie/name/{name}/"})
     public List<ItemDTO> getMovieByName(@PathVariable("name") String name) throws IllegalArgumentException{
     	return movieService.getMovieByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     }
-    @GetMapping(value= {"/item/music/{name}", "/item/music/{name}/"})
+    @GetMapping(value= {"/item/music/name/{name}", "/item/music/name/{name}/"})
     public List<ItemDTO> getMusicByName(@PathVariable("name") String name) throws IllegalArgumentException{
     	return musicService.getMusicByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     }
-    @GetMapping(value= {"/item/book/{name}", "/item/book/{name}/"})
+    @GetMapping(value= {"/item/book/name/{name}", "/item/book/name/{name}/"})
     public List<ItemDTO> getBookByName(@PathVariable("name") String name) throws IllegalArgumentException{
     	return bookService.getBookByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     }
-    @GetMapping(value= {"/item/newspaper/{name}", "/item/newspaper/{name}/"})
+    @GetMapping(value= {"/item/newspaper/name/{name}", "/item/newspaper/name/{name}/"})
     public NewspaperDTO getNewspaperByHeadline(@PathVariable("name") String name) throws IllegalArgumentException{
     	Newspaper newspaper = newspaperService.getNewspaperByHeadline(name);
     	return convertNewspaperToDTO(newspaper);
+    }
+    
+    @GetMapping(value= {"/item/{type}/{name}", "/item/{type}/{name}/"})
+    public List<ItemDTO> getItemByVariable(@PathVariable("type") String type, @PathVariable("name") String name) throws IllegalArgumentException{
+    	if(type.toLowerCase().equals("director")) { 
+    		return movieService.getMovieFromDirector(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("musician")) {
+        	return musicService.getMusicFromMusician(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("author")) {
+        	return bookService.getBookFromAuthor(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("distributor")) { 
+    		return movieService.getMovieFromDistributor(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("publisher")) {
+        	return bookService.getBookFromPublisher(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("rating")) {
+    		return movieService.getMovieFromRating(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("label")) {
+        	return musicService.getMusicFromLabel(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	else if(type.toLowerCase().equals("genre")) {
+    		return bookService.getBookFromGenre(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
+    	}
+    	return null;
     }
     
     
