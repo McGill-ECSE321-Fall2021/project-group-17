@@ -31,11 +31,18 @@ public class ShiftRestController {
     private PersonRoleRepository personRoleRepository;
 
 
-    @PostMapping(value = { "/shift/{id}/","/shift/{id}/"})
+    @PostMapping(value = { "/shift/librarian/{id}/","/shift/librarian/{id}/"})
     @ResponseBody
-    public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body,
+    public ShiftDTO createShiftLibrarian(@PathVariable("id") Integer id, @RequestBody JsonBody body,
                                 @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
-        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
+        Shift shift = shiftService.createShiftLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
+        return convertToDTO(shift);
+    }
+    @PostMapping(value = { "/shift/headlibrarian/{id}/","/shift/headlibrarian/{id}/"})
+    @ResponseBody
+    public ShiftDTO createShiftHeadLibrarian(@PathVariable("id") Integer id, @RequestBody JsonBody body,
+                                @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+        Shift shift = shiftService.createShiftHeadLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
 
