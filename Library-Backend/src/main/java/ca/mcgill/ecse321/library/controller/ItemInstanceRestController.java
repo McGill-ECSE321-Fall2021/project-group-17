@@ -19,11 +19,10 @@ public class ItemInstanceRestController {
         return convertToDTO(itemInstance);
     }*/
 
-    @PostMapping(value= {"/iteminstance/{serialNum}", "/iteminstance/{serialNum}/"})
+    @PostMapping(value= {"/iteminstance/", "/iteminstance"})
     @ResponseBody
-    public ItemInstanceDTO createItemInstance(@PathVariable("serialNum") int serialNum,
-                                  @RequestBody JsonBody body) throws IllegalArgumentException{
-        ItemInstance itemInstance = service.createItemInstance(serialNum, body.getCheckableItemId());
+    public ItemInstanceDTO createItemInstance(@RequestBody JsonBody body) throws IllegalArgumentException{
+        ItemInstance itemInstance = service.createItemInstance(body.getCheckableItemId());
         return convertToDTO(itemInstance);
     }
 

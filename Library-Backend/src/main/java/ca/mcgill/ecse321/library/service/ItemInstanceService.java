@@ -17,10 +17,14 @@ public class ItemInstanceService {
     @Autowired
     private CheckableItemRepository checkableItemRepository;
 
+    /**
+     *
+     * @param checkableItemId
+     * @return
+     */
     @Transactional
-    public ItemInstance createItemInstance(int serialNum, Integer checkableItemId) {
+    public ItemInstance createItemInstance(Integer checkableItemId) {
         ItemInstance itemInstance = new ItemInstance();
-        //itemInstance.setSerialNum(serialNum);
 
         if (checkableItemId != null) {
             Item item = checkableItemRepository.findItemById(checkableItemId);
