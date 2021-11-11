@@ -2,12 +2,13 @@ package ca.mcgill.ecse321.library.service;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.dao.*;
+import ca.mcgill.ecse321.library.model.HeadLibrarian;
+import ca.mcgill.ecse321.library.model.OnlineAccount;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.mcgill.ecse321.library.dao.LibrarianRepository;
-import ca.mcgill.ecse321.library.dao.PersonRepository;
-import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.Person;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
@@ -15,26 +16,45 @@ import ca.mcgill.ecse321.library.service.Exception.PersonException;
 @Service
 public class LibrarianService {
     @Autowired
-    private LibrarianRepository librarianRepository;
+    private HeadLibrarianRepository headLibrarianRepository;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
-    private PersonRoleRepository personRoleRepository;
+    private OnlineAccountRepository onlineAccountRepository;
+    @Autowired
+    private LibrarianRepository librarianRepository;
 
     @Transactional
-    public Librarian createLibrarian(Integer id){
-    	Person p = personRepository.findPersonById(id);
-    	if(p == null) {
-    		throw new PersonException("Person not found from id!");
-    	}
+    public Librarian createLibrarian(Integer personId){
         Librarian librarian = new Librarian();
-        librarian.setPerson(p);
-        librarianRepository.save(librarian);
+        if(personId == null || personId < 0) throw new PersonException("Invalid Id");
+        Person person = personRepository.findPersonById(personId);
+        if(person == null) throw new PersonException("No person by this Id");
+        librarian.setPerson(person);
+        headLibrarianRepository.save(librarian);
         return librarian;
     }
-    
-
     @Transactional
-    public Librarian getLibrarian(int id){return (Librarian) librarianRepository.findPersonRoleById(id);}
-    
+    public Librarian updateLibrarian(Integer headLibrarian, Integer personId, String username){
+        if(headLibrarian == null || headLibrarian < 0)throw new OnlineAccountException("Invalid Id");
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(headLibrarian);
+        if(librarian == null) throw new OnlineAccountException("No librarian by this id");
+        if(personId == null || personId < 0) throw new PersonException("Invalid Id");
+        Person person = personRepository.findPersonById(personId);
+        if(person == null) throw new PersonException("No person by this Id");
+        if(username == null)throw new OnlineAccountException("Invalid Id");
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+        if(account == null) throw new OnlineAccountException("No account by this username");
+        librarian.setAccount(account);
+        librarian.setPerson(person);
+        headLibrarianRepository.save(librarian);
+        return librarian;
+    }
+    @Transactional
+    public Librarian getLibrarian(Integer id){
+        if(id == null || id < 0) throw new OnlineAccountException("Invalid Id");
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(id);
+        if(librarian == null) throw new OnlineAccountException("No librarian by this id");
+        return librarian;
+    }
 }

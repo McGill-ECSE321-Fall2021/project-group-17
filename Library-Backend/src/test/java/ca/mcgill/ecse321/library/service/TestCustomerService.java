@@ -221,7 +221,7 @@ public class TestCustomerService {
     public void updateCustomerPenalty(){
        Customer customer=null;
         try{
-            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,service2.getAddress(ADDRESS_KEY).getId(),service3.getLibraryCard(LIBRARYCARD_KEY));
+            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,ADDRESS_KEY,service3.getLibraryCard(LIBRARYCARD_KEY));
         }
         catch(Exception e){
             fail();
@@ -256,7 +256,7 @@ public class TestCustomerService {
         Customer customer=null;
         String error=null;
         try{
-            customer= service.updateCustomer(CUSTOMER_KEY2,PENALTY,service2.getAddress(ADDRESS_KEY).getId(),service3.getLibraryCard(LIBRARYCARD_KEY));
+            customer= service.updateCustomer(CUSTOMER_KEY2,PENALTY,ADDRESS_KEY,service3.getLibraryCard(LIBRARYCARD_KEY));
         }
         catch(Exception e){
             error= e.getMessage();
