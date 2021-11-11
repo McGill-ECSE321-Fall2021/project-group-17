@@ -59,6 +59,7 @@ public class ShiftRestController {
         shiftService.updateShiftLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
+
     @PutMapping(value = {"/shift/headLibrarian/{shiftid}", "/shift/headLibrarian/{shiftid}"})
     public void modifyLibraryHoursHeadLibrarian(@PathVariable("shiftid") int shiftId,
                                             @RequestBody JsonBody body,
@@ -66,7 +67,8 @@ public class ShiftRestController {
         shiftService.updateShiftHeadLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
-    @DeleteMapping(value = {"/shift/{shiftid}", "/libraryhour/{shiftid}"})
+    @DeleteMapping(value = {"/shift/{shiftid}", "/shift/{shiftid}"})
+
     public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
     }
