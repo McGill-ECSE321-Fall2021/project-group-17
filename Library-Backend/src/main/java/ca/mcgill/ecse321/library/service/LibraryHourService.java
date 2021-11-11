@@ -89,16 +89,18 @@ public class LibraryHourService {
     }
 
     @Transactional
-    public LibraryHour deleteLibraryHour(Integer libraryHourId, Integer accountId){
+    public LibraryHour deleteLibraryHour(Integer libraryHourId, String accountUsername){
         if(libraryHourId < 0 || libraryHourId == null) throw new LibraryHourException("Invalid Id");
 
         LibraryHour libraryHour = libraryHourRepository.findLibraryHourById(libraryHourId);
         if(libraryHour == null) throw new LibraryHourException("There does not exist a Library hour by Id");
 
-        if(accountId == null || accountId < 0) throw new OnlineAccountException("Invalid Account Id");
-        HeadLibrarian headLibrarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(accountId);
-        if(headLibrarian == null) throw new OnlineAccountException("Active Account is Unauthorized for this Action");
-        libraryHourRepository.deleteById(accountId);
+        OnlineAccount account = getActiveUser(accountUsername);
+        if(account.getLoggedIn() == false) throw new OnlineAccountException("Account must be logged in");
+        PersonRole role = account.getPersonRole();
+        if(!(role instanceof HeadLibrarian)) throw new OnlineAccountException("Account is not authorized for this action");
+
+        libraryHourRepository.deleteById(libraryHourId);
         return null;
     }
     private OnlineAccount getActiveUser(String accountUsername){
