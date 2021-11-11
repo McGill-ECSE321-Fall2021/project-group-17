@@ -31,40 +31,40 @@ public class ShiftRestController {
     private PersonRoleRepository personRoleRepository;
 
 
-    @PostMapping(value = { "/shift/librarian/","/shift/librarian/"})
+    @PostMapping(value = { "/shift/librarian","/shift/librarian"})
     public ShiftDTO createShiftLibrarian(@RequestBody JsonBody body,
                                 @RequestParam(value = "accountusername", required = false) String accountUsername) throws IllegalArgumentException{
         Shift shift = shiftService.createShiftLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
-    @PostMapping(value = { "/shift/headLibrarian/","/shift/headLibrarian"})
+    @PostMapping(value = { "/shift/headLibrarian","/shift/headLibrarian"})
     public ShiftDTO createShiftHeadLibrarian(@RequestBody JsonBody body,
                                 @RequestParam(value = "accountUsername", required = false) String accountUsername) throws IllegalArgumentException{
         Shift shift = shiftService.createShiftHeadLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
 
-    @GetMapping(value = {"/shift/{id}/", "/shift/{id}/"})
+    @GetMapping(value = {"/shift/{id}", "/shift/{id}"})
     public ShiftDTO getShift(@PathVariable("id") int id) throws IllegalArgumentException {
         Shift shift = shiftService.getShift(id);
         return convertToDTO(shift);
     }
 
-    @PutMapping(value = {"/shift/librarian/{shiftid}/", "/shift/librarian/{shiftid}/"})
+    @PutMapping(value = {"/shift/librarian/{shiftid}", "/shift/librarian/{shiftid}"})
     public void modifyLibraryHoursLibrarian(@PathVariable("shiftid") int shiftId,
                                     @RequestBody JsonBody body,
                                    @RequestParam(value = "accountUsername", required = false)String accountUsername){
         shiftService.updateShiftLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
-    @PutMapping(value = {"/shift/headLibrarian/{shiftid}/", "/shift/headLibrarian/{shiftid}/"})
+    @PutMapping(value = {"/shift/headLibrarian/{shiftid}", "/shift/headLibrarian/{shiftid}"})
     public void modifyLibraryHoursHeadLibrarian(@PathVariable("shiftid") int shiftId,
                                             @RequestBody JsonBody body,
                                             @RequestParam(value = "accountUsername", required = false)String accountUsername){
         shiftService.updateShiftHeadLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
-    @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
+    @DeleteMapping(value = {"/shift/{shiftid}", "/libraryhour/{shiftid}"})
     public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
     }

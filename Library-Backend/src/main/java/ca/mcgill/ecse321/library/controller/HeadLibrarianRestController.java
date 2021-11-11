@@ -11,13 +11,13 @@ public class HeadLibrarianRestController {
     @Autowired
     private HeadLibrarianService headService;
 
-    @PostMapping(value= {"/headLibrarian/{personid}","/headLibrarian/{personid}/"})
+    @PostMapping(value= {"/headLibrarian/{personid}","/headLibrarian/{personid}"})
     public HeadLibrarianDTO createHeadLibrarian(@PathVariable("personid") Integer personId) throws IllegalArgumentException{
         HeadLibrarian headLibrarian = headService.createHeadLibrarian(personId);
         return convertToDTO(headLibrarian);
     }
 
-    @PutMapping(value= {"/headLibrarian/{username}/{personid}/{accountid}/","/headLibrarian/{username}/{personid}/{accountid}/"})
+    @PutMapping(value= {"/headLibrarian/{username}/{personid}/{accountid}","/headLibrarian/{username}/{personid}/{accountid}"})
     public HeadLibrarianDTO updateHeadLibrarian(@PathVariable("personid") Integer personId,
                                                 @PathVariable("accountid") Integer accountId,
                                                 @PathVariable("username")String username) throws IllegalArgumentException{
@@ -25,7 +25,7 @@ public class HeadLibrarianRestController {
         return convertToDTO(headLibrarian);
     }
 
-    @GetMapping(value = {"/headLibrarian/{id}", "/headLibrarian/{id}/"})
+    @GetMapping(value = {"/headLibrarian/{id}", "/headLibrarian/{id}"})
     public HeadLibrarianDTO getHeadLibrarian(@PathVariable("id") int id) throws IllegalArgumentException{
         HeadLibrarian headLibrarian = headService.getHeadLibrarian(id);
         return convertToDTO(headLibrarian);

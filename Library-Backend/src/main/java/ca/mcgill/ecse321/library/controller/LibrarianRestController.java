@@ -19,13 +19,13 @@ public class LibrarianRestController {
     @Autowired
     private LibrarianService librarianService;
 
-    @PostMapping(value = {"/librarian/{personid}","/librarian/{personid}/"})
+    @PostMapping(value = {"/librarian/{personid}","/librarian/{personid}"})
     public LibrarianDTO createLibrarian(@PathVariable("personid") Integer personId) throws IllegalArgumentException{
         Librarian librarian = librarianService.createLibrarian(personId);
         return convertToDTO(librarian);
     }
 
-    @PutMapping(value= {"/librarian/{username}/{personid}/{accountid}/","/librarian/{username}/{personid}/{accountid}/"})
+    @PutMapping(value= {"/librarian/{username}/{personid}/{accountid}","/librarian/{username}/{personid}/{accountid}"})
     public LibrarianDTO createLibrarian(@PathVariable("personid") Integer personId,
                                                 @PathVariable("accountid") Integer accountId,
                                                 @PathVariable("username")String username) throws IllegalArgumentException{
@@ -33,7 +33,7 @@ public class LibrarianRestController {
         return convertToDTO(librarian);
     }
 
-    @GetMapping(value = {"/librarian/{id}", "/librarian/{id}/"})
+    @GetMapping(value = {"/librarian/{id}", "/librarian/{id}"})
     public LibrarianDTO getLibrarian(@PathVariable("id") Integer id) throws IllegalArgumentException{
         Librarian librarian = librarianService.getLibrarian(id);
         return convertToDTO(librarian);
