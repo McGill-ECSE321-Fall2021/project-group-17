@@ -195,7 +195,7 @@
         "method": "POST",
         "header": [],
         "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/customer/bob1/1288?personRoleId={{customer_id}}",
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/customer/bob1/1288/bob@mail.com?personRoleId={{customer_id}}",
           "protocol": "https",
           "host": [
             "library-backend-534a",
@@ -206,7 +206,8 @@
             "onlineaccount",
             "customer",
             "bob1",
-            "1288"
+            "1288",
+            "bob@mail.com"
           ],
           "query": [
             {
