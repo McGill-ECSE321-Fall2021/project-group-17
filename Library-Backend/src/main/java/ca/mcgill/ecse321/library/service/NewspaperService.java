@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.Exception.NewspaperException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @Service
@@ -28,21 +29,46 @@ public class NewspaperService {
     CheckableItemRepository checkableItemRepository;
 
     @Transactional
-    public Newspaper createNewspaper(int librarianId, int id, String name, Date date, String headline){
-        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-        if(librarian == null){
-            throw new PersonException("Librarian not found in request");
+    public Newspaper createNewspaper(Integer librarianId, Integer id, String name, Date date, String headline){
+    	
+    	String error = "";
+        if (librarianId == null) {
+        	throw new PersonException("Librarian not found in request");
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+            error = error + "Librarian does not exist! ";
         }
+        if (id == null) {
+            error = error + "Id needs to be provided!";
+        } 
+//        else if (newspaperRepository.findItemById(id) != null) {
+//            error = error + "Item with id " + id + " already exists! ";
+//        }
+        if (name == null) {
+            error = error + "Name needs to be provided!";
+        }
+        if (date == null) {
+            error = error + "Date needs to be provided!";
+        }
+        if (headline == null) {
+            error = error + "Headline needs to be provided!";
+        }
+        error = error.trim();
+
+        if (error.length() > 0) {
+            throw new IllegalArgumentException(error);
+        }
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        Newspaper n= new Newspaper();
-        n.setId(id);
-        n.setName(name);
-        n.setDatePublished(date);
-        n.setHeadline(headline);
-        newspaperRepository.save(n);
-        return n;
+        
+        Newspaper newspaper = new Newspaper();
+        newspaper.setId(id);
+        newspaper.setName(name);
+        newspaper.setDatePublished(date);
+        newspaper.setHeadline(headline);
+        newspaperRepository.save(newspaper);
+        return newspaper;
     }
     
     /*@Transactional
@@ -68,12 +94,12 @@ public class NewspaperService {
         }
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null){
-            throw new NewspaperException("Librarian not found in request");
+            throw new OnlineAccountException("Librarian not found in request");
         }
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        checkableItemRepository.deleteById(newspaperId);
+        newspaperRepository.deleteById(newspaperId);
         newspaper = null;
     }
     

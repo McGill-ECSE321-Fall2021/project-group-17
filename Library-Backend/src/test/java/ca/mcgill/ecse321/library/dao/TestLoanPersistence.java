@@ -48,11 +48,12 @@ public class TestLoanPersistence {
         Customer customer = new Customer(0, null, 0, null, null, null);
         customerRepository.save(customer);
 
-        int id = 6789;
+
         Date checkedOut = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
         Date returnDate = java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-        Loan loan = new Loan(id, checkedOut, returnDate, itemInstance, customer);
+        Loan loan = new Loan(0, checkedOut, returnDate, itemInstance, customer);
         loanRepository.save(loan);
+        int id = loan.getId();
         loan = loanRepository.findLoanById(id);
         assertNotNull(loan);
         assertEquals(id, loan.getId());

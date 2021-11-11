@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.library.dao.BookRepository;
 import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
@@ -16,24 +17,58 @@ import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
+@Service
 public class BookService {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
     @Autowired
-    LibrarianRepository librarianRepository;
+    private LibrarianRepository librarianRepository;
     @Autowired
-    CheckableItemRepository checkableItemRepository;
+    private CheckableItemRepository checkableItemRepository;
     @Transactional
-    public Book createBook(int librarianId, int id, String name, Date date,String author, String publisher, String genre){
-    	 Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-         if(librarian == null){
-             throw new PersonException("Librarian not found in request");
-         }
-         if (!(librarian instanceof Librarian)) {
-         	throw new PersonException("User must be a librarian");
-         }
+    public Book createBook(Integer librarianId, Integer id, String name, Date date,String author, String publisher, String genre){
+    	
+    	String error = "";
+        if (librarianId == null) {
+        	throw new PersonException("Librarian not found in request");
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+            error = error + "Librarian does not exist! ";
+        }
+        if (id == null) {
+            error = error + "Id needs to be provided!";
+        } 
+//        else if (bookRepository.findItemById(id) != null) {
+//            error = error + "Item with id " + id + " already exists! ";
+//        }
+        if (name == null) {
+            error = error + "Name needs to be provided!";
+        }
+        if (date == null) {
+            error = error + "Date needs to be provided!";
+        }
+        if (author == null) {
+            error = error + "Author needs to be provided!";
+        }
+        if (publisher == null) {
+            error = error + "Publisher needs to be provided!";
+        }
+        if (genre == null) {
+            error = error + "Genre needs to be provided!";
+        }
+        error = error.trim();
+
+        if (error.length() > 0) {
+            throw new IllegalArgumentException(error);
+        }
+    	
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if (!(librarian instanceof Librarian)) {
+        	throw new PersonException("User must be a librarian");
+        }
+        
     	Book b= new Book();
         b.setId(id);
         b.setName(name);
@@ -67,12 +102,12 @@ public class BookService {
         }
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null){
-            throw new PersonException("Librarian not found in request");
+            throw new OnlineAccountException("Librarian not found in request");
         }
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        checkableItemRepository.deleteById(bookId);
+        bookRepository.deleteById(bookId);
         book = null;
     }
     @Transactional

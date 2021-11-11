@@ -34,8 +34,8 @@ public class ShiftRestController {
     @PostMapping(value = { "/shift/{id}/","/shift/{id}/"})
     @ResponseBody
     public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body,
-                                @RequestParam(value = "accountid", required = false)int accountId) throws IllegalArgumentException{
-        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountId);
+                                @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
 
@@ -44,17 +44,25 @@ public class ShiftRestController {
         Shift shift = shiftService.getShift(id);
         return convertToDTO(shift);
     }
-    
+
+    @PutMapping(value = {"/shift/{shiftid}/", "/shift/{shiftid}/"})
+    public void modifyLibraryHours(@PathVariable("shiftid") int shiftId,
+                                    @RequestBody JsonBody body,
+                                   @RequestParam(value = "accountUsername", required = false)String accountUsername){
+        //do we need to use JsonBody or Path Variable??
+        shiftService.updateShift(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
+                body.getLibrarianId(), accountUsername);
+    }
     @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
-    public void deleteLibraryHour(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountid", required = false)int accountId){
-        shiftService.deleteShift(accountId, shiftId);
+    public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
+        shiftService.deleteShift(accountUsername, shiftId);
     }
     @GetMapping(value= {"/shift/librarian/{librarianId}"})
     @ResponseBody
     public List<ShiftDTO> getShifts(@PathVariable("librarianId") Integer librarianId) throws IllegalArgumentException{
     	PersonRole l = personRoleRepository.findPersonRoleById(librarianId);
         if (!(l instanceof Librarian)) throw new PersonException("Unauthorized Current User");
-    	List<Shift> shifts = shiftService.getShifts(librarianId);
+    	List<Shift> shifts = shiftService.getLibrarianShifts(librarianId);
         List<ShiftDTO> out = new ArrayList<ShiftDTO>();
         for(Shift s : shifts) {
         	out.add(convertToDTO(s));
@@ -63,32 +71,32 @@ public class ShiftRestController {
     }
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        private Time startTime;
-        private Time endTime;
-        private DayOfWeek dayOfWeek;
+        private String startTime;
+        private String endTime;
+        private String dayOfWeek;
         private Integer librarianId;
 
-        public Time getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Time startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Time getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Time endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
-        public DayOfWeek getDayOfWeek() {
+        public String getDayOfWeek() {
             return dayOfWeek;
         }
 
-        public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        public void setDayOfWeek(String dayOfWeek) {
             this.dayOfWeek = dayOfWeek;
         }
 

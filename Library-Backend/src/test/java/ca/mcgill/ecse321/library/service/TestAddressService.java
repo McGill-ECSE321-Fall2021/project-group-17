@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,6 +82,14 @@ public class TestAddressService {
             }
         });
     }
+
+    @AfterEach
+    public void clearDatabase() {
+        addressRepository.deleteAll();
+        customerRepository.deleteAll();
+        personRepository.deleteAll();
+    }
+
 
     @Test
     public void createAddress(){

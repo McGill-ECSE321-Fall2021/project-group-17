@@ -65,7 +65,7 @@ public class TestOnlineAccountService {
         OnlineAccount account = null;
 
         try {
-            account = service.createOnlineAccount(USERNAME, PASSWORD, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, CUSTOMER_KEY);
         } catch (Exception e) {
             fail();
         }
@@ -83,7 +83,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccount(null, PASSWORD, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(null, PASSWORD, CUSTOMER_KEY);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -97,7 +97,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccount(USERNAME, null, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(USERNAME, null, CUSTOMER_KEY);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -111,7 +111,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccount(USERNAME, PASSWORD, null);
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, null);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -125,7 +125,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccount(USERNAME, PASSWORD, 4321);
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, 4321);
         } catch (Exception e) {
             error = e.getMessage();
         }

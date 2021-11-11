@@ -20,10 +20,10 @@ public class CustomerRestController {
 
     @PostMapping(value= {"/customer/{id}","/customer/{id}/"})
     @ResponseBody
-    public CustomerDTO createCustomer(@PathVariable("id") int id,
+    public CustomerDTO createCustomer(@PathVariable("id") int id,@RequestParam Integer addressId,
                                       @RequestBody JsonBody body) throws IllegalArgumentException{
         Customer customer = customerService.createCustomer(id,body.getPerson(), body.getPenalty(),
-                body.getAddress(), body.getLibCard());
+                addressId, body.getLibCard());
         return convertToDTO(customer);
     }
 
@@ -40,19 +40,19 @@ public class CustomerRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        Person person;
+        Integer personId;
         Integer penalty;
-        Address address;
+        Integer addressId;
         LibraryCard libCard;
 
-        public void setPenalty(int penalty){this.penalty = penalty;}
-        public int getPenalty(){return penalty;}
+        public void setPenalty(Integer penalty){this.penalty = penalty;}
+        public Integer getPenalty(){return penalty;}
 
-        public void setPerson(Person person){this.person = person;}
-        public Person getPerson(){return person;}
+        public void setPerson(Integer personId){this.personId = personId;}
+        public Integer getPerson(){return personId;}
 
-        public void setAddress(Address address){this.address = address;}
-        public Address getAddress(){return address;}
+        public void setAddress(Integer address){this.addressId = address;}
+        public Integer getAddress(){return addressId;}
 
         public void setLibCard(LibraryCard libCard){this.libCard = libCard;}
         public LibraryCard getLibCard(){return libCard;}

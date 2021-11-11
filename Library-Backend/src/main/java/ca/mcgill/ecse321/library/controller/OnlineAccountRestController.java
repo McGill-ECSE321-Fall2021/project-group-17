@@ -17,11 +17,25 @@ public class OnlineAccountRestController {
         return convertToDTO(service.getOnlineAccount(username));
     }
 
-    @PostMapping(value = { "/onlineaccount/{username}/{password}", "/onlineaccount/{username}/{password}/" })
-    public OnlineAccountDTO createOnlineAccount(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) throws IllegalArgumentException {
-        OnlineAccount account = service.createOnlineAccount(username, password, personRoleId);
+    // create accounts for customer, librarian and head librarian
+    @PostMapping(value = { "/onlineaccount/customer/{username}/{password}", "/onlineaccount/customer/{username}/{password}/" })
+    public OnlineAccountDTO createOnlineAccountCustomer(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) throws IllegalArgumentException {
+        OnlineAccount account = service.createOnlineAccountCustomer(username, password, personRoleId);
         return convertToDTO(account);
     }
+    
+    @PostMapping(value = { "/onlineaccount/librarian/{username}/{password}", "/onlineaccount/librarian/{username}/{password}/" })
+    public OnlineAccountDTO createOnlineAccountLibrarian(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) throws IllegalArgumentException {
+        OnlineAccount account = service.createOnlineAccountLibrarian(username, password, personRoleId);
+        return convertToDTO(account);
+    }
+
+    @PostMapping(value = { "/onlineaccount/headlibrarian/{username}/{password}", "/onlineaccount/headlibrarian/{username}/{password}/" })
+    public OnlineAccountDTO createOnlineAccountHeadLibrarian(@PathVariable("username") String username, @PathVariable("password") String password, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) throws IllegalArgumentException {
+        OnlineAccount account = service.createOnlineAccountHeadLibrarian(username, password, personRoleId);
+        return convertToDTO(account);
+    }
+    // create accounts for customer, librarian and head librarian
 
     @DeleteMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/"})
     public void deleteOnlineAccount(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {

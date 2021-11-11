@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Entity
 public class Loan {
-    private int id;
+    private Integer id;
     private Date checkedOut;
     private Date returnDate;
     private ItemInstance itemInstance;
@@ -17,7 +17,7 @@ public class Loan {
     }
 
     public Loan(Integer id, Date checkedOut, Date returnDate, ItemInstance itemInstance, Customer customer) {
-        this.id = id;
+        //this.id = id;
         this.checkedOut = checkedOut;
         this.returnDate = returnDate;
         this.itemInstance = itemInstance;
@@ -25,8 +25,8 @@ public class Loan {
     }
 
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public Integer getId() {
         return this.id;
     }
 
