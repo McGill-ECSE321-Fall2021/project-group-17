@@ -39,8 +39,9 @@ public class CustomerService {
         customerRepository.save(customer);
         return customer;
     }
-    public Customer updateCustomer(Integer id, Integer penalty, Address address, LibraryCard libCard){
+    public Customer updateCustomer(Integer id, Integer penalty, Integer addressId, LibraryCard libCard){
         Customer customer = (Customer) customerRepository.findPersonRoleById(id);
+        Address address= addressRepository.findAddressById(addressId);
         if(customer==null){
             throw new CustomerException("cannot find customer");
         }
