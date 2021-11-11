@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
 import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
 import ca.mcgill.ecse321.library.dao.ShiftRepository;
@@ -15,10 +18,8 @@ import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.model.Shift;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
+import ca.mcgill.ecse321.library.service.Exception.PersonException;
 import ca.mcgill.ecse321.library.service.Exception.ShiftException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -27,6 +28,8 @@ public class ShiftService {
     private ShiftRepository shiftRepository;
     @Autowired
     private PersonRoleRepository personRoleRepository;
+    @Autowired
+    private LibrarianRepository librarianRepository;
     @Autowired
     private OnlineAccountRepository onlineAccountRepository;
 
@@ -45,10 +48,22 @@ public class ShiftService {
     }
     
     @Transactional
-    public List<Shift> getLibrarianShifts(Integer id) {
+    public List<Shift> getLibrarianShifts(Integer librarianId) {
+    	String error = "";
+    	if (librarianId == null) {
+        	error = error + "Librarian not found in request";
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+            error = error + "Librarian does not exist! ";
+        }
+    	if(librarianId == null || librarianId < 0) {
+    		error = error + "Invalid Id";
+    	}
+    	if(error.length() > 0) {
+    		throw new IllegalArgumentException(error);
+    	}
     	List<Shift> shifts = new ArrayList<Shift>();
         for(Shift s : shiftRepository.findAll()) {
-        	if(s.getLibrarian().getId() == id) {
+        	if(s.getLibrarian().getId() == librarianId) {
         		shifts.add(s);
         	}
         }

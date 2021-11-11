@@ -38,17 +38,21 @@ public class ItemRestController {
 
     @Autowired
     private ItemService service;
+    @Autowired
     private MovieService movieService;
+    @Autowired
     private BookService bookService;
+    @Autowired
     private MusicService musicService;
+    @Autowired
     private NewspaperService newspaperService;
 
     @PostMapping(value= {"/item/movie/{librarianId}", "/item/movie/{librarianId}/"})
     @ResponseBody
     public MovieDTO addMovie(@PathVariable("librarianId") Integer librarianId,
-                                  @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
+                                  @RequestBody JsonBodyMovie body) throws Exception{
         Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
-        		body.getRunningTime(), body.getRating(), body.getFilmDistributor());
+					body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
 
@@ -133,6 +137,8 @@ public class ItemRestController {
         public void setFilmDistributor(String filmDistributor) {
             this.filmDistributor = filmDistributor;
         }
+        
+        public JsonBodyMovie(){}
     }
 
     @PostMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
@@ -216,6 +222,8 @@ public class ItemRestController {
         public void setGenre(String genre) {
             this.genre = genre;
         }
+        
+        public JsonBodyBook(){}
     }
 
 
@@ -290,6 +298,8 @@ public class ItemRestController {
         public void setRecordLabel(String recordLabel) {
             this.recordLabel = recordLabel;
         }
+        
+        public JsonBodyMusic(){}
     }
 
     @PostMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
@@ -352,33 +362,31 @@ public class ItemRestController {
         public void setHeadline(String headline) {
             this.headline = headline;
         }
+        
+        public JsonBodyNewspaper(){}
     }
     
     // delete music, movie, book, newspaper
     
     @DeleteMapping(value= {"/item/movie/{librarianId}/{id}", "/item/movie/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteMovie(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	movieService.deleteMovie(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/book/{librarianId}/{id}", "/item/book/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteBook(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	bookService.deleteBook(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/music/{librarianId}/{id}", "/item/music/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteMusic(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	musicService.deleteMusic(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/newspaper/{librarianId}/{id}", "/item/newspaper/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteNewspaper(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	newspaperService.deleteNewspaper(id, librarianId);
