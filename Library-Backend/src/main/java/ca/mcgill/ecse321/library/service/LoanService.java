@@ -33,7 +33,6 @@ public class LoanService {
     public Loan createLoan(Date start, Integer itemId, Integer customerId, Date returnDate){
         Loan loan = new Loan();
 
-
         if(itemId == null){
             throw new LoanException("Need to have a item instance for a loan");
         }
