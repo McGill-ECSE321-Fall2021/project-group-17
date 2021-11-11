@@ -1,0 +1,290 @@
+{
+  "info": {
+    "_postman_id": "a9282495-f19a-439b-b0cb-ce3d6ed2a28e",
+    "name": "Customer",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Person",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.environment.set(\"person_id\", pm.response.json().id);",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Victoria\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/person/",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "person",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Address",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.environment.set(\"address_id\", pm.response.json().id);",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"customerId\":null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "address",
+            "1",
+            "234",
+            "Peel Street",
+            "Montreal",
+            "Canada"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.environment.set(\"customer_id\", pm.response.json().id);",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"personId\": {{person_id}},\n    \"penalty\": 0,\n    \"addressId\": {{address_id}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/customer/2",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "customer",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/customer/{{customer_id}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "customer",
+            "{{customer_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"penalty\": 1,\n    \"addressId\": {{address_id}},\n    \"libCard\" : null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/customer/{{customer_id}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "customer",
+            "{{customer_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/verifyCustomer/{{customer_id}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "verifyCustomer",
+            "{{customer_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Customer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://library-backend-534a.herokuapp.com/customer/{{customer_id}}",
+          "protocol": "https",
+          "host": [
+            "library-backend-534a",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "customer",
+            "{{customer_id}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
