@@ -166,7 +166,7 @@ public class TestCustomerService {
         catch (Exception e){
            error= e.getMessage();
         }
-        assertEquals(error,"cannot create Customer");
+        assertEquals(error,"Cannot create Customer because person is null");
 
     }
     @Test
@@ -201,17 +201,9 @@ public class TestCustomerService {
 
     @Test
     public void verifyUpdateAddress(){
-        int id = CUSTOMER_KEY;
-        Person person=null;
-        try{
-            person= service1.createPerson(PERSON_NAME,null);
-        }
-        catch(Exception e){
-            fail();
-        }
         Customer customer = null;
         try{
-            customer = service.createCustomer(CUSTOMER_KEY,person.getId(),0,service2.getAddress(ADDRESS_KEY).getId(),null);
+            customer = service.createCustomer(CUSTOMER_KEY,service1.getPerson(PERSON_KEY).getId(),0,service2.getAddress(ADDRESS_KEY).getId(),null);
         }
         catch (Exception e){
             fail();
@@ -229,7 +221,7 @@ public class TestCustomerService {
     public void updateCustomerPenalty(){
        Customer customer=null;
         try{
-            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,service2.getAddress(ADDRESS_KEY),service3.getLibraryCard(LIBRARYCARD_KEY));
+            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,service2.getAddress(ADDRESS_KEY).getId(),service3.getLibraryCard(LIBRARYCARD_KEY));
         }
         catch(Exception e){
             fail();
@@ -245,13 +237,7 @@ public class TestCustomerService {
         Customer customer=null;
         Address address= null;
         try{
-            address= service2.createAddress(ADDRESS_KEY2, ADDRESS_STREET_NUMBER,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_COUNTRY,CUSTOMER_KEY );
-        }
-        catch(Exception e){
-            fail();
-        }
-        try{
-            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,address,service3.getLibraryCard(LIBRARYCARD_KEY));
+            customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,service2.getAddress(ADDRESS_KEY).getId(),service3.getLibraryCard(LIBRARYCARD_KEY));
         }
         catch(Exception e){
             fail();
@@ -259,7 +245,7 @@ public class TestCustomerService {
         assertNotNull(customer);
         assertEquals(customer.getId(),CUSTOMER_KEY);
         assertEquals(customer.getLibraryCard().getId(),service3.getLibraryCard(LIBRARYCARD_KEY).getId());
-        assertEquals(customer.getAddress().getId(),address.getId());
+        assertEquals(customer.getAddress().getId(),service2.getAddress(ADDRESS_KEY).getId());
         assertEquals(customer.getPenalty(),PENALTY);
     }
 
@@ -268,7 +254,7 @@ public class TestCustomerService {
         Customer customer=null;
         String error=null;
         try{
-            customer= service.updateCustomer(CUSTOMER_KEY2,PENALTY,service2.getAddress(ADDRESS_KEY),service3.getLibraryCard(LIBRARYCARD_KEY));
+            customer= service.updateCustomer(CUSTOMER_KEY2,PENALTY,service2.getAddress(ADDRESS_KEY).getId(),service3.getLibraryCard(LIBRARYCARD_KEY));
         }
         catch(Exception e){
             error= e.getMessage();
