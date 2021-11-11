@@ -8,6 +8,7 @@ import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
+import ca.mcgill.ecse321.library.model.HeadLibrarian;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.model.Shift;
@@ -71,14 +73,7 @@ public class ShiftRestController {
     @GetMapping(value= {"/shift/librarian/{librarianId}"})
     @ResponseBody
     public List<ShiftDTO> getShifts(@PathVariable("librarianId") Integer librarianId) throws IllegalArgumentException{
-    	PersonRole l = personRoleRepository.findPersonRoleById(librarianId);
-        if (!(l instanceof Librarian)) throw new PersonException("Unauthorized Current User");
-    	List<Shift> shifts = shiftService.getLibrarianShifts(librarianId);
-        List<ShiftDTO> out = new ArrayList<ShiftDTO>();
-        for(Shift s : shifts) {
-        	out.add(convertToDTO(s));
-        }
-        return out;
+    	return shiftService.getLibrarianShifts(librarianId).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
