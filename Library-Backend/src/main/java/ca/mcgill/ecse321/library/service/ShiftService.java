@@ -88,7 +88,7 @@ public class ShiftService {
         return s;
     }
     @Transactional
-    public Shift updateShift(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+    public Shift updateShiftLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active User is unauthorized for this action");
 
@@ -99,6 +99,21 @@ public class ShiftService {
         shift.updateDayOfWeek(DOW);
         shift.updateEndTime(endTime);
         shift.setLibrarian(librarian);
+        shiftRepository.save(shift);
+        return shift;
+    }
+    @Transactional
+    public Shift updateShiftHeadLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active User is unauthorized for this action");
+
+        Shift shift = getShift(shiftId);
+        HeadLibrarian headLibrarian = findHeadLibrarian(librarianId);
+
+        shift.updateStartTime(startTime);
+        shift.updateDayOfWeek(DOW);
+        shift.updateEndTime(endTime);
+        shift.setLibrarian(headLibrarian);
         shiftRepository.save(shift);
         return shift;
     }
