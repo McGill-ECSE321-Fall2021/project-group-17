@@ -62,7 +62,8 @@ public class ShiftService {
     	String error = "";
     	if (librarianId == null) {
         	error = error + "Librarian not found in request";
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null &&
+        		headLibrarianRepository.findPersonRoleById(librarianId) == null) {
             error = error + "Librarian does not exist! ";
         }
     	if(librarianId == null || librarianId < 0) {

@@ -1,25 +1,25 @@
 package ca.mcgill.ecse321.library.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
-import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
-import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
-import ca.mcgill.ecse321.library.model.*;
-import ca.mcgill.ecse321.library.service.Exception.InvalidUserException;
-import ca.mcgill.ecse321.library.service.Exception.LibraryException;
-import ca.mcgill.ecse321.library.service.Exception.LibraryHourException;
-import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ca.mcgill.ecse321.library.dao.HeadLibrarianRepository;
 import ca.mcgill.ecse321.library.dao.LibraryHourRepository;
 import ca.mcgill.ecse321.library.dao.LibraryRepository;
-
-import java.sql.Time;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
+import ca.mcgill.ecse321.library.model.HeadLibrarian;
+import ca.mcgill.ecse321.library.model.Library;
+import ca.mcgill.ecse321.library.model.LibraryHour;
+import ca.mcgill.ecse321.library.model.OnlineAccount;
+import ca.mcgill.ecse321.library.model.PersonRole;
+import ca.mcgill.ecse321.library.service.Exception.LibraryException;
+import ca.mcgill.ecse321.library.service.Exception.LibraryHourException;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 
 @Service
 public class LibraryHourService {
@@ -28,9 +28,9 @@ public class LibraryHourService {
 	@Autowired
     private LibraryRepository libraryRepository;;
     @Autowired
-    private PersonRoleRepository personRoleRepository;
-    @Autowired
     private OnlineAccountRepository onlineAccountRepository;
+    @Autowired
+    private HeadLibrarianRepository headLibrarianRepository;
 	
     @Transactional
     public LibraryHour createLibraryHour(Integer libraryId, String startTime, String endTime, String DOW, String accountUsername){
@@ -96,8 +96,8 @@ public class LibraryHourService {
         if(libraryHour == null) throw new LibraryHourException("There does not exist a Library hour by Id");
 
         if(accountId == null || accountId < 0) throw new OnlineAccountException("Invalid Account Id");
-        PersonRole account = personRoleRepository.findPersonRoleById(accountId);
-        if(!(account instanceof HeadLibrarian)) throw new OnlineAccountException("Active Account is Unauthorized for this Action");
+        HeadLibrarian headLibrarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(accountId);
+        if(headLibrarian == null) throw new OnlineAccountException("Active Account is Unauthorized for this Action");
         libraryHourRepository.deleteById(accountId);
         return null;
     }
