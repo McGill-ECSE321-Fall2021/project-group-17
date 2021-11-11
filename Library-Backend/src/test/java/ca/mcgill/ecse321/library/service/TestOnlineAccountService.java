@@ -89,6 +89,9 @@ public class TestOnlineAccountService {
         });
     }
 
+    /**
+     * Creates an OnlineAccount for a customer successfully
+     */
     @Test
     public void testCreateOnlineAccountCustomerValid() {
         OnlineAccount account = null;
@@ -106,6 +109,9 @@ public class TestOnlineAccountService {
         assertEquals(LOGGEDIN, account.getLoggedIn());
     }
 
+    /**
+     * Fails to create an OnlineAccount for a customer because the username field is null
+     */
     @Test
     public void testCreateOnlineAccountCustomerNoUsername() {
         OnlineAccount account = null;
@@ -120,6 +126,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create account with null username.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a customer because the password field is null
+     */
     @Test
     public void testCreateOnlineAccountCustomerNoPassword() {
         OnlineAccount account = null;
@@ -134,6 +143,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create account with null password.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a customer because the personRoleId field is null
+     */
     @Test
     public void testCreateOnlineAccountCustomerNoPersonRoleId() {
         OnlineAccount account = null;
@@ -148,6 +160,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create an account without a user.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a customer because the email field is null
+     */
     @Test
     public void testCreateOnlineAccountCustomerNoEmail() {
         OnlineAccount account = null;
@@ -162,6 +177,10 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create an account without an email", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a customer because the personRoleId does not
+     * correspond to a customer in the database
+     */
     @Test
     public void testCreateOnlineAccountCustomerInvalidPersonRoleId() {
         OnlineAccount account = null;
@@ -176,6 +195,9 @@ public class TestOnlineAccountService {
         assertEquals("No user exists with the personRoleId given", error);
     }
 
+    /**
+     * Creates an OnlineAccount for a librarian successfully
+     */
     @Test
     public void testCreateOnlineAccountLibrarianValid() {
         OnlineAccount account = null;
@@ -193,6 +215,9 @@ public class TestOnlineAccountService {
         assertEquals(LOGGEDIN, account.getLoggedIn());
     }
 
+    /**
+     * Fails to create an OnlineAccount for a librarian because the username field is null
+     */
     @Test
     public void testCreateOnlineAccountLibrarianNoUsername() {
         OnlineAccount account = null;
@@ -207,6 +232,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create account with null username.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a librarian because the password field is null
+     */
     @Test
     public void testCreateOnlineAccountLibrarianNoPassword() {
         OnlineAccount account = null;
@@ -221,6 +249,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create account with null password.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a librarian because the personRoleId field is null
+     */
     @Test
     public void testCreateOnlineAccountLibrarianNoPersonRoleId() {
         OnlineAccount account = null;
@@ -235,6 +266,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create an account without a user.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a librarian because the email field is null
+     */
     @Test
     public void testCreateOnlineAccountLibrarianNoEmail() {
         OnlineAccount account = null;
@@ -249,6 +283,10 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create an account without an email", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a librarian because the personRoleId does not correspond
+     * to a librarian in the database
+     */
     @Test
     public void testCreateOnlineAccountLibrarianInvalidPersonRoleId() {
         OnlineAccount account = null;
@@ -263,6 +301,9 @@ public class TestOnlineAccountService {
         assertEquals("No user exists with the personRoleId given", error);
     }
 
+    /**
+     * Creates an OnlineAccount for a head librarian successfully
+     */
     @Test
     public void testCreateOnlineAccountHeadLibrarianValid() {
         OnlineAccount account = null;
@@ -280,6 +321,9 @@ public class TestOnlineAccountService {
         assertEquals(LOGGEDIN, account.getLoggedIn());
     }
 
+    /**
+     * Fails to create an OnlineAccount for a head librarian because the username field is null
+     */
     @Test
     public void testCreateOnlineAccountHeadLibrarianNoUsername() {
         OnlineAccount account = null;
@@ -294,6 +338,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create account with null username.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a head librarian because the password field is null
+     */
     @Test
     public void testCreateOnlineAccountHeadLibrarianNoPassword() {
         OnlineAccount account = null;
@@ -308,6 +355,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create account with null password.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a head librarian because the personRoleId field is null
+     */
     @Test
     public void testCreateOnlineAccountHeadLibrarianNoPersonRoleId() {
         OnlineAccount account = null;
@@ -322,6 +372,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create an account without a user.", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a head librarian because the email field is null
+     */
     @Test
     public void testCreateOnlineAccountHeadLibrarianNoEmail() {
         OnlineAccount account = null;
@@ -336,6 +389,10 @@ public class TestOnlineAccountService {
         assertEquals("Cannot create an account without an email", error);
     }
 
+    /**
+     * Fails to create an OnlineAccount for a head librarian because the personRoleId does not
+     * correspond to a head librarian in the database
+     */
     @Test
     public void testCreateOnlineAccountHeadLibrarianInvalidPersonRoleId() {
         OnlineAccount account = null;
@@ -350,6 +407,9 @@ public class TestOnlineAccountService {
         assertEquals("No user exists with the personRoleId given", error);
     }
 
+    /**
+     * Retrieves an account successfully for the given username
+     */
     @Test
     public void testGetOnlineAccountValid() {
         OnlineAccount account = null;
@@ -368,6 +428,9 @@ public class TestOnlineAccountService {
         assertEquals(LOGGEDIN, account.getLoggedIn());
     }
 
+    /**
+     * Fails to get an OnlineAccount because the username field is null
+     */
     @Test
     public void testGetOnlineAccountNoUsername() {
         OnlineAccount account = null;
@@ -383,6 +446,10 @@ public class TestOnlineAccountService {
         assertEquals("Cannot get account with a null username", error);
     }
 
+    /**
+     * Fails to get an OnlineAccount for the given username because it does not exist within the
+     * database
+     */
     @Test
     public void testGetOnlineAccountInvalidUsername() {
         OnlineAccount account = null;
@@ -398,6 +465,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find the account for the given username", error);
     }
 
+    /**
+     * Successfully logs in an online account for the given username
+     */
     @Test
     public void testLogInValid() {
         OnlineAccount account = null;
@@ -409,9 +479,12 @@ public class TestOnlineAccountService {
         }
 
         assertNotNull(account);
-        assertEquals(true, account.getLoggedIn());
+        assertTrue(account.getLoggedIn());
     }
 
+    /**
+     * Fails to login an OnlineAccount because the username field is null
+     */
     @Test
     public void testLogInNoUsername() {
         OnlineAccount account = null;
@@ -427,6 +500,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find username to login user.", error);
     }
 
+    /**
+     * Fails to login an OnlineAccount because the password field is null
+     */
     @Test
     public void testLogInNoPassword() {
         OnlineAccount account = null;
@@ -442,6 +518,10 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find password to login user.", error);
     }
 
+    /**
+     * Fails to login an OnlineAccount because the account for the given username does not exist
+     * within the database
+     */
     @Test
     public void testLogInInvalidUsername() {
         OnlineAccount account = null;
@@ -457,6 +537,9 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find account by username.", error);
     }
 
+    /**
+     * Logs out an OnlineAccount for the given username successfully.
+     */
     @Test
     public void testLogoutValid() {
         OnlineAccount account = null;
@@ -468,9 +551,12 @@ public class TestOnlineAccountService {
         }
 
         assertNotNull(account);
-        assertEquals(false, account.getLoggedIn());
+        assertFalse(account.getLoggedIn());
     }
 
+    /**
+     * Fails to logout an OnlineAccount because the username field is null
+     */
     @Test
     public void testLogoutNoUsername() {
         OnlineAccount account = null;
@@ -486,6 +572,10 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find username to delete account.", error);
     }
 
+    /**
+     * Fails to logout an OnlineAccount because the account for the given username does not exist
+     * in the database
+     */
     @Test
     public void testLogoutInvalidUsername() {
         OnlineAccount account = null;
@@ -501,9 +591,11 @@ public class TestOnlineAccountService {
         assertEquals("No account with said username exists", error);
     }
 
+    /**
+     * Successfully deletes the OnlineAccount for a customer
+     */
     @Test
     public void testDeleteAccountCustomerValid() {
-        OnlineAccount account = null;
 
         try {
             service.deleteOnlineAccountCustomer(USERNAME, CUSTOMER_KEY);
@@ -512,9 +604,11 @@ public class TestOnlineAccountService {
         }
     }
 
+    /**
+     * Fails to delete the customer OnlineAccount because the username field is null
+     */
     @Test
     public void testDeleteAccountCustomerNoUsername() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -526,9 +620,12 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find username to delete account.", error);
     }
 
+    /**
+     * Fails to delete the customer OnlineAccount because the username does not correspond to an
+     * account in the database
+     */
     @Test
     public void testDeleteAccountCustomerInvalidUsername() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -540,9 +637,11 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find account.", error);
     }
 
+    /**
+     * Fails to delete the customer OnlineAccount because the personRoleId field is null
+     */
     @Test
     public void testDeleteAccountCustomerNoPersonRoleId() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -554,9 +653,12 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find personRoleId to delete account.", error);
     }
 
+    /**
+     * Fails to delete the customer OnlineAccount because the personRoleId field does not
+     * correspond to a personRole in the database
+     */
     @Test
     public void testDeleteAccountCustomerInvalidPersonRoleId() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -568,9 +670,11 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find personRole to delete account.", error);
     }
 
+    /**
+     * Successfully deletes the OnlineAccount for a librarian
+     */
     @Test
     public void testDeleteAccountLibrarianValid() {
-        OnlineAccount account = null;
 
         try {
             service.deleteOnlineAccountLibrarian(USERNAME, LIBRARIAN_KEY);
@@ -579,9 +683,11 @@ public class TestOnlineAccountService {
         }
     }
 
+    /**
+     * Fails to delete the librarian OnlineAccount because the username field is null
+     */
     @Test
     public void testDeleteAccountLibrarianNoUsername() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -593,9 +699,12 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find username to delete account.", error);
     }
 
+    /**
+     * Fails to delete the librarian OnlineAccount because the username does not correspond to an
+     * account in the database
+     */
     @Test
     public void testDeleteAccountLibrarianInvalidUsername() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -607,9 +716,11 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find account.", error);
     }
 
+    /**
+     * Fails to delete the librarian OnlineAccount because the personRoleId field is null
+     */
     @Test
     public void testDeleteAccountLibrarianNoPersonRoleId() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -621,9 +732,12 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find personRoleId to delete account.", error);
     }
 
+    /**
+     * Fails to delete the librarian OnlineAccount because the personRoleId field does not
+     * correspond to a personRole in the database
+     */
     @Test
     public void testDeleteAccountLibrarianInvalidPersonRoleId() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -635,9 +749,11 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find personRole to delete account.", error);
     }
 
+    /**
+     * Successfully deletes the OnlineAccount for a head librarian
+     */
     @Test
     public void testDeleteAccountHeadLibrarianValid() {
-        OnlineAccount account = null;
 
         try {
             service.deleteOnlineAccountHeadLibrarian(USERNAME, HEAD_LIBRARIAN_KEY);
@@ -646,9 +762,11 @@ public class TestOnlineAccountService {
         }
     }
 
+    /**
+     * Fails to delete the head librarian OnlineAccount because the username field is null
+     */
     @Test
     public void testDeleteAccountHeadLibrarianNoUsername() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -660,9 +778,12 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find username to delete account.", error);
     }
 
+    /**
+     * Fails to delete the head librarian OnlineAccount because the username does not correspond to an
+     * account in the database
+     */
     @Test
     public void testDeleteAccountHeadLibrarianInvalidUsername() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -674,9 +795,11 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find account.", error);
     }
 
+    /**
+     * Fails to delete the head librarian OnlineAccount because the personRoleId field is null
+     */
     @Test
     public void testDeleteAccountHeadLibrarianNoPersonRoleId() {
-        OnlineAccount account = null;
         String error = "";
 
         try {
@@ -688,9 +811,12 @@ public class TestOnlineAccountService {
         assertEquals("Cannot find personRoleId to delete account.", error);
     }
 
+    /**
+     * Fails to delete the head librarian OnlineAccount because the personRoleId field does not
+     * correspond to a personRole in the database
+     */
     @Test
     public void testDeleteAccountHeadLibrarianInvalidPersonRoleId() {
-        OnlineAccount account = null;
         String error = "";
 
         try {

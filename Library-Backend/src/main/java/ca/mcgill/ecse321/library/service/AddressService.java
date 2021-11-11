@@ -18,7 +18,18 @@ public class AddressService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * @param streetNumber
+     * @param street
+     * @param city
+     * @param country
+     * @param customerId
+     * @return Address given input is valid
+     */
     @Transactional
+
     public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId) {
         if(addressRepository.findAddressById(id)!=null){
             throw new AddressException("cannot have two addresses with the same ID");
@@ -39,6 +50,12 @@ public class AddressService {
         addressRepository.save(address);
         return address;
     }
+
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     *
+     */
     @Transactional
     public void deleteAddress(Integer id) {
         if(id==null){
@@ -51,6 +68,12 @@ public class AddressService {
       addressRepository.delete(address);
     }
 
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * @return address corresponding to the input ID
+     */
+
     @Transactional
     public Address getAddress(int id) {
         Address address=addressRepository.findAddressById(id);
@@ -62,6 +85,16 @@ public class AddressService {
         }
 
     }
+
+    /**
+     * @author Victoria Sanchez
+     * @param id
+     * @param streetNumber
+     * @param street
+     * @param city
+     * @param country
+     * @return Address with new information
+     */
 
     @Transactional
     public Address updateAddress(int id, Integer streetNumber, String street, String city, String country) {

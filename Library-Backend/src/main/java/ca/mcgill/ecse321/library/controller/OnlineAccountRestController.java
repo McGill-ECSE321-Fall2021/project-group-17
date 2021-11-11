@@ -35,8 +35,8 @@ public class OnlineAccountRestController {
         OnlineAccount account = service.createOnlineAccountHeadLibrarian(username, password, personRoleId, email);
         return convertToDTO(account);
     }
-    // create accounts for customer, librarian and head librarian
 
+    // deletes accounts for customer, librarian and head librarian
     @DeleteMapping(value = { "/onlineaccount/customer/{username}", "/onlineaccount/customer/{username}/"})
     public void deleteOnlineAccountCustomer(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {
         service.deleteOnlineAccountCustomer(username, personRoleId);
@@ -52,12 +52,13 @@ public class OnlineAccountRestController {
         service.deleteOnlineAccountCustomer(username, personRoleId);
     }
 
+    //logs in the user with the given username and password
     @PutMapping(value = {"/login/{username}/{password}", "/login/{username}/{password}/"})
     public OnlineAccountDTO logIn(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
         return convertToDTO(service.logIn(username, password));
     }
 
-
+    //logs out the user for the given username
     @PutMapping(value={"/logout/{username}", "/logout/{username}/"})
     public void logOut(@PathVariable("username") String username) {
         service.logout(username);
