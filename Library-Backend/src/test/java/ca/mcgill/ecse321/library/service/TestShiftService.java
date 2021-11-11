@@ -95,7 +95,7 @@ public class TestShiftService {
         String id2 = ACCOUNT_USERNAME;
         Shift shift=null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME_AS_STRING, SHIFT_END_TIME_AS_STRING
+            shift = shiftService.createShiftLibrarian(SHIFT_START_TIME_AS_STRING, SHIFT_END_TIME_AS_STRING
                     , DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
@@ -115,14 +115,14 @@ public class TestShiftService {
         String id3 = ACCOUNT_USERNAME;
         Shift shift = null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME_AS_STRING,
+            shift = shiftService.createShiftLibrarian(SHIFT_START_TIME_AS_STRING,
                     SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
         try{
-            shiftService.updateShift(shift.getId(), SHIFT_START_TIME_AS_STRING,
+            shiftService.updateShiftLibrarian(shift.getId(), SHIFT_START_TIME_AS_STRING,
                     SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_2_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
@@ -135,8 +135,10 @@ public class TestShiftService {
         assertEquals(shift.getEndTime(),SHIFT_END_TIME);
         assertEquals(shift.getLibrarian().getId(), LIBRARIAN_KEY);
     }
+    
+    
     @Test
-    public void getLibrarianShifts(){
+    public void getLibrarianShiftsValid(){
         List<Shift> shifts = null;
         try{
             shifts = shiftService.getLibrarianShifts(LIBRARIAN_KEY);
@@ -144,6 +146,30 @@ public class TestShiftService {
         catch(Exception e){
             fail();
         }
+    }
+    @Test
+    public void getLibrarianShiftsInvalidId(){
+    	String error = "";
+        List<Shift> shifts = null;
+        try{
+            shifts = shiftService.getLibrarianShifts(LIBRARIAN_KEY+1);
+        }
+        catch(Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Librarian does not exist! ");
+    }
+    @Test
+    public void getLibrarianShiftsNullLibrarian(){
+    	String error = "";
+        List<Shift> shifts = null;
+        try{
+            shifts = shiftService.getLibrarianShifts(null);
+        }
+        catch(Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Librarian not found in request");
     }
     
 }

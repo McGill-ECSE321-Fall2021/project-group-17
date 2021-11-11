@@ -22,9 +22,18 @@ public class CustomerRestController {
     @ResponseBody
     public CustomerDTO createCustomer(@PathVariable("id") int id,
                                       @RequestBody JsonBody body) throws IllegalArgumentException{
-        Customer customer = customerService.createCustomer(id,body.getPerson(), body.getPenalty(),
-                body.getAddress(), body.getLibCard());
+        Customer customer = customerService.createCustomer(id,body.getPersonId(), body.getPenalty(),
+                body.getAddressId(), body.getLibCard());
         return convertToDTO(customer);
+    }
+
+    @PutMapping(value={"/customer/{id}", "/customer/{id}/"})
+    public CustomerDTO updateCustomer(@PathVariable("id") int id, @RequestBody JsonBody body) throws IllegalArgumentException{
+        return convertToDTO(customerService.updateCustomer(id, body.getPenalty(), body.getAddressId(), body.getLibCard()));
+    }
+    @DeleteMapping(value={"/customer/{id}", "/customer/{id}/"})
+    public void deleteCustomer(@PathVariable("id") int id) throws IllegalArgumentException{
+        customerService.deleteCustomer(id);
     }
 
     @GetMapping(value = {"/customer/{id}", "/customer/{id}/"})
@@ -40,22 +49,42 @@ public class CustomerRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
-        Person person;
-        Integer penalty;
-        Address address;
-        LibraryCard libCard;
+        private Integer personId;
+        private Integer penalty;
+        private Integer addressId;
+        private LibraryCard libCard;
 
-        public void setPenalty(int penalty){this.penalty = penalty;}
-        public int getPenalty(){return penalty;}
+        public Integer getPersonId() {
+            return personId;
+        }
 
-        public void setPerson(Person person){this.person = person;}
-        public Person getPerson(){return person;}
+        public void setPersonId(Integer personId) {
+            this.personId = personId;
+        }
 
-        public void setAddress(Address address){this.address = address;}
-        public Address getAddress(){return address;}
+        public Integer getPenalty() {
+            return penalty;
+        }
 
-        public void setLibCard(LibraryCard libCard){this.libCard = libCard;}
-        public LibraryCard getLibCard(){return libCard;}
+        public void setPenalty(Integer penalty) {
+            this.penalty = penalty;
+        }
+
+        public Integer getAddressId() {
+            return addressId;
+        }
+
+        public void setAddressId(Integer addressId) {
+            this.addressId = addressId;
+        }
+
+        public LibraryCard getLibCard() {
+            return libCard;
+        }
+
+        public void setLibCard(LibraryCard libCard) {
+            this.libCard = libCard;
+        }
 
         public JsonBody(){}
     }

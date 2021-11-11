@@ -31,11 +31,16 @@ public class ShiftRestController {
     private PersonRoleRepository personRoleRepository;
 
 
-    @PostMapping(value = { "/shift/{id}/","/shift/{id}/"})
-    @ResponseBody
-    public ShiftDTO createShift(@PathVariable("id") Integer id, @RequestBody JsonBody body,
-                                @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
-        Shift shift = shiftService.createShift(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
+    @PostMapping(value = { "/shift/librarian/","/shift/librarian/"})
+    public ShiftDTO createShiftLibrarian(@RequestBody JsonBody body,
+                                @RequestParam(value = "accountusername", required = false) String accountUsername) throws IllegalArgumentException{
+        Shift shift = shiftService.createShiftLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
+        return convertToDTO(shift);
+    }
+    @PostMapping(value = { "/shift/headLibrarian/","/shift/headLibrarian"})
+    public ShiftDTO createShiftHeadLibrarian(@RequestBody JsonBody body,
+                                @RequestParam(value = "accountUsername", required = false) String accountUsername) throws IllegalArgumentException{
+        Shift shift = shiftService.createShiftHeadLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
 
@@ -45,12 +50,18 @@ public class ShiftRestController {
         return convertToDTO(shift);
     }
 
-    @PutMapping(value = {"/shift/{shiftid}/", "/shift/{shiftid}/"})
-    public void modifyLibraryHours(@PathVariable("shiftid") int shiftId,
+    @PutMapping(value = {"/shift/librarian/{shiftid}/", "/shift/librarian/{shiftid}/"})
+    public void modifyLibraryHoursLibrarian(@PathVariable("shiftid") int shiftId,
                                     @RequestBody JsonBody body,
                                    @RequestParam(value = "accountUsername", required = false)String accountUsername){
-        //do we need to use JsonBody or Path Variable??
-        shiftService.updateShift(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
+        shiftService.updateShiftLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
+                body.getLibrarianId(), accountUsername);
+    }
+    @PutMapping(value = {"/shift/headLibrarian/{shiftid}/", "/shift/headLibrarian/{shiftid}/"})
+    public void modifyLibraryHoursHeadLibrarian(@PathVariable("shiftid") int shiftId,
+                                            @RequestBody JsonBody body,
+                                            @RequestParam(value = "accountUsername", required = false)String accountUsername){
+        shiftService.updateShiftHeadLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
     @DeleteMapping(value = {"/shift/{shiftid}/", "/libraryhour/{shiftid}/"})
@@ -104,8 +115,8 @@ public class ShiftRestController {
             return librarianId;
         }
 
-        public void setLibrarianId(Integer Id) {
-            this.librarianId = Id;
+        public void setLibrarianId(Integer librarianId) {
+            this.librarianId = librarianId;
         }
 
         public JsonBody(){}

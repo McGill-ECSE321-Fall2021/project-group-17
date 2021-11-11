@@ -22,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.sql.Date;
 
+
 import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
 
@@ -155,7 +157,7 @@ public class TestLoanService {
     }
 
 
-    //UPDATE LOAN
+    // TESTS FOR UPDATE LOAN
 
     @Test
     public void testUpdateLoanValid(){
@@ -225,8 +227,6 @@ public class TestLoanService {
         assertEquals(r.getCustomer().getId(),CUSTOMER_KEY +10);
         assertEquals(r.getItemInstance().getSerialNum(),ITEM_INSTANCE_KEY);
     }
-
-
 
     @Test
     public void testUpdateLoanMissingItemInstance(){
@@ -359,6 +359,9 @@ public class TestLoanService {
     }
 
 
+    // TESTS FOR CREATE LOAN
+
+
     @Test
     public void testCreateLoan(){
         Loan loan = null;
@@ -374,21 +377,7 @@ public class TestLoanService {
         assertEquals(endDate, loan.getReturnDate());
         assertNotNull(loan.getItemInstance());
     }
-    /*@Test
-    public void testCreateLoanNoCustomer(){
-        int id = LOAN_KEY;
 
-        Loan loan = null;
-        String error = "";
-        try{
-            loan = service.createLoan(startDate,ITEM_INSTANCE_KEY,null,LIBRARY_MANAGEMENT_SYSTEM_KEY,endDate,null);
-        }
-        catch (Exception e){
-           error = e.getMessage();
-        }
-        assertNull(loan);
-        assertEquals("",error);
-    }*/
     @Test
     public void testCreateLoanNoStartDate(){
         int id = LOAN_KEY;
@@ -522,7 +511,7 @@ public class TestLoanService {
     }
 
 
-    // VIEW ACTIVE LOANS
+    // TESTS FOR VIEW ACTIVE LOANS
 
     @Test
     public void testGetInventory(){
@@ -539,7 +528,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetLoan(){
+    public void testGetLoans(){
         try{
             loanService.viewActiveLoans(CUSTOMER_KEY);
         } catch (Exception e){
@@ -549,7 +538,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetLoanCustomerNotFound(){
+    public void testGetLoansCustomerNotFound(){
         String error = null;
         try{
             loanService.viewActiveLoans(LOAN_KEY);
@@ -560,7 +549,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetLoanByNullId(){
+    public void testGetLoansByNullId(){
         String error = null;
         try{
             loanService.viewActiveLoans(null);
@@ -571,14 +560,13 @@ public class TestLoanService {
     }
 
 
-
-    // VIEW LOAN RETURN DATE
+    // TESTS FOR GET LOAN
 
     @Test
-    public void testGetDate(){
+    public void testGetLoan(){
         Loan loan = null;
         try{
-            loan = loanService.viewLoanReturnDate(LOAN_KEY,CUSTOMER_KEY);
+            loan = loanService.getLoan(LOAN_KEY,CUSTOMER_KEY);
         } catch (Exception e){
             fail();
         }
@@ -587,10 +575,10 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateLoanNotFound(){
+    public void testGetLoanNotFound(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(LOAN_KEY+1, CUSTOMER_KEY);
+            loanService.getLoan(LOAN_KEY+1, CUSTOMER_KEY);
         } catch (Exception e){
             error = e.getMessage();
         }
@@ -598,10 +586,10 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateByEmptyId(){
+    public void testGetLoanByEmptyId(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(null,CUSTOMER_KEY);
+            loanService.getLoan(null,CUSTOMER_KEY);
         } catch (Exception e){
             error = e.getMessage();
         }
@@ -609,10 +597,10 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateByNullId(){
+    public void testGetLoanByNullId(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(LOAN_KEY,null);
+            loanService.getLoan(LOAN_KEY,null);
         } catch (Exception e){
             error = e.getMessage();
         }
@@ -620,17 +608,17 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateCustomerNotFound(){
+    public void testGetLoanCustomerNotFound(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(LOAN_KEY, CUSTOMER_KEY+1);
+            loanService.getLoan(LOAN_KEY, CUSTOMER_KEY+1);
         } catch (Exception e){
             error = e.getMessage();
         }
         assertEquals("Customer does not exist", error);
     }
 
-    //DELETE LOAN
+    // TESTS FOR DELETE LOAN
 
     @Test
     public void testDeleteLoanValid(){

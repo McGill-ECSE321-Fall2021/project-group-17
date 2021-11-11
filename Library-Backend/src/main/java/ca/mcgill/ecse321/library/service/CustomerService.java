@@ -13,23 +13,35 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Transactional
-    public Customer createCustomer(Integer id,Person person, Integer penalty, Address address, LibraryCard libCard){
+    public Customer createCustomer(Integer id,Integer personId, Integer penalty, Integer addressId, LibraryCard libCard){
         Customer customer = new Customer();
-        if(person==null||address==null){
-            throw new CustomerException("cannot create Customer");
+
+        Person person = personRepository.findPersonById(personId);
+        Address address = addressRepository.findAddressById(addressId);
+
+        if(person==null){
+            throw new CustomerException("Cannot create Customer because person is null");
+        }
+        if(address==null){
+            throw new CustomerException("Cannot create Customer because address is null");
         }
         customer.setPenalty(penalty);
         customer.setAddress(address);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
-        customer.setId(id);
+        //customer.setId(id);
         customerRepository.save(customer);
         return customer;
     }
-    public Customer updateCustomer(Integer id, Integer penalty, Address address, LibraryCard libCard){
+    public Customer updateCustomer(Integer id, Integer penalty, Integer addressId, LibraryCard libCard){
         Customer customer = (Customer) customerRepository.findPersonRoleById(id);
+        Address address= addressRepository.findAddressById(addressId);
         if(customer==null){
             throw new CustomerException("cannot find customer");
         }
