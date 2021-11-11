@@ -29,7 +29,7 @@ import ca.mcgill.ecse321.library.model.Movie;
 import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.BookService;
-//import ca.mcgill.ecse321.library.service.ItemService;
+import ca.mcgill.ecse321.library.service.ItemService;
 import ca.mcgill.ecse321.library.service.MovieService;
 import ca.mcgill.ecse321.library.service.MusicService;
 import ca.mcgill.ecse321.library.service.NewspaperService;
@@ -39,8 +39,8 @@ import ca.mcgill.ecse321.library.service.NewspaperService;
 @RestController
 public class ItemRestController {
 
-//    @Autowired
-//    private ItemService service;
+    @Autowired
+    private ItemService service;
     @Autowired
     private MovieService movieService;
     @Autowired
@@ -384,7 +384,7 @@ public class ItemRestController {
     
     // update music, movie, book, newspaper
     
-    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @PutMapping(value= {"/item/movie/{librarianId}", "/item/movie/{librarianId}/"})
     @ResponseBody
     public MovieDTO updateMovie(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
@@ -392,7 +392,7 @@ public class ItemRestController {
 				body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
-    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @PutMapping(value= {"/item/music/{librarianId}", "/item/music/{librarianId}/"})
     @ResponseBody
     public MusicDTO updateMusic(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
@@ -400,7 +400,7 @@ public class ItemRestController {
                 body.getRecordLabel());
         return convertMusicToDTO(music);
     }
-    @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
+    @PutMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
     @ResponseBody
     public BookDTO updateBook(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyBook body) throws IllegalArgumentException{
