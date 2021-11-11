@@ -25,8 +25,11 @@ public class CustomerService {
         Person person = personRepository.findPersonById(personId);
         Address address = addressRepository.findAddressById(addressId);
 
-        if(person==null||address==null){
-            throw new CustomerException("cannot create Customer");
+        if(person==null){
+            throw new CustomerException("Cannot create Customer because person is null");
+        }
+        if(address==null){
+            throw new CustomerException("Cannot create Customer because address is null");
         }
         customer.setPenalty(penalty);
         customer.setAddress(address);
