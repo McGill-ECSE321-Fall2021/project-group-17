@@ -28,9 +28,16 @@ public class OnlineAccountService {
     @Autowired
     private HeadLibrarianRepository headLibrarianRepository;
 
-
+    /**
+     * Creates an account for a librarian
+     * @param username
+     * @param password
+     * @param librarianId
+     * @param email
+     * @return an OnlineAccount created with the given username, password, email, and librarianId
+     */
     @Transactional
-    public OnlineAccount createOnlineAccountLibrarian(String username, String password, Integer librarianId) {
+    public OnlineAccount createOnlineAccountLibrarian(String username, String password, Integer librarianId, String email) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -43,9 +50,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
+        if (email == null) {
+            throw new OnlineAccountException("Cannot create an account without an email");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        account.setEmail(email);
 
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if (librarian == null) {
@@ -56,9 +68,17 @@ public class OnlineAccountService {
         onlineAccountRepository.save(account);
         return account;
     }
-    
+
+    /**
+     * Creates an account for a customer
+     * @param username
+     * @param password
+     * @param customerId
+     * @param email
+     * @return an OnlineAccount created with the given username, password, email, and librarianId
+     */
     @Transactional
-    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer customerId) {
+    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer customerId, String email) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -71,9 +91,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
+        if (email == null) {
+            throw new OnlineAccountException("Cannot create an account without an email");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        account.setEmail(email);
 
         Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
         if (customer == null) {
@@ -84,9 +109,17 @@ public class OnlineAccountService {
         onlineAccountRepository.save(account);
         return account;
     }
-    
+
+    /**
+     * Creates an account for a head librarian
+     * @param username
+     * @param password
+     * @param librarianId
+     * @param email
+     * @return an OnlineAccount created with the given username, password, email, and librarianId
+     */
     @Transactional
-    public OnlineAccount createOnlineAccountHeadLibrarian(String username, String password, Integer librarianId) {
+    public OnlineAccount createOnlineAccountHeadLibrarian(String username, String password, Integer librarianId, String email) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -99,9 +132,14 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
+        if (email == null) {
+            throw new OnlineAccountException("Cannot create an account without an email");
+        }
+
         OnlineAccount account = new OnlineAccount();
         account.setUsername(username);
         account.setPassword(password);
+        account.setEmail(email);
 
         HeadLibrarian headLibrarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(librarianId);
 
@@ -114,6 +152,11 @@ public class OnlineAccountService {
         return account;
     }
 
+    /**
+     * Retrieves the account for the given username
+     * @param username
+     * @return an OnlineAccount with the given username
+     */
     @Transactional
     public OnlineAccount getOnlineAccount(String username) {
         if (username == null) {
@@ -129,6 +172,11 @@ public class OnlineAccountService {
         return account;
     }
 
+    /**
+     * Sets the account for the given username to logged out
+     * @param username
+     * @return an OnlineAccount that has loggedIn = false
+     */
     @Transactional
     public OnlineAccount logout(String username){
         if (username == null) {
@@ -146,6 +194,11 @@ public class OnlineAccountService {
         return o;
     }
 
+    /**
+     * Deletes the OnlineAccount for a customer
+     * @param username
+     * @param personRoleId
+     */
     @Transactional
     public void deleteOnlineAccountCustomer(String username, Integer personRoleId) {
         if (username == null) {
@@ -171,6 +224,11 @@ public class OnlineAccountService {
         onlineAccountRepository.delete(account);
     }
 
+    /**
+     * Deletes the OnlineAccount for a librarian
+     * @param username
+     * @param personRoleId
+     */
     @Transactional
     public void deleteOnlineAccountLibrarian(String username, Integer personRoleId) {
         if (username == null) {
@@ -196,6 +254,11 @@ public class OnlineAccountService {
         onlineAccountRepository.delete(account);
     }
 
+    /**
+     * Deletes the OnlineAccount for a head librarian
+     * @param username
+     * @param personRoleId
+     */
     @Transactional
     public void deleteOnlineAccountHeadLibrarian(String username, Integer personRoleId) {
         if (username == null) {
@@ -221,6 +284,12 @@ public class OnlineAccountService {
         onlineAccountRepository.delete(account);
     }
 
+    /**
+     * Sets the account for the given username to loggedIn if the password is correct for the given username
+     * @param username
+     * @param password
+     * @return an OnlineAccount with loggedIn = true
+     */
     @Transactional
     public OnlineAccount logIn(String username, String password) {
         if (username == null) {

@@ -44,7 +44,7 @@ public class CustomerService {
         customer.setAddress(address);
         customer.setLibraryCard(libCard);
         customer.setPerson(person);
-        customer.setId(id);
+        //customer.setId(id);
         customerRepository.save(customer);
         return customer;
     }

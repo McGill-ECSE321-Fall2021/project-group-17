@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.library.service;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.library.dao.BookRepository;
-import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.model.Book;
 import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
+import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
@@ -26,63 +25,43 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private LibrarianRepository librarianRepository;
-    @Autowired
-    private CheckableItemRepository checkableItemRepository;
     @Transactional
-    public Book createBook(Integer librarianId, Integer id, String name, Date date,String author, String publisher, String genre){
+    public Book createBook(Integer librarianId, Integer id, String name, Date date, String author, String publisher, String genre){
     	
     	String error = "";
-        if (librarianId == null) {
-        	throw new PersonException("Librarian not found in request");
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+    	if (librarianId == null) {
+    		throw new IllegalArgumentException("Librarian does not exist! ");
+    	}
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if (librarian == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
             error = error + "Id needs to be provided!";
-        } 
-//        else if (bookRepository.findItemById(id) != null) {
-//            error = error + "Item with id " + id + " already exists! ";
-//        }
+        }
         if (name == null) {
             error = error + "Name needs to be provided!";
         }
         if (date == null) {
             error = error + "Date needs to be provided!";
         }
-        if (author == null) {
-            error = error + "Author needs to be provided!";
-        }
-        if (publisher == null) {
-            error = error + "Publisher needs to be provided!";
-        }
-        if (genre == null) {
-            error = error + "Genre needs to be provided!";
-        }
         error = error.trim();
 
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
         }
-    	
-    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-        if (!(librarian instanceof Librarian)) {
-        	throw new PersonException("User must be a librarian");
-        }
         
-    	Book b= new Book();
-        b.setId(id);
-        b.setName(name);
-        b.setDatePublished(date);
-        b.setAuthor(author);
-        b.setPublisher(publisher);
-        b.setGenre(genre);
-        bookRepository.save(b);
-        return b;
+    	Book book = new Book();
+        book.setId(id);
+        book.setName(name);
+        book.setDatePublished(date);
+        book.setAuthor(author);
+        book.setPublisher(publisher);
+        book.setGenre(genre);
+        bookRepository.save(book);
+        return book;
     }
-    /*@Transactional
-    public void deleteBook(int id){
-    	bookRepository.deleteById(id);
-    }*/
+
     /**
      * Used to delete item
      * @param bookId
@@ -93,7 +72,7 @@ public class BookService {
         if(bookId == null){
             throw new BookException("Cannot find book with id to delete");
         }
-        Optional<Item> book = bookRepository.findById(bookId);
+        Book book = (Book) bookRepository.findItemById(bookId);
         if(book == null){
             throw new NotFoundException("Cannot find book to delete");
         }
@@ -110,29 +89,70 @@ public class BookService {
         bookRepository.deleteById(bookId);
         book = null;
     }
+    
+    @Transactional
+    public Book updateBook(Integer librarianId, Integer id, String name, Date date, String author, String publisher, String genre) {
+    	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
+        	throw new PersonException("Librarian does not exist!");
+    	}
+
+    	Book book = (Book) bookRepository.findItemById(id);
+
+        if (book == null) {
+            throw new MovieException("Can't update book because no book exists for the given id.");
+        }
+
+        if (id != null) {
+        	book.setId(id);
+        }
+
+        if (name != null) {
+        	book.setName(name);
+        }
+
+        if (date != null) {
+        	book.setDatePublished(date);
+        }
+
+        if (author != null) {
+        	book.setAuthor(author);
+        }
+        
+        if (genre != null) {
+        	book.setGenre(genre);
+        }
+        
+        if (publisher != null) {
+        	book.setPublisher(publisher);
+        }
+
+        bookRepository.save(book);
+        return book;
+    }
+    
     @Transactional
     public Book getBook(Integer bookId){
-        Book b= (Book) bookRepository.findItemById(bookId);
-        return b;
+        Book book = (Book) bookRepository.findItemById(bookId);
+        return book;
     }
     @Transactional
     public List<Item> getBookByName(String name){
-        List<Item> results= bookRepository.findItemByName(name);
+        List<Item> results = bookRepository.findItemByName(name);
         return results;
     }
     @Transactional
     public List<Book> getBookFromAuthor(String author){
-        List<Book> results= bookRepository.findBookByAuthor(author);
+        List<Book> results = bookRepository.findBookByAuthor(author);
         return results;
     }
     @Transactional
     public List<Book> getBookFromPublisher(String publisher){
-        List<Book> results= bookRepository.findBookByPublisher(publisher);
+        List<Book> results = bookRepository.findBookByPublisher(publisher);
         return results;
     }
     @Transactional
     public List<Book> getBookFromGenre(String genre){
-        List<Book> results= bookRepository.findBookByGenre(genre);
+        List<Book> results = bookRepository.findBookByGenre(genre);
         return results;
     }
 }

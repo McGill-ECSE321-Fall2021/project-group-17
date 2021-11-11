@@ -15,7 +15,6 @@ import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.model.Shift;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
-import ca.mcgill.ecse321.library.service.Exception.PersonException;
 import ca.mcgill.ecse321.library.service.Exception.ShiftException;
 
 
@@ -23,8 +22,6 @@ import ca.mcgill.ecse321.library.service.Exception.ShiftException;
 public class ShiftService {
     @Autowired
     private ShiftRepository shiftRepository;
-    @Autowired
-    private PersonRoleRepository personRoleRepository;
     @Autowired
     private LibrarianRepository librarianRepository;
     @Autowired
@@ -63,7 +60,8 @@ public class ShiftService {
     	String error = "";
     	if (librarianId == null) {
         	error = error + "Librarian not found in request";
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+        } else if (librarianRepository.findPersonRoleById(librarianId) == null &&
+        		headLibrarianRepository.findPersonRoleById(librarianId) == null) {
             error = error + "Librarian does not exist! ";
         }
     	if(librarianId == null || librarianId < 0) {
@@ -88,7 +86,7 @@ public class ShiftService {
         return s;
     }
     @Transactional
-    public Shift updateShift(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+    public Shift updateShiftLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active User is unauthorized for this action");
 
@@ -103,12 +101,24 @@ public class ShiftService {
         return shift;
     }
     @Transactional
+    public Shift updateShiftHeadLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active User is unauthorized for this action");
+
+        Shift shift = getShift(shiftId);
+        HeadLibrarian headLibrarian = findHeadLibrarian(librarianId);
+
+        shift.updateStartTime(startTime);
+        shift.updateDayOfWeek(DOW);
+        shift.updateEndTime(endTime);
+        shift.setLibrarian(headLibrarian);
+        shiftRepository.save(shift);
+        return shift;
+    }
+    @Transactional
     public void deleteShift(String accountUsername, Integer shiftId){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized forthis action");
-
-        Shift shift = getShift(shiftId);
-
         shiftRepository.deleteById(shiftId);
     }
 
