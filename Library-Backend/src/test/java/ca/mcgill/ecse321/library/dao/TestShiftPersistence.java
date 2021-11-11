@@ -51,8 +51,9 @@ public class TestShiftPersistence {
         shift.updateDayOfWeek(DOWAsString);
         shift.updateEndTime(endTimeAsString);
         shift.updateStartTime(startTimeAsString);
-        shift.setId(shiftID);
+       // shift.setId(shiftID);
         shiftRepository.save(shift);
+        shiftID = shift.getId();
         shift = null;
         librarian = null;
         shift = shiftRepository.findShiftById(shiftID);

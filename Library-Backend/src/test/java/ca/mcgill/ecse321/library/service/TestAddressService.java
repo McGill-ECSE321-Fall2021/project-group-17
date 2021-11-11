@@ -36,7 +36,7 @@ public class TestAddressService {
 
     private static final int PERSON_KEY = 3;
     private static final int ADDRESS_KEY = 5;
-    private static final int ADDRESS_KEY2 = 2;
+    private static final int ADDRESS_KEY2 = 0;
     private static final int ADDRESS_STREET_NUMBER = 3456;
     private static final int ADDRESS_STREET_NUMBER2 = 3453;
     private static final String ADDRESS_STREET = "Peel";

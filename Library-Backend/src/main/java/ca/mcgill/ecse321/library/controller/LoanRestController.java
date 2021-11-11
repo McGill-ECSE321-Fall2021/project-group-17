@@ -9,32 +9,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @RestController
 @CrossOrigin("*")
 public class LoanRestController {
 
+    /**
+     * returns created loan
+     */
     @Autowired
     private LoanService service;
     @PostMapping(value= {"/loan","/loan/"})
-    public LoanDTO createLoan(@RequestParam(value = "librarianId",required = false) Integer librarianId, @RequestBody JsonBody body){
+    public LoanDTO createLoan(@RequestBody JsonBody body){
         Loan loan = service.createLoan(body.getCheckedOut(), body.getItemId(), body.getCustomerId(),
-                body.getReturnDate() ,librarianId);
+                body.getReturnDate());
         return convertToDto(loan);
     }
 
+    /**
+     * deletes loan
+     * @param id
+     * @param customerId
+     */
     @DeleteMapping(value={"/loan/{id}","/loan/{id}/"})
     public void deleteLoan(@PathVariable Integer id, @RequestParam(value = "customerId",required = false) Integer customerId){
         service.deleteLoan(id,customerId);
     }
 
+    /**
+     * update loan by loan id
+     * @param id
+     * @param body
+     * @return
+     */
     @PatchMapping({"/loan/{id}","/loan/{id}/"})
     public LoanDTO updateLoan(@PathVariable Integer id, @RequestBody LoanRestController.JsonBody body){
         return convertToDto(service.updateLoan(id,body.getCheckedOut(),body.getReturnDate(), body.getCustomerId(),
@@ -42,24 +52,25 @@ public class LoanRestController {
     }
 
     //TODO get vs return date get
+
+    /**
+     * returns loan
+     * @param id
+     * @param customerId
+     * @return
+     */
     @GetMapping("/loan/returndate/{id}")
-    public LoanDTO viewLoanReturnDate(@PathVariable("id") Integer id, @RequestParam(value = "customerId", required = false) Integer customerId){
-        return convertToDto(service.viewLoanReturnDate(id,customerId));
+    public LoanDTO getLoan(@PathVariable("id") Integer id, @RequestParam(value = "customerId", required = false) Integer customerId){
+        return convertToDto(service.getLoan(id,customerId));
     }
 
+    /**
+     * returns all loans for a customer
+     */
     @GetMapping("/loan/customer/{id}")
     public List<LoanDTO> viewActiveLoans(@PathVariable("id") Integer id){
         return service.viewActiveLoans(id);
     }
-
-/*
-    @GetMapping("/loan/customer/{id}")
-    public List<LoanDTO> viewActiveLoans(Integer id){
-        List<Loan> activeLoans = service.viewActiveLoans(id);
-        return toList(activeLoans.stream().map(this::convertToDto).collect(Collectors.toList()));
-    }
-
- */
 
 
     //CONVERT TO DTO
@@ -74,14 +85,6 @@ public class LoanRestController {
         loanDTO.setItemInstance(loan.getItemInstance());
         loanDTO.setReturnDate(loan.getReturnDate());
         return loanDTO;
-    }
-
-    private <T> List<T> toList(Iterable<T> iterable) {
-        List<T> resultList = new ArrayList<>();
-        for (T t : iterable) {
-            resultList.add(t);
-        }
-        return resultList;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)

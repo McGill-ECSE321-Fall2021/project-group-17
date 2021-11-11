@@ -28,11 +28,11 @@ The Library Management System aims to create an easy to use system which can bri
   ### Effort Breakdown Sprint Two
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
-  | Aidan Jackson|                      |  |
-  | Hana Gustyn  |    | |
+  | Aidan Jackson| Service methods (PersonRole sub-classes, Library Hour, and Shift) corresponding Restful EndPoints, Corresponding Mockito Service Tests | 30 |
+  | Hana Gustyn  | Service methods for Account Management use cases, corresponding restful endpoints and mockito service tests  | 30 |
   | Tomasz Mroz  |    |  |
-  | Fiona Ryan   |    |  |
-  | Victoria Sanchez|  |  |
+  | Fiona Ryan   | Service methods for Reservation Management use cases, corresponding restful endpoints and mockito service tests   | 30  |
+  | Victoria Sanchez| Service methods for Account Management use cases, corresponding restful endpoints and mockito service tests |  30|
   | Jerry Xia |  |  |
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)

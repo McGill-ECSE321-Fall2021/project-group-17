@@ -12,7 +12,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.globals.set(\"personId\", pm.response.json().id());\r",
+              "pm.environment.set(\"person_id\", pm.response.json().id);\r",
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
               "});"
@@ -55,7 +55,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.globals.set(\"addressId\", pm.response.json().id());",
+              "pm.environment.set(\"address_id\", pm.response.json().id);",
               "pm.test(\"Status code is 200\", function () {",
               "    pm.response.to.have.status(200);",
               "});"
@@ -69,7 +69,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"customerId\": null\r\n}",
+          "raw": "{\n    \"customerId\":null\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -103,7 +103,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.environment.set(\"personRoleId\", pm.response.json().id);\r",
+              "pm.environment.set(\"customer_id\", pm.response.json().id);\r",
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
               "});"
@@ -117,7 +117,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"id\": 2,\r\n    \"person\": {{personId}},\r\n    \"penalty\": 0,\r\n    \"address\": {{addressId}}\r\n}",
+          "raw": "{\r\n    \"personId\": {{person_id}},\r\n    \"penalty\": 0,\r\n    \"addressId\": {{address_id}}\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -159,7 +159,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/customer/{{personRoleId}}",
+          "raw": "https://library-backend-534a.herokuapp.com/customer/{{customer_id}}",
           "protocol": "https",
           "host": [
             "library-backend-534a",
@@ -168,7 +168,7 @@
           ],
           "path": [
             "customer",
-            "{{personRoleId}}"
+            "{{customer_id}}"
           ]
         }
       },
@@ -195,7 +195,7 @@
         "method": "POST",
         "header": [],
         "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/bob/1234?{{personRoleId}}",
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/customer/bob1/1288?personRoleId={{customer_id}}",
           "protocol": "https",
           "host": [
             "library-backend-534a",
@@ -204,13 +204,14 @@
           ],
           "path": [
             "onlineaccount",
-            "bob",
-            "1234"
+            "customer",
+            "bob1",
+            "1288"
           ],
           "query": [
             {
-              "key": "{{personRoleId}}",
-              "value": null
+              "key": "personRoleId",
+              "value": "{{customer_id}}"
             }
           ]
         }
@@ -339,7 +340,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/{{username}}?{{personRoleId}}",
+          "raw": "https://library-backend-534a.herokuapp.com/onlineaccount/customer/{{username}}?personRoleId={{customer_id}}",
           "protocol": "https",
           "host": [
             "library-backend-534a",
@@ -348,56 +349,14 @@
           ],
           "path": [
             "onlineaccount",
+            "customer",
             "{{username}}"
           ],
           "query": [
             {
-              "key": "{{personRoleId}}",
-              "value": null
+              "key": "personRoleId",
+              "value": "{{customer_id}}"
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "https://library-backend-534a.herokuapp.com/person",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.environment.set(\"person_id\", pm.response.json().id);\r",
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"name\": \"Hana\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "https://library-backend-534a.herokuapp.com/person",
-          "protocol": "https",
-          "host": [
-            "library-backend-534a",
-            "herokuapp",
-            "com"
-          ],
-          "path": [
-            "person"
           ]
         }
       },
