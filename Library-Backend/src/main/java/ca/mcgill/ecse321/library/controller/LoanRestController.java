@@ -60,8 +60,8 @@ public class LoanRestController {
      * @return
      */
     @GetMapping("/loan/returndate/{id}")
-    public LoanDTO viewLoanReturnDate(@PathVariable("id") Integer id, @RequestParam(value = "customerId", required = false) Integer customerId){
-        return convertToDto(service.viewLoanReturnDate(id,customerId));
+    public LoanDTO getLoan(@PathVariable("id") Integer id, @RequestParam(value = "customerId", required = false) Integer customerId){
+        return convertToDto(service.getLoan(id,customerId));
     }
 
     /**

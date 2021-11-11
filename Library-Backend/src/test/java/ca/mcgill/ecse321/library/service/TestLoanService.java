@@ -369,7 +369,7 @@ public class TestLoanService {
     public void testGetDate(){
         Loan loan = null;
         try{
-            loan = loanService.viewLoanReturnDate(LOAN_KEY,CUSTOMER_KEY);
+            loan = loanService.getLoan(LOAN_KEY,CUSTOMER_KEY);
         } catch (Exception e){
             fail();
         }
@@ -381,7 +381,7 @@ public class TestLoanService {
     public void testGetDateLoanNotFound(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(LOAN_KEY+1, CUSTOMER_KEY);
+            loanService.getLoan(LOAN_KEY+1, CUSTOMER_KEY);
         } catch (Exception e){
             error = e.getMessage();
         }
@@ -392,7 +392,7 @@ public class TestLoanService {
     public void testGetDateByEmptyId(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(null,CUSTOMER_KEY);
+            loanService.getLoan(null,CUSTOMER_KEY);
         } catch (Exception e){
             error = e.getMessage();
         }
@@ -403,7 +403,7 @@ public class TestLoanService {
     public void testGetDateByNullId(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(LOAN_KEY,null);
+            loanService.getLoan(LOAN_KEY,null);
         } catch (Exception e){
             error = e.getMessage();
         }
@@ -414,7 +414,7 @@ public class TestLoanService {
     public void testGetDateCustomerNotFound(){
         String error = null;
         try{
-            loanService.viewLoanReturnDate(LOAN_KEY, CUSTOMER_KEY+1);
+            loanService.getLoan(LOAN_KEY, CUSTOMER_KEY+1);
         } catch (Exception e){
             error = e.getMessage();
         }

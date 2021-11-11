@@ -172,7 +172,7 @@ public class LoanService {
      * @return loan of the customer with customerID and the loanID
      */
     @Transactional
-    public Loan viewLoanReturnDate(Integer loanID, Integer customerID){
+    public Loan getLoan(Integer loanID, Integer customerID){
         if(loanID == null){
             throw new LoanException("Please provide a valid loan ID");
         }
