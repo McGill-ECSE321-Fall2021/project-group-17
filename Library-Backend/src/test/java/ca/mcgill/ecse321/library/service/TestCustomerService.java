@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Date;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -44,19 +44,11 @@ public class TestCustomerService {
     private static final int LIBRARYCARD_KEY = 7;
     private static final int ADDRESS_KEY = 5;
     private static final boolean VERIFIED = true;
-    private static final String PERSON_NAME = "victoria";
+
     private static final int CUSTOMER_KEY = 2;
     private static final int CUSTOMER_KEY2 = 8;
     private static final int CUSTOMER_KEY3 = -5;
-    private static final int ADDRESS_KEY2 = 2;
-    private static final int ADDRESS_STREET_NUMBER = 3456;
-    private static final int ADDRESS_STREET_NUMBER2 = 3453;
-    private static final String ADDRESS_STREET = "Peel";
-    private static final String ADDRESS_STREET2 = "Park";
-    private static final String ADDRESS_CITY = "Montreal";
-    private static final String ADDRESS_CITY2 = "Toronto";
-    private static final String ADDRESS_COUNTRY = "Canada";
-    private static final String ADDRESS_COUNTRY2 = "US";
+
     @BeforeEach
     public void setMockOutput() {
         lenient().when(libraryCardRepository.findLibraryCardById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
@@ -104,8 +96,13 @@ public class TestCustomerService {
         libraryCardRepository.deleteAll();
         personRepository.deleteAll();
     }
+
+    /**
+     * tests creating a customer
+     */
+    @Test
+
     public void createCustomer(){
-        int id = CUSTOMER_KEY;
         Person person=null;
         try{
             person= service1.getPerson(PERSON_KEY);
@@ -135,11 +132,15 @@ public class TestCustomerService {
             fail();
         }
         assertNotNull(customer);
-        assertEquals(customer.getPerson(),person);
-        assertEquals(customer.getAddress(),address);
+        assertEquals(customer.getPerson().getId(),person.getId());
+        assertEquals(customer.getAddress().getId(),address.getId());
         assertEquals(customer.getLibraryCard(),libraryCard);
 
     }
+
+    /**
+     * tests what happens when a customer is created with incomplete info
+     */
     @Test
     public void createCustomerNotEnoughInfo(){
         String error=null;
@@ -169,15 +170,22 @@ public class TestCustomerService {
         assertEquals(error,"Cannot create Customer because person is null");
 
     }
+
+    /**
+     * retrieves customer
+     */
     @Test
     public void getCustomer(){
-        String error = null;
         try{
             service.getCustomer(CUSTOMER_KEY);
         } catch (Exception e){
-            error = e.getMessage();
+            fail();
         }
     }
+
+    /**
+     * tests what happens when try to find customer that does not exist
+     */
     @Test
     public void getCustomerNotFound(){
         String error = null;
@@ -188,6 +196,10 @@ public class TestCustomerService {
         }
         assertEquals(error,"This customer does not exist");
     }
+
+    /**
+     * tests what happens when you retrieve a customer with an invalid id
+     */
     @Test
     public void getCustomerInvalid(){
         String error = null;
@@ -198,6 +210,10 @@ public class TestCustomerService {
         }
         assertEquals(error,"Invalid Id");
     }
+
+    /**
+     * tests verifying the customer Address
+     */
 
     @Test
     public void verifyUpdateAddress(){
@@ -217,6 +233,10 @@ public class TestCustomerService {
         assertNotNull(customer);
         assertEquals(customer.getIsVerified(),VERIFIED);
     }
+
+    /**
+     * tests updating the customer penalty
+     */
     @Test
     public void updateCustomerPenalty(){
        Customer customer=null;
@@ -232,6 +252,10 @@ public class TestCustomerService {
         assertEquals(customer.getAddress().getId(),service2.getAddress(ADDRESS_KEY).getId());
         assertEquals(customer.getPenalty(),PENALTY);
     }
+
+    /**
+     * tests updating the customer address
+     */
     @Test
     public void updateCustomerAddress(){
         Customer customer=null;
@@ -251,6 +275,9 @@ public class TestCustomerService {
         assertEquals(customer.getPenalty(),PENALTY);
     }
 
+    /**
+     * tests what happens when you try to update the information of a customer that does not exist
+     */
     @Test
     public void updateCustomerNotFound(){
         Customer customer=null;
@@ -263,6 +290,10 @@ public class TestCustomerService {
         }
         assertEquals(error,"cannot find customer");
     }
+
+    /**
+     * tests deleting a customer
+     */
     @Test
     public void testDeleteCustomer(){
         try{
@@ -272,6 +303,10 @@ public class TestCustomerService {
             fail();
         }
     }
+
+    /**
+     * testing deleting a customer that does not exist
+     */
     @Test
     public void testDeleteCustomerNotFound(){
         String error=null;
@@ -283,6 +318,10 @@ public class TestCustomerService {
         }
         assertEquals(error,"Customer does not exist");
     }
+
+    /**
+     * tests what happens when you try to delete a customer with an invalid jey
+     */
     @Test
     public void testDeleteCustomerInvalid(){
         String error=null;
@@ -294,6 +333,10 @@ public class TestCustomerService {
         }
         assertEquals(error,"Cannot find customer to delete.");
     }
+
+    /**
+     * tests verifying the address of a customer that does not exist
+     */
     @Test
     public void testVerifyCustomerInvalid(){
         String error=null;
