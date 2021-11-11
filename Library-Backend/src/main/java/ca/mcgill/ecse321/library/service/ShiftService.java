@@ -18,7 +18,6 @@ import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.model.Shift;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
-import ca.mcgill.ecse321.library.service.Exception.PersonException;
 import ca.mcgill.ecse321.library.service.Exception.ShiftException;
 
 
