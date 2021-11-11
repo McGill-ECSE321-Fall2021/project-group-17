@@ -2,14 +2,12 @@ package ca.mcgill.ecse321.library.service;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.MusicRepository;
 import ca.mcgill.ecse321.library.model.Item;
@@ -23,11 +21,9 @@ import ca.mcgill.ecse321.library.service.Exception.PersonException;
 @Service
 public class MusicService {
     @Autowired
-    MusicRepository musicRepository;
+    private MusicRepository musicRepository;
     @Autowired
-    LibrarianRepository librarianRepository;
-    @Autowired
-    CheckableItemRepository checkableItemRepository;
+    private LibrarianRepository librarianRepository;
     
     @Transactional
     public Music createMusic(Integer librarianId, Integer id, String name, Date date, String musician, String recordLabel){
@@ -40,21 +36,9 @@ public class MusicService {
         }
         if (id == null) {
             error = error + "Id needs to be provided!";
-        } 
-//        else if (musicRepository.findItemById(id) != null) {
-//            error = error + "Item with id " + id + " already exists! ";
-//        }
+        }
         if (name == null) {
             error = error + "Name needs to be provided!";
-        }
-        if (date == null) {
-            error = error + "Date needs to be provided!";
-        }
-        if (musician == null) {
-            error = error + "Musician needs to be provided!";
-        }
-        if (recordLabel == null) {
-            error = error + "Record label needs to be provided!";
         }
         error = error.trim();
 
@@ -76,10 +60,7 @@ public class MusicService {
         musicRepository.save(music);
         return music;
     }
-    /*@Transactional
-    public void deleteMusic(int id){
-        musicRepository.deleteById(id);;
-    }*/
+
     /**
      * Used to delete item
      * @param musicId
@@ -90,7 +71,7 @@ public class MusicService {
         if(musicId == null){
             throw new BookException("Cannot find music with id to delete");
         }
-        Optional<Item> music = musicRepository.findById(musicId);
+        Music music = (Music) musicRepository.findItemById(musicId);
         if(music == null){
             throw new NotFoundException("Cannot find music to delete");
         }
@@ -109,22 +90,22 @@ public class MusicService {
     }
     @Transactional
     public List<Item> getMusicByName(String name){
-        List<Item> results= musicRepository.findItemByName(name);
+        List<Item> results = musicRepository.findItemByName(name);
         return results;
     }
     @Transactional
     public Music getMusic(Integer musicId){
-        Music m= (Music) musicRepository.findItemById(musicId);
-        return m;
+        Music music = (Music) musicRepository.findItemById(musicId);
+        return music;
     }
     @Transactional
-    public List<Music> getMusicFromArtist(String musician){
-        List<Music> results= musicRepository.findMusicByMusician(musician);
+    public List<Music> getMusicFromMusician(String musician){
+        List<Music> results = musicRepository.findMusicByMusician(musician);
         return results;
     }
     @Transactional
     public List<Music> getMusicFromLabel(String label){
-        List<Music> results= musicRepository.findMusicByRecordLabel(label);
+        List<Music> results = musicRepository.findMusicByRecordLabel(label);
         return results;
     }
 }
