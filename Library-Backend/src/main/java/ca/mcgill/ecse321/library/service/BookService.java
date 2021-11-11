@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.library.dao.BookRepository;
 import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
@@ -19,13 +20,14 @@ import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
+@Service
 public class BookService {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
     @Autowired
-    LibrarianRepository librarianRepository;
+    private LibrarianRepository librarianRepository;
     @Autowired
-    CheckableItemRepository checkableItemRepository;
+    private CheckableItemRepository checkableItemRepository;
     @Transactional
     public Book createBook(Integer librarianId, Integer id, String name, Date date,String author, String publisher, String genre){
     	
