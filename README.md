@@ -28,7 +28,7 @@ The Library Management System aims to create an easy to use system which can bri
   ### Effort Breakdown Sprint Two
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
-  | Aidan Jackson|                      |  |
+  | Aidan Jackson| Service methods (PersonRole sub-classes, Library Hour, and Shift) corresponding Restful EndPoints, Corresponding Mockito Service Tests | 30 |
   | Hana Gustyn  |    | |
   | Tomasz Mroz  |    |  |
   | Fiona Ryan   |    |  |
