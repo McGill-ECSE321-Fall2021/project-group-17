@@ -29,7 +29,7 @@ public class CustomerRestController {
 
     @PutMapping(value={"/customer/{id}", "/customer/{id}/"})
     public CustomerDTO updateCustomer(@PathVariable("id") int id, @RequestBody JsonBody body) throws IllegalArgumentException{
-        return convertToDTO(customerService.updateCustomer(id, body.getPenalty(), body.getAddress(), body.getLibCard()));
+        return convertToDTO(customerService.updateCustomer(id, body.getPenalty(), body.getAddressId(), body.getLibCard()));
     }
     @DeleteMapping(value={"/customer/{id}", "/customer/{id}/"})
     public void deleteCustomer(@PathVariable("id") int id) throws IllegalArgumentException{
