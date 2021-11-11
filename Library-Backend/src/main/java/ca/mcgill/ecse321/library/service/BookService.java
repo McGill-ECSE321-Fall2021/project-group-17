@@ -14,6 +14,7 @@ import ca.mcgill.ecse321.library.model.Book;
 import ca.mcgill.ecse321.library.model.Item;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
+import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
@@ -25,12 +26,14 @@ public class BookService {
     @Autowired
     private LibrarianRepository librarianRepository;
     @Transactional
-    public Book createBook(Integer librarianId, Integer id, String name, Date date,String author, String publisher, String genre){
+    public Book createBook(Integer librarianId, Integer id, String name, Date date, String author, String publisher, String genre){
     	
     	String error = "";
-        if (librarianId == null) {
-        	throw new PersonException("Librarian not found in request");
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+    	if (librarianId == null) {
+    		throw new IllegalArgumentException("Librarian does not exist! ");
+    	}
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if (librarian == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
@@ -46,11 +49,6 @@ public class BookService {
 
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
-        }
-    	
-    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-        if (!(librarian instanceof Librarian)) {
-        	throw new PersonException("User must be a librarian");
         }
         
     	Book book = new Book();
@@ -91,6 +89,47 @@ public class BookService {
         bookRepository.deleteById(bookId);
         book = null;
     }
+    
+    @Transactional
+    public Book updateBook(Integer librarianId, Integer id, String name, Date date, String author, String publisher, String genre) {
+    	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
+        	throw new PersonException("Librarian does not exist!");
+    	}
+
+    	Book book = (Book) bookRepository.findItemById(id);
+
+        if (book == null) {
+            throw new MovieException("Can't update book because no book exists for the given id.");
+        }
+
+        if (id != null) {
+        	book.setId(id);
+        }
+
+        if (name != null) {
+        	book.setName(name);
+        }
+
+        if (date != null) {
+        	book.setDatePublished(date);
+        }
+
+        if (author != null) {
+        	book.setAuthor(author);
+        }
+        
+        if (genre != null) {
+        	book.setGenre(genre);
+        }
+        
+        if (publisher != null) {
+        	book.setPublisher(publisher);
+        }
+
+        bookRepository.save(book);
+        return book;
+    }
+    
     @Transactional
     public Book getBook(Integer bookId){
         Book book = (Book) bookRepository.findItemById(bookId);

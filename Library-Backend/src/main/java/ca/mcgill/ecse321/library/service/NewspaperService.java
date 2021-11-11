@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.NewspaperRepository;
 import ca.mcgill.ecse321.library.model.Librarian;
+import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.model.Newspaper;
+import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NewspaperException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
@@ -27,9 +29,11 @@ public class NewspaperService {
     public Newspaper createNewspaper(Integer librarianId, Integer id, String name, Date date, String headline){
     	
     	String error = "";
-        if (librarianId == null) {
-        	throw new PersonException("Librarian not found in request");
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+    	if (librarianId == null) {
+    		throw new IllegalArgumentException("Librarian does not exist! ");
+    	}
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if (librarian == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
@@ -43,16 +47,45 @@ public class NewspaperService {
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
         }
-    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-        if (!(librarian instanceof Librarian)) {
-        	throw new PersonException("User must be a librarian");
-        }
         
         Newspaper newspaper = new Newspaper();
         newspaper.setId(id);
         newspaper.setName(name);
         newspaper.setDatePublished(date);
         newspaper.setHeadline(headline);
+        newspaperRepository.save(newspaper);
+        return newspaper;
+    }
+    
+    @Transactional
+    public Newspaper updateNewspaper(Integer librarianId, Integer id, String name, Date date, String headline) {
+    	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
+        	throw new PersonException("Librarian does not exist!");
+    	}
+    	
+    	Newspaper newspaper = (Newspaper) newspaperRepository.findItemById(id);
+        
+        if (newspaper == null) {
+            throw new MovieException("Can't update newspaper because no newspaper exists for the given id.");
+        }
+
+        if (id != null) {
+        	newspaper.setId(id);
+        }
+
+        if (name != null) {
+        	newspaper.setName(name);
+        }
+
+        if (date != null) {
+        	newspaper.setDatePublished(date);
+        }
+
+        if (headline != null) {
+        	newspaper.setHeadline(headline);
+        }
+        
+        
         newspaperRepository.save(newspaper);
         return newspaper;
     }

@@ -28,9 +28,11 @@ public class MovieService {
     @Transactional
     public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) throws Exception{
     	String error = "";
-        if (librarianId == null) {
-        	throw new PersonException("Librarian not found in request");
-        } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
+    	if (librarianId == null) {
+    		throw new IllegalArgumentException("Librarian does not exist! ");
+    	}
+    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
+        if (librarian == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
@@ -43,11 +45,6 @@ public class MovieService {
 
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
-        }
-    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-
-        if (!(librarian instanceof Librarian)) {
-        	throw new PersonException("User must be a librarian");
         }
         
     	Movie movie = new Movie();
@@ -83,6 +80,50 @@ public class MovieService {
         }
         movieRepository.deleteById(movieId);
         movie = null;
+    }
+    
+    @Transactional
+    public Movie updateMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) {
+    	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
+        	throw new PersonException("Librarian does not exist!");
+    	}
+    	
+    	Movie movie = (Movie) movieRepository.findItemById(id);
+
+        if (movie == null) {
+            throw new MovieException("Can't update movie because no movie exists for the given id.");
+        }
+
+        if (id != null) {
+        	movie.setId(id);
+        }
+
+        if (name != null) {
+            movie.setName(name);
+        }
+
+        if (date != null) {
+            movie.setDatePublished(date);
+        }
+
+        if (director != null) {
+            movie.setDirector(director);
+        }
+        
+        if (runningTime != null) {
+            movie.setRunningTime(runningTime);
+        }
+        
+        if (rating != null) {
+            movie.setRating(rating);
+        }
+        
+        if (distributor != null) {
+            movie.setFilmDistributor(distributor);
+        }
+
+        movieRepository.save(movie);
+        return movie;
     }
     
     @Transactional
