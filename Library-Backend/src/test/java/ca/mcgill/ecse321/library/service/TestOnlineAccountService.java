@@ -37,6 +37,7 @@ public class TestOnlineAccountService {
 
     private static final String USERNAME = "bob";
     private static final String PASSWORD = "1234";
+    private static final String EMAIL = "bob@mail.com";
     private static final int CUSTOMER_KEY = 1;
     private static final int LIBRARIAN_KEY = 2;
     private static final int HEAD_LIBRARIAN_KEY = 3;
@@ -93,7 +94,7 @@ public class TestOnlineAccountService {
         OnlineAccount account = null;
 
         try {
-            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, CUSTOMER_KEY, EMAIL);
         } catch (Exception e) {
             fail();
         }
@@ -111,7 +112,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountCustomer(null, PASSWORD, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(null, PASSWORD, CUSTOMER_KEY, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -125,7 +126,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountCustomer(USERNAME, null, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(USERNAME, null, CUSTOMER_KEY, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -139,7 +140,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, null);
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, null, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -148,12 +149,26 @@ public class TestOnlineAccountService {
     }
 
     @Test
+    public void testCreateOnlineAccountCustomerNoEmail() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, CUSTOMER_KEY, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("Cannot create an account without an email", error);
+    }
+
+    @Test
     public void testCreateOnlineAccountCustomerInvalidPersonRoleId() {
         OnlineAccount account = null;
         String error = "";
 
         try {
-            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, 4321);
+            account = service.createOnlineAccountCustomer(USERNAME, PASSWORD, 4321, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -166,7 +181,7 @@ public class TestOnlineAccountService {
         OnlineAccount account = null;
 
         try {
-            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, LIBRARIAN_KEY);
+            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, LIBRARIAN_KEY, EMAIL);
         } catch (Exception e) {
             fail();
         }
@@ -184,7 +199,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountLibrarian(null, PASSWORD, LIBRARIAN_KEY);
+            account = service.createOnlineAccountLibrarian(null, PASSWORD, LIBRARIAN_KEY, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -198,7 +213,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountLibrarian(USERNAME, null, LIBRARIAN_KEY);
+            account = service.createOnlineAccountLibrarian(USERNAME, null, LIBRARIAN_KEY, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -212,7 +227,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, null);
+            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, null, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -221,12 +236,26 @@ public class TestOnlineAccountService {
     }
 
     @Test
+    public void testCreateOnlineAccountLibrarianNoEmail() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, CUSTOMER_KEY, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("Cannot create an account without an email", error);
+    }
+
+    @Test
     public void testCreateOnlineAccountLibrarianInvalidPersonRoleId() {
         OnlineAccount account = null;
         String error = "";
 
         try {
-            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, 4321);
+            account = service.createOnlineAccountLibrarian(USERNAME, PASSWORD, 4321, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -239,7 +268,7 @@ public class TestOnlineAccountService {
         OnlineAccount account = null;
 
         try {
-            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, HEAD_LIBRARIAN_KEY);
+            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, HEAD_LIBRARIAN_KEY, EMAIL);
         } catch (Exception e) {
             fail();
         }
@@ -257,7 +286,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountCustomer(null, PASSWORD, CUSTOMER_KEY);
+            account = service.createOnlineAccountCustomer(null, PASSWORD, CUSTOMER_KEY, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -271,7 +300,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountCustomer(USERNAME, null, HEAD_LIBRARIAN_KEY);
+            account = service.createOnlineAccountCustomer(USERNAME, null, HEAD_LIBRARIAN_KEY, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -285,7 +314,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, null);
+            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, null, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -294,12 +323,26 @@ public class TestOnlineAccountService {
     }
 
     @Test
+    public void testCreateOnlineAccountHeadLibrarianNoEmail() {
+        OnlineAccount account = null;
+        String error = "";
+
+        try {
+            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, CUSTOMER_KEY, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(account);
+        assertEquals("Cannot create an account without an email", error);
+    }
+
+    @Test
     public void testCreateOnlineAccountHeadLibrarianInvalidPersonRoleId() {
         OnlineAccount account = null;
         String error = "";
 
         try {
-            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, 4321);
+            account = service.createOnlineAccountHeadLibrarian(USERNAME, PASSWORD, 4321, EMAIL);
         } catch (Exception e) {
             error = e.getMessage();
         }

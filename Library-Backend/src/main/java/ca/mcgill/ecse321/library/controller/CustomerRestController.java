@@ -85,8 +85,6 @@ public class CustomerRestController {
         public void setLibCard(LibraryCard libCard) {
             this.libCard = libCard;
         }
-
-        public JsonBody(){}
     }
 
     private CustomerDTO convertToDTO(Customer customer){
