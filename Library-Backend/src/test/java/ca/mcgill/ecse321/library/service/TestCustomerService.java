@@ -237,7 +237,7 @@ public class TestCustomerService {
         Customer customer=null;
         Address address= null;
 
-       
+
         try{
             customer= service.updateCustomer(CUSTOMER_KEY,PENALTY,service2.getAddress(ADDRESS_KEY).getId(),service3.getLibraryCard(LIBRARYCARD_KEY));
         }
