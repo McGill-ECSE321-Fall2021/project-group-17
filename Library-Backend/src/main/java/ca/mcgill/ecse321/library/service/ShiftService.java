@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.library.service;
 
-import java.sql.Time;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
 import ca.mcgill.ecse321.library.dao.ShiftRepository;
 import ca.mcgill.ecse321.library.model.HeadLibrarian;
 import ca.mcgill.ecse321.library.model.Librarian;
+import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.model.Shift;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
