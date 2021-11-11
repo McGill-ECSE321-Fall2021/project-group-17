@@ -52,7 +52,7 @@ public class ReservationService {
             throw new ReservationException("Invalid customer provided");
         }
         if(reservationRepository.findByCustomer(c) != null && reservationRepository.findByCustomer(c).size() > 4){
-            throw new ReservationException("This customer already has the maximum number of loans");
+            throw new ReservationException("This customer already has the maximum number of reservations");
         }
         r.setCustomer(c);
 
@@ -64,7 +64,9 @@ public class ReservationService {
             throw new ReservationException("Item instance does not exist");
         }
         r.setItemInstance(i);
-        //TODO add in check for item already on reservation
+        if(reservationRepository.findByItemInstance(i) != null){
+            throw new LoanException("Item is already reserved");
+        }
         reservationRepository.save(r);
         return r;
     }
@@ -134,6 +136,9 @@ public class ReservationService {
             ItemInstance i = itemInstanceRepository.findItemInstanceBySerialNum(itemInstanceId);
             if(i == null){
                 throw new ReservationException("Cannot find item instance to update reservation to");
+            }
+            if(reservationRepository.findByItemInstance(i) != null){
+                throw new LoanException("Item is already reserved");
             }
             r.setItemInstance(i);
         }

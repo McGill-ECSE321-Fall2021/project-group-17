@@ -22,15 +22,13 @@ public class OnlineAccountService {
     @Autowired
     private OnlineAccountRepository onlineAccountRepository;
     @Autowired
-    private PersonRoleRepository personRoleRepository;
-    @Autowired
     private LibrarianRepository librarianRepository;
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private HeadLibrarianRepository headLibrarianRepository;
 
-    
+
     @Transactional
     public OnlineAccount createOnlineAccountLibrarian(String username, String password, Integer librarianId) {
         if (username == null) {
@@ -50,7 +48,6 @@ public class OnlineAccountService {
         account.setPassword(password);
 
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
-
         if (librarian == null) {
             throw new OnlineAccountException("No user exists with the personRoleId given");
         }
@@ -61,7 +58,7 @@ public class OnlineAccountService {
     }
     
     @Transactional
-    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer librarianId) {
+    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer customerId) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -70,7 +67,7 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create account with null password.");
         }
 
-        if (librarianId == null) {
+        if (customerId == null) {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
@@ -78,7 +75,7 @@ public class OnlineAccountService {
         account.setUsername(username);
         account.setPassword(password);
 
-        Customer customer = (Customer) customerRepository.findPersonRoleById(librarianId);
+        Customer customer = (Customer) customerRepository.findPersonRoleById(customerId);
         if (customer == null) {
             throw new OnlineAccountException("No user exists with the personRoleId given");
         }
@@ -150,7 +147,7 @@ public class OnlineAccountService {
     }
 
     @Transactional
-    public void deleteOnlineAccount(String username, Integer personRoleId) {
+    public void deleteOnlineAccountCustomer(String username, Integer personRoleId) {
         if (username == null) {
             throw new OnlineAccountException("Cannot find username to delete account.");
         }
@@ -165,7 +162,57 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find personRoleId to delete account.");
         }
 
-        PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
+        PersonRole personRole = customerRepository.findPersonRoleById(personRoleId);
+
+        if (personRole == null) {
+            throw new OnlineAccountException("Cannot find personRole to delete account.");
+        }
+
+        onlineAccountRepository.delete(account);
+    }
+
+    @Transactional
+    public void deleteOnlineAccountLibrarian(String username, Integer personRoleId) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to delete account.");
+        }
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find account.");
+        }
+
+        if (personRoleId == null) {
+            throw new OnlineAccountException("Cannot find personRoleId to delete account.");
+        }
+
+        PersonRole personRole = librarianRepository.findPersonRoleById(personRoleId);
+
+        if (personRole == null) {
+            throw new OnlineAccountException("Cannot find personRole to delete account.");
+        }
+
+        onlineAccountRepository.delete(account);
+    }
+
+    @Transactional
+    public void deleteOnlineAccountHeadLibrarian(String username, Integer personRoleId) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to delete account.");
+        }
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find account.");
+        }
+
+        if (personRoleId == null) {
+            throw new OnlineAccountException("Cannot find personRoleId to delete account.");
+        }
+
+        PersonRole personRole = headLibrarianRepository.findPersonRoleById(personRoleId);
 
         if (personRole == null) {
             throw new OnlineAccountException("Cannot find personRole to delete account.");

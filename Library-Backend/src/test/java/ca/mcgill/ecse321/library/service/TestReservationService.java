@@ -411,6 +411,7 @@ public class TestReservationService {
     private static final int CUSTOMER_KEY = 2;
     private static final int CUSTOMER_GREEDY_KEY = 102;
     private static final int ITEM_INSTANCE_KEY = 3;
+    private static final int OVERLAP_ITEM_INSTANCE_KEY = 103;
     private static final int LIBRARIAN_KEY = 5;
     private static final Customer CUSTOMER = new Customer(CUSTOMER_KEY,null,0,null,null,null);
     private static final Customer GREEDY_CUSTOMER = new Customer(CUSTOMER_GREEDY_KEY,null,0,null,null,null);
@@ -480,6 +481,16 @@ public class TestReservationService {
                 return null;
             }
         });
+        lenient().when(reservationRepository.findByItemInstance(any())).thenAnswer((InvocationOnMock invocation) -> {
+            if(((ItemInstance)invocation.getArgument(0)).getSerialNum() == (OVERLAP_ITEM_INSTANCE_KEY)) {
+                Reservation reservation1 = new Reservation();
+                reservation1.setId(OVERLAP_ITEM_INSTANCE_KEY);
+                return reservation1;
+            }
+            else {
+                return null;
+            }
+        });
         lenient().when(itemInstanceRepository.findItemInstanceBySerialNum(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(ITEM_INSTANCE_KEY)) {
                 ItemInstance itemInstance = new ItemInstance();
@@ -488,6 +499,10 @@ public class TestReservationService {
             } else  if(invocation.getArgument(0).equals(ITEM_INSTANCE_KEY+10)) {
                 ItemInstance itemInstance = new ItemInstance();
                 itemInstance.setSerialNum(ITEM_INSTANCE_KEY+10);
+                return itemInstance;
+            } else if(invocation.getArgument(0).equals(OVERLAP_ITEM_INSTANCE_KEY)) {
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.setSerialNum(OVERLAP_ITEM_INSTANCE_KEY);
                 return itemInstance;
             } else {
                 return null;
@@ -759,7 +774,21 @@ public class TestReservationService {
             error = e.getMessage();
         }
         assertNull(r);
-        assertEquals(error,"This customer already has the maximum number of loans");
+        assertEquals(error,"This customer already has the maximum number of reservations");
+    }
+
+    @Test
+    public void testCreateReservationItemAlreadyReserved(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.createReservation(startDate,endDate,OVERLAP_ITEM_INSTANCE_KEY,CUSTOMER_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Item is already reserved");
     }
     //END CREATE RESERVATION TESTS
 
@@ -947,6 +976,19 @@ public class TestReservationService {
         assertEquals(error,"This customer already has the maximum number of loans");
     }
 
+    @Test
+    public void testUpdateReservationItemAlreadyReserved(){
+        Reservation r = null;
+        String error = "";
+        try{
+            r = service.updateReservation(RESERVATION_KEY,null,null,null,OVERLAP_ITEM_INSTANCE_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertNull(r);
+        assertEquals(error,"Item is already reserved");
+    }
 
     //END UPDATE RESERVATION TESTS
 
