@@ -289,7 +289,7 @@ public class TestOnlineAccountService {
         OnlineAccount account = null;
 
         try {
-            service.deleteOnlineAccount(USERNAME, CUSTOMER_KEY);
+            service.deleteOnlineAccountCustomer(USERNAME, CUSTOMER_KEY);
         } catch (Exception e) {
             fail();
         }
@@ -301,7 +301,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            service.deleteOnlineAccount(null, CUSTOMER_KEY);
+            service.deleteOnlineAccountCustomer(null, CUSTOMER_KEY);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -315,7 +315,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            service.deleteOnlineAccount("john", CUSTOMER_KEY);
+            service.deleteOnlineAccountCustomer("john", CUSTOMER_KEY);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -329,7 +329,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            service.deleteOnlineAccount(USERNAME, null);
+            service.deleteOnlineAccountCustomer(USERNAME, null);
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -343,7 +343,7 @@ public class TestOnlineAccountService {
         String error = "";
 
         try {
-            service.deleteOnlineAccount(USERNAME, 4321);
+            service.deleteOnlineAccountCustomer(USERNAME, 4321);
         } catch (Exception e) {
             error = e.getMessage();
         }

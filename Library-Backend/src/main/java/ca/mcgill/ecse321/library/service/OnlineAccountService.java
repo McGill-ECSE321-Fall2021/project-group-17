@@ -150,7 +150,7 @@ public class OnlineAccountService {
     }
 
     @Transactional
-    public void deleteOnlineAccount(String username, Integer personRoleId) {
+    public void deleteOnlineAccountCustomer(String username, Integer personRoleId) {
         if (username == null) {
             throw new OnlineAccountException("Cannot find username to delete account.");
         }
@@ -165,7 +165,32 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find personRoleId to delete account.");
         }
 
-        PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
+        PersonRole personRole = customerRepository.findPersonRoleById(personRoleId);
+
+        if (personRole == null) {
+            throw new OnlineAccountException("Cannot find personRole to delete account.");
+        }
+
+        onlineAccountRepository.delete(account);
+    }
+
+    @Transactional
+    public void deleteOnlineAccountLibrarian(String username, Integer personRoleId) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot find username to delete account.");
+        }
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find account.");
+        }
+
+        if (personRoleId == null) {
+            throw new OnlineAccountException("Cannot find personRoleId to delete account.");
+        }
+
+        PersonRole personRole = librarianRepository.findPersonRoleById(personRoleId);
 
         if (personRole == null) {
             throw new OnlineAccountException("Cannot find personRole to delete account.");
