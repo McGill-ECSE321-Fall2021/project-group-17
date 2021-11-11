@@ -13,7 +13,6 @@ public class HeadLibrarianService {
     @Transactional
     public HeadLibrarian createHeadLibrarian(int id){
         HeadLibrarian headLibrarian = new HeadLibrarian();
-        headLibrarian.setId(id);
         headLibrarianRepository.save(headLibrarian);
         return headLibrarian;
     }
