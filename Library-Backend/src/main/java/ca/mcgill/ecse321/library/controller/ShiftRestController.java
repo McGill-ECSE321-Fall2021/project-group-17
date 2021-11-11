@@ -32,16 +32,14 @@ public class ShiftRestController {
 
 
     @PostMapping(value = { "/shift/librarian/","/shift/librarian/"})
-    @ResponseBody
     public ShiftDTO createShiftLibrarian(@RequestBody JsonBody body,
-                                @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+                                @RequestParam(value = "accountusername", required = false) String accountUsername) throws IllegalArgumentException{
         Shift shift = shiftService.createShiftLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
-    @PostMapping(value = { "/shift/headLibrarian/","/shift/headLibrarian/"})
-    @ResponseBody
+    @PostMapping(value = { "/shift/headLibrarian/","/shift/headLibrarian"})
     public ShiftDTO createShiftHeadLibrarian(@RequestBody JsonBody body,
-                                @RequestParam(value = "accountusername", required = false)String accountUsername) throws IllegalArgumentException{
+                                @RequestParam(value = "accountUsername", required = false) String accountUsername) throws IllegalArgumentException{
         Shift shift = shiftService.createShiftHeadLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
@@ -111,8 +109,8 @@ public class ShiftRestController {
             return librarianId;
         }
 
-        public void setLibrarianId(Integer Id) {
-            this.librarianId = Id;
+        public void setLibrarianId(Integer librarianId) {
+            this.librarianId = librarianId;
         }
 
         public JsonBody(){}

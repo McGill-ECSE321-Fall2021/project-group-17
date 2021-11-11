@@ -18,7 +18,7 @@ public class HeadLibrarianRestController {
     }
 
     @PutMapping(value= {"/headLibrarian/{username}/{personid}/{accountid}/","/headLibrarian/{username}/{personid}/{accountid}/"})
-    public HeadLibrarianDTO createHeadLibrarian(@PathVariable("personid") Integer personId,
+    public HeadLibrarianDTO updateHeadLibrarian(@PathVariable("personid") Integer personId,
                                                 @PathVariable("accountid") Integer accountId,
                                                 @PathVariable("username")String username) throws IllegalArgumentException{
         HeadLibrarian headLibrarian = headService.updateHeadLibrarian(personId, accountId, username);
