@@ -37,12 +37,10 @@ public class MovieService {
     
     @Transactional
     public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) throws Exception{
-    	try {
     	String error = "";
         if (librarianId == null) {
         	throw new PersonException("Librarian not found in request");
         } else if (librarianRepository.findPersonRoleById(librarianId) == null) {
-//        } else if (librarianRepository.findById(librarianId) == null) {
             error = error + "Librarian does not exist! ";
         }
         if (id == null) {
@@ -74,7 +72,6 @@ public class MovieService {
         if (error.length() > 0) {
             throw new IllegalArgumentException(error);
         }
-//    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
     	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
 
         if (!(librarian instanceof Librarian)) {
@@ -91,10 +88,6 @@ public class MovieService {
         movie.setRunningTime(runningTime);
         movieRepository.save(movie);
         return movie;
-    	}
-    	catch (Exception e) {
-    		throw new Exception(e.getMessage());
-    	}
     }
     
     /*@Transactional
@@ -127,8 +120,8 @@ public class MovieService {
     
     @Transactional
     public Movie getMovie(Integer movieId){
-        Movie m= (Movie) movieRepository.findItemById(movieId);
-        return m;
+        Movie movie = (Movie) movieRepository.findItemById(movieId);
+        return movie;
     }
     @Transactional
     public List<Item> getMovieByName(String name){

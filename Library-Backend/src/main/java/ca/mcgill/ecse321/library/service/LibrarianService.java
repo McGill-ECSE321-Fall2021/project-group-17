@@ -23,15 +23,13 @@ public class LibrarianService {
 
     @Transactional
     public Librarian createLibrarian(Integer id){
-        Librarian librarian = new Librarian();
     	Person p = personRepository.findPersonById(id);
     	if(p == null) {
     		throw new PersonException("Person not found from id!");
     	}
-    	librarian.setPerson(p);
-        librarian.setId(id);
+        Librarian librarian = new Librarian();
+        librarian.setPerson(p);
         librarianRepository.save(librarian);
-        personRoleRepository.save(librarian);
         return librarian;
     }
     

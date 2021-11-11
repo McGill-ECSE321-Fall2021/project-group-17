@@ -51,8 +51,7 @@ public class ItemRestController {
     @ResponseBody
     public MovieDTO addMovie(@PathVariable("librarianId") Integer librarianId,
                                   @RequestBody JsonBodyMovie body) throws Exception{
-        Movie movie;
-			movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
+        Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
 					body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
@@ -370,28 +369,24 @@ public class ItemRestController {
     // delete music, movie, book, newspaper
     
     @DeleteMapping(value= {"/item/movie/{librarianId}/{id}", "/item/movie/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteMovie(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	movieService.deleteMovie(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/book/{librarianId}/{id}", "/item/book/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteBook(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	bookService.deleteBook(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/music/{librarianId}/{id}", "/item/music/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteMusic(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	musicService.deleteMusic(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/newspaper/{librarianId}/{id}", "/item/newspaper/{librarianId}/{id}/"})
-    @ResponseBody
     public void deleteNewspaper(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
     	newspaperService.deleteNewspaper(id, librarianId);
