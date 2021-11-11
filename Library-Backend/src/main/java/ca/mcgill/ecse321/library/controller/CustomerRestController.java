@@ -45,8 +45,8 @@ public class CustomerRestController {
         Integer addressId;
         LibraryCard libCard;
 
-        public void setPenalty(int penalty){this.penalty = penalty;}
-        public int getPenalty(){return penalty;}
+        public void setPenalty(Integer penalty){this.penalty = penalty;}
+        public Integer getPenalty(){return penalty;}
 
         public void setPerson(Integer personId){this.personId = personId;}
         public Integer getPerson(){return personId;}
