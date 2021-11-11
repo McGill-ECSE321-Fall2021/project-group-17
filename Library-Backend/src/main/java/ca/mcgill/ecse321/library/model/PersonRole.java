@@ -16,7 +16,7 @@ public abstract class PersonRole {
     public PersonRole(){}
 
     public PersonRole(int id, Person person, OnlineAccount account){
-        this.id = id;
+        //this.id = id;
         this.person = person;
         this.account = account;
     }

@@ -134,7 +134,6 @@ public class TestItemService {
             movie = movieService.createMovie(LIBRARIAN_KEY, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(movie);
@@ -155,7 +154,6 @@ public class TestItemService {
             book = bookService.createBook(LIBRARIAN_KEY, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(book);
@@ -175,7 +173,6 @@ public class TestItemService {
             music = musicService.createMusic(LIBRARIAN_KEY, MUSIC_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(music);
@@ -194,7 +191,6 @@ public class TestItemService {
             newspaper = newspaperService.createNewspaper(LIBRARIAN_KEY, NEWSPAPER_KEY, MEDIA_NAME, DATE_PUBLISHED, HEADLINE);
         }
         catch(Exception e){
-        	System.out.println(e);
             fail();
         }
         assertNotNull(newspaper);
@@ -204,46 +200,179 @@ public class TestItemService {
         assertEquals(newspaper.getHeadline(), HEADLINE);
     }
     
-    //START DELETE PERSON TESTS
     @Test
-    public void testDeleteMovie(){
+    public void testDeleteMovieValid(){
         try{
             movieService.deleteMovie(MOVIE_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){        	
-        	System.out.println(e);
             fail();
         }
     }
     @Test
-    public void testDeleteBook(){
+    public void testDeleteBookValid(){
         try{
             bookService.deleteBook(BOOK_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){
-        	System.out.println(e);
             fail();
         }
     }
     @Test
-    public void testDeleteMusic(){
+    public void testDeleteMusicValid(){
         try{
-            bookService.deleteBook(MUSIC_KEY, LIBRARIAN_KEY);
+            musicService.deleteMusic(MUSIC_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){
-        	System.out.println(e);
             fail();
         }
     }
     @Test
-    public void testDeleteNewspaper(){
+    public void testDeleteNewspaperValid(){
         try{
             newspaperService.deleteNewspaper(NEWSPAPER_KEY, LIBRARIAN_KEY);
         }
         catch (Exception e){
-        	System.out.println(e);
             fail();
         }
+    }
+    
+    
+    @Test
+    public void testDeleteMovieMissingId(){
+        String error = "";
+        try{
+            movieService.deleteMovie(null, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Cannot find movie with id to delete");
+    }
+    @Test
+    public void testDeleteBookMissingId(){
+        String error = "";
+        try{
+            bookService.deleteBook(null, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Cannot find book with id to delete");
+    }
+    @Test
+    public void testDeleteMusicMissingId(){
+        String error = "";
+        try{
+            musicService.deleteMusic(null, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Cannot find music with id to delete");
+    }
+    @Test
+    public void testDeleteNewspaperMissingId(){
+        String error = "";
+        try{
+            newspaperService.deleteNewspaper(null, LIBRARIAN_KEY);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Cannot find newspaper with id to delete");
+    }
+    
+    
+    @Test
+    public void testDeleteMovieNotExistingLibrarian(){
+        String error = "";
+        try{
+        	movieService.deleteMovie(MOVIE_KEY, LIBRARIAN_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Librarian not found in request");
+    }
+    @Test
+    public void testDeleteMusicNotExistingLibrarian(){
+        String error = "";
+        try{
+        	musicService.deleteMusic(MUSIC_KEY, LIBRARIAN_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Librarian not found in request");
+    }
+    @Test
+    public void testDeleteBookNotExistingLibrarian(){
+        String error = "";
+        try{
+        	bookService.deleteBook(BOOK_KEY, LIBRARIAN_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Librarian not found in request");
+    }
+    @Test
+    public void testDeleteNewspaperNotExistingLibrarian(){
+        String error = "";
+        try{
+        	newspaperService.deleteNewspaper(NEWSPAPER_KEY, LIBRARIAN_KEY+1);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Librarian not found in request");
+    }
+    
+    
+    @Test
+    public void testDeleteMovieNullLibrarian(){
+        String error = "";
+        try{
+            movieService.deleteMovie(MOVIE_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot authorize librarian to delete movie");
+    }
+    @Test
+    public void testDeleteMusicNullLibrarian(){
+        String error = "";
+        try{
+            musicService.deleteMusic(MUSIC_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot authorize librarian to delete music");
+    }
+    @Test
+    public void testDeleteBookNullLibrarian(){
+        String error = "";
+        try{
+            bookService.deleteBook(BOOK_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error,"Cannot authorize librarian to delete book");
+    }
+    @Test
+    public void testDeleteNewspaperNullLibrarian(){
+        String error = "";
+        try{
+            newspaperService.deleteNewspaper(NEWSPAPER_KEY,null);
+        }
+        catch (Exception e){
+            error = e.getMessage();
+        }
+        assertEquals(error, "Cannot authorize librarian to delete newspaper");
     }
     
 }
