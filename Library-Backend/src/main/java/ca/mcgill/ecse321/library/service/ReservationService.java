@@ -65,7 +65,7 @@ public class ReservationService {
         }
         r.setItemInstance(i);
         if(reservationRepository.findByItemInstance(i) != null){
-            throw new LoanException("Item is already reserved");
+            throw new LoanException("Item is already on reservation");
         }
         reservationRepository.save(r);
         return r;
