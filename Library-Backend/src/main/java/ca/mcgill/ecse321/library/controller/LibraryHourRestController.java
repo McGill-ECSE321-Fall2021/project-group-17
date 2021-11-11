@@ -21,13 +21,13 @@ public class LibraryHourRestController {
     @Autowired
     private LibraryRestController libraryService;
 
-    @GetMapping(value = {"/libraryhour/{id}", "/libraryhour/{id}/"})//
+    @GetMapping(value = {"/libraryhour/{id}", "/libraryhour/{id}"})//
     public LibraryHourDTO getLibraryHour(@PathVariable("id") int id) throws IllegalArgumentException {
         LibraryHour libraryHour = service.getLibraryHour(id);
         return convertToDTO(libraryHour);
     }
 
-    @PostMapping(value= {"/libraryhour/{id}/", "/libraryhour/{id}/"})
+    @PostMapping(value= {"/libraryhour/{id}", "/libraryhour/{id}"})
     @ResponseBody
     public LibraryHourDTO createLibraryHour(@PathVariable("id") int Id,
                                   @RequestBody JsonBody body,
@@ -36,7 +36,7 @@ public class LibraryHourRestController {
         return convertToDTO(libraryHour);
     }
 
-    @PutMapping(value = {"/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}/", "/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}/"})
+    @PutMapping(value = {"/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}", "/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}"})
     public void modifyLibraryHours(@PathVariable("libhourid") int libHourId,
                                 @PathVariable("starttime") String startTime, @PathVariable("endtime") String endTime,
                                 @PathVariable("dayofweek") String DOW,
@@ -45,7 +45,7 @@ public class LibraryHourRestController {
         service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountUsername);
     }
 
-    @DeleteMapping(value = {"/libraryhour/{libraryhourid}/", "/libraryhour/{libraryhourid}/"})
+    @DeleteMapping(value = {"/libraryhour/{libraryhourid}", "/libraryhour/{libraryhourid}"})
     public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountid", required = false)int accountId){
         service.deleteLibraryHour(libraryHourid, accountId);
     }
