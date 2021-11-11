@@ -415,7 +415,7 @@ public class TestReservationService {
             error = e.getMessage();
         }
         assertNull(r);
-        assertEquals(error,"Item is already reserved");
+        assertEquals(error,"Item is already on reservation");
     }
     //END CREATE RESERVATION TESTS
 
