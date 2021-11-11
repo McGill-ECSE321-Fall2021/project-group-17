@@ -46,7 +46,7 @@ public class LibraryHourRestController {
     }
 
     @DeleteMapping(value = {"/libraryhour/{libraryhourid}", "/libraryhour/{libraryhourid}"})
-    public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountid", required = false)int accountId){
+    public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountId", required = false)Integer accountId){
         service.deleteLibraryHour(libraryHourid, accountId);
     }
 
