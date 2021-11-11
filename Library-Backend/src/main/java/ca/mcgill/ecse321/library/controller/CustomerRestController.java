@@ -20,9 +20,9 @@ public class CustomerRestController {
 
     @PostMapping(value= {"/customer/{id}","/customer/{id}/"})
     @ResponseBody
-    public CustomerDTO createCustomer(@PathVariable("id") int id,@RequestParam Integer addressId,
+    public CustomerDTO createCustomer(@PathVariable("id") int id, @RequestParam Integer addressId,
                                       @RequestBody JsonBody body) throws IllegalArgumentException{
-        Customer customer = customerService.createCustomer(id,body.getPerson(), body.getPenalty(),
+        Customer customer = customerService.createCustomer(id,body.getPersonId(), body.getPenalty(),
                 addressId, body.getLibCard());
         return convertToDTO(customer);
     }
@@ -48,11 +48,11 @@ public class CustomerRestController {
         public void setPenalty(Integer penalty){this.penalty = penalty;}
         public Integer getPenalty(){return penalty;}
 
-        public void setPerson(Integer personId){this.personId = personId;}
-        public Integer getPerson(){return personId;}
+        public void setPersonId(Integer personId){this.personId = personId;}
+        public Integer getPersonId(){return personId;}
 
-        public void setAddress(Integer address){this.addressId = address;}
-        public Integer getAddress(){return addressId;}
+        public void setAddressId(Integer address){this.addressId = address;}
+        public Integer getAddressId(){return addressId;}
 
         public void setLibCard(LibraryCard libCard){this.libCard = libCard;}
         public LibraryCard getLibCard(){return libCard;}
