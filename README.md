@@ -31,7 +31,7 @@ The Library Management System aims to create an easy to use system which can bri
   | Aidan Jackson| Service methods (PersonRole sub-classes, Library Hour, and Shift) corresponding Restful EndPoints, Corresponding Mockito Service Tests | 30 |
   | Hana Gustyn  |   | |
   | Tomasz Mroz  |    |  |
-  | Fiona Ryan   |    |  |
+  | Fiona Ryan   | Service methods for Reservation Management use cases, corresponding restful endpoints and mockito service tests   | 30  |
   | Victoria Sanchez| Service methods for Account Management use cases, corresponding restful endpoints and mockito service tests |  30|
   | Jerry Xia |  |  |
 ### Project Wiki
