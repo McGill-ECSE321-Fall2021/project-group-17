@@ -95,7 +95,7 @@ public class TestShiftService {
         String id2 = ACCOUNT_USERNAME;
         Shift shift=null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME_AS_STRING, SHIFT_END_TIME_AS_STRING
+            shift = shiftService.createShiftLibrarian(SHIFT_START_TIME_AS_STRING, SHIFT_END_TIME_AS_STRING
                     , DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
@@ -115,7 +115,7 @@ public class TestShiftService {
         String id3 = ACCOUNT_USERNAME;
         Shift shift = null;
         try{
-            shift = shiftService.createShift(SHIFT_START_TIME_AS_STRING,
+            shift = shiftService.createShiftLibrarian(SHIFT_START_TIME_AS_STRING,
                     SHIFT_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, LIBRARIAN_KEY, ACCOUNT_USERNAME);
         }
         catch(Exception e){
