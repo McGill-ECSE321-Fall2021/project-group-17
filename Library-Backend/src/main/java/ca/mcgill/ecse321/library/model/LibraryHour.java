@@ -19,11 +19,11 @@ public class LibraryHour {
 
     public LibraryHour() {}
 
-    public LibraryHour(int id, Time startTime, Time endTime, DayOfWeek dayOfWeek, Library library) {
+    public LibraryHour(int id, String startTime, String endTime, String dayOfWeek, Library library) {
     	//this.id = id;
-    	this.startTime = startTime;
-    	this.endTime = endTime;
-    	this.dayOfWeek = dayOfWeek;
+        this.startTime = Time.valueOf(startTime);
+        this.endTime = Time.valueOf(endTime);
+        this.dayOfWeek = DayOfWeek.valueOf(dayOfWeek);
     	this.library = library;
     }
 
@@ -49,6 +49,7 @@ public class LibraryHour {
     public Time getStartTime() {
         return startTime;
     }
+    public void updateStartTime(String startTime){this.startTime = Time.valueOf(startTime);}
 
     public void setStartTime(Time startTime) {
         this.startTime = startTime;
@@ -57,6 +58,7 @@ public class LibraryHour {
     public Time getEndTime() {
         return endTime;
     }
+    public void updateEndTime(String endTime){this.endTime = Time.valueOf(endTime);}
 
     public void setEndTime(Time endTime) {
         this.endTime = endTime;
@@ -65,6 +67,7 @@ public class LibraryHour {
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
+    public void updateDayOfWeek(String DOW){this.dayOfWeek = DayOfWeek.valueOf(DOW);}
 
     public void setDayOfWeek(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;

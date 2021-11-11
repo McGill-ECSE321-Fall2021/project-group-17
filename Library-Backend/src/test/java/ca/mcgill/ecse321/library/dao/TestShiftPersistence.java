@@ -36,19 +36,21 @@ public class TestShiftPersistence {
     @Transactional
     public void testPersistAndLoadShift(){
         Integer shiftID = 5432;
-        Time startTime = java.sql.Time.valueOf(java.time.LocalTime.now());
-        Time endTime = java.sql.Time.valueOf(java.time.LocalTime.now());
-        Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,16));
-        DayOfWeek DOW = java.time.DayOfWeek.valueOf("MONDAY");
+        Time startTime = Time.valueOf("12:42:53");
+        Time endTime = Time.valueOf("13:43:12");
+        DayOfWeek DOW = DayOfWeek.valueOf("MONDAY");
+        String startTimeAsString = startTime.toString();
+        String endTimeAsString= endTime.toString();
+        String DOWAsString= DOW.toString();
         Librarian librarian = new Librarian(0,null,null);
         librarianRepository.save(librarian);
         int libId = librarian.getId();
 
         Shift shift = new Shift();
         shift.setLibrarian(librarian);
-        shift.setDayOfWeek(DOW);
-        shift.setEndTime(endTime);
-        shift.setStartTime(startTime);
+        shift.updateDayOfWeek(DOWAsString);
+        shift.updateEndTime(endTimeAsString);
+        shift.updateStartTime(startTimeAsString);
         shift.setId(shiftID);
         shiftRepository.save(shift);
         shift = null;
