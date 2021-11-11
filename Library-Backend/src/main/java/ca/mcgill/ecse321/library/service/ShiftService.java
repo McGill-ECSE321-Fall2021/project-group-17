@@ -23,8 +23,6 @@ public class ShiftService {
     @Autowired
     private ShiftRepository shiftRepository;
     @Autowired
-    private PersonRoleRepository personRoleRepository;
-    @Autowired
     private LibrarianRepository librarianRepository;
     @Autowired
     private OnlineAccountRepository onlineAccountRepository;
@@ -106,9 +104,6 @@ public class ShiftService {
     public void deleteShift(String accountUsername, Integer shiftId){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized forthis action");
-
-        Shift shift = getShift(shiftId);
-
         shiftRepository.deleteById(shiftId);
     }
 
