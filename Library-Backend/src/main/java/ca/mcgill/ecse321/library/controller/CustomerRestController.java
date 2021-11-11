@@ -20,10 +20,10 @@ public class CustomerRestController {
 
     @PostMapping(value= {"/customer/{id}","/customer/{id}/"})
     @ResponseBody
-    public CustomerDTO createCustomer(@PathVariable("id") int id,
+    public CustomerDTO createCustomer(@PathVariable("id") int id,@RequestParam Integer addressId,
                                       @RequestBody JsonBody body) throws IllegalArgumentException{
         Customer customer = customerService.createCustomer(id,body.getPerson(), body.getPenalty(),
-                body.getAddress(), body.getLibCard());
+                addressId, body.getLibCard());
         return convertToDTO(customer);
     }
 
