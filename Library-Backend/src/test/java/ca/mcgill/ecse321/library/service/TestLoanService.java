@@ -331,7 +331,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetLoan(){
+    public void testGetLoans(){
         try{
             loanService.viewActiveLoans(CUSTOMER_KEY);
         } catch (Exception e){
@@ -341,7 +341,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetLoanCustomerNotFound(){
+    public void testGetLoansCustomerNotFound(){
         String error = null;
         try{
             loanService.viewActiveLoans(LOAN_KEY);
@@ -352,7 +352,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetLoanByNullId(){
+    public void testGetLoansByNullId(){
         String error = null;
         try{
             loanService.viewActiveLoans(null);
@@ -363,10 +363,10 @@ public class TestLoanService {
     }
 
 
-    // TESTS FOR VIEW LOAN RETURN DATE
+    // TESTS FOR GET LOAN
 
     @Test
-    public void testGetDate(){
+    public void testGetLoan(){
         Loan loan = null;
         try{
             loan = loanService.getLoan(LOAN_KEY,CUSTOMER_KEY);
@@ -378,7 +378,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateLoanNotFound(){
+    public void testGetLoanNotFound(){
         String error = null;
         try{
             loanService.getLoan(LOAN_KEY+1, CUSTOMER_KEY);
@@ -389,7 +389,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateByEmptyId(){
+    public void testGetLoanByEmptyId(){
         String error = null;
         try{
             loanService.getLoan(null,CUSTOMER_KEY);
@@ -400,7 +400,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateByNullId(){
+    public void testGetLoanByNullId(){
         String error = null;
         try{
             loanService.getLoan(LOAN_KEY,null);
@@ -411,7 +411,7 @@ public class TestLoanService {
     }
 
     @Test
-    public void testGetDateCustomerNotFound(){
+    public void testGetLoanCustomerNotFound(){
         String error = null;
         try{
             loanService.getLoan(LOAN_KEY, CUSTOMER_KEY+1);

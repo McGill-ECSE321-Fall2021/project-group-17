@@ -166,7 +166,7 @@ public class LoanService {
     }
 
     /**
-     * View loan return date
+     * Get loan
      * @param loanID
      * @param customerID
      * @return loan of the customer with customerID and the loanID
