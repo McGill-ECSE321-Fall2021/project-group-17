@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ItemInstanceService {
@@ -45,5 +46,11 @@ public class ItemInstanceService {
             throw new ItemInstanceException("There exist no item instance by that Id");
         }
         return itemInstanceRepository.findItemInstanceBySerialNum(serialNum);
+    }
+
+    @Transactional
+
+    public List<ItemInstance> viewInventory() {
+        return (List<ItemInstance>) itemInstanceRepository.findAll();
     }
 }

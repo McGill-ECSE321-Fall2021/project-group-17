@@ -29,7 +29,6 @@ import ca.mcgill.ecse321.library.model.Movie;
 import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.BookService;
-import ca.mcgill.ecse321.library.service.ItemService;
 import ca.mcgill.ecse321.library.service.MovieService;
 import ca.mcgill.ecse321.library.service.MusicService;
 import ca.mcgill.ecse321.library.service.NewspaperService;
@@ -39,8 +38,6 @@ import ca.mcgill.ecse321.library.service.NewspaperService;
 @RestController
 public class ItemRestController {
 
-    @Autowired
-    private ItemService service;
     @Autowired
     private MovieService movieService;
     @Autowired
