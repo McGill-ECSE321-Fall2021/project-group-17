@@ -37,9 +37,19 @@ public class OnlineAccountRestController {
     }
     // create accounts for customer, librarian and head librarian
 
-    @DeleteMapping(value = { "/onlineaccount/{username}", "/onlineaccount/{username}/"})
-    public void deleteOnlineAccount(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {
-        service.deleteOnlineAccount(username, personRoleId);
+    @DeleteMapping(value = { "/onlineaccount/customer/{username}", "/onlineaccount/customer/{username}/"})
+    public void deleteOnlineAccountCustomer(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {
+        service.deleteOnlineAccountCustomer(username, personRoleId);
+    }
+
+    @DeleteMapping(value = { "/onlineaccount/librarian/{username}", "/onlineaccount/librarian/{username}/"})
+    public void deleteOnlineAccountLibrarian(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {
+        service.deleteOnlineAccountLibrarian(username, personRoleId);
+    }
+
+    @DeleteMapping(value = { "/onlineaccount/headlibrarian/{username}", "/onlineaccount/headlibrarian/{username}/"})
+    public void deleteOnlineAccountHeadLibrarian(@PathVariable("username") String username, @RequestParam(value = "personRoleId",required = false) Integer personRoleId) {
+        service.deleteOnlineAccountCustomer(username, personRoleId);
     }
 
     @PutMapping(value = {"/login/{username}/{password}", "/login/{username}/{password}/"})
