@@ -5,13 +5,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.mcgill.ecse321.library.dao.LibrarianRepository;
-import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
-import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
-import ca.mcgill.ecse321.library.dao.ShiftRepository;
 import ca.mcgill.ecse321.library.model.HeadLibrarian;
 import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
@@ -31,14 +28,28 @@ public class ShiftService {
     private LibrarianRepository librarianRepository;
     @Autowired
     private OnlineAccountRepository onlineAccountRepository;
+    @Autowired
+    private HeadLibrarianRepository headLibrarianRepository;
 
     @Transactional
-    public Shift createShift(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+    public Shift createShiftLibrarian(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("This account is not authorized for this action");
 
         Shift shift = new Shift(startTime, endTime, DOW);
         Librarian librarian = findLibrarian(librarianId);
+
+        shift.setLibrarian(librarian);
+        shiftRepository.save(shift);
+        return shift;
+
+    }
+    public Shift createShiftHeadLibrarian(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("This account is not authorized for this action");
+
+        Shift shift = new Shift(startTime, endTime, DOW);
+        HeadLibrarian librarian = findHeadLibrarian(librarianId);
 
         shift.setLibrarian(librarian);
         shiftRepository.save(shift);
@@ -109,8 +120,15 @@ public class ShiftService {
     }
     private Librarian findLibrarian(Integer librarianId){
         if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
-        Librarian librarian = (Librarian) personRoleRepository.findPersonRoleById(librarianId);
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null) throw new OnlineAccountException("No existing account with this Id");
         return librarian;
     }
+    private HeadLibrarian findHeadLibrarian(Integer librarianId){
+        if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
+        HeadLibrarian librarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(librarianId);
+        if(librarian == null) throw new OnlineAccountException("No existing account with this Id");
+        return librarian;
+    }
+
 }
