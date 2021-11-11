@@ -1,27 +1,38 @@
 package ca.mcgill.ecse321.library.service;
 
-import ca.mcgill.ecse321.library.dao.CustomerRepository;
-import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
-import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.OnlineAccount;
-import ca.mcgill.ecse321.library.model.PersonRole;
-import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
+import ca.mcgill.ecse321.library.dao.CustomerRepository;
+import ca.mcgill.ecse321.library.dao.HeadLibrarianRepository;
+import ca.mcgill.ecse321.library.dao.LibrarianRepository;
+import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
+import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
+import ca.mcgill.ecse321.library.model.Customer;
+import ca.mcgill.ecse321.library.model.HeadLibrarian;
+import ca.mcgill.ecse321.library.model.Librarian;
+import ca.mcgill.ecse321.library.model.OnlineAccount;
+import ca.mcgill.ecse321.library.model.PersonRole;
+import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 
 @Service
 public class OnlineAccountService {
     @Autowired
-    OnlineAccountRepository onlineAccountRepository;
+    private OnlineAccountRepository onlineAccountRepository;
     @Autowired
-    PersonRoleRepository personRoleRepository;
+    private PersonRoleRepository personRoleRepository;
+    @Autowired
+    private LibrarianRepository librarianRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private HeadLibrarianRepository headLibrarianRepository;
 
+    
     @Transactional
-    public OnlineAccount createOnlineAccount(String username, String password, Integer personRoleId) {
+    public OnlineAccount createOnlineAccountLibrarian(String username, String password, Integer librarianId) {
         if (username == null) {
             throw new OnlineAccountException("Cannot create account with null username.");
         }
@@ -30,7 +41,7 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot create account with null password.");
         }
 
-        if (personRoleId == null) {
+        if (librarianId == null) {
             throw new OnlineAccountException("Cannot create an account without a user.");
         }
 
@@ -38,13 +49,70 @@ public class OnlineAccountService {
         account.setUsername(username);
         account.setPassword(password);
 
-        PersonRole personRole = personRoleRepository.findPersonRoleById(personRoleId);
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
 
-        if (personRole == null) {
+        if (librarian == null) {
             throw new OnlineAccountException("No user exists with the personRoleId given");
         }
 
-        account.setPersonRole(personRole);
+        account.setPersonRole(librarian);
+        onlineAccountRepository.save(account);
+        return account;
+    }
+    
+    @Transactional
+    public OnlineAccount createOnlineAccountCustomer(String username, String password, Integer librarianId) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot create account with null username.");
+        }
+
+        if (password == null) {
+            throw new OnlineAccountException("Cannot create account with null password.");
+        }
+
+        if (librarianId == null) {
+            throw new OnlineAccountException("Cannot create an account without a user.");
+        }
+
+        OnlineAccount account = new OnlineAccount();
+        account.setUsername(username);
+        account.setPassword(password);
+
+        Customer customer = (Customer) customerRepository.findPersonRoleById(librarianId);
+        if (customer == null) {
+            throw new OnlineAccountException("No user exists with the personRoleId given");
+        }
+
+        account.setPersonRole(customer);
+        onlineAccountRepository.save(account);
+        return account;
+    }
+    
+    @Transactional
+    public OnlineAccount createOnlineAccountHeadLibrarian(String username, String password, Integer librarianId) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot create account with null username.");
+        }
+
+        if (password == null) {
+            throw new OnlineAccountException("Cannot create account with null password.");
+        }
+
+        if (librarianId == null) {
+            throw new OnlineAccountException("Cannot create an account without a user.");
+        }
+
+        OnlineAccount account = new OnlineAccount();
+        account.setUsername(username);
+        account.setPassword(password);
+
+        HeadLibrarian headLibrarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(librarianId);
+
+        if (headLibrarian == null) {
+            throw new OnlineAccountException("No user exists with the personRoleId given");
+        }
+
+        account.setPersonRole(headLibrarian);
         onlineAccountRepository.save(account);
         return account;
     }
