@@ -32,7 +32,7 @@ public class LibraryHourService {
     @Autowired
     private HeadLibrarianRepository headLibrarianRepository;
 	
-    @Transactional
+    @Transactional //Creates the Library Hour and initializes the attributes
     public LibraryHour createLibraryHour(Integer libraryId, String startTime, String endTime, String DOW, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(libraryId < 0 || libraryId == null) throw new LibraryException("Invalid Id");
@@ -53,7 +53,7 @@ public class LibraryHourService {
         return libraryHour;
     }
     
-    @Transactional
+    @Transactional //Gets the LibraryHour with the passed Id
     public LibraryHour getLibraryHour(Integer id) {
         if(id == null || id < 0) throw new LibraryHourException("Invalid Library Hour Id");
         return libraryHourRepository.findLibraryHourById(id);
@@ -70,7 +70,7 @@ public class LibraryHourService {
         return libHours;
     }
 
-    @Transactional
+    @Transactional //Updates the LibraryHour with the passed Id and other attributes
     public LibraryHour updateLibraryHour(Integer libHourId, String startTime, String endTime, String DOW, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(libHourId < 0 || libHourId == null) throw new LibraryHourException("Invalid Id");
@@ -88,7 +88,7 @@ public class LibraryHourService {
         return libraryHour;
     }
 
-    @Transactional
+    @Transactional //Deletes the LibraryHour object with the passed Id
     public LibraryHour deleteLibraryHour(Integer libraryHourId, String accountUsername){
         if(libraryHourId < 0 || libraryHourId == null) throw new LibraryHourException("Invalid Id");
 
@@ -103,6 +103,7 @@ public class LibraryHourService {
         libraryHourRepository.deleteById(libraryHourId);
         return null;
     }
+    //Helper method to help in user authentication
     private OnlineAccount getActiveUser(String accountUsername){
         if(accountUsername == null) throw new OnlineAccountException("Invalid account id");
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(accountUsername);

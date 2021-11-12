@@ -51,7 +51,7 @@ public class LibraryHourRestController {
     public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountUsername", required = false)String accountUsername){
         service.deleteLibraryHour(libraryHourid, accountUsername);
     }
-
+    //Converts a libraryHour typed object into its corresponding data transfer object
     private LibraryHourDTO convertToDTO(LibraryHour libraryHour) {
         if (libraryHour == null) {
             throw new IllegalArgumentException("There is no such LibraryHour!");
@@ -65,7 +65,7 @@ public class LibraryHourRestController {
         libraryHourDTO.setStartTime(libraryHour.getStartTime());
         return libraryHourDTO;
     }
-
+    //Json Body used to take in paramaters from the https  request
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private String startTime;

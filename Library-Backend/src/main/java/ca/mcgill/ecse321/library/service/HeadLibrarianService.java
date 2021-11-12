@@ -17,7 +17,7 @@ public class HeadLibrarianService {
     private OnlineAccountRepository onlineAccountRepository;
 
     @Transactional
-    public HeadLibrarian createHeadLibrarian(Integer personId){
+    public HeadLibrarian createHeadLibrarian(Integer personId){ //Creates and save a new head Librarian to the repository.
         HeadLibrarian headLibrarian = new HeadLibrarian();
         if(personId == null || personId < 0) throw new PersonException("Invalid Id");
         Person person = personRepository.findPersonById(personId);
@@ -27,7 +27,7 @@ public class HeadLibrarianService {
         return headLibrarian;
     }
     @Transactional
-    public HeadLibrarian updateHeadLibrarian(Integer headLibrarian, Integer personId, String username){
+    public HeadLibrarian updateHeadLibrarian(Integer headLibrarian, Integer personId, String username){//Updates and save a new head Librarian to the repository.
         if(headLibrarian == null || headLibrarian < 0)throw new OnlineAccountException("Invalid Id");
         HeadLibrarian librarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(headLibrarian);
         if(librarian == null) throw new OnlineAccountException("No librarian by this id");
@@ -43,7 +43,7 @@ public class HeadLibrarianService {
         return librarian;
     }
     @Transactional
-    public HeadLibrarian getHeadLibrarian(Integer id){
+    public HeadLibrarian getHeadLibrarian(Integer id){//Retrieves the Head Librarian with the given Id
         if(id == null || id < 0) throw new OnlineAccountException("Invalid Id");
         HeadLibrarian headLibrarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(id);
         if(headLibrarian == null) throw new OnlineAccountException("No librarian by this id");
