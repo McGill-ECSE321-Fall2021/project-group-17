@@ -16,8 +16,6 @@ import ca.mcgill.ecse321.library.service.Exception.PersonException;
 @Service
 public class LibrarianService {
     @Autowired
-    private HeadLibrarianRepository headLibrarianRepository;
-    @Autowired
     private PersonRepository personRepository;
     @Autowired
     private OnlineAccountRepository onlineAccountRepository;
@@ -31,13 +29,13 @@ public class LibrarianService {
         Person person = personRepository.findPersonById(personId);
         if(person == null) throw new PersonException("No person by this Id");
         librarian.setPerson(person);
-        headLibrarianRepository.save(librarian);
+        librarianRepository.save(librarian);
         return librarian;
     }
     @Transactional
-    public Librarian updateLibrarian(Integer headLibrarian, Integer personId, String username){
-        if(headLibrarian == null || headLibrarian < 0)throw new OnlineAccountException("Invalid Id");
-        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(headLibrarian);
+    public Librarian updateLibrarian(Integer librarianId, Integer personId, String username){
+        if(librarianId == null || librarianId < 0)throw new OnlineAccountException("Invalid Id");
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null) throw new OnlineAccountException("No librarian by this id");
         if(personId == null || personId < 0) throw new PersonException("Invalid Id");
         Person person = personRepository.findPersonById(personId);
@@ -47,7 +45,7 @@ public class LibrarianService {
         if(account == null) throw new OnlineAccountException("No account by this username");
         librarian.setAccount(account);
         librarian.setPerson(person);
-        headLibrarianRepository.save(librarian);
+        librarianRepository.save(librarian);
         return librarian;
     }
     @Transactional
