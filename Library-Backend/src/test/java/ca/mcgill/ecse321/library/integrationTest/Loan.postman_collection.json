@@ -51,6 +51,17 @@
 		},
 		{
 			"name": "Make address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"address_id\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -220,7 +231,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://library-backend-534a.herokuapp.com/iteminstance/{{item_instance_id}}",
+					"raw": "https://library-backend-534a.herokuapp.com/iteminstance/",
 					"protocol": "https",
 					"host": [
 						"library-backend-534a",
@@ -229,7 +240,7 @@
 					],
 					"path": [
 						"iteminstance",
-						"{{item_instance_id}}"
+						""
 					]
 				}
 			},
