@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "c73562c3-ce5b-4d08-b0d6-88e7e221a039",
+		"name": "Library hour",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Person Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// pm.collectionVariables.set(\"person_id\",  pm.response.json().id);\r",
+							"pm.environment.set(\"person_id\", pm.response.json().id);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Jerry\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/person",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Head Librarian Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//pm.collectionVariables.set(\"headLibrarian_id\", pm.response.json().id);",
+							"pm.environment.set(\"headLibrarian_id\", pm.response.json().id);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/headLibrarian/{{person_id}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"headLibrarian",
+						"{{person_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Library",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"library_id\", pm.response.json().id);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/library/41",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"library",
+						"41"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Online Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"username\", pm.response.json().username);\r",
+							"pm.environment.set(\"password\", pm.response.json().password);\r",
+							"//pm.environment.set(\"headLibrarian_id\", pm.response.json().id);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/onlineaccount/headlibrarian/myusername/mypassword/myusername@mail.com?personRoleId={{headLibrarian_id}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"",
+						"onlineaccount",
+						"headlibrarian",
+						"myusername",
+						"mypassword",
+						"myusername@mail.com"
+					],
+					"query": [
+						{
+							"key": "personRoleId",
+							"value": "{{headLibrarian_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login to Online Account Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/login/{{username}}/{{password}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"login",
+						"{{username}}",
+						"{{password}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Library Hour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"libraryHour_id\", pm.response.json().id);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startTime\": \"10:27:27\",\n    \"endTime\": \"14:43:08\",\n    \"dayOfWeek\": \"WEDNESDAY\",\n    \"libraryId\": {{library_id}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/libraryhour/4321?accountusername={{username}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"libraryhour",
+						"4321"
+					],
+					"query": [
+						{
+							"key": "accountusername",
+							"value": "{{username}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Library Hour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/libraryhour/{{libraryHour_id}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"libraryhour",
+						"{{libraryHour_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Library Hour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/libraryhour/{{libraryHour_id}}/12:27:27/14:27:27/FRIDAY?accountUsername={{username}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"libraryhour",
+						"{{libraryHour_id}}",
+						"12:27:27",
+						"14:27:27",
+						"FRIDAY"
+					],
+					"query": [
+						{
+							"key": "accountUsername",
+							"value": "{{username}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Library Hour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/libraryhour/{{libraryHour_id}}?accountUsername={{username}}",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"libraryhour",
+						"{{libraryHour_id}}"
+					],
+					"query": [
+						{
+							"key": "accountUsername",
+							"value": "{{username}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "headLibrarian_id",
+			"value": ""
+		}
+	]
+}
