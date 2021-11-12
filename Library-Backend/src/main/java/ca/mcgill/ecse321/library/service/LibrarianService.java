@@ -3,14 +3,11 @@ package ca.mcgill.ecse321.library.service;
 import javax.transaction.Transactional;
 
 import ca.mcgill.ecse321.library.dao.*;
-import ca.mcgill.ecse321.library.model.HeadLibrarian;
-import ca.mcgill.ecse321.library.model.OnlineAccount;
+import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.mcgill.ecse321.library.model.Librarian;
-import ca.mcgill.ecse321.library.model.Person;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @Service
@@ -56,5 +53,21 @@ public class LibrarianService {
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(id);
         if(librarian == null) throw new OnlineAccountException("No librarian by this id");
         return librarian;
+    }
+    @Transactional
+    public void deleteLibrarian(Integer id, String accountUsername){
+        PersonRole role = getActiveUser(accountUsername).getPersonRole();
+        if(role == null) throw new OnlineAccountException("No person role asscoiated with this account");
+        if(!(role instanceof HeadLibrarian)) throw new OnlineAccountException("Account is not authorized for this action");
+        if(id == null) throw new OnlineAccountException("invalid id");
+        headLibrarianRepository.deleteById(id);
+    }
+    //Helper method for user authentication
+    private OnlineAccount getActiveUser(String accountUsername){
+        if(accountUsername == null) throw new OnlineAccountException("Invalid account id");
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(accountUsername);
+        if(account == null) throw new OnlineAccountException("No account by that username");
+        if(account.getLoggedIn() == false) throw new OnlineAccountException("This account is not the active user");
+        return account;
     }
 }

@@ -31,6 +31,10 @@ public class HeadLibrarianRestController {
         return convertToDTO(headLibrarian);
     }
 
+    @DeleteMapping(value = {"/headLibrarian/{id}", "/headLibrarian/{id}"})
+    public void deleteHeadLibrarian(@PathVariable("id")Integer id, @RequestParam("accountUsername")String accountUsername) throws IllegalArgumentException{
+        headService.deleteHeadLibrarian(id, accountUsername);
+    }
     private HeadLibrarianDTO convertToDTO(HeadLibrarian headLibrarian){
         if (headLibrarian == null) {
             throw new IllegalArgumentException("There is no such Customer!");

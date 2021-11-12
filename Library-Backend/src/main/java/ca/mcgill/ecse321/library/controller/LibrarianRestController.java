@@ -38,7 +38,12 @@ public class LibrarianRestController {
         Librarian librarian = librarianService.getLibrarian(id);
         return convertToDTO(librarian);
     }
-    
+
+    @DeleteMapping(value = {"/librarian/{id}", "/librarian/{id}"})
+    public void deleteHeadLibrarian(@PathVariable("id")Integer id, @RequestParam("accountUsername")String accountUsername) throws IllegalArgumentException{
+        librarianService.deleteLibrarian(id, accountUsername);
+    }
+
     private LibrarianDTO convertToDTO(Librarian librarian){
         if (librarian == null) {
             throw new IllegalArgumentException("There is no such Librarian!");
