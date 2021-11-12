@@ -88,7 +88,6 @@ public class TestCustomerService {
             }
         });
     }
-    @Test
     @AfterEach
     public void clearDatabase() {
         addressRepository.deleteAll();
