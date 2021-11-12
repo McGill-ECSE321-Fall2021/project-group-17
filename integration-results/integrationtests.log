@@ -1,0 +1,519 @@
+
+> Task :Library-Backend:integrationTest
+
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Address.postman_collection.json
+newman
+
+Address
+
+→ CreateAddress
+  POST https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada?Customer-ID=null [200 OK, 378B, 293ms]
+  ✓  Status code is 200
+
+→ UpdateAddress
+  PUT https://library-backend-534a.herokuapp.com/address/1/34/mcgill ave/Montreal/Canada [200 OK, 376B, 41ms]
+  ✓  Status code is 200
+
+→ GetAddress
+  GET https://library-backend-534a.herokuapp.com/address/1 [200 OK, 376B, 43ms]
+  ✓  Status code is 200
+
+→ DeleteAddress
+  DELETE https://library-backend-534a.herokuapp.com/address/1 [200 OK, 220B, 40ms]
+  ✓  Status code is 200
+
+┌─────────────────────────┬────────────────────┬────────────────────┐
+│                         │           executed │             failed │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              iterations │                  1 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│                requests │                  4 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│            test-scripts │                  4 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│      prerequest-scripts │                  0 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              assertions │                  4 │                  0 │
+├─────────────────────────┴────────────────────┴────────────────────┤
+│ total run duration: 519ms                                         │
+├───────────────────────────────────────────────────────────────────┤
+│ total data received: 347B (approx)                                │
+├───────────────────────────────────────────────────────────────────┤
+│ average response time: 104ms [min: 40ms, max: 293ms, s.d.: 108ms] │
+└───────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Collection(Customer).postman_collection.json
+newman
+
+Customer
+
+→ Create Person
+  POST https://library-backend-534a.herokuapp.com/person/ [200 OK, 307B, 244ms]
+  ✓  Status code is 200
+
+→ Create Address
+  POST https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada [200 OK, 378B, 45ms]
+  ✓  Status code is 200
+
+→ Create Customer
+  POST https://library-backend-534a.herokuapp.com/customer/2 [200 OK, 500B, 59ms]
+  ✓  Status code is 200
+
+→ Get Customer
+  GET https://library-backend-534a.herokuapp.com/customer/4 [200 OK, 500B, 58ms]
+  ✓  Status code is 200
+
+→ Update Customer
+  PUT https://library-backend-534a.herokuapp.com/customer/4 [200 OK, 500B, 69ms]
+  ✓  Status code is 200
+
+→ Verify Customer
+  PUT https://library-backend-534a.herokuapp.com/verifyCustomer/4 [200 OK, 220B, 86ms]
+  ✓  Status code is 200
+
+→ Delete Customer
+  DELETE https://library-backend-534a.herokuapp.com/customer/4 [200 OK, 220B, 64ms]
+  ✓  Status code is 200
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                 7 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                 7 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 0 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                 7 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 780ms                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 880B (approx)                              │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 89ms [min: 45ms, max: 244ms, s.d.: 64ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Collection(LibraryHour).postman_collection.json
+newman
+
+Library hour
+
+→ Create Person Copy
+  POST https://library-backend-534a.herokuapp.com/person [200 OK, 304B, 251ms]
+  ✓  Status code is 200
+
+→ Create Head Librarian Copy
+  POST https://library-backend-534a.herokuapp.com/headLibrarian/5 [200 OK, 337B, 56ms]
+  ✓  Status code is 200
+
+→ Create Library
+  POST https://library-backend-534a.herokuapp.com/library/41 [200 OK, 282B, 36ms]
+  ✓  Status code is 200
+
+→ Make Online Account
+  POST https://library-backend-534a.herokuapp.com//onlineaccount/headlibrarian/myusername/mypassword/myusername@mail.com?personRoleId=6 [200 OK, 474B, 55ms]
+  ✓  Status code is 200
+
+→ Login to Online Account Copy
+  PUT https://library-backend-534a.herokuapp.com/login/myusername/mypassword [200 OK, 429B, 55ms]
+  ✓  Status code is 200
+
+→ Create Library Hour
+  POST https://library-backend-534a.herokuapp.com/libraryhour/4321?accountusername=myusername [200 OK, 369B, 59ms]
+  ✓  Status code is 200
+
+→ Get Library Hour
+  GET https://library-backend-534a.herokuapp.com/libraryhour/7 [200 OK, 369B, 36ms]
+  ✓  Status code is 200
+
+→ Update Library Hour
+  PUT https://library-backend-534a.herokuapp.com/libraryhour/7/12:27:27/14:27:27/FRIDAY?accountUsername=myusername [200 OK, 366B, 53ms]
+  ✓  Status code is 200
+
+→ Delete Library Hour
+  DELETE https://library-backend-534a.herokuapp.com/libraryhour/7?accountUsername=myusername [200 OK, 220B, 58ms]
+  ✓  Status code is 200
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                 9 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                 9 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 0 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                 9 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 844ms                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 798B (approx)                              │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 73ms [min: 36ms, max: 251ms, s.d.: 63ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Collection(Shift).postman_collection.json
+newman
+
+Shift
+
+→ Create Person
+  POST https://library-backend-534a.herokuapp.com/person [200 OK, 304B, 224ms]
+  ✓  Status code is 200
+
+→ Create Librarian
+  POST https://library-backend-534a.herokuapp.com/librarian/8 [200 OK, 337B, 51ms]
+  ✓  Status code is 200
+
+→ Create Head Librarian
+  POST https://library-backend-534a.herokuapp.com/headLibrarian/8 [200 OK, 338B, 55ms]
+  ✓  Status code is 200
+
+→ Make Online Account
+  POST https://library-backend-534a.herokuapp.com/onlineaccount/librarian/bob344/1288/bob@mail.com?personRoleId=10 [200 OK, 465B, 46ms]
+  ✓  Status code is 200
+
+→ Login to Online Account
+  PUT https://library-backend-534a.herokuapp.com/login/bob344/1288 [200 OK, 420B, 53ms]
+  ✓  Status code is 200
+
+→ Create Shift
+  POST https://library-backend-534a.herokuapp.com/shift/headLibrarian?accountUsername=bob344 [200 OK, 425B, 64ms]
+  ✓  Status code is 200
+
+→ Get Shift
+  GET https://library-backend-534a.herokuapp.com/shift/11 [200 OK, 425B, 46ms]
+  ✓  Status code is 200
+
+→ Update Shift
+  PUT https://library-backend-534a.herokuapp.com/shift/headLibrarian/11?accountUsername=bob344 [200 OK, 220B, 53ms]
+  ✓  Status code is 200
+
+→ Delete Shift
+  DELETE https://library-backend-534a.herokuapp.com/shift/11?accountusername=bob344 [200 OK, 220B, 68ms]
+  ✓  Status code is 200
+
+→ Get Head Librarian Shifts
+  GET https://library-backend-534a.herokuapp.com/shift/librarian/10 [200 OK, 263B, 45ms]
+  ✓  Status code is 200
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                10 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                20 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                10 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                10 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 1004ms                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 845B (approx)                              │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 70ms [min: 45ms, max: 224ms, s.d.: 51ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Item.postman_collection.json
+newman
+
+Item
+
+→ Create Person
+  POST https://library-backend-534a.herokuapp.com/person [200 OK, 305B, 214ms]
+  ✓  Status code is 200
+
+→ Create Librarian
+  POST https://library-backend-534a.herokuapp.com/librarian/12 [200 OK, 339B, 53ms]
+  ✓  Status code is 200
+
+→ Add Movie
+  POST https://library-backend-534a.herokuapp.com/item/movie/13 [200 OK, 408B, 46ms]
+  ✓  Status code is 200
+
+→ Update Movie
+  PUT https://library-backend-534a.herokuapp.com/item/movie/13 [200 OK, 406B, 56ms]
+  ✓  Status code is 200
+
+→ Get Movie
+  GET https://library-backend-534a.herokuapp.com/item/movie/id/11 [200 OK, 406B, 39ms]
+  ✓  Status code is 200
+
+→ Delete Movie
+  DELETE https://library-backend-534a.herokuapp.com/item/movie/13/11 [200 OK, 220B, 44ms]
+  ✓  Status code is 200
+
+→ Add Book
+  POST https://library-backend-534a.herokuapp.com/item/book/13 [200 OK, 390B, 49ms]
+  ✓  Status code is 200
+
+→ Update Book
+  PUT https://library-backend-534a.herokuapp.com/item/book/13 [200 OK, 390B, 47ms]
+  ✓  Status code is 200
+
+→ Get Book
+  GET https://library-backend-534a.herokuapp.com/item/book/id/123412345 [200 OK, 390B, 41ms]
+  ✓  Status code is 200
+
+→ Delete Book
+  DELETE https://library-backend-534a.herokuapp.com/item/book/13/123412345 [200 OK, 220B, 44ms]
+  ✓  Status code is 200
+
+→ Add Music
+  POST https://library-backend-534a.herokuapp.com/item/music/13 [200 OK, 380B, 46ms]
+  ✓  Status code is 200
+
+→ Update Music
+  PUT https://library-backend-534a.herokuapp.com/item/music/13 [200 OK, 380B, 46ms]
+  ✓  Status code is 200
+
+→ Get Music
+  GET https://library-backend-534a.herokuapp.com/item/music/id/123456 [200 OK, 380B, 41ms]
+  ✓  Status code is 200
+
+→ Delete Music
+  DELETE https://library-backend-534a.herokuapp.com/item/music/13/123456 [200 OK, 220B, 48ms]
+  ✓  Status code is 200
+
+→ Add Newspaper
+  POST https://library-backend-534a.herokuapp.com/item/newspaper/13 [200 OK, 354B, 55ms]
+  ✓  Status code is 200
+
+→ Update Newspaper
+  PUT https://library-backend-534a.herokuapp.com/item/newspaper/13 [200 OK, 354B, 60ms]
+  ✓  Status code is 200
+
+→ Get Newspaper
+  GET https://library-backend-534a.herokuapp.com/item/newspaper/id/1234567890 [200 OK, 354B, 49ms]
+  ✓  Status code is 200
+
+→ Delete Newspaper
+  DELETE https://library-backend-534a.herokuapp.com/item/newspaper/13/1234567890 [200 OK, 220B, 57ms]
+  ✓  Status code is 200
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                18 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                36 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                23 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                18 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 1548ms                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 1.58kB (approx)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 57ms [min: 39ms, max: 214ms, s.d.: 38ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Loan.postman_collection.json
+newman
+
+Loan
+
+→ Create Person
+  POST https://library-backend-534a.herokuapp.com/person/ [200 OK, 303B, 267ms]
+  ✓  Status code is 200
+
+→ Make address
+  POST https://library-backend-534a.herokuapp.com/address/123/1/jawn/montreal/canada [200 OK, 371B, 48ms]
+
+→ get address
+  GET https://library-backend-534a.herokuapp.com/address/15 [200 OK, 371B, 36ms]
+
+→ Make Customer
+  POST https://library-backend-534a.herokuapp.com/customer/1 [200 OK, 489B, 51ms]
+  ✓  Status code is 200
+
+→ Get Customer
+  GET https://library-backend-534a.herokuapp.com/customer/16 [200 OK, 489B, 59ms]
+  ✓  Status code is 200
+
+→ Make Item Instance
+  POST https://library-backend-534a.herokuapp.com/iteminstance/ [200 OK, 298B, 38ms]
+  ✓  Status code is 200
+
+→ Make Loan
+  POST https://library-backend-534a.herokuapp.com/loan/ [200 OK, 619B, 61ms]
+  ✓  Status code is 200
+
+→ Get Loan Return Date
+  GET https://library-backend-534a.herokuapp.com/loan/returndate/18?customerId=16 [200 OK, 619B, 49ms]
+  ✓  Status code is 200
+  ✓  return date is correct
+
+→ Update Loan
+  PATCH https://library-backend-534a.herokuapp.com/loan/18 [200 OK, 619B, 70ms]
+  ✓  Status code is 200
+
+→ Delete Loan
+  DELETE https://library-backend-534a.herokuapp.com/loan/18?customerId=16 [200 OK, 220B, 56ms]
+  ✓  Status code is 200
+
+→ Check if loan is really deleted
+  GET https://library-backend-534a.herokuapp.com/loan/returndate/18?customerId=16 [409 Conflict, 405B, 46ms]
+  ✓  Status code is 409
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                11 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                10 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                10 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 1007ms                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 1.97kB (approx)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 71ms [min: 36ms, max: 267ms, s.d.: 62ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/OnlineAccount.postman_collection.json
+newman
+
+OnlineAccount
+
+→ Create Person
+  POST https://library-backend-534a.herokuapp.com/person [200 OK, 304B, 235ms]
+  ✓  Status code is 200
+
+→ Create Address
+  POST https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada [200 OK, 380B, 55ms]
+  ✓  Status code is 200
+
+→ Make Customer
+  POST https://library-backend-534a.herokuapp.com/customer/2 [200 OK, 499B, 82ms]
+  ✓  Status code is 200
+
+→ Get Customer
+  GET https://library-backend-534a.herokuapp.com/customer/21 [200 OK, 499B, 54ms]
+  ✓  Status code is 200
+
+→ Make Online Account
+  POST https://library-backend-534a.herokuapp.com/onlineaccount/customer/bob1/1288/bob@mail.com?personRoleId=21 [200 OK, 628B, 50ms]
+  ✓  Status code is 200
+
+→ Get Online Account
+  GET https://library-backend-534a.herokuapp.com/getaccount/bob1 [200 OK, 584B, 76ms]
+  ✓  Status code is 200
+
+→ Login to Online Account
+  PUT https://library-backend-534a.herokuapp.com/login/bob1/1288 [200 OK, 583B, 49ms]
+  ✓  Status code is 200
+
+→ Logout from Online Account
+  PUT https://library-backend-534a.herokuapp.com/logout/bob1 [200 OK, 220B, 47ms]
+  ✓  Status code is 200
+
+→ Delete Online Account
+  DELETE https://library-backend-534a.herokuapp.com/onlineaccount/customer/bob1?personRoleId=21 [200 OK, 220B, 62ms]
+  ✓  Status code is 200
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                 9 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                 9 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 0 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                 9 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 905ms                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 1.61kB (approx)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 78ms [min: 47ms, max: 235ms, s.d.: 56ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+Executing test /mnt/c/McGill/U2-Fall/ECSE-321/project/project-group-17/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/Reservation.postman_collection.json
+newman
+
+Reservation
+
+→ Create Person
+  POST https://library-backend-534a.herokuapp.com/person [200 OK, 303B, 248ms]
+  ✓  Status code is 200
+
+→ Create Address
+  POST https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada [200 OK, 380B, 54ms]
+  ✓  Status code is 200
+
+→ Make Customer
+  POST https://library-backend-534a.herokuapp.com/customer/1 [200 OK, 498B, 81ms]
+  ✓  Status code is 200
+
+→ Get Customer
+  GET https://library-backend-534a.herokuapp.com/customer/24 [200 OK, 498B, 56ms]
+  ✓  Status code is 200
+
+→ Make Item Instance
+  POST https://library-backend-534a.herokuapp.com/iteminstance/ [200 OK, 298B, 56ms]
+  ✓  Status code is 200
+
+→ Make Reservation
+  POST https://library-backend-534a.herokuapp.com/reservation/ [200 OK, 629B, 60ms]
+  ✓  Status code is 200
+
+→ Get Reservation
+  GET https://library-backend-534a.herokuapp.com/reservation/26?customerId=24 [200 OK, 629B, 65ms]
+  ✓  Status code is 200
+
+→ Update Reservation
+  PATCH https://library-backend-534a.herokuapp.com/reservation/26 [200 OK, 629B, 77ms]
+  ✓  Status code is 200
+
+→ Delete Reservation
+  DELETE https://library-backend-534a.herokuapp.com/reservation/26?customerId=24 [200 OK, 220B, 65ms]
+  ✓  Status code is 200
+
+→ Get Reservation After Delete
+  GET https://library-backend-534a.herokuapp.com/reservation/26?customerId=24 [404 Not Found, 425B, 48ms]
+  ✓  Status code is 404
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                10 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                10 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                10 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 1028ms                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 1.93kB (approx)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 81ms [min: 48ms, max: 248ms, s.d.: 56ms] │
+└─────────────────────────────────────────────────────────────────┘
+TRUNCATE TABLE
+passed all tests
+
+BUILD SUCCESSFUL in 21s
+1 actionable task: 1 executed

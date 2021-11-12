@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "783d24b8-cb65-403c-bb34-d3b8e3db3110",
-		"name": "Collection 1 (reservation)",
+		"name": "Reservation",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -26,7 +26,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{}",
+					"raw": "{\r\n    \"name\": \"Tom\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -34,7 +34,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://library-backend-534a.herokuapp.com/person/tom",
+					"raw": "https://library-backend-534a.herokuapp.com/person",
 					"protocol": "https",
 					"host": [
 						"library-backend-534a",
@@ -42,8 +42,55 @@
 						"com"
 					],
 					"path": [
-						"person",
-						"tom"
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"address_id\", pm.response.json().id);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://library-backend-534a.herokuapp.com/address/1/234/Peel Street/Montreal/Canada",
+					"protocol": "https",
+					"host": [
+						"library-backend-534a",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"address",
+						"1",
+						"234",
+						"Peel Street",
+						"Montreal",
+						"Canada"
 					]
 				}
 			},
@@ -70,7 +117,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"penalty\": 1\r\n}",
+					"raw": "{\r\n    \"personId\": {{person_id}},\r\n    \"addressId\": {{address_id}},\r\n    \"penalty\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -165,7 +212,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://library-backend-534a.herokuapp.com/iteminstance/{{item_instance_id}}",
+					"raw": "https://library-backend-534a.herokuapp.com/iteminstance/",
 					"protocol": "https",
 					"host": [
 						"library-backend-534a",
@@ -174,7 +221,7 @@
 					],
 					"path": [
 						"iteminstance",
-						"{{item_instance_id}}"
+						""
 					]
 				}
 			},
