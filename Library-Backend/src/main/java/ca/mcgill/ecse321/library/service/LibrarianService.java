@@ -58,7 +58,7 @@ public class LibrarianService {
         if(role == null) throw new OnlineAccountException("No person role asscoiated with this account");
         if(!(role instanceof HeadLibrarian)) throw new OnlineAccountException("Account is not authorized for this action");
         if(id == null) throw new OnlineAccountException("invalid id");
-        headLibrarianRepository.deleteById(id);
+        librarianRepository.deleteById(id);
     }
     //Helper method for user authentication
     private OnlineAccount getActiveUser(String accountUsername){
