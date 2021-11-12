@@ -33,11 +33,19 @@ import ca.mcgill.ecse321.library.service.MovieService;
 import ca.mcgill.ecse321.library.service.MusicService;
 import ca.mcgill.ecse321.library.service.NewspaperService;
 
-
+/*
+ * Rest controller that controls movie, book, music
+ * and newspaper services. These services allow for
+ * use with the rest controller.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class ItemRestController {
 
+	/*
+	 * Provided service classes that allow manipulation with the
+	 * rest controller.
+	 */
     @Autowired
     private MovieService movieService;
     @Autowired
@@ -51,12 +59,18 @@ public class ItemRestController {
     @ResponseBody
     public MovieDTO addMovie(@PathVariable("librarianId") Integer librarianId,
                                   @RequestBody JsonBodyMovie body) throws Exception{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and creates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
 					body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
 
     private MovieDTO convertMovieToDTO(Movie movie) {
+    	/* Converts provided item to DTO. Checks if input movie is null,
+    	 * then sets id in all fields. Return the DTO
+    	 */
         if (movie == null) {
             throw new IllegalArgumentException("There is no such Movie!");
         }
@@ -72,6 +86,9 @@ public class ItemRestController {
     }
     
     private ItemDTO convertItemToDTO(Item item) {
+    	/* Converts item to DTO. Checks if input movie is null,
+    	 * then sets id in all fields. Return the DTO
+    	 */
         if (item == null) {
             throw new IllegalArgumentException("There is no such Item!");
         }
@@ -85,6 +102,10 @@ public class ItemRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBodyMovie {
+    	/* given provided fields, initializes getters and setters
+    	 * that are able to query and send back data from
+    	 * the controller.
+    	 */
         private Integer id;
         private String name;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -157,12 +178,18 @@ public class ItemRestController {
     @ResponseBody
     public BookDTO addBook(@PathVariable("librarianId") int librarianId,
                             @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and creates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
                 body.getPublisher(), body.getGenre());
         return convertBookToDTO(book);
     }
 
     private BookDTO convertBookToDTO(Book book) {
+    	/* Converts provided item to DTO. Checks if input movie is null,
+    	 * then sets id in all fields. Return the DTO
+    	 */
         if (book == null) {
             throw new IllegalArgumentException("There is no such Book!");
         }
@@ -179,6 +206,10 @@ public class ItemRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBodyBook {
+    	/* given provided fields, initializes getters and setters
+    	 * that are able to query and send back data from
+    	 * the controller.
+    	 */
         private Integer id;
         private String name;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -243,12 +274,18 @@ public class ItemRestController {
     @ResponseBody
     public MusicDTO addMusic(@PathVariable("librarianId") int librarianId,
                              @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and creates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Music music = musicService.createMusic(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),
                 body.getRecordLabel());
         return convertMusicToDTO(music);
     }
 
     private MusicDTO convertMusicToDTO(Music music) {
+    	/* Converts provided item to DTO. Checks if input movie is null,
+    	 * then sets id in all fields. Return the DTO
+    	 */
         if (music == null) {
             throw new IllegalArgumentException("There is no such Music!");
         }
@@ -264,6 +301,10 @@ public class ItemRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBodyMusic {
+    	/* given provided fields, initializes getters and setters
+    	 * that are able to query and send back data from
+    	 * the controller.
+    	 */
         private Integer id;
         private String name;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -318,6 +359,9 @@ public class ItemRestController {
     @ResponseBody
     public NewspaperDTO addNewspaper(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyNewspaper body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and creates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Newspaper newspaper = newspaperService.createNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
         return convertNewspaperToDTO(newspaper);
     }
@@ -337,6 +381,10 @@ public class ItemRestController {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBodyNewspaper {
+    	/* given provided fields, initializes getters and setters
+    	 * that are able to query and send back data from
+    	 * the controller.
+    	 */
         private Integer id;
         private String name;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -385,30 +433,45 @@ public class ItemRestController {
     @ResponseBody
     public MovieDTO updateMovie(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and updates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Movie movie = movieService.updateMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
 				body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
+    
     @PutMapping(value= {"/item/music/{librarianId}", "/item/music/{librarianId}/"})
     @ResponseBody
     public MusicDTO updateMusic(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and updates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Music music = musicService.updateMusic(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),
                 body.getRecordLabel());
         return convertMusicToDTO(music);
     }
+    
     @PutMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
     @ResponseBody
     public BookDTO updateBook(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and updates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
     	Book book = bookService.updateBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
                 body.getPublisher(), body.getGenre());
         return convertBookToDTO(book);
     }
+    
     @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
     @ResponseBody
     public NewspaperDTO updateNewspaper(@PathVariable("librarianId") int librarianId,
                                  @RequestBody JsonBodyNewspaper body) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and updates an item with provided elements from the json body.
+    	 * Then, converts it to a DTO */
         Newspaper newspaper = newspaperService.updateNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
         return convertNewspaperToDTO(newspaper);
     }
@@ -419,68 +482,107 @@ public class ItemRestController {
     @DeleteMapping(value= {"/item/movie/{librarianId}/{id}", "/item/movie/{librarianId}/{id}/"})
     public void deleteMovie(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 */
     	movieService.deleteMovie(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/book/{librarianId}/{id}", "/item/book/{librarianId}/{id}/"})
     public void deleteBook(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 */
     	bookService.deleteBook(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/music/{librarianId}/{id}", "/item/music/{librarianId}/{id}/"})
     public void deleteMusic(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 */
     	musicService.deleteMusic(id, librarianId);
     }
     
     @DeleteMapping(value= {"/item/newspaper/{librarianId}/{id}", "/item/newspaper/{librarianId}/{id}/"})
     public void deleteNewspaper(@PathVariable("librarianId") int librarianId,
     		@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 */
     	newspaperService.deleteNewspaper(id, librarianId);
     }
     
     @GetMapping(value= {"/item/movie/id/{id}", "/item/movie/id/{id}/"})
     public MovieDTO getMovieById(@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	Movie movie = movieService.getMovie(id);
     	return convertMovieToDTO(movie);    
     }
     @GetMapping(value= {"/item/book/id/{id}", "/item/book/id/{id}/"})
     public BookDTO getBookById(@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	Book book = bookService.getBook(id);
     	return convertBookToDTO(book);
     }
     @GetMapping(value= {"/item/music/id/{id}", "/item/music/id/{id}/"})
     public MusicDTO getMusicById(@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	Music music = musicService.getMusic(id);
     	return convertMusicToDTO(music);
     }
     @GetMapping(value= {"/item/newspaper/id/{id}", "/item/newspaper/id/{id}/"})
     public NewspaperDTO getNewspaperById(@PathVariable("id") int id) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	Newspaper newspaper = newspaperService.getNewspaper(id);
     	return convertNewspaperToDTO(newspaper);
     }
     
     @GetMapping(value= {"/item/movie/name/{name}", "/item/movie/name/{name}/"})
     public List<ItemDTO> getMovieByName(@PathVariable("name") String name) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	return movieService.getMovieByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     }
     @GetMapping(value= {"/item/music/name/{name}", "/item/music/name/{name}/"})
     public List<ItemDTO> getMusicByName(@PathVariable("name") String name) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	return musicService.getMusicByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     }
     @GetMapping(value= {"/item/book/name/{name}", "/item/book/name/{name}/"})
     public List<ItemDTO> getBookByName(@PathVariable("name") String name) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	return bookService.getBookByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     }
     @GetMapping(value= {"/item/newspaper/name/{name}", "/item/newspaper/name/{name}/"})
     public NewspaperDTO getNewspaperByHeadline(@PathVariable("name") String name) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	Newspaper newspaper = newspaperService.getNewspaperByHeadline(name);
     	return convertNewspaperToDTO(newspaper);
     }
     
     @GetMapping(value= {"/item/{type}/{name}", "/item/{type}/{name}/"})
     public List<ItemDTO> getItemByVariable(@PathVariable("type") String type, @PathVariable("name") String name) throws IllegalArgumentException{
+    	/* calls the item service that corresponds to the input provided, 
+    	 * and deletes the item with provided parameter from the json body.
+    	 * Then, converts it to a DTO. */
     	if(type.toLowerCase().equals("director")) {
     		return movieService.getMovieFromDirector(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());
     	}
@@ -507,8 +609,6 @@ public class ItemRestController {
     	}
     	return null;
     }
-    
-    
     
     
 }

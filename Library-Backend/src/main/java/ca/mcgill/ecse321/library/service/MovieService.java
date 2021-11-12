@@ -20,6 +20,11 @@ import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @Service
 public class MovieService {
+	/*
+	 * Repositories for aiding the service.
+	 * These repositories allow for the storage of data
+	 * into the database. Allows for create, get, update and delete functionalities.
+	 */
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
@@ -27,6 +32,11 @@ public class MovieService {
     
     @Transactional
     public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) throws Exception{
+    	/*
+    	 * Creates a movie item with the provided ids from the rest controller method.
+    	 * Throws errors based on arguments, and whether they were provided or not.
+    	 * Saves item into repository at the end.
+    	 */
     	String error = "";
     	if (librarianId == null) {
     		throw new IllegalArgumentException("Librarian does not exist! ");
@@ -61,6 +71,10 @@ public class MovieService {
     
     @Transactional
     public void deleteMovie(Integer movieId, Integer librarianId){
+    	/*
+    	 * Deletes item based on id, and requires librarian id to
+    	 * perform this task. Deletes in repository at the end.
+    	 */
         if(movieId == null){
             throw new MovieException("Cannot find movie with id to delete");
         }
@@ -83,7 +97,13 @@ public class MovieService {
     }
     
     @Transactional
-    public Movie updateMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) {
+    public Movie updateMovie(Integer librarianId, Integer id, String name, Date date, String director, 
+    		Integer runningTime, String rating, String distributor) {
+       	/*
+    	 * Updates an item with the provided ids from the rest controller method.
+    	 * Throws errors based on arguments, and whether they were provided or not.
+    	 * Saves item into repository at the end.
+    	 */
     	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
         	throw new PersonException("Librarian does not exist!");
     	}
@@ -128,26 +148,41 @@ public class MovieService {
     
     @Transactional
     public Movie getMovie(Integer movieId){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         Movie movie = (Movie) movieRepository.findItemById(movieId);
         return movie;
     }
     @Transactional
     public List<Item> getMovieByName(String name){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Item> results = movieRepository.findItemByName(name);
         return results;
     }
     @Transactional
     public List<Movie> getMovieFromDirector(String director){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Movie> results = movieRepository.findMovieByDirector(director);
         return results;
     }
     @Transactional
     public List<Movie> getMovieFromDistributor(String distributor){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Movie> results = movieRepository.findMovieByFilmDistributor(distributor);
         return results;
     }
     @Transactional
     public List<Movie> getMovieFromRating(String rating){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Movie> results = movieRepository.findMovieByRating(rating);
         return results;
     }
