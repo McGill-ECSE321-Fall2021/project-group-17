@@ -29,8 +29,7 @@ public class LibraryRestController {
 
     @PostMapping(value= {"/library/{id}", "/library/{id}/"})
     @ResponseBody
-    public LibraryDTO createLibrary(@PathVariable("id") int id,
-                                  @RequestBody JsonBody body) throws IllegalArgumentException{
+    public LibraryDTO createLibrary(@PathVariable("id") int id) throws IllegalArgumentException{
         Library library = service.createLibrary(id);
         return convertToDTO(library);
     }
@@ -45,10 +44,4 @@ public class LibraryRestController {
         libraryDTO.setId(library.getId());
         return libraryDTO;
     }
-
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private static class JsonBody{
-        public JsonBody(){}
-    }
-
 }
