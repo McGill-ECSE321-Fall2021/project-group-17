@@ -24,6 +24,9 @@ public class ReservationService {
     @Autowired
     private ItemInstanceRepository itemInstanceRepository;
     @Transactional
+    /*
+    a lot of checks for different conditions
+     */
     public Reservation createReservation(Date dateReserved, Date pickupDay, Integer itemInstanceId, Integer customerId, Integer librarianId){
         Reservation r = new Reservation();
 
@@ -34,6 +37,7 @@ public class ReservationService {
         if(pickupDay == null){
             throw new ReservationException("Cannot have empty pickup day");
         }
+        //converts to localdate for easy date calculations
         if(dateReserved.toLocalDate().isAfter(pickupDay.toLocalDate())){
             throw new ReservationException("Cannot have pickup date before reservation date");
         }
@@ -51,6 +55,7 @@ public class ReservationService {
         if(c == null){
             throw new ReservationException("Invalid customer provided");
         }
+        //checks if customer is over their cap
         if(reservationRepository.findByCustomer(c) != null && reservationRepository.findByCustomer(c).size() > 4){
             throw new ReservationException("This customer already has the maximum number of reservations");
         }
@@ -64,6 +69,7 @@ public class ReservationService {
             throw new ReservationException("Item instance does not exist");
         }
         r.setItemInstance(i);
+        //cant have items reserved at the same time
         if(reservationRepository.findByItemInstance(i) != null){
             throw new LoanException("Item is already on reservation");
         }
@@ -102,6 +108,7 @@ public class ReservationService {
     }
 
     @Transactional
+    //similar conditions to create reservation
     public Reservation updateReservation(Integer id,Date startDate, Date endDate, Integer customerId, Integer itemInstanceId){
         if(id == null){
             throw new ReservationException("Reservation id cannot be null");
