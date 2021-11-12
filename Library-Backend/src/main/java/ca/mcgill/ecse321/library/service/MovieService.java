@@ -83,7 +83,8 @@ public class MovieService {
     }
     
     @Transactional
-    public Movie updateMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) {
+    public Movie updateMovie(Integer librarianId, Integer id, String name, Date date, String director, 
+    		Integer runningTime, String rating, String distributor) {
     	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
         	throw new PersonException("Librarian does not exist!");
     	}

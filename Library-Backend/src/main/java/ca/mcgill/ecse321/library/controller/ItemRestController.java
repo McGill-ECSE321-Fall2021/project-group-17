@@ -392,6 +392,7 @@ public class ItemRestController {
 				body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
     }
+    
     @PutMapping(value= {"/item/music/{librarianId}", "/item/music/{librarianId}/"})
     @ResponseBody
     public MusicDTO updateMusic(@PathVariable("librarianId") int librarianId,
@@ -400,6 +401,7 @@ public class ItemRestController {
                 body.getRecordLabel());
         return convertMusicToDTO(music);
     }
+    
     @PutMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
     @ResponseBody
     public BookDTO updateBook(@PathVariable("librarianId") int librarianId,
@@ -408,6 +410,7 @@ public class ItemRestController {
                 body.getPublisher(), body.getGenre());
         return convertBookToDTO(book);
     }
+    
     @PutMapping(value= {"/item/newspaper/{librarianId}", "/item/newspaper/{librarianId}/"})
     @ResponseBody
     public NewspaperDTO updateNewspaper(@PathVariable("librarianId") int librarianId,

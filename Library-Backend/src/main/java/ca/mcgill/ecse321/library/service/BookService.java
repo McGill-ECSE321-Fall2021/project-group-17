@@ -26,7 +26,8 @@ public class BookService {
     @Autowired
     private LibrarianRepository librarianRepository;
     @Transactional
-    public Book createBook(Integer librarianId, Integer id, String name, Date date, String author, String publisher, String genre){
+    public Book createBook(Integer librarianId, Integer id, String name, Date date, 
+    		String author, String publisher, String genre){
     	
     	String error = "";
     	if (librarianId == null) {
@@ -91,7 +92,8 @@ public class BookService {
     }
     
     @Transactional
-    public Book updateBook(Integer librarianId, Integer id, String name, Date date, String author, String publisher, String genre) {
+    public Book updateBook(Integer librarianId, Integer id, String name, Date date, String author, 
+    		String publisher, String genre) {
     	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
         	throw new PersonException("Librarian does not exist!");
     	}
