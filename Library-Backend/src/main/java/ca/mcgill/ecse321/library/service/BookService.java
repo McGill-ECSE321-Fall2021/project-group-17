@@ -21,6 +21,11 @@ import ca.mcgill.ecse321.library.service.Exception.PersonException;
 
 @Service
 public class BookService {
+	/*
+	 * Repositories for aiding the service.
+	 * These repositories allow for the storage of data
+	 * into the database. Allows for create, get, update and delete functionalities.
+	 */
     @Autowired
     private BookRepository bookRepository;
     @Autowired
@@ -28,7 +33,11 @@ public class BookService {
     @Transactional
     public Book createBook(Integer librarianId, Integer id, String name, Date date, 
     		String author, String publisher, String genre){
-    	
+    	/*
+    	 * Creates a movie item with the provided ids from the rest controller method.
+    	 * Throws errors based on arguments, and whether they were provided or not.
+    	 * Saves item into repository at the end.
+    	 */
     	String error = "";
     	if (librarianId == null) {
     		throw new IllegalArgumentException("Librarian does not exist! ");
@@ -70,6 +79,10 @@ public class BookService {
      */
     @Transactional
     public void deleteBook(Integer bookId, Integer librarianId){
+    	/*
+    	 * Deletes item based on id, and requires librarian id to
+    	 * perform this task. Deletes in repository at the end.
+    	 */
         if(bookId == null){
             throw new BookException("Cannot find book with id to delete");
         }
@@ -94,6 +107,11 @@ public class BookService {
     @Transactional
     public Book updateBook(Integer librarianId, Integer id, String name, Date date, String author, 
     		String publisher, String genre) {
+       	/*
+    	 * Updates an item with the provided ids from the rest controller method.
+    	 * Throws errors based on arguments, and whether they were provided or not.
+    	 * Saves item into repository at the end.
+    	 */
     	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {
         	throw new PersonException("Librarian does not exist!");
     	}
@@ -134,26 +152,41 @@ public class BookService {
     
     @Transactional
     public Book getBook(Integer bookId){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         Book book = (Book) bookRepository.findItemById(bookId);
         return book;
     }
     @Transactional
     public List<Item> getBookByName(String name){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Item> results = bookRepository.findItemByName(name);
         return results;
     }
     @Transactional
     public List<Book> getBookFromAuthor(String author){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Book> results = bookRepository.findBookByAuthor(author);
         return results;
     }
     @Transactional
     public List<Book> getBookFromPublisher(String publisher){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Book> results = bookRepository.findBookByPublisher(publisher);
         return results;
     }
     @Transactional
     public List<Book> getBookFromGenre(String genre){
+    	/*
+    	 * Gets item based on field, from the corresponding repository.
+    	 */
         List<Book> results = bookRepository.findBookByGenre(genre);
         return results;
     }
