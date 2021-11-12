@@ -87,6 +87,9 @@ public class TestLibrarianService {
         });
     }
 
+    /**
+     * Successfully creates a librarian
+     */
     @Test
     public void TestCreateLibrarianValid() {
         Librarian librarian = null;
@@ -101,6 +104,9 @@ public class TestLibrarianService {
         assertEquals(PERSON_ID, librarian.getPerson().getId());
     }
 
+    /**
+     * Can't create a librarian because the PersonId is null
+     */
     @Test
     public void TestCreateLibrarianNoPersonId() {
         Librarian librarian = null;
@@ -116,6 +122,9 @@ public class TestLibrarianService {
         assertEquals("Invalid Id", error);
     }
 
+    /**
+     * Can't create the librarian because no Person exists in the database with the given id
+     */
     @Test
     public void TestCreateLibrarianInvalidPersonId() {
         Librarian librarian = null;
@@ -131,6 +140,9 @@ public class TestLibrarianService {
         assertEquals("No person by this Id", error);
     }
 
+    /**
+     * Successfully updates the librarian
+     */
     @Test
     public void TestUpdateLibrarianValid() {
         Librarian librarian = null;
@@ -147,6 +159,9 @@ public class TestLibrarianService {
         assertEquals(USERNAME, librarian.getAccount().getUsername());
     }
 
+    /**
+     * Can't update the librarian because the LibrarianId is null
+     */
     @Test
     public void TestUpdateLibrarianNoLibrarianId() {
         Librarian librarian = null;
@@ -162,6 +177,9 @@ public class TestLibrarianService {
         assertEquals("Invalid Id", error);
     }
 
+    /**
+     * Can't update the Librarian because the PersonId is null
+     */
     @Test
     public void TestUpdateLibrarianNoPersonId() {
         Librarian librarian = null;
@@ -177,6 +195,9 @@ public class TestLibrarianService {
         assertEquals("Invalid Id", error);
     }
 
+    /**
+     * Can't update the librarian because the username is null
+     */
     @Test
     public void TestUpdateLibrarianNoUsername() {
         Librarian librarian = null;
@@ -192,6 +213,9 @@ public class TestLibrarianService {
         assertEquals("Invalid Id", error);
     }
 
+    /**
+     * Can't update the librarian because no librarian exists in the database for the given id
+     */
     @Test
     public void TestUpdateLibrarianInvalidLibrarianId() {
         Librarian librarian = null;
@@ -207,6 +231,9 @@ public class TestLibrarianService {
         assertEquals("No librarian by this id", error);
     }
 
+    /**
+     * Can't update the librarian because no person exists in the database for the given id
+     */
     @Test
     public void TestUpdateLibrarianInvalidPersonId() {
         Librarian librarian = null;
@@ -222,6 +249,9 @@ public class TestLibrarianService {
         assertEquals("No person by this Id", error);
     }
 
+    /**
+     * Can't update the librarian because no username exists in the database for the given id
+     */
     @Test
     public void TestUpdateLibrarianInvalidUsername() {
         Librarian librarian = null;
@@ -237,6 +267,9 @@ public class TestLibrarianService {
         assertEquals("No account by this username", error);
     }
 
+    /**
+     * Successfully gets the librarian for the given id
+     */
     @Test
     public void TestGetLibrarianValid() {
         Librarian librarian = null;
@@ -251,6 +284,9 @@ public class TestLibrarianService {
         assertEquals(LIBRARIAN_KEY, librarian.getId());
     }
 
+    /**
+     * Can't retrieve the librarian because the id is null
+     */
     @Test
     public void TestGetLibrarianNoLibrarianId() {
         Librarian librarian = null;
@@ -266,6 +302,9 @@ public class TestLibrarianService {
         assertEquals("Invalid Id", error);
     }
 
+    /**
+     * Can't retrieve the librarian because no librarian exists in the database for the given id
+     */
     @Test
     public void TestGetLibrarianInvalidLibrarianId() {
         Librarian librarian = null;
@@ -281,6 +320,9 @@ public class TestLibrarianService {
         assertEquals("No librarian by this id", error);
     }
 
+    /**
+     * Successfully deletes the librarian for the given id
+     */
     @Test
     public void TestDeleteLibrarianValid() {
         try {
@@ -290,6 +332,9 @@ public class TestLibrarianService {
         }
     }
 
+    /**
+     * Can't delete the librarian because the id is null
+     */
     @Test
     public void TestDeleteLibrarianNoLibrarianId() {
         String error = "";
@@ -303,6 +348,9 @@ public class TestLibrarianService {
         assertEquals("Null id" ,error);
     }
 
+    /**
+     * Can't delete the librarian because the username is null
+     */
     @Test
     public void TestDeleteLibrarianNoUsername() {
         String error = "";
@@ -316,6 +364,9 @@ public class TestLibrarianService {
         assertEquals("Null username" ,error);
     }
 
+    /**
+     * Can't delete the librarian because no librarian exists in the database for the given id
+     */
     @Test
     public void TestDeleteLibrarianInvalidLibrarianId() {
         String error = "";
