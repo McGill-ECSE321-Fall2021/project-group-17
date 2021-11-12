@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ShiftService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ShiftService (ca.mcgill.ecse321.library.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShiftService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.8%
+  </span>
+  <span class="absValue">
+    (69/ 72)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ShiftService$$EnhancerBySpringCGLIB$$3b0fd828</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.8%
+  </span>
+  <span class="absValue">
+    (69/ 72)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import javax.transaction.Transactional;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import ca.mcgill.ecse321.library.dao.*;
+<i>9</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>10</i>&nbsp;import org.springframework.stereotype.Service;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import ca.mcgill.ecse321.library.model.HeadLibrarian;
+<i>13</i>&nbsp;import ca.mcgill.ecse321.library.model.Librarian;
+<i>14</i>&nbsp;import ca.mcgill.ecse321.library.model.OnlineAccount;
+<i>15</i>&nbsp;import ca.mcgill.ecse321.library.model.PersonRole;
+<i>16</i>&nbsp;import ca.mcgill.ecse321.library.model.Shift;
+<i>17</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
+<i>18</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.ShiftException;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;@Service
+<b class="fc"><i>22</i>&nbsp;public class ShiftService {</b>
+<i>23</i>&nbsp;    @Autowired
+<i>24</i>&nbsp;    private ShiftRepository shiftRepository;
+<i>25</i>&nbsp;    @Autowired
+<i>26</i>&nbsp;    private LibrarianRepository librarianRepository;
+<i>27</i>&nbsp;    @Autowired
+<i>28</i>&nbsp;    private OnlineAccountRepository onlineAccountRepository;
+<i>29</i>&nbsp;    @Autowired
+<i>30</i>&nbsp;    private HeadLibrarianRepository headLibrarianRepository;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    @Transactional //creates a new shift object and initializes the attributes with the passed parameters(only for account belonging to librarian
+<i>33</i>&nbsp;    public Shift createShiftLibrarian(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+<b class="fc"><i>34</i>&nbsp;        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();</b>
+<b class="fc"><i>35</i>&nbsp;        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException(&quot;This account is not authorized for this action&quot;);</b>
+<i>36</i>&nbsp;
+<b class="fc"><i>37</i>&nbsp;        Shift shift = new Shift(startTime, endTime, DOW);</b>
+<b class="fc"><i>38</i>&nbsp;        Librarian librarian = findLibrarian(librarianId);</b>
+<i>39</i>&nbsp;
+<b class="fc"><i>40</i>&nbsp;        shift.setLibrarian(librarian);</b>
+<b class="fc"><i>41</i>&nbsp;        shiftRepository.save(shift);</b>
+<b class="fc"><i>42</i>&nbsp;        return shift;</b>
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;    //Creates a shift object with the passed parameters.(only for account belonging to Head Librarian)
+<i>46</i>&nbsp;    @Transactional
+<i>47</i>&nbsp;    public Shift createShiftHeadLibrarian(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+<b class="fc"><i>48</i>&nbsp;        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();</b>
+<b class="fc"><i>49</i>&nbsp;        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException(&quot;This account is not authorized for this action&quot;);</b>
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;        Shift shift = new Shift(startTime, endTime, DOW);</b>
+<b class="fc"><i>52</i>&nbsp;        HeadLibrarian librarian = findHeadLibrarian(librarianId);</b>
+<i>53</i>&nbsp;
+<b class="fc"><i>54</i>&nbsp;        shift.setLibrarian(librarian);</b>
+<b class="fc"><i>55</i>&nbsp;        shiftRepository.save(shift);</b>
+<b class="fc"><i>56</i>&nbsp;        return shift;</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;    
+<i>60</i>&nbsp;    @Transactional //Gets all shifts that are associated with a given librarian
+<i>61</i>&nbsp;    public List&lt;Shift&gt; getLibrarianShifts(Integer librarianId) {
+<b class="fc"><i>62</i>&nbsp;    	String error = &quot;&quot;;</b>
+<b class="fc"><i>63</i>&nbsp;    	if (librarianId == null) {</b>
+<b class="fc"><i>64</i>&nbsp;        	error = error + &quot;Librarian not found in request&quot;;</b>
+<b class="fc"><i>65</i>&nbsp;        } else if (librarianRepository.findPersonRoleById(librarianId) == null &amp;&amp;</b>
+<b class="fc"><i>66</i>&nbsp;        		headLibrarianRepository.findPersonRoleById(librarianId) == null) {</b>
+<b class="fc"><i>67</i>&nbsp;            error = error + &quot;Librarian does not exist! &quot;;</b>
+<i>68</i>&nbsp;        }
+<b class="fc"><i>69</i>&nbsp;    	if(librarianId == null || librarianId &lt; 0) {</b>
+<b class="fc"><i>70</i>&nbsp;    		error = error + &quot;Invalid Id&quot;;</b>
+<i>71</i>&nbsp;    	}
+<b class="fc"><i>72</i>&nbsp;    	if(error.length() &gt; 0) {</b>
+<b class="fc"><i>73</i>&nbsp;    		throw new IllegalArgumentException(error);</b>
+<i>74</i>&nbsp;    	}
+<b class="fc"><i>75</i>&nbsp;    	List&lt;Shift&gt; shifts = new ArrayList&lt;Shift&gt;();</b>
+<b class="fc"><i>76</i>&nbsp;        for(Shift s : shiftRepository.findAll()) {</b>
+<b class="nc"><i>77</i>&nbsp;        	if(s.getLibrarian().getId() == librarianId) {</b>
+<b class="nc"><i>78</i>&nbsp;        		shifts.add(s);</b>
+<i>79</i>&nbsp;        	}
+<b class="nc"><i>80</i>&nbsp;        }</b>
+<b class="fc"><i>81</i>&nbsp;        return shifts;</b>
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;    @Transactional
+<i>84</i>&nbsp;    public Shift getShift(Integer id){
+<b class="fc"><i>85</i>&nbsp;        if(id == null || id &lt; 0) throw new ShiftException(&quot;Invalid Id&quot;);</b>
+<b class="fc"><i>86</i>&nbsp;        Shift s = shiftRepository.findShiftById(id);</b>
+<b class="fc"><i>87</i>&nbsp;        if(s == null) throw new ShiftException(&quot;No Shift Exists with Provided Id&quot;);</b>
+<b class="fc"><i>88</i>&nbsp;        return s;</b>
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;    @Transactional // Updates a shift (only for account which belongs to librarian)
+<i>91</i>&nbsp;    public Shift updateShiftLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+<b class="fc"><i>92</i>&nbsp;        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();</b>
+<b class="fc"><i>93</i>&nbsp;        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException(&quot;Active User is unauthorized for this action&quot;);</b>
+<i>94</i>&nbsp;
+<b class="fc"><i>95</i>&nbsp;        Shift shift = getShift(shiftId);</b>
+<b class="fc"><i>96</i>&nbsp;        Librarian librarian = findLibrarian(librarianId);</b>
+<i>97</i>&nbsp;
+<b class="fc"><i>98</i>&nbsp;        shift.updateStartTime(startTime);</b>
+<b class="fc"><i>99</i>&nbsp;        shift.updateDayOfWeek(DOW);</b>
+<b class="fc"><i>100</i>&nbsp;        shift.updateEndTime(endTime);</b>
+<b class="fc"><i>101</i>&nbsp;        shift.setLibrarian(librarian);</b>
+<b class="fc"><i>102</i>&nbsp;        shiftRepository.save(shift);</b>
+<b class="fc"><i>103</i>&nbsp;        return shift;</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;    // Updates a shift (only for account which belongs to head librarian)
+<i>106</i>&nbsp;    @Transactional
+<i>107</i>&nbsp;    public Shift updateShiftHeadLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
+<b class="fc"><i>108</i>&nbsp;        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();</b>
+<b class="fc"><i>109</i>&nbsp;        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException(&quot;Active User is unauthorized for this action&quot;);</b>
+<i>110</i>&nbsp;
+<b class="fc"><i>111</i>&nbsp;        Shift shift = getShift(shiftId);</b>
+<b class="fc"><i>112</i>&nbsp;        HeadLibrarian headLibrarian = findHeadLibrarian(librarianId);</b>
+<i>113</i>&nbsp;
+<b class="fc"><i>114</i>&nbsp;        shift.updateStartTime(startTime);</b>
+<b class="fc"><i>115</i>&nbsp;        shift.updateDayOfWeek(DOW);</b>
+<b class="fc"><i>116</i>&nbsp;        shift.updateEndTime(endTime);</b>
+<b class="fc"><i>117</i>&nbsp;        shift.setLibrarian(headLibrarian);</b>
+<b class="fc"><i>118</i>&nbsp;        shiftRepository.save(shift);</b>
+<b class="fc"><i>119</i>&nbsp;        return shift;</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;    @Transactional //Deletes a shift with the passed Id
+<i>122</i>&nbsp;    public void deleteShift(String accountUsername, Integer shiftId){
+<b class="fc"><i>123</i>&nbsp;        PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();</b>
+<b class="fc"><i>124</i>&nbsp;        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException(&quot;Active user is not authorized for this action&quot;);</b>
+<b class="fc"><i>125</i>&nbsp;        shiftRepository.deleteById(shiftId);</b>
+<b class="fc"><i>126</i>&nbsp;    }</b>
+<i>127</i>&nbsp;    //Helper method for user authentication
+<i>128</i>&nbsp;    private OnlineAccount getActiveUser(String accountUsername){
+<b class="fc"><i>129</i>&nbsp;        if(accountUsername == null) throw new OnlineAccountException(&quot;Invalid account id&quot;);</b>
+<b class="fc"><i>130</i>&nbsp;        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(accountUsername);</b>
+<b class="fc"><i>131</i>&nbsp;        if(account == null) throw new OnlineAccountException(&quot;No account by that username&quot;);</b>
+<b class="fc"><i>132</i>&nbsp;        if(account.getLoggedIn() == false) throw new OnlineAccountException(&quot;This account is not the active user&quot;);</b>
+<b class="fc"><i>133</i>&nbsp;        return account;</b>
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;    //Helper method which finds a Librarian
+<i>136</i>&nbsp;    private Librarian findLibrarian(Integer librarianId){
+<b class="fc"><i>137</i>&nbsp;        if(librarianId == null || librarianId &lt; 0) throw new OnlineAccountException(&quot;Invalid Id&quot;);</b>
+<b class="fc"><i>138</i>&nbsp;        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);</b>
+<b class="fc"><i>139</i>&nbsp;        if(librarian == null) throw new OnlineAccountException(&quot;No existing account with this Id&quot;);</b>
+<b class="fc"><i>140</i>&nbsp;        return librarian;</b>
+<i>141</i>&nbsp;    }
+<i>142</i>&nbsp;    //Helper method which finds a Head Librarian
+<i>143</i>&nbsp;    private HeadLibrarian findHeadLibrarian(Integer librarianId){
+<b class="fc"><i>144</i>&nbsp;        if(librarianId == null || librarianId &lt; 0) throw new OnlineAccountException(&quot;Invalid Id&quot;);</b>
+<b class="fc"><i>145</i>&nbsp;        HeadLibrarian librarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(librarianId);</b>
+<b class="fc"><i>146</i>&nbsp;        if(librarian == null) throw new OnlineAccountException(&quot;No existing account with this Id&quot;);</b>
+<b class="fc"><i>147</i>&nbsp;        return librarian;</b>
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;
+<i>150</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

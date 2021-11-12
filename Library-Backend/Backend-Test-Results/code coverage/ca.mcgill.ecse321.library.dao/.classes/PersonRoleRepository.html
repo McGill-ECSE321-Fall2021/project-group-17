@@ -1,0 +1,67 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PersonRoleRepository</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PersonRoleRepository (ca.mcgill.ecse321.library.dao)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">PersonRoleRepository$MockitoMock$414884711</td>
+  </tr>
+  <tr>
+    <td class="name">PersonRoleRepository$MockitoMock$414884711$auxiliary$3wcTI5n9</td>
+  </tr>
+  <tr>
+    <td class="name">PersonRoleRepository$MockitoMock$414884711$auxiliary$VPecAZaH</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.model.PersonRole;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.springframework.context.annotation.Primary;
+<i>6</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;@Primary
+<i>9</i>&nbsp;public interface PersonRoleRepository extends CrudRepository&lt;PersonRole, Integer&gt;{
+<i>10</i>&nbsp;    PersonRole findPersonRoleById(int id);
+<i>11</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,680 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ItemRestController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ItemRestController (ca.mcgill.ecse321.library.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ItemRestController</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.7%
+  </span>
+  <span class="absValue">
+    (1/ 27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1%
+  </span>
+  <span class="absValue">
+    (1/ 105)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ItemRestController$JsonBodyBook</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ItemRestController$JsonBodyMovie</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ItemRestController$JsonBodyMusic</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ItemRestController$JsonBodyNewspaper</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    1.3%
+  </span>
+  <span class="absValue">
+    (1/ 75)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0.6%
+  </span>
+  <span class="absValue">
+    (1/ 175)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.sql.Date;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;import java.util.stream.Collectors;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>8</i>&nbsp;import org.springframework.web.bind.annotation.CrossOrigin;
+<i>9</i>&nbsp;import org.springframework.web.bind.annotation.DeleteMapping;
+<i>10</i>&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+<i>11</i>&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+<i>12</i>&nbsp;import org.springframework.web.bind.annotation.PostMapping;
+<i>13</i>&nbsp;import org.springframework.web.bind.annotation.PutMapping;
+<i>14</i>&nbsp;import org.springframework.web.bind.annotation.RequestBody;
+<i>15</i>&nbsp;import org.springframework.web.bind.annotation.ResponseBody;
+<i>16</i>&nbsp;import org.springframework.web.bind.annotation.RestController;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import com.fasterxml.jackson.annotation.JsonFormat;
+<i>19</i>&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import ca.mcgill.ecse321.library.dto.BookDTO;
+<i>22</i>&nbsp;import ca.mcgill.ecse321.library.dto.ItemDTO;
+<i>23</i>&nbsp;import ca.mcgill.ecse321.library.dto.MovieDTO;
+<i>24</i>&nbsp;import ca.mcgill.ecse321.library.dto.MusicDTO;
+<i>25</i>&nbsp;import ca.mcgill.ecse321.library.dto.NewspaperDTO;
+<i>26</i>&nbsp;import ca.mcgill.ecse321.library.model.Book;
+<i>27</i>&nbsp;import ca.mcgill.ecse321.library.model.Item;
+<i>28</i>&nbsp;import ca.mcgill.ecse321.library.model.Movie;
+<i>29</i>&nbsp;import ca.mcgill.ecse321.library.model.Music;
+<i>30</i>&nbsp;import ca.mcgill.ecse321.library.model.Newspaper;
+<i>31</i>&nbsp;import ca.mcgill.ecse321.library.service.BookService;
+<i>32</i>&nbsp;import ca.mcgill.ecse321.library.service.MovieService;
+<i>33</i>&nbsp;import ca.mcgill.ecse321.library.service.MusicService;
+<i>34</i>&nbsp;import ca.mcgill.ecse321.library.service.NewspaperService;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;@CrossOrigin(origins = &quot;*&quot;)
+<i>38</i>&nbsp;@RestController
+<b class="fc"><i>39</i>&nbsp;public class ItemRestController {</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    @Autowired
+<i>42</i>&nbsp;    private MovieService movieService;
+<i>43</i>&nbsp;    @Autowired
+<i>44</i>&nbsp;    private BookService bookService;
+<i>45</i>&nbsp;    @Autowired
+<i>46</i>&nbsp;    private MusicService musicService;
+<i>47</i>&nbsp;    @Autowired
+<i>48</i>&nbsp;    private NewspaperService newspaperService;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @PostMapping(value= {&quot;/item/movie/{librarianId}&quot;, &quot;/item/movie/{librarianId}/&quot;})
+<i>51</i>&nbsp;    @ResponseBody
+<i>52</i>&nbsp;    public MovieDTO addMovie(@PathVariable(&quot;librarianId&quot;) Integer librarianId,
+<i>53</i>&nbsp;                                  @RequestBody JsonBodyMovie body) throws Exception{
+<b class="nc"><i>54</i>&nbsp;        Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),</b>
+<b class="nc"><i>55</i>&nbsp;					body.getRunningTime(), body.getRating(), body.getFilmDistributor());</b>
+<b class="nc"><i>56</i>&nbsp;        return convertMovieToDTO(movie);</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    private MovieDTO convertMovieToDTO(Movie movie) {
+<b class="nc"><i>60</i>&nbsp;        if (movie == null) {</b>
+<b class="nc"><i>61</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Movie!&quot;);</b>
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;        MovieDTO movieDTO = new MovieDTO();</b>
+<b class="nc"><i>65</i>&nbsp;        movieDTO.setId(movie.getId());</b>
+<b class="nc"><i>66</i>&nbsp;        movieDTO.setName(movie.getName());</b>
+<b class="nc"><i>67</i>&nbsp;        movieDTO.setDatePublished(movie.getDatePublished());</b>
+<b class="nc"><i>68</i>&nbsp;        movieDTO.setDirector(movie.getDirector());</b>
+<b class="nc"><i>69</i>&nbsp;        movieDTO.setRunningTime(movie.getRunningTime());</b>
+<b class="nc"><i>70</i>&nbsp;        movieDTO.setFilmDistributor(movie.getFilmDistributor());</b>
+<b class="nc"><i>71</i>&nbsp;        return movieDTO;</b>
+<i>72</i>&nbsp;    }
+<i>73</i>&nbsp;    
+<i>74</i>&nbsp;    private ItemDTO convertItemToDTO(Item item) {
+<b class="nc"><i>75</i>&nbsp;        if (item == null) {</b>
+<b class="nc"><i>76</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Item!&quot;);</b>
+<i>77</i>&nbsp;        }
+<i>78</i>&nbsp;
+<b class="nc"><i>79</i>&nbsp;        ItemDTO itemDTO = new ItemDTO();</b>
+<b class="nc"><i>80</i>&nbsp;        itemDTO.setId(item.getId());</b>
+<b class="nc"><i>81</i>&nbsp;        itemDTO.setName(item.getName());</b>
+<b class="nc"><i>82</i>&nbsp;        itemDTO.setDatePublished(item.getDatePublished());</b>
+<b class="nc"><i>83</i>&nbsp;        return itemDTO;</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+<i>87</i>&nbsp;    private static class JsonBodyMovie {
+<i>88</i>&nbsp;        private Integer id;
+<i>89</i>&nbsp;        private String name;
+<i>90</i>&nbsp;        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd&quot;)
+<i>91</i>&nbsp;        private Date datePublished;
+<i>92</i>&nbsp;        private String director;
+<i>93</i>&nbsp;        private Integer runningTime;
+<i>94</i>&nbsp;        private String rating;
+<i>95</i>&nbsp;        private String filmDistributor;
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;        public Integer getId() {
+<b class="nc"><i>98</i>&nbsp;            return id;</b>
+<i>99</i>&nbsp;        }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;        public void setId(Integer id) {
+<b class="nc"><i>102</i>&nbsp;            this.id = id;</b>
+<b class="nc"><i>103</i>&nbsp;        }</b>
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;        public String getName() {
+<b class="nc"><i>106</i>&nbsp;            return name;</b>
+<i>107</i>&nbsp;        }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;        public void setName(String name) {
+<b class="nc"><i>110</i>&nbsp;            this.name = name;</b>
+<b class="nc"><i>111</i>&nbsp;        }</b>
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;        public Date getDatePublished() {
+<b class="nc"><i>114</i>&nbsp;            return datePublished;</b>
+<i>115</i>&nbsp;        }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;        public void setDatePublished(Date datePublished) {
+<b class="nc"><i>118</i>&nbsp;            this.datePublished = datePublished;</b>
+<b class="nc"><i>119</i>&nbsp;        }</b>
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;        public String getDirector() {
+<b class="nc"><i>122</i>&nbsp;            return director;</b>
+<i>123</i>&nbsp;        }
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;        public void setDirector(String director) {
+<b class="nc"><i>126</i>&nbsp;            this.director = director;</b>
+<b class="nc"><i>127</i>&nbsp;        }</b>
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;        public Integer getRunningTime() {
+<b class="nc"><i>130</i>&nbsp;            return runningTime;</b>
+<i>131</i>&nbsp;        }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;        public void setRunningTime(Integer runningTime) {
+<b class="nc"><i>134</i>&nbsp;            this.runningTime = runningTime;</b>
+<b class="nc"><i>135</i>&nbsp;        }</b>
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;        public String getRating() {
+<b class="nc"><i>138</i>&nbsp;            return rating;</b>
+<i>139</i>&nbsp;        }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;        public void setRating(String rating) {
+<b class="nc"><i>142</i>&nbsp;            this.rating = rating;</b>
+<b class="nc"><i>143</i>&nbsp;        }</b>
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;        public String getFilmDistributor() {
+<b class="nc"><i>146</i>&nbsp;            return filmDistributor;</b>
+<i>147</i>&nbsp;        }
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;        public void setFilmDistributor(String filmDistributor) {
+<b class="nc"><i>150</i>&nbsp;            this.filmDistributor = filmDistributor;</b>
+<b class="nc"><i>151</i>&nbsp;        }</b>
+<i>152</i>&nbsp;        
+<b class="nc"><i>153</i>&nbsp;        public JsonBodyMovie(){}</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    @PostMapping(value= {&quot;/item/book/{librarianId}&quot;, &quot;/item/book/{librarianId}/&quot;})
+<i>157</i>&nbsp;    @ResponseBody
+<i>158</i>&nbsp;    public BookDTO addBook(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>159</i>&nbsp;                            @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+<b class="nc"><i>160</i>&nbsp;        Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),</b>
+<b class="nc"><i>161</i>&nbsp;                body.getPublisher(), body.getGenre());</b>
+<b class="nc"><i>162</i>&nbsp;        return convertBookToDTO(book);</b>
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    private BookDTO convertBookToDTO(Book book) {
+<b class="nc"><i>166</i>&nbsp;        if (book == null) {</b>
+<b class="nc"><i>167</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Book!&quot;);</b>
+<i>168</i>&nbsp;        }
+<i>169</i>&nbsp;
+<b class="nc"><i>170</i>&nbsp;        BookDTO bookDTO = new BookDTO();</b>
+<b class="nc"><i>171</i>&nbsp;        bookDTO.setId(book.getId());</b>
+<b class="nc"><i>172</i>&nbsp;        bookDTO.setName(book.getName());</b>
+<b class="nc"><i>173</i>&nbsp;        bookDTO.setDatePublished(book.getDatePublished());</b>
+<b class="nc"><i>174</i>&nbsp;        bookDTO.setAuthor(book.getAuthor());</b>
+<b class="nc"><i>175</i>&nbsp;        bookDTO.setPublisher(book.getPublisher());</b>
+<b class="nc"><i>176</i>&nbsp;        bookDTO.setGenre(book.getGenre());</b>
+<b class="nc"><i>177</i>&nbsp;        return bookDTO;</b>
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+<i>181</i>&nbsp;    private static class JsonBodyBook {
+<i>182</i>&nbsp;        private Integer id;
+<i>183</i>&nbsp;        private String name;
+<i>184</i>&nbsp;        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd&quot;)
+<i>185</i>&nbsp;        private Date datePublished;
+<i>186</i>&nbsp;        private String author;
+<i>187</i>&nbsp;        private String publisher;
+<i>188</i>&nbsp;        private String genre;
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;        public Integer getId() {
+<b class="nc"><i>191</i>&nbsp;            return id;</b>
+<i>192</i>&nbsp;        }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;        public void setId(Integer id) {
+<b class="nc"><i>195</i>&nbsp;            this.id = id;</b>
+<b class="nc"><i>196</i>&nbsp;        }</b>
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;        public String getName() {
+<b class="nc"><i>199</i>&nbsp;            return name;</b>
+<i>200</i>&nbsp;        }
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;        public void setName(String name) {
+<b class="nc"><i>203</i>&nbsp;            this.name = name;</b>
+<b class="nc"><i>204</i>&nbsp;        }</b>
+<i>205</i>&nbsp;
+<i>206</i>&nbsp;        public Date getDatePublished() {
+<b class="nc"><i>207</i>&nbsp;            return datePublished;</b>
+<i>208</i>&nbsp;        }
+<i>209</i>&nbsp;
+<i>210</i>&nbsp;        public void setDatePublished(Date datePublished) {
+<b class="nc"><i>211</i>&nbsp;            this.datePublished = datePublished;</b>
+<b class="nc"><i>212</i>&nbsp;        }</b>
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;        public String getAuthor() {
+<b class="nc"><i>215</i>&nbsp;            return author;</b>
+<i>216</i>&nbsp;        }
+<i>217</i>&nbsp;
+<i>218</i>&nbsp;        public void setAuthor(String author) {
+<b class="nc"><i>219</i>&nbsp;            this.author = author;</b>
+<b class="nc"><i>220</i>&nbsp;        }</b>
+<i>221</i>&nbsp;
+<i>222</i>&nbsp;        public String getPublisher() {
+<b class="nc"><i>223</i>&nbsp;            return publisher;</b>
+<i>224</i>&nbsp;        }
+<i>225</i>&nbsp;
+<i>226</i>&nbsp;        public void setPublisher(String publisher) {
+<b class="nc"><i>227</i>&nbsp;            this.publisher = publisher;</b>
+<b class="nc"><i>228</i>&nbsp;        }</b>
+<i>229</i>&nbsp;
+<i>230</i>&nbsp;        public String getGenre() {
+<b class="nc"><i>231</i>&nbsp;            return genre;</b>
+<i>232</i>&nbsp;        }
+<i>233</i>&nbsp;
+<i>234</i>&nbsp;        public void setGenre(String genre) {
+<b class="nc"><i>235</i>&nbsp;            this.genre = genre;</b>
+<b class="nc"><i>236</i>&nbsp;        }</b>
+<i>237</i>&nbsp;        
+<b class="nc"><i>238</i>&nbsp;        public JsonBodyBook(){}</b>
+<i>239</i>&nbsp;    }
+<i>240</i>&nbsp;
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    @PostMapping(value= {&quot;/item/music/{librarianId}&quot;, &quot;/item/music/{librarianId}/&quot;})
+<i>243</i>&nbsp;    @ResponseBody
+<i>244</i>&nbsp;    public MusicDTO addMusic(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>245</i>&nbsp;                             @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
+<b class="nc"><i>246</i>&nbsp;        Music music = musicService.createMusic(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),</b>
+<b class="nc"><i>247</i>&nbsp;                body.getRecordLabel());</b>
+<b class="nc"><i>248</i>&nbsp;        return convertMusicToDTO(music);</b>
+<i>249</i>&nbsp;    }
+<i>250</i>&nbsp;
+<i>251</i>&nbsp;    private MusicDTO convertMusicToDTO(Music music) {
+<b class="nc"><i>252</i>&nbsp;        if (music == null) {</b>
+<b class="nc"><i>253</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Music!&quot;);</b>
+<i>254</i>&nbsp;        }
+<i>255</i>&nbsp;
+<b class="nc"><i>256</i>&nbsp;        MusicDTO musicDTO = new MusicDTO();</b>
+<b class="nc"><i>257</i>&nbsp;        musicDTO.setId(music.getId());</b>
+<b class="nc"><i>258</i>&nbsp;        musicDTO.setName(music.getName());</b>
+<b class="nc"><i>259</i>&nbsp;        musicDTO.setDatePublished(music.getDatePublished());</b>
+<b class="nc"><i>260</i>&nbsp;        musicDTO.setMusician(music.getMusician());</b>
+<b class="nc"><i>261</i>&nbsp;        musicDTO.setRecordLabel(music.getRecordLabel());</b>
+<b class="nc"><i>262</i>&nbsp;        return musicDTO;</b>
+<i>263</i>&nbsp;    }
+<i>264</i>&nbsp;
+<i>265</i>&nbsp;    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+<i>266</i>&nbsp;    private static class JsonBodyMusic {
+<i>267</i>&nbsp;        private Integer id;
+<i>268</i>&nbsp;        private String name;
+<i>269</i>&nbsp;        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd&quot;)
+<i>270</i>&nbsp;        private Date datePublished;
+<i>271</i>&nbsp;        private String musician;
+<i>272</i>&nbsp;        private String recordLabel;
+<i>273</i>&nbsp;
+<i>274</i>&nbsp;        public Integer getId() {
+<b class="nc"><i>275</i>&nbsp;            return id;</b>
+<i>276</i>&nbsp;        }
+<i>277</i>&nbsp;
+<i>278</i>&nbsp;        public void setId(Integer id) {
+<b class="nc"><i>279</i>&nbsp;            this.id = id;</b>
+<b class="nc"><i>280</i>&nbsp;        }</b>
+<i>281</i>&nbsp;
+<i>282</i>&nbsp;        public String getName() {
+<b class="nc"><i>283</i>&nbsp;            return name;</b>
+<i>284</i>&nbsp;        }
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;        public void setName(String name) {
+<b class="nc"><i>287</i>&nbsp;            this.name = name;</b>
+<b class="nc"><i>288</i>&nbsp;        }</b>
+<i>289</i>&nbsp;
+<i>290</i>&nbsp;        public Date getDatePublished() {
+<b class="nc"><i>291</i>&nbsp;            return datePublished;</b>
+<i>292</i>&nbsp;        }
+<i>293</i>&nbsp;
+<i>294</i>&nbsp;        public void setDatePublished(Date datePublished) {
+<b class="nc"><i>295</i>&nbsp;            this.datePublished = datePublished;</b>
+<b class="nc"><i>296</i>&nbsp;        }</b>
+<i>297</i>&nbsp;
+<i>298</i>&nbsp;        public String getMusician() {
+<b class="nc"><i>299</i>&nbsp;            return musician;</b>
+<i>300</i>&nbsp;        }
+<i>301</i>&nbsp;
+<i>302</i>&nbsp;        public void setMusician(String musician) {
+<b class="nc"><i>303</i>&nbsp;            this.musician = musician;</b>
+<b class="nc"><i>304</i>&nbsp;        }</b>
+<i>305</i>&nbsp;
+<i>306</i>&nbsp;        public String getRecordLabel() {
+<b class="nc"><i>307</i>&nbsp;            return recordLabel;</b>
+<i>308</i>&nbsp;        }
+<i>309</i>&nbsp;
+<i>310</i>&nbsp;        public void setRecordLabel(String recordLabel) {
+<b class="nc"><i>311</i>&nbsp;            this.recordLabel = recordLabel;</b>
+<b class="nc"><i>312</i>&nbsp;        }</b>
+<i>313</i>&nbsp;        
+<b class="nc"><i>314</i>&nbsp;        public JsonBodyMusic(){}</b>
+<i>315</i>&nbsp;    }
+<i>316</i>&nbsp;
+<i>317</i>&nbsp;    @PostMapping(value= {&quot;/item/newspaper/{librarianId}&quot;, &quot;/item/newspaper/{librarianId}/&quot;})
+<i>318</i>&nbsp;    @ResponseBody
+<i>319</i>&nbsp;    public NewspaperDTO addNewspaper(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>320</i>&nbsp;                                 @RequestBody JsonBodyNewspaper body) throws IllegalArgumentException{
+<b class="nc"><i>321</i>&nbsp;        Newspaper newspaper = newspaperService.createNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());</b>
+<b class="nc"><i>322</i>&nbsp;        return convertNewspaperToDTO(newspaper);</b>
+<i>323</i>&nbsp;    }
+<i>324</i>&nbsp;
+<i>325</i>&nbsp;    private NewspaperDTO convertNewspaperToDTO(Newspaper newspaper) {
+<b class="nc"><i>326</i>&nbsp;        if (newspaper == null) {</b>
+<b class="nc"><i>327</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Newspaper!&quot;);</b>
+<i>328</i>&nbsp;        }
+<i>329</i>&nbsp;
+<b class="nc"><i>330</i>&nbsp;        NewspaperDTO newspaperDTO = new NewspaperDTO();</b>
+<b class="nc"><i>331</i>&nbsp;        newspaperDTO.setId(newspaper.getId());</b>
+<b class="nc"><i>332</i>&nbsp;        newspaperDTO.setName(newspaper.getName());</b>
+<b class="nc"><i>333</i>&nbsp;        newspaperDTO.setDatePublished(newspaper.getDatePublished());</b>
+<b class="nc"><i>334</i>&nbsp;        newspaperDTO.setHeadline(newspaper.getHeadline());</b>
+<b class="nc"><i>335</i>&nbsp;        return newspaperDTO;</b>
+<i>336</i>&nbsp;    }
+<i>337</i>&nbsp;
+<i>338</i>&nbsp;    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+<i>339</i>&nbsp;    private static class JsonBodyNewspaper {
+<i>340</i>&nbsp;        private Integer id;
+<i>341</i>&nbsp;        private String name;
+<i>342</i>&nbsp;        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd&quot;)
+<i>343</i>&nbsp;        private Date datePublished;
+<i>344</i>&nbsp;        private String headline;
+<i>345</i>&nbsp;
+<i>346</i>&nbsp;        public Integer getId() {
+<b class="nc"><i>347</i>&nbsp;            return id;</b>
+<i>348</i>&nbsp;        }
+<i>349</i>&nbsp;
+<i>350</i>&nbsp;        public void setId(Integer id) {
+<b class="nc"><i>351</i>&nbsp;            this.id = id;</b>
+<b class="nc"><i>352</i>&nbsp;        }</b>
+<i>353</i>&nbsp;
+<i>354</i>&nbsp;        public String getName() {
+<b class="nc"><i>355</i>&nbsp;            return name;</b>
+<i>356</i>&nbsp;        }
+<i>357</i>&nbsp;
+<i>358</i>&nbsp;        public void setName(String name) {
+<b class="nc"><i>359</i>&nbsp;            this.name = name;</b>
+<b class="nc"><i>360</i>&nbsp;        }</b>
+<i>361</i>&nbsp;
+<i>362</i>&nbsp;        public Date getDatePublished() {
+<b class="nc"><i>363</i>&nbsp;            return datePublished;</b>
+<i>364</i>&nbsp;        }
+<i>365</i>&nbsp;
+<i>366</i>&nbsp;        public void setDatePublished(Date datePublished) {
+<b class="nc"><i>367</i>&nbsp;            this.datePublished = datePublished;</b>
+<b class="nc"><i>368</i>&nbsp;        }</b>
+<i>369</i>&nbsp;
+<i>370</i>&nbsp;        public String getHeadline() {
+<b class="nc"><i>371</i>&nbsp;            return headline;</b>
+<i>372</i>&nbsp;        }
+<i>373</i>&nbsp;
+<i>374</i>&nbsp;        public void setHeadline(String headline) {
+<b class="nc"><i>375</i>&nbsp;            this.headline = headline;</b>
+<b class="nc"><i>376</i>&nbsp;        }</b>
+<i>377</i>&nbsp;        
+<b class="nc"><i>378</i>&nbsp;        public JsonBodyNewspaper(){}</b>
+<i>379</i>&nbsp;    }
+<i>380</i>&nbsp;    
+<i>381</i>&nbsp;    
+<i>382</i>&nbsp;    // update music, movie, book, newspaper
+<i>383</i>&nbsp;    
+<i>384</i>&nbsp;    @PutMapping(value= {&quot;/item/movie/{librarianId}&quot;, &quot;/item/movie/{librarianId}/&quot;})
+<i>385</i>&nbsp;    @ResponseBody
+<i>386</i>&nbsp;    public MovieDTO updateMovie(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>387</i>&nbsp;                                 @RequestBody JsonBodyMovie body) throws IllegalArgumentException{
+<b class="nc"><i>388</i>&nbsp;        Movie movie = movieService.updateMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),</b>
+<b class="nc"><i>389</i>&nbsp;				body.getRunningTime(), body.getRating(), body.getFilmDistributor());</b>
+<b class="nc"><i>390</i>&nbsp;        return convertMovieToDTO(movie);</b>
+<i>391</i>&nbsp;    }
+<i>392</i>&nbsp;    @PutMapping(value= {&quot;/item/music/{librarianId}&quot;, &quot;/item/music/{librarianId}/&quot;})
+<i>393</i>&nbsp;    @ResponseBody
+<i>394</i>&nbsp;    public MusicDTO updateMusic(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>395</i>&nbsp;                                 @RequestBody JsonBodyMusic body) throws IllegalArgumentException{
+<b class="nc"><i>396</i>&nbsp;        Music music = musicService.updateMusic(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getMusician(),</b>
+<b class="nc"><i>397</i>&nbsp;                body.getRecordLabel());</b>
+<b class="nc"><i>398</i>&nbsp;        return convertMusicToDTO(music);</b>
+<i>399</i>&nbsp;    }
+<i>400</i>&nbsp;    @PutMapping(value= {&quot;/item/book/{librarianId}&quot;, &quot;/item/book/{librarianId}/&quot;})
+<i>401</i>&nbsp;    @ResponseBody
+<i>402</i>&nbsp;    public BookDTO updateBook(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>403</i>&nbsp;                                 @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+<b class="nc"><i>404</i>&nbsp;    	Book book = bookService.updateBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),</b>
+<b class="nc"><i>405</i>&nbsp;                body.getPublisher(), body.getGenre());</b>
+<b class="nc"><i>406</i>&nbsp;        return convertBookToDTO(book);</b>
+<i>407</i>&nbsp;    }
+<i>408</i>&nbsp;    @PutMapping(value= {&quot;/item/newspaper/{librarianId}&quot;, &quot;/item/newspaper/{librarianId}/&quot;})
+<i>409</i>&nbsp;    @ResponseBody
+<i>410</i>&nbsp;    public NewspaperDTO updateNewspaper(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>411</i>&nbsp;                                 @RequestBody JsonBodyNewspaper body) throws IllegalArgumentException{
+<b class="nc"><i>412</i>&nbsp;        Newspaper newspaper = newspaperService.updateNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());</b>
+<b class="nc"><i>413</i>&nbsp;        return convertNewspaperToDTO(newspaper);</b>
+<i>414</i>&nbsp;    }
+<i>415</i>&nbsp;    
+<i>416</i>&nbsp;    
+<i>417</i>&nbsp;    // delete music, movie, book, newspaper
+<i>418</i>&nbsp;    
+<i>419</i>&nbsp;    @DeleteMapping(value= {&quot;/item/movie/{librarianId}/{id}&quot;, &quot;/item/movie/{librarianId}/{id}/&quot;})
+<i>420</i>&nbsp;    public void deleteMovie(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>421</i>&nbsp;    		@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>422</i>&nbsp;    	movieService.deleteMovie(id, librarianId);</b>
+<b class="nc"><i>423</i>&nbsp;    }</b>
+<i>424</i>&nbsp;    
+<i>425</i>&nbsp;    @DeleteMapping(value= {&quot;/item/book/{librarianId}/{id}&quot;, &quot;/item/book/{librarianId}/{id}/&quot;})
+<i>426</i>&nbsp;    public void deleteBook(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>427</i>&nbsp;    		@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>428</i>&nbsp;    	bookService.deleteBook(id, librarianId);</b>
+<b class="nc"><i>429</i>&nbsp;    }</b>
+<i>430</i>&nbsp;    
+<i>431</i>&nbsp;    @DeleteMapping(value= {&quot;/item/music/{librarianId}/{id}&quot;, &quot;/item/music/{librarianId}/{id}/&quot;})
+<i>432</i>&nbsp;    public void deleteMusic(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>433</i>&nbsp;    		@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>434</i>&nbsp;    	musicService.deleteMusic(id, librarianId);</b>
+<b class="nc"><i>435</i>&nbsp;    }</b>
+<i>436</i>&nbsp;    
+<i>437</i>&nbsp;    @DeleteMapping(value= {&quot;/item/newspaper/{librarianId}/{id}&quot;, &quot;/item/newspaper/{librarianId}/{id}/&quot;})
+<i>438</i>&nbsp;    public void deleteNewspaper(@PathVariable(&quot;librarianId&quot;) int librarianId,
+<i>439</i>&nbsp;    		@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>440</i>&nbsp;    	newspaperService.deleteNewspaper(id, librarianId);</b>
+<b class="nc"><i>441</i>&nbsp;    }</b>
+<i>442</i>&nbsp;    
+<i>443</i>&nbsp;    @GetMapping(value= {&quot;/item/movie/id/{id}&quot;, &quot;/item/movie/id/{id}/&quot;})
+<i>444</i>&nbsp;    public MovieDTO getMovieById(@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>445</i>&nbsp;    	Movie movie = movieService.getMovie(id);</b>
+<b class="nc"><i>446</i>&nbsp;    	return convertMovieToDTO(movie);    </b>
+<i>447</i>&nbsp;    }
+<i>448</i>&nbsp;    @GetMapping(value= {&quot;/item/book/id/{id}&quot;, &quot;/item/book/id/{id}/&quot;})
+<i>449</i>&nbsp;    public BookDTO getBookById(@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>450</i>&nbsp;    	Book book = bookService.getBook(id);</b>
+<b class="nc"><i>451</i>&nbsp;    	return convertBookToDTO(book);</b>
+<i>452</i>&nbsp;    }
+<i>453</i>&nbsp;    @GetMapping(value= {&quot;/item/music/id/{id}&quot;, &quot;/item/music/id/{id}/&quot;})
+<i>454</i>&nbsp;    public MusicDTO getMusicById(@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>455</i>&nbsp;    	Music music = musicService.getMusic(id);</b>
+<b class="nc"><i>456</i>&nbsp;    	return convertMusicToDTO(music);</b>
+<i>457</i>&nbsp;    }
+<i>458</i>&nbsp;    @GetMapping(value= {&quot;/item/newspaper/id/{id}&quot;, &quot;/item/newspaper/id/{id}/&quot;})
+<i>459</i>&nbsp;    public NewspaperDTO getNewspaperById(@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>460</i>&nbsp;    	Newspaper newspaper = newspaperService.getNewspaper(id);</b>
+<b class="nc"><i>461</i>&nbsp;    	return convertNewspaperToDTO(newspaper);</b>
+<i>462</i>&nbsp;    }
+<i>463</i>&nbsp;    
+<i>464</i>&nbsp;    @GetMapping(value= {&quot;/item/movie/name/{name}&quot;, &quot;/item/movie/name/{name}/&quot;})
+<i>465</i>&nbsp;    public List&lt;ItemDTO&gt; getMovieByName(@PathVariable(&quot;name&quot;) String name) throws IllegalArgumentException{
+<b class="nc"><i>466</i>&nbsp;    	return movieService.getMovieByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>467</i>&nbsp;    }
+<i>468</i>&nbsp;    @GetMapping(value= {&quot;/item/music/name/{name}&quot;, &quot;/item/music/name/{name}/&quot;})
+<i>469</i>&nbsp;    public List&lt;ItemDTO&gt; getMusicByName(@PathVariable(&quot;name&quot;) String name) throws IllegalArgumentException{
+<b class="nc"><i>470</i>&nbsp;    	return musicService.getMusicByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>471</i>&nbsp;    }
+<i>472</i>&nbsp;    @GetMapping(value= {&quot;/item/book/name/{name}&quot;, &quot;/item/book/name/{name}/&quot;})
+<i>473</i>&nbsp;    public List&lt;ItemDTO&gt; getBookByName(@PathVariable(&quot;name&quot;) String name) throws IllegalArgumentException{
+<b class="nc"><i>474</i>&nbsp;    	return bookService.getBookByName(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>475</i>&nbsp;    }
+<i>476</i>&nbsp;    @GetMapping(value= {&quot;/item/newspaper/name/{name}&quot;, &quot;/item/newspaper/name/{name}/&quot;})
+<i>477</i>&nbsp;    public NewspaperDTO getNewspaperByHeadline(@PathVariable(&quot;name&quot;) String name) throws IllegalArgumentException{
+<b class="nc"><i>478</i>&nbsp;    	Newspaper newspaper = newspaperService.getNewspaperByHeadline(name);</b>
+<b class="nc"><i>479</i>&nbsp;    	return convertNewspaperToDTO(newspaper);</b>
+<i>480</i>&nbsp;    }
+<i>481</i>&nbsp;    
+<i>482</i>&nbsp;    @GetMapping(value= {&quot;/item/{type}/{name}&quot;, &quot;/item/{type}/{name}/&quot;})
+<i>483</i>&nbsp;    public List&lt;ItemDTO&gt; getItemByVariable(@PathVariable(&quot;type&quot;) String type, @PathVariable(&quot;name&quot;) String name) throws IllegalArgumentException{
+<b class="nc"><i>484</i>&nbsp;    	if(type.toLowerCase().equals(&quot;director&quot;)) {</b>
+<b class="nc"><i>485</i>&nbsp;    		return movieService.getMovieFromDirector(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>486</i>&nbsp;    	}
+<b class="nc"><i>487</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;musician&quot;)) {</b>
+<b class="nc"><i>488</i>&nbsp;        	return musicService.getMusicFromMusician(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>489</i>&nbsp;    	}
+<b class="nc"><i>490</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;author&quot;)) {</b>
+<b class="nc"><i>491</i>&nbsp;        	return bookService.getBookFromAuthor(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>492</i>&nbsp;    	}
+<b class="nc"><i>493</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;distributor&quot;)) { </b>
+<b class="nc"><i>494</i>&nbsp;    		return movieService.getMovieFromDistributor(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>495</i>&nbsp;    	}
+<b class="nc"><i>496</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;publisher&quot;)) {</b>
+<b class="nc"><i>497</i>&nbsp;        	return bookService.getBookFromPublisher(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>498</i>&nbsp;    	}
+<b class="nc"><i>499</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;rating&quot;)) {</b>
+<b class="nc"><i>500</i>&nbsp;    		return movieService.getMovieFromRating(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>501</i>&nbsp;    	}
+<b class="nc"><i>502</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;label&quot;)) {</b>
+<b class="nc"><i>503</i>&nbsp;        	return musicService.getMusicFromLabel(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>504</i>&nbsp;    	}
+<b class="nc"><i>505</i>&nbsp;    	else if(type.toLowerCase().equals(&quot;genre&quot;)) {</b>
+<b class="nc"><i>506</i>&nbsp;    		return bookService.getBookFromGenre(name).stream().map(this::convertItemToDTO).collect(Collectors.toList());</b>
+<i>507</i>&nbsp;    	}
+<b class="nc"><i>508</i>&nbsp;    	return null;</b>
+<i>509</i>&nbsp;    }
+<i>510</i>&nbsp;    
+<i>511</i>&nbsp;    
+<i>512</i>&nbsp;    
+<i>513</i>&nbsp;    
+<i>514</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

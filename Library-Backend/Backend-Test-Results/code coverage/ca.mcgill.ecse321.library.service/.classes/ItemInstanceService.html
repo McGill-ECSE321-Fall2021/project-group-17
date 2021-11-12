@@ -1,0 +1,149 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ItemInstanceService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ItemInstanceService (ca.mcgill.ecse321.library.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ItemInstanceService</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.6%
+  </span>
+  <span class="absValue">
+    (11/ 13)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ItemInstanceService$$EnhancerBySpringCGLIB$$4a9b1a62</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.6%
+  </span>
+  <span class="absValue">
+    (11/ 13)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.dao.CheckableItemRepository;
+<i>4</i>&nbsp;import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.model.CheckableItem;
+<i>6</i>&nbsp;import ca.mcgill.ecse321.library.model.Item;
+<i>7</i>&nbsp;import ca.mcgill.ecse321.library.model.ItemInstance;
+<i>8</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.ItemInstanceException;
+<i>9</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>10</i>&nbsp;import org.springframework.stereotype.Service;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import javax.transaction.Transactional;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;@Service
+<b class="fc"><i>16</i>&nbsp;public class ItemInstanceService {</b>
+<i>17</i>&nbsp;    @Autowired
+<i>18</i>&nbsp;    private ItemInstanceRepository itemInstanceRepository;
+<i>19</i>&nbsp;    @Autowired
+<i>20</i>&nbsp;    private CheckableItemRepository checkableItemRepository;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     *
+<i>24</i>&nbsp;     * @param checkableItemId
+<i>25</i>&nbsp;     * @return
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    @Transactional
+<i>28</i>&nbsp;    public ItemInstance createItemInstance(Integer checkableItemId) {
+<b class="fc"><i>29</i>&nbsp;        ItemInstance itemInstance = new ItemInstance();</b>
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;        if (checkableItemId != null) {</b>
+<b class="fc"><i>32</i>&nbsp;            Item item = checkableItemRepository.findItemById(checkableItemId);</b>
+<b class="fc"><i>33</i>&nbsp;            if (item instanceof CheckableItem) {</b>
+<b class="nc"><i>34</i>&nbsp;                itemInstance.setCheckableItem((CheckableItem) item);</b>
+<i>35</i>&nbsp;            }
+<i>36</i>&nbsp;        }
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;        itemInstanceRepository.save(itemInstance);</b>
+<b class="fc"><i>39</i>&nbsp;        return itemInstance;</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @Transactional
+<i>43</i>&nbsp;    public ItemInstance getItemInstance(int serialNum) {
+<b class="fc"><i>44</i>&nbsp;        ItemInstance itemInstance = itemInstanceRepository.findItemInstanceBySerialNum(serialNum);</b>
+<b class="fc"><i>45</i>&nbsp;        if(itemInstance == null){</b>
+<b class="fc"><i>46</i>&nbsp;            throw new ItemInstanceException(&quot;There exist no item instance by that Id&quot;);</b>
+<i>47</i>&nbsp;        }
+<b class="fc"><i>48</i>&nbsp;        return itemInstanceRepository.findItemInstanceBySerialNum(serialNum);</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Transactional
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public List&lt;ItemInstance&gt; viewInventory() {
+<b class="nc"><i>54</i>&nbsp;        return (List&lt;ItemInstance&gt;) itemInstanceRepository.findAll();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MovieService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MovieService (ca.mcgill.ecse321.library.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MovieService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.7%
+  </span>
+  <span class="absValue">
+    (67/ 70)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MovieService$$EnhancerBySpringCGLIB$$e6582c1e</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.7%
+  </span>
+  <span class="absValue">
+    (67/ 70)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.sql.Date;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import javax.transaction.Transactional;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>9</i>&nbsp;import org.springframework.stereotype.Service;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import ca.mcgill.ecse321.library.dao.LibrarianRepository;
+<i>12</i>&nbsp;import ca.mcgill.ecse321.library.dao.MovieRepository;
+<i>13</i>&nbsp;import ca.mcgill.ecse321.library.model.Item;
+<i>14</i>&nbsp;import ca.mcgill.ecse321.library.model.Librarian;
+<i>15</i>&nbsp;import ca.mcgill.ecse321.library.model.Movie;
+<i>16</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.MovieException;
+<i>17</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
+<i>18</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
+<i>19</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.PersonException;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;@Service
+<b class="fc"><i>22</i>&nbsp;public class MovieService {</b>
+<i>23</i>&nbsp;    @Autowired
+<i>24</i>&nbsp;    private MovieRepository movieRepository;
+<i>25</i>&nbsp;    @Autowired
+<i>26</i>&nbsp;    private LibrarianRepository librarianRepository;
+<i>27</i>&nbsp;    
+<i>28</i>&nbsp;    @Transactional
+<i>29</i>&nbsp;    public Movie createMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) throws Exception{
+<b class="fc"><i>30</i>&nbsp;    	String error = &quot;&quot;;</b>
+<b class="fc"><i>31</i>&nbsp;    	if (librarianId == null) {</b>
+<b class="fc"><i>32</i>&nbsp;    		throw new IllegalArgumentException(&quot;Librarian does not exist! &quot;);</b>
+<i>33</i>&nbsp;    	}
+<b class="fc"><i>34</i>&nbsp;    	Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);</b>
+<b class="fc"><i>35</i>&nbsp;        if (librarian == null) {</b>
+<b class="nc"><i>36</i>&nbsp;            error = error + &quot;Librarian does not exist! &quot;;</b>
+<i>37</i>&nbsp;        }
+<b class="fc"><i>38</i>&nbsp;        if (id == null) {</b>
+<b class="fc"><i>39</i>&nbsp;            error = error + &quot;Id needs to be provided!&quot;;</b>
+<i>40</i>&nbsp;        }
+<b class="fc"><i>41</i>&nbsp;        if (name == null) {</b>
+<b class="fc"><i>42</i>&nbsp;            error = error + &quot;Name needs to be provided!&quot;;</b>
+<i>43</i>&nbsp;        }
+<b class="fc"><i>44</i>&nbsp;        error = error.trim();</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;        if (error.length() &gt; 0) {</b>
+<b class="fc"><i>47</i>&nbsp;            throw new IllegalArgumentException(error);</b>
+<i>48</i>&nbsp;        }
+<i>49</i>&nbsp;        
+<b class="fc"><i>50</i>&nbsp;    	Movie movie = new Movie();</b>
+<b class="fc"><i>51</i>&nbsp;        movie.setId(id);</b>
+<b class="fc"><i>52</i>&nbsp;        movie.setName(name);</b>
+<b class="fc"><i>53</i>&nbsp;        movie.setDatePublished(date);</b>
+<b class="fc"><i>54</i>&nbsp;        movie.setFilmDistributor(distributor);</b>
+<b class="fc"><i>55</i>&nbsp;        movie.setRating(rating);</b>
+<b class="fc"><i>56</i>&nbsp;        movie.setDirector(director);</b>
+<b class="fc"><i>57</i>&nbsp;        movie.setRunningTime(runningTime);</b>
+<b class="fc"><i>58</i>&nbsp;        movieRepository.save(movie);</b>
+<b class="fc"><i>59</i>&nbsp;        return movie;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;    
+<i>62</i>&nbsp;    @Transactional
+<i>63</i>&nbsp;    public void deleteMovie(Integer movieId, Integer librarianId){
+<b class="fc"><i>64</i>&nbsp;        if(movieId == null){</b>
+<b class="fc"><i>65</i>&nbsp;            throw new MovieException(&quot;Cannot find movie with id to delete&quot;);</b>
+<i>66</i>&nbsp;        }
+<b class="fc"><i>67</i>&nbsp;        Movie movie = (Movie) movieRepository.findItemById(movieId);</b>
+<b class="fc"><i>68</i>&nbsp;        if(movie == null){</b>
+<b class="fc"><i>69</i>&nbsp;            throw new NotFoundException(&quot;Cannot find movie to delete&quot;);</b>
+<i>70</i>&nbsp;        }
+<b class="fc"><i>71</i>&nbsp;        if(librarianId == null){</b>
+<b class="fc"><i>72</i>&nbsp;            throw new MovieException(&quot;Cannot authorize librarian to delete movie&quot;);</b>
+<i>73</i>&nbsp;        }
+<b class="fc"><i>74</i>&nbsp;        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);</b>
+<b class="fc"><i>75</i>&nbsp;        if(librarian == null){</b>
+<b class="fc"><i>76</i>&nbsp;            throw new OnlineAccountException(&quot;Librarian not found in request&quot;);</b>
+<i>77</i>&nbsp;        }
+<b class="fc"><i>78</i>&nbsp;        if (!(librarian instanceof Librarian)) {</b>
+<b class="nc"><i>79</i>&nbsp;        	throw new PersonException(&quot;User must be a librarian&quot;);</b>
+<i>80</i>&nbsp;        }
+<b class="fc"><i>81</i>&nbsp;        movieRepository.deleteById(movieId);</b>
+<b class="fc"><i>82</i>&nbsp;        movie = null;</b>
+<b class="fc"><i>83</i>&nbsp;    }</b>
+<i>84</i>&nbsp;    
+<i>85</i>&nbsp;    @Transactional
+<i>86</i>&nbsp;    public Movie updateMovie(Integer librarianId, Integer id, String name, Date date, String director, Integer runningTime, String rating, String distributor) {
+<b class="fc"><i>87</i>&nbsp;    	if (librarianId == null || librarianRepository.findPersonRoleById(librarianId) == null) {</b>
+<b class="nc"><i>88</i>&nbsp;        	throw new PersonException(&quot;Librarian does not exist!&quot;);</b>
+<i>89</i>&nbsp;    	}
+<i>90</i>&nbsp;    	
+<b class="fc"><i>91</i>&nbsp;    	Movie movie = (Movie) movieRepository.findItemById(id);</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;        if (movie == null) {</b>
+<b class="fc"><i>94</i>&nbsp;            throw new MovieException(&quot;Can&#39;t update movie because no movie exists for the given id.&quot;);</b>
+<i>95</i>&nbsp;        }
+<i>96</i>&nbsp;
+<b class="fc"><i>97</i>&nbsp;        if (id != null) {</b>
+<b class="fc"><i>98</i>&nbsp;        	movie.setId(id);</b>
+<i>99</i>&nbsp;        }
+<i>100</i>&nbsp;
+<b class="fc"><i>101</i>&nbsp;        if (name != null) {</b>
+<b class="fc"><i>102</i>&nbsp;            movie.setName(name);</b>
+<i>103</i>&nbsp;        }
+<i>104</i>&nbsp;
+<b class="fc"><i>105</i>&nbsp;        if (date != null) {</b>
+<b class="fc"><i>106</i>&nbsp;            movie.setDatePublished(date);</b>
+<i>107</i>&nbsp;        }
+<i>108</i>&nbsp;
+<b class="fc"><i>109</i>&nbsp;        if (director != null) {</b>
+<b class="fc"><i>110</i>&nbsp;            movie.setDirector(director);</b>
+<i>111</i>&nbsp;        }
+<i>112</i>&nbsp;        
+<b class="fc"><i>113</i>&nbsp;        if (runningTime != null) {</b>
+<b class="fc"><i>114</i>&nbsp;            movie.setRunningTime(runningTime);</b>
+<i>115</i>&nbsp;        }
+<i>116</i>&nbsp;        
+<b class="fc"><i>117</i>&nbsp;        if (rating != null) {</b>
+<b class="fc"><i>118</i>&nbsp;            movie.setRating(rating);</b>
+<i>119</i>&nbsp;        }
+<i>120</i>&nbsp;        
+<b class="fc"><i>121</i>&nbsp;        if (distributor != null) {</b>
+<b class="fc"><i>122</i>&nbsp;            movie.setFilmDistributor(distributor);</b>
+<i>123</i>&nbsp;        }
+<i>124</i>&nbsp;
+<b class="fc"><i>125</i>&nbsp;        movieRepository.save(movie);</b>
+<b class="fc"><i>126</i>&nbsp;        return movie;</b>
+<i>127</i>&nbsp;    }
+<i>128</i>&nbsp;    
+<i>129</i>&nbsp;    @Transactional
+<i>130</i>&nbsp;    public Movie getMovie(Integer movieId){
+<b class="fc"><i>131</i>&nbsp;        Movie movie = (Movie) movieRepository.findItemById(movieId);</b>
+<b class="fc"><i>132</i>&nbsp;        return movie;</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;    @Transactional
+<i>135</i>&nbsp;    public List&lt;Item&gt; getMovieByName(String name){
+<b class="fc"><i>136</i>&nbsp;        List&lt;Item&gt; results = movieRepository.findItemByName(name);</b>
+<b class="fc"><i>137</i>&nbsp;        return results;</b>
+<i>138</i>&nbsp;    }
+<i>139</i>&nbsp;    @Transactional
+<i>140</i>&nbsp;    public List&lt;Movie&gt; getMovieFromDirector(String director){
+<b class="fc"><i>141</i>&nbsp;        List&lt;Movie&gt; results = movieRepository.findMovieByDirector(director);</b>
+<b class="fc"><i>142</i>&nbsp;        return results;</b>
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;    @Transactional
+<i>145</i>&nbsp;    public List&lt;Movie&gt; getMovieFromDistributor(String distributor){
+<b class="fc"><i>146</i>&nbsp;        List&lt;Movie&gt; results = movieRepository.findMovieByFilmDistributor(distributor);</b>
+<b class="fc"><i>147</i>&nbsp;        return results;</b>
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;    @Transactional
+<i>150</i>&nbsp;    public List&lt;Movie&gt; getMovieFromRating(String rating){
+<b class="fc"><i>151</i>&nbsp;        List&lt;Movie&gt; results = movieRepository.findMovieByRating(rating);</b>
+<b class="fc"><i>152</i>&nbsp;        return results;</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

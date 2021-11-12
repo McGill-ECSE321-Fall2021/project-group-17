@@ -1,0 +1,73 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoanRepository</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoanRepository (ca.mcgill.ecse321.library.dao)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">LoanRepository$MockitoMock$1645122954</td>
+  </tr>
+  <tr>
+    <td class="name">LoanRepository$MockitoMock$1645122954$auxiliary$5KD8bG7Y</td>
+  </tr>
+  <tr>
+    <td class="name">LoanRepository$MockitoMock$1645122954$auxiliary$kJCZdtg5</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.model.Customer;
+<i>4</i>&nbsp;import ca.mcgill.ecse321.library.model.ItemInstance;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.model.Loan;
+<i>6</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.sql.Date;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public interface LoanRepository extends CrudRepository&lt;Loan, Integer&gt;  {
+<i>12</i>&nbsp;    Loan findLoanById(Integer id);
+<i>13</i>&nbsp;    List&lt;Loan&gt; findLoanByCheckedOut(Date checkedOut);
+<i>14</i>&nbsp;    List&lt;Loan&gt; findLoanByReturnDate(Date returnDate);
+<i>15</i>&nbsp;    Loan findByItemInstance(ItemInstance itemInstance);
+<i>16</i>&nbsp;    List&lt;Loan&gt; findLoansByCustomer(Customer customer);
+<i>17</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>
