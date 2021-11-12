@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ItemInstance</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ItemInstance (ca.mcgill.ecse321.library.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ItemInstance</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ItemInstance$HibernateProxy$mqOBVVAl</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javax.persistence.*;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;@Entity
+<i>6</i>&nbsp;public class ItemInstance {
+<i>7</i>&nbsp;    private int serialNum;
+<i>8</i>&nbsp;    private CheckableItem checkableItem;
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;    public ItemInstance() {}</b>
+<i>11</i>&nbsp;
+<b class="fc"><i>12</i>&nbsp;    public ItemInstance(CheckableItem item) {</b>
+<b class="fc"><i>13</i>&nbsp;        this.checkableItem = item;</b>
+<b class="fc"><i>14</i>&nbsp;    }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @Id
+<i>17</i>&nbsp;    @GeneratedValue(strategy=GenerationType.AUTO)
+<i>18</i>&nbsp;    public int getSerialNum() {
+<b class="fc"><i>19</i>&nbsp;        return this.serialNum;</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public void setSerialNum(int serialNum) {
+<b class="fc"><i>23</i>&nbsp;        this.serialNum = serialNum;</b>
+<b class="fc"><i>24</i>&nbsp;    }</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    //had to remove optional tag to get tests to pass idk if this will be a problem later -tom
+<i>27</i>&nbsp;    @ManyToOne()
+<i>28</i>&nbsp;    public CheckableItem getCheckableItem() {
+<b class="fc"><i>29</i>&nbsp;        return this.checkableItem;</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public void setCheckableItem(CheckableItem item) {
+<b class="fc"><i>33</i>&nbsp;        this.checkableItem = item;</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /*@OneToOne
+<i>37</i>&nbsp;    public Reservation getReservation() {
+<i>38</i>&nbsp;        return this.reservation;
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public void setReservation(Reservation reservation) {
+<i>42</i>&nbsp;        this.reservation = reservation;
+<i>43</i>&nbsp;    }*/
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    /*@OneToOne
+<i>46</i>&nbsp;    public Loan getLoan() {
+<i>47</i>&nbsp;        return this.loan;
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void setLoan(Loan loan) {
+<i>51</i>&nbsp;        this.loan = loan;
+<i>52</i>&nbsp;    }*/
+<i>53</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

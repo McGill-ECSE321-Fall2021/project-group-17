@@ -1,0 +1,240 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoanRestController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoanRestController (ca.mcgill.ecse321.library.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoanRestController</td>
+<td class="coverageStat">
+  <span class="percent">
+    14.3%
+  </span>
+  <span class="absValue">
+    (1/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.6%
+  </span>
+  <span class="absValue">
+    (1/ 18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LoanRestController$JsonBody</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    6.2%
+  </span>
+  <span class="absValue">
+    (1/ 16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.2%
+  </span>
+  <span class="absValue">
+    (1/ 31)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.dto.LoanDTO;
+<i>4</i>&nbsp;import ca.mcgill.ecse321.library.model.Loan;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.service.LoanService;
+<i>6</i>&nbsp;import com.fasterxml.jackson.annotation.JsonFormat;
+<i>7</i>&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+<i>8</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>9</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.sql.Date;
+<i>12</i>&nbsp;import java.util.List;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import org.springframework.web.bind.annotation.RequestParam;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;@RestController
+<i>17</i>&nbsp;@CrossOrigin(&quot;*&quot;)
+<b class="fc"><i>18</i>&nbsp;public class LoanRestController {</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * returns created loan
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    @Autowired
+<i>24</i>&nbsp;    private LoanService service;
+<i>25</i>&nbsp;    @PostMapping(value= {&quot;/loan&quot;,&quot;/loan/&quot;})
+<i>26</i>&nbsp;    public LoanDTO createLoan(@RequestBody JsonBody body){
+<b class="nc"><i>27</i>&nbsp;        Loan loan = service.createLoan(body.getCheckedOut(), body.getItemId(), body.getCustomerId(),</b>
+<b class="nc"><i>28</i>&nbsp;                body.getReturnDate());</b>
+<b class="nc"><i>29</i>&nbsp;        return convertToDto(loan);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * deletes loan
+<i>34</i>&nbsp;     * @param id
+<i>35</i>&nbsp;     * @param customerId
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    @DeleteMapping(value={&quot;/loan/{id}&quot;,&quot;/loan/{id}/&quot;})
+<i>38</i>&nbsp;    public void deleteLoan(@PathVariable Integer id, @RequestParam(value = &quot;customerId&quot;,required = false) Integer customerId){
+<b class="nc"><i>39</i>&nbsp;        service.deleteLoan(id,customerId);</b>
+<b class="nc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    /**
+<i>43</i>&nbsp;     * update loan by loan id
+<i>44</i>&nbsp;     * @param id
+<i>45</i>&nbsp;     * @param body
+<i>46</i>&nbsp;     * @return
+<i>47</i>&nbsp;     */
+<i>48</i>&nbsp;    @PatchMapping({&quot;/loan/{id}&quot;,&quot;/loan/{id}/&quot;})
+<i>49</i>&nbsp;    public LoanDTO updateLoan(@PathVariable Integer id, @RequestBody LoanRestController.JsonBody body){
+<b class="nc"><i>50</i>&nbsp;        return convertToDto(service.updateLoan(id,body.getCheckedOut(),body.getReturnDate(), body.getCustomerId(),</b>
+<b class="nc"><i>51</i>&nbsp;                body.getItemId()));</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    //TODO get vs return date get
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    /**
+<i>57</i>&nbsp;     * returns loan
+<i>58</i>&nbsp;     * @param id
+<i>59</i>&nbsp;     * @param customerId
+<i>60</i>&nbsp;     * @return
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    @GetMapping(&quot;/loan/returndate/{id}&quot;)
+<i>63</i>&nbsp;    public LoanDTO getLoan(@PathVariable(&quot;id&quot;) Integer id, @RequestParam(value = &quot;customerId&quot;, required = false) Integer customerId){
+<b class="nc"><i>64</i>&nbsp;        return convertToDto(service.getLoan(id,customerId));</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * returns all loans for a customer
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    @GetMapping(&quot;/loan/customer/{id}&quot;)
+<i>71</i>&nbsp;    public List&lt;LoanDTO&gt; viewActiveLoans(@PathVariable(&quot;id&quot;) Integer id){
+<b class="nc"><i>72</i>&nbsp;        return service.viewActiveLoans(id);</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    //CONVERT TO DTO
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    private LoanDTO convertToDto(Loan loan){
+<b class="nc"><i>79</i>&nbsp;        if (loan == null) {</b>
+<b class="nc"><i>80</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such loan!&quot;);</b>
+<i>81</i>&nbsp;        }
+<b class="nc"><i>82</i>&nbsp;        LoanDTO loanDTO = new LoanDTO(loan.getId());</b>
+<b class="nc"><i>83</i>&nbsp;        loanDTO.setCheckedOut(loan.getCheckedOut());</b>
+<b class="nc"><i>84</i>&nbsp;        loanDTO.setCustomer(loan.getCustomer());</b>
+<b class="nc"><i>85</i>&nbsp;        loanDTO.setItemInstance(loan.getItemInstance());</b>
+<b class="nc"><i>86</i>&nbsp;        loanDTO.setReturnDate(loan.getReturnDate());</b>
+<b class="nc"><i>87</i>&nbsp;        return loanDTO;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+<b class="nc"><i>91</i>&nbsp;    private static class JsonBody{</b>
+<i>92</i>&nbsp;        private Integer itemId;
+<i>93</i>&nbsp;        private Integer customerId;
+<i>94</i>&nbsp;        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd&quot;)
+<i>95</i>&nbsp;        private Date checkedOut;
+<i>96</i>&nbsp;        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd&quot;)
+<i>97</i>&nbsp;        private Date returnDate;
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;        public Integer getItemId() {
+<b class="nc"><i>100</i>&nbsp;            return itemId;</b>
+<i>101</i>&nbsp;        }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;        public void setItemId(Integer itemId) {
+<b class="nc"><i>104</i>&nbsp;            this.itemId = itemId;</b>
+<b class="nc"><i>105</i>&nbsp;        }</b>
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;        public Integer getCustomerId() {
+<b class="nc"><i>108</i>&nbsp;            return customerId;</b>
+<i>109</i>&nbsp;        }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;        public void setCustomerId(Integer customerId) {
+<b class="nc"><i>112</i>&nbsp;            this.customerId = customerId;</b>
+<b class="nc"><i>113</i>&nbsp;        }</b>
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;        public Date getCheckedOut() {
+<b class="nc"><i>116</i>&nbsp;            return checkedOut;</b>
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;        public void setCheckedOut(Date checkedOut) {
+<b class="nc"><i>120</i>&nbsp;            this.checkedOut = checkedOut;</b>
+<b class="nc"><i>121</i>&nbsp;        }</b>
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;        public Date getReturnDate() {
+<b class="nc"><i>124</i>&nbsp;            return returnDate;</b>
+<i>125</i>&nbsp;        }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;        public void setReturnDate(Date returnDate) {
+<b class="nc"><i>128</i>&nbsp;            this.returnDate = returnDate;</b>
+<b class="nc"><i>129</i>&nbsp;        }</b>
+<i>130</i>&nbsp;    }
+<i>131</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

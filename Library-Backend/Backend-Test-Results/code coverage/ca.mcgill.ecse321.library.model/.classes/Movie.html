@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Movie</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Movie (ca.mcgill.ecse321.library.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Movie</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/ 20)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Movie$HibernateProxy$WGFPuClO</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/ 20)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import javax.persistence.Entity;
+<i>5</i>&nbsp;import java.sql.Date;
+<i>6</i>&nbsp; /*
+<i>7</i>&nbsp; class written by Victoria Sanhcez
+<i>8</i>&nbsp;  */
+<i>9</i>&nbsp;@Entity
+<i>10</i>&nbsp;public class Movie extends CheckableItem {
+<i>11</i>&nbsp;    String director;
+<i>12</i>&nbsp;    Integer runningTime;
+<i>13</i>&nbsp;    String rating;
+<i>14</i>&nbsp;    String filmDistributor;
+<i>15</i>&nbsp;
+<b class="fc"><i>16</i>&nbsp;    public Movie(){</b>
+<i>17</i>&nbsp;
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;    public Movie(int id, String name, Date date, String director, Integer runningTime, String rating, String filmDistributor){
+<b class="fc"><i>20</i>&nbsp;        super(id,name,date);</b>
+<b class="fc"><i>21</i>&nbsp;        this.director=director;</b>
+<b class="fc"><i>22</i>&nbsp;        this.runningTime=runningTime;</b>
+<b class="fc"><i>23</i>&nbsp;        this.rating=rating;</b>
+<b class="fc"><i>24</i>&nbsp;        this.filmDistributor=filmDistributor;</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;    //setters and getters are generated
+<i>27</i>&nbsp;    public void setDirector(String d){
+<b class="fc"><i>28</i>&nbsp;        this.director=d;</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;    public String getDirector(){
+<b class="fc"><i>31</i>&nbsp;        return this.director;</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;    public void setRunningTime(Integer r){
+<b class="fc"><i>34</i>&nbsp;        this.runningTime=r;</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;    public Integer getRunningTime(){
+<b class="fc"><i>37</i>&nbsp;        return this.runningTime;</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;    public void setRating(String r){
+<b class="fc"><i>40</i>&nbsp;        this.rating=r;</b>
+<b class="fc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;    public String getRating(){
+<b class="fc"><i>43</i>&nbsp;        return this.rating;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;    public void setFilmDistributor(String f){
+<b class="fc"><i>46</i>&nbsp;        this.filmDistributor=f;</b>
+<b class="fc"><i>47</i>&nbsp;    }</b>
+<i>48</i>&nbsp;    public String getFilmDistributor(){
+<b class="fc"><i>49</i>&nbsp;        return this.filmDistributor;</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;}
+<i>53</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OnlineAccountRestController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OnlineAccountRestController (ca.mcgill.ecse321.library.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OnlineAccountRestController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.1%
+  </span>
+  <span class="absValue">
+    (1/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4%
+  </span>
+  <span class="absValue">
+    (1/ 25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.dto.OnlineAccountDTO;
+<i>4</i>&nbsp;import ca.mcgill.ecse321.library.model.OnlineAccount;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.service.OnlineAccountService;
+<i>6</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>7</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;@CrossOrigin(origins = &quot;*&quot;)
+<i>10</i>&nbsp;@RestController
+<b class="fc"><i>11</i>&nbsp;public class OnlineAccountRestController {</b>
+<i>12</i>&nbsp;    @Autowired
+<i>13</i>&nbsp;    private OnlineAccountService service;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    @GetMapping(value = { &quot;/getaccount/{username}&quot;, &quot;/getaccount/{username}/&quot; })
+<i>16</i>&nbsp;    public OnlineAccountDTO getOnlineAccount(@PathVariable(&quot;username&quot;) String username) {
+<b class="nc"><i>17</i>&nbsp;        return convertToDTO(service.getOnlineAccount(username));</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    // create accounts for customer, librarian and head librarian
+<i>21</i>&nbsp;    @PostMapping(value = { &quot;/onlineaccount/customer/{username}/{password}/{email}&quot;, &quot;/onlineaccount/customer/{username}/{password}/{email}/&quot; })
+<i>22</i>&nbsp;    public OnlineAccountDTO createOnlineAccountCustomer(@PathVariable(&quot;username&quot;) String username, @PathVariable(&quot;password&quot;) String password, @PathVariable(&quot;email&quot;) String email, @RequestParam(value = &quot;personRoleId&quot;,required = false) Integer personRoleId) throws IllegalArgumentException {
+<b class="nc"><i>23</i>&nbsp;        OnlineAccount account = service.createOnlineAccountCustomer(username, password, personRoleId, email);</b>
+<b class="nc"><i>24</i>&nbsp;        return convertToDTO(account);</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;    
+<i>27</i>&nbsp;    @PostMapping(value = { &quot;/onlineaccount/librarian/{username}/{password}/{email}&quot;, &quot;/onlineaccount/librarian/{username}/{password}/{email}/&quot; })
+<i>28</i>&nbsp;    public OnlineAccountDTO createOnlineAccountLibrarian(@PathVariable(&quot;username&quot;) String username, @PathVariable(&quot;password&quot;) String password, @PathVariable(&quot;email&quot;) String email, @RequestParam(value = &quot;personRoleId&quot;,required = false) Integer personRoleId) throws IllegalArgumentException {
+<b class="nc"><i>29</i>&nbsp;        OnlineAccount account = service.createOnlineAccountLibrarian(username, password, personRoleId, email);</b>
+<b class="nc"><i>30</i>&nbsp;        return convertToDTO(account);</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @PostMapping(value = { &quot;/onlineaccount/headlibrarian/{username}/{password}/{email}&quot;, &quot;/onlineaccount/headlibrarian/{username}/{password}/{email}/&quot; })
+<i>34</i>&nbsp;    public OnlineAccountDTO createOnlineAccountHeadLibrarian(@PathVariable(&quot;username&quot;) String username, @PathVariable(&quot;password&quot;) String password, @PathVariable(&quot;email&quot;) String email, @RequestParam(value = &quot;personRoleId&quot;,required = false) Integer personRoleId) throws IllegalArgumentException {
+<b class="nc"><i>35</i>&nbsp;        OnlineAccount account = service.createOnlineAccountHeadLibrarian(username, password, personRoleId, email);</b>
+<b class="nc"><i>36</i>&nbsp;        return convertToDTO(account);</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    // deletes accounts for customer, librarian and head librarian
+<i>40</i>&nbsp;    @DeleteMapping(value = { &quot;/onlineaccount/customer/{username}&quot;, &quot;/onlineaccount/customer/{username}/&quot;})
+<i>41</i>&nbsp;    public void deleteOnlineAccountCustomer(@PathVariable(&quot;username&quot;) String username, @RequestParam(value = &quot;personRoleId&quot;,required = false) Integer personRoleId) {
+<b class="nc"><i>42</i>&nbsp;        service.deleteOnlineAccountCustomer(username, personRoleId);</b>
+<b class="nc"><i>43</i>&nbsp;    }</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    @DeleteMapping(value = { &quot;/onlineaccount/librarian/{username}&quot;, &quot;/onlineaccount/librarian/{username}/&quot;})
+<i>46</i>&nbsp;    public void deleteOnlineAccountLibrarian(@PathVariable(&quot;username&quot;) String username, @RequestParam(value = &quot;personRoleId&quot;,required = false) Integer personRoleId) {
+<b class="nc"><i>47</i>&nbsp;        service.deleteOnlineAccountLibrarian(username, personRoleId);</b>
+<b class="nc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @DeleteMapping(value = { &quot;/onlineaccount/headlibrarian/{username}&quot;, &quot;/onlineaccount/headlibrarian/{username}/&quot;})
+<i>51</i>&nbsp;    public void deleteOnlineAccountHeadLibrarian(@PathVariable(&quot;username&quot;) String username, @RequestParam(value = &quot;personRoleId&quot;,required = false) Integer personRoleId) {
+<b class="nc"><i>52</i>&nbsp;        service.deleteOnlineAccountCustomer(username, personRoleId);</b>
+<b class="nc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    //logs in the user with the given username and password
+<i>56</i>&nbsp;    @PutMapping(value = {&quot;/login/{username}/{password}&quot;, &quot;/login/{username}/{password}/&quot;})
+<i>57</i>&nbsp;    public OnlineAccountDTO logIn(@PathVariable(&quot;username&quot;) String username, @PathVariable(&quot;password&quot;) String password) throws IllegalArgumentException {
+<b class="nc"><i>58</i>&nbsp;        return convertToDTO(service.logIn(username, password));</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    //logs out the user for the given username
+<i>62</i>&nbsp;    @PutMapping(value={&quot;/logout/{username}&quot;, &quot;/logout/{username}/&quot;})
+<i>63</i>&nbsp;    public void logOut(@PathVariable(&quot;username&quot;) String username) {
+<b class="nc"><i>64</i>&nbsp;        service.logout(username);</b>
+<b class="nc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    private OnlineAccountDTO convertToDTO(OnlineAccount account) {
+<b class="nc"><i>68</i>&nbsp;        if (account == null) {</b>
+<b class="nc"><i>69</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Online Account!&quot;);</b>
+<i>70</i>&nbsp;        }
+<b class="nc"><i>71</i>&nbsp;        OnlineAccountDTO accountDTO = new OnlineAccountDTO();</b>
+<b class="nc"><i>72</i>&nbsp;        accountDTO.setUsername(account.getUsername());</b>
+<b class="nc"><i>73</i>&nbsp;        accountDTO.setPassword(account.getPassword());</b>
+<b class="nc"><i>74</i>&nbsp;        accountDTO.setPersonRole(account.getPersonRole());</b>
+<b class="nc"><i>75</i>&nbsp;        accountDTO.setLoggedIn(account.getLoggedIn());</b>
+<b class="nc"><i>76</i>&nbsp;        return accountDTO;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>
