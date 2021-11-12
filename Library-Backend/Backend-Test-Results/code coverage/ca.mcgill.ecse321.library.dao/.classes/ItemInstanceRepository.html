@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ItemInstanceRepository</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ItemInstanceRepository (ca.mcgill.ecse321.library.dao)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">ItemInstanceRepository$MockitoMock$48462195</td>
+  </tr>
+  <tr>
+    <td class="name">ItemInstanceRepository$MockitoMock$48462195$auxiliary$yEoJJjKr</td>
+  </tr>
+  <tr>
+    <td class="name">ItemInstanceRepository$MockitoMock$48462195$auxiliary$YxjEZBGh</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.model.CheckableItem;
+<i>4</i>&nbsp;import org.springframework.data.repository.CrudRepository;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.model.ItemInstance;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public interface ItemInstanceRepository extends CrudRepository&lt;ItemInstance, String&gt; {
+<i>10</i>&nbsp;    ItemInstance findItemInstanceBySerialNum(int serialNum);
+<i>11</i>&nbsp;    List&lt;ItemInstance&gt; findByCheckableItem(CheckableItem checkableItem);
+<i>12</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

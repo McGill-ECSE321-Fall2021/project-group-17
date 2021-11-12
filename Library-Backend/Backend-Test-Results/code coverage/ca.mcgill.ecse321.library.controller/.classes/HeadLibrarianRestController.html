@@ -1,0 +1,131 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: HeadLibrarianRestController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: HeadLibrarianRestController (ca.mcgill.ecse321.library.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HeadLibrarianRestController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    6.2%
+  </span>
+  <span class="absValue">
+    (1/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.model.HeadLibrarian;
+<i>4</i>&nbsp;import ca.mcgill.ecse321.library.dto.HeadLibrarianDTO;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.service.HeadLibrarianService;
+<i>6</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>7</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>8</i>&nbsp;@CrossOrigin(origins = &quot;*&quot;)
+<i>9</i>&nbsp;@RestController
+<b class="fc"><i>10</i>&nbsp;public class HeadLibrarianRestController {</b>
+<i>11</i>&nbsp;    @Autowired
+<i>12</i>&nbsp;    private HeadLibrarianService headService;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @PostMapping(value= {&quot;/headLibrarian/{personid}&quot;,&quot;/headLibrarian/{personid}&quot;})
+<i>15</i>&nbsp;    public HeadLibrarianDTO createHeadLibrarian(@PathVariable(&quot;personid&quot;) Integer personId) throws IllegalArgumentException{
+<b class="nc"><i>16</i>&nbsp;        HeadLibrarian headLibrarian = headService.createHeadLibrarian(personId);</b>
+<b class="nc"><i>17</i>&nbsp;        return convertToDTO(headLibrarian);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @PutMapping(value= {&quot;/headLibrarian/{username}/{personid}/{accountid}&quot;,&quot;/headLibrarian/{username}/{personid}/{accountid}&quot;})
+<i>21</i>&nbsp;    public HeadLibrarianDTO updateHeadLibrarian(@PathVariable(&quot;personid&quot;) Integer personId,
+<i>22</i>&nbsp;                                                @PathVariable(&quot;accountid&quot;) Integer accountId,
+<i>23</i>&nbsp;                                                @PathVariable(&quot;username&quot;)String username) throws IllegalArgumentException{
+<b class="nc"><i>24</i>&nbsp;        HeadLibrarian headLibrarian = headService.updateHeadLibrarian(personId, accountId, username);</b>
+<b class="nc"><i>25</i>&nbsp;        return convertToDTO(headLibrarian);</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @GetMapping(value = {&quot;/headLibrarian/{id}&quot;, &quot;/headLibrarian/{id}&quot;})
+<i>29</i>&nbsp;    public HeadLibrarianDTO getHeadLibrarian(@PathVariable(&quot;id&quot;) int id) throws IllegalArgumentException{
+<b class="nc"><i>30</i>&nbsp;        HeadLibrarian headLibrarian = headService.getHeadLibrarian(id);</b>
+<b class="nc"><i>31</i>&nbsp;        return convertToDTO(headLibrarian);</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @DeleteMapping(value = {&quot;/headLibrarian/{id}&quot;, &quot;/headLibrarian/{id}&quot;})
+<i>35</i>&nbsp;    public void deleteHeadLibrarian(@PathVariable(&quot;id&quot;)Integer id, @RequestParam(&quot;accountUsername&quot;)String accountUsername) throws IllegalArgumentException{
+<b class="nc"><i>36</i>&nbsp;        headService.deleteHeadLibrarian(id, accountUsername);</b>
+<b class="nc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;    private HeadLibrarianDTO convertToDTO(HeadLibrarian headLibrarian){
+<b class="nc"><i>39</i>&nbsp;        if (headLibrarian == null) {</b>
+<b class="nc"><i>40</i>&nbsp;            throw new IllegalArgumentException(&quot;There is no such Customer!&quot;);</b>
+<i>41</i>&nbsp;        }
+<b class="nc"><i>42</i>&nbsp;        HeadLibrarianDTO hDTO = new HeadLibrarianDTO();</b>
+<b class="nc"><i>43</i>&nbsp;        hDTO.setId(headLibrarian.getId());</b>
+<b class="nc"><i>44</i>&nbsp;        hDTO.setAccount(headLibrarian.getAccount());</b>
+<b class="nc"><i>45</i>&nbsp;        hDTO.setPerson(headLibrarian.getPerson());</b>
+<b class="nc"><i>46</i>&nbsp;        return hDTO;</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

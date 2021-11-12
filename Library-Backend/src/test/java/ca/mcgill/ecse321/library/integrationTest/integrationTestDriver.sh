@@ -28,6 +28,12 @@ for file in $path/*collection.json
 do
   echo "Executing test $file"
   newman run "$file" -e "$collection" --bail
+  if [[ $? -ne 0 ]]
+  then
+    echo "failed collection $collection"
+    exit 1
+  fi
   clearDB
 done
 
+echo "passed all tests"

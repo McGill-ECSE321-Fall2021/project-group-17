@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AddressService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ca.mcgill.ecse321.library.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AddressService (ca.mcgill.ecse321.library.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddressService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (36/ 36)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AddressService$$EnhancerBySpringCGLIB$$6888af52</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (36/ 36)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ca.mcgill.ecse321.library.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ca.mcgill.ecse321.library.dao.AddressRepository;
+<i>4</i>&nbsp;import ca.mcgill.ecse321.library.dao.CustomerRepository;
+<i>5</i>&nbsp;import ca.mcgill.ecse321.library.model.Address;
+<i>6</i>&nbsp;import ca.mcgill.ecse321.library.model.Customer;
+<i>7</i>&nbsp;import ca.mcgill.ecse321.library.model.PersonRole;
+<i>8</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.AddressException;
+<i>9</i>&nbsp;import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
+<i>10</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>11</i>&nbsp;import org.springframework.stereotype.Service;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import javax.transaction.Transactional;
+<i>14</i>&nbsp;@Service
+<b class="fc"><i>15</i>&nbsp;public class AddressService {</b>
+<i>16</i>&nbsp;    @Autowired
+<i>17</i>&nbsp;    private AddressRepository addressRepository;
+<i>18</i>&nbsp;    @Autowired
+<i>19</i>&nbsp;    private CustomerRepository customerRepository;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * @author Victoria Sanchez
+<i>23</i>&nbsp;     * @param id
+<i>24</i>&nbsp;     * @param streetNumber
+<i>25</i>&nbsp;     * @param street
+<i>26</i>&nbsp;     * @param city
+<i>27</i>&nbsp;     * @param country
+<i>28</i>&nbsp;     * @param customerId
+<i>29</i>&nbsp;     * @return Address given input is valid
+<i>30</i>&nbsp;     */
+<i>31</i>&nbsp;    @Transactional
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public Address createAddress(int id, Integer streetNumber, String street, String city, String country, Integer customerId) {
+<b class="fc"><i>34</i>&nbsp;        if(addressRepository.findAddressById(id)!=null){</b>
+<b class="fc"><i>35</i>&nbsp;            throw new AddressException(&quot;cannot have two addresses with the same ID&quot;);</b>
+<i>36</i>&nbsp;        }
+<b class="fc"><i>37</i>&nbsp;        if(streetNumber==0 || street==null||city==null||country==null ){</b>
+<b class="fc"><i>38</i>&nbsp;            throw new AddressException(&quot;incomplete Address given&quot;);</b>
+<i>39</i>&nbsp;        }
+<b class="fc"><i>40</i>&nbsp;        Address address = new Address(id, streetNumber, street, city, country);</b>
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;        if (customerId != null) {</b>
+<b class="fc"><i>43</i>&nbsp;            PersonRole personRole = customerRepository.findPersonRoleById(customerId);</b>
+<i>44</i>&nbsp;
+<b class="fc"><i>45</i>&nbsp;            if (personRole instanceof Customer) {</b>
+<b class="fc"><i>46</i>&nbsp;                address.setCustomer((Customer) personRole);</b>
+<i>47</i>&nbsp;            }
+<i>48</i>&nbsp;        }
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;        addressRepository.save(address);</b>
+<b class="fc"><i>51</i>&nbsp;        return address;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * @author Victoria Sanchez
+<i>56</i>&nbsp;     * @param id
+<i>57</i>&nbsp;     *
+<i>58</i>&nbsp;     */
+<i>59</i>&nbsp;    @Transactional
+<i>60</i>&nbsp;    public void deleteAddress(Integer id) {
+<b class="fc"><i>61</i>&nbsp;        if(id==null){</b>
+<b class="fc"><i>62</i>&nbsp;            throw new AddressException(&quot;Cannot find address to delete.&quot;);}</b>
+<i>63</i>&nbsp;
+<b class="fc"><i>64</i>&nbsp;            Address address= addressRepository.findAddressById(id);</b>
+<b class="fc"><i>65</i>&nbsp;        if(address==null){</b>
+<b class="fc"><i>66</i>&nbsp;            throw new AddressException(&quot;Address does not exist&quot;);</b>
+<i>67</i>&nbsp;        }
+<b class="fc"><i>68</i>&nbsp;      addressRepository.delete(address);</b>
+<b class="fc"><i>69</i>&nbsp;    }</b>
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;     * @author Victoria Sanchez
+<i>73</i>&nbsp;     * @param id
+<i>74</i>&nbsp;     * @return address corresponding to the input ID
+<i>75</i>&nbsp;     */
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    @Transactional
+<i>78</i>&nbsp;    public Address getAddress(int id) {
+<b class="fc"><i>79</i>&nbsp;        Address address=addressRepository.findAddressById(id);</b>
+<b class="fc"><i>80</i>&nbsp;        if(address==null){</b>
+<b class="fc"><i>81</i>&nbsp;            throw new AddressException(&quot;Address not found&quot;);</b>
+<i>82</i>&nbsp;        }
+<i>83</i>&nbsp;        else{
+<b class="fc"><i>84</i>&nbsp;            return address;</b>
+<i>85</i>&nbsp;        }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    /**
+<i>90</i>&nbsp;     * @author Victoria Sanchez
+<i>91</i>&nbsp;     * @param id
+<i>92</i>&nbsp;     * @param streetNumber
+<i>93</i>&nbsp;     * @param street
+<i>94</i>&nbsp;     * @param city
+<i>95</i>&nbsp;     * @param country
+<i>96</i>&nbsp;     * @return Address with new information
+<i>97</i>&nbsp;     */
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    @Transactional
+<i>100</i>&nbsp;    public Address updateAddress(int id, Integer streetNumber, String street, String city, String country) {
+<b class="fc"><i>101</i>&nbsp;        Address address = addressRepository.findAddressById(id);</b>
+<i>102</i>&nbsp;
+<b class="fc"><i>103</i>&nbsp;        if (address == null) {</b>
+<b class="fc"><i>104</i>&nbsp;            throw new AddressException(&quot;Can&#39;t update address because no address exists for the given id.&quot;);</b>
+<i>105</i>&nbsp;        }
+<i>106</i>&nbsp;
+<b class="fc"><i>107</i>&nbsp;        if (streetNumber != null) {</b>
+<b class="fc"><i>108</i>&nbsp;            address.setStreetNumber(streetNumber);</b>
+<i>109</i>&nbsp;        }
+<i>110</i>&nbsp;
+<b class="fc"><i>111</i>&nbsp;        if (street != null) {</b>
+<b class="fc"><i>112</i>&nbsp;            address.setStreet(street);</b>
+<i>113</i>&nbsp;        }
+<i>114</i>&nbsp;
+<b class="fc"><i>115</i>&nbsp;        if (city != null) {</b>
+<b class="fc"><i>116</i>&nbsp;            address.setCity(city);</b>
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;
+<b class="fc"><i>119</i>&nbsp;        if (country != null) {</b>
+<b class="fc"><i>120</i>&nbsp;            address.setCountry(country);</b>
+<i>121</i>&nbsp;        }
+<i>122</i>&nbsp;
+<b class="fc"><i>123</i>&nbsp;        addressRepository.save(address);</b>
+<b class="fc"><i>124</i>&nbsp;        return address;</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-11-11 21:38</div>
+</div>
+</body>
+</html>

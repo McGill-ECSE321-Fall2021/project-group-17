@@ -22,8 +22,19 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
+/*
+ * This file tests services that are related to movie, 
+ * music, book and newspaper. Uses mock methods to
+ * emulate interaction with the psql database.
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestItemService {
+	/*
+	 * Repositories for aiding the service.
+	 * These repositories allow for the storage of data
+	 * into the database. Allows for create, get, update and delete functionalities.
+	 * However, these are mocked to emulate their functionality.
+	 */
 	@Mock
     private LibrarianRepository librarianRepository;
     @Mock
@@ -35,6 +46,10 @@ public class TestItemService {
     @Mock
     private NewspaperRepository newspaperRepository;
 
+	/*
+	 * Provided service classes that allow manipulation with the
+	 * rest controller.
+	 */
     @InjectMocks
     private LibrarianService librarianService;
     @InjectMocks
@@ -46,6 +61,9 @@ public class TestItemService {
     @InjectMocks
     private NewspaperService newspaperService;
 
+    /*
+     * Fields that are used throughout the tests.
+     */
     private static final String MEDIA_NAME = "Somename";
     private static final String AUTHOR_DIRECTOR_MUSICIAN = "Someone";
     private static final String AUTHOR_DIRECTOR_MUSICIAN2 = "Someone2";
@@ -69,7 +87,7 @@ public class TestItemService {
     
     @BeforeEach
     public void setMockOutput() {
-
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(movieRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(MOVIE_KEY)) {
                 Movie movie = new Movie();
@@ -79,6 +97,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(movieRepository.findItemByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(MEDIA_NAME)) {
             	List<Movie> movies = new ArrayList<Movie>();
@@ -90,6 +109,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(movieRepository.findMovieByDirector(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(AUTHOR_DIRECTOR_MUSICIAN)) {
             	List<Movie> movies = new ArrayList<Movie>();
@@ -101,6 +121,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(movieRepository.findMovieByFilmDistributor(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(PUBLISHER_DISTRIBUTOR)) {
                 List<Movie> movies = new ArrayList<Movie>();
@@ -112,6 +133,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(movieRepository.findMovieByRating(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(RATING)) {
                 List<Movie> movies = new ArrayList<Movie>();
@@ -123,6 +145,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(bookRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(BOOK_KEY)) {
                 Book book = new Book();
@@ -132,6 +155,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(bookRepository.findItemByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(MEDIA_NAME)) {
             	List<Book> books = new ArrayList<Book>();
@@ -143,6 +167,7 @@ public class TestItemService {
                 return null;
             }
         });
+        // sets mock output so that no data is read from or deleted from the database.
         lenient().when(bookRepository.findBookByAuthor(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(AUTHOR_DIRECTOR_MUSICIAN)) {
                 List<Book> books = new ArrayList<Book>();
@@ -154,6 +179,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(bookRepository.findBookByPublisher(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(PUBLISHER_DISTRIBUTOR)) {
                 List<Book> books = new ArrayList<Book>();
@@ -165,6 +191,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(bookRepository.findBookByGenre(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(GENRE)) {
             	List<Book> books = new ArrayList<Book>();
@@ -176,6 +203,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(musicRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(MUSIC_KEY)){
                 Music music = new Music();
@@ -185,6 +213,7 @@ public class TestItemService {
             	return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(musicRepository.findItemByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(MEDIA_NAME)){
                 List<Music> musics = new ArrayList<Music>();
@@ -196,6 +225,7 @@ public class TestItemService {
             	return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(musicRepository.findMusicByMusician(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(AUTHOR_DIRECTOR_MUSICIAN)){
                 List<Music> musics = new ArrayList<Music>();
@@ -207,6 +237,7 @@ public class TestItemService {
             	return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(musicRepository.findMusicByRecordLabel(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(RECORD_LABEL)){
             	List<Music> musics = new ArrayList<Music>();
@@ -218,6 +249,7 @@ public class TestItemService {
             	return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(newspaperRepository.findItemById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(NEWSPAPER_KEY)){
                 Newspaper newspaper = new Newspaper();
@@ -227,6 +259,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(newspaperRepository.findNewspaperByHeadline(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(HEADLINE)){
                 Newspaper newspaper = new Newspaper();
@@ -236,6 +269,7 @@ public class TestItemService {
                 return null;
             }
         });
+    	// sets mock output so that no data is read from or deleted from the database.
         lenient().when(librarianRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(LIBRARIAN_KEY)){
                 Librarian librarian = new Librarian();
@@ -250,7 +284,7 @@ public class TestItemService {
  		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
  			return invocation.getArgument(0);
  		};
- 		
+    	// sets mock output so that no data is read from or deleted from the database.
  		lenient().when(movieRepository.save(any(Movie.class))).thenAnswer(returnParameterAsAnswer);
  		lenient().when(bookRepository.save(any(Book.class))).thenAnswer(returnParameterAsAnswer);
  		lenient().when(musicRepository.save(any(Music.class))).thenAnswer(returnParameterAsAnswer);
@@ -260,6 +294,7 @@ public class TestItemService {
 
     @AfterEach
     public void clearDatabase() {
+    	// clears the repositories
         movieRepository.deleteAll();
         bookRepository.deleteAll();
         musicRepository.deleteAll();
@@ -269,6 +304,10 @@ public class TestItemService {
 
     @Test
     public void createMovieValid(){
+    	/* This test creates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Movie movie = null;
         
         try{
@@ -289,6 +328,10 @@ public class TestItemService {
     
     @Test
     public void createMovieNoName(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
         	movieService.createMovie(LIBRARIAN_KEY, MOVIE_KEY, null, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
@@ -300,6 +343,10 @@ public class TestItemService {
     }
     @Test
     public void createBookNoName(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             bookService.createBook(LIBRARIAN_KEY, BOOK_KEY, null, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
@@ -311,6 +358,10 @@ public class TestItemService {
     }
     @Test
     public void createMusicNoName(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             musicService.createMusic(LIBRARIAN_KEY, MUSIC_KEY, null, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL);
@@ -322,6 +373,10 @@ public class TestItemService {
     }
     @Test
     public void createNewspaperNoName(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             newspaperService.createNewspaper(LIBRARIAN_KEY, NEWSPAPER_KEY, null, DATE_PUBLISHED, HEADLINE);
@@ -334,6 +389,10 @@ public class TestItemService {
     
     @Test
     public void createMovieNoId(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
         	movieService.createMovie(LIBRARIAN_KEY, null, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
@@ -345,6 +404,10 @@ public class TestItemService {
     }
     @Test
     public void createBookNoId(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             bookService.createBook(LIBRARIAN_KEY,  null, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
@@ -356,6 +419,10 @@ public class TestItemService {
     }
     @Test
     public void createMusicNoId(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             musicService.createMusic(LIBRARIAN_KEY, null, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL);
@@ -367,6 +434,10 @@ public class TestItemService {
     }
     @Test
     public void createNewspaperNoId(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             newspaperService.createNewspaper(LIBRARIAN_KEY, null, MEDIA_NAME, DATE_PUBLISHED, HEADLINE);
@@ -379,6 +450,10 @@ public class TestItemService {
     
     @Test
     public void createMovieNoLibrarian(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
         	movieService.createMovie(null, MOVIE_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING, PUBLISHER_DISTRIBUTOR);
@@ -390,6 +465,10 @@ public class TestItemService {
     }
     @Test
     public void createBookNoLibrarian(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             bookService.createBook(null, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
@@ -401,6 +480,10 @@ public class TestItemService {
     }
     @Test
     public void createMusicNoLibrarian(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             musicService.createMusic(null, MUSIC_KEY, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RECORD_LABEL);
@@ -412,6 +495,10 @@ public class TestItemService {
     }
     @Test
     public void createNewspaperNoLibrarian(){
+    	/* Creates item without the specified field.
+    	 * This can result in an error thrown, which is
+    	 * then compared to pass/fail the test case.
+    	 */
         String error = "";
         try{
             newspaperService.createNewspaper(null, BOOK_KEY, MEDIA_NAME, DATE_PUBLISHED, HEADLINE);
@@ -425,6 +512,10 @@ public class TestItemService {
 
     @Test
     public void createBookValid(){
+    	/* This test creates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Book book = null;
         
         try{
@@ -445,6 +536,10 @@ public class TestItemService {
     
     @Test
     public void createMusicValid(){
+    	/* This test creates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Music music = null;
         
         try{
@@ -464,6 +559,10 @@ public class TestItemService {
     
     @Test
     public void createNewspaperValid(){
+    	/* This test creates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Newspaper newspaper = null;
         
         try{
@@ -481,6 +580,10 @@ public class TestItemService {
     
     @Test
     public void updateMovieDirector(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Movie movie = null;
         
         try{
@@ -501,6 +604,10 @@ public class TestItemService {
     
     @Test
     public void updateMovieDistributor(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Movie movie = null;
         
         try{
@@ -521,6 +628,10 @@ public class TestItemService {
     
     @Test
     public void updateMovieRating(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Movie movie = null;
         
         try{
@@ -540,6 +651,10 @@ public class TestItemService {
     }
     @Test
     public void updateMovieNotFound(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         String error = null;
         try{
             movieService.updateMovie(LIBRARIAN_KEY, MOVIE_KEY+1, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, RUNNING_TIME, RATING2, PUBLISHER_DISTRIBUTOR);
@@ -552,6 +667,10 @@ public class TestItemService {
     
     @Test
     public void updateBookAuthor(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Book book = null;
         
         try{
@@ -570,6 +689,10 @@ public class TestItemService {
     }
     @Test
     public void updateBookPublisher(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Book book = null;
         
         try{
@@ -588,6 +711,10 @@ public class TestItemService {
     }
     @Test
     public void updateBookGenre(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Book book = null;
         
         try{
@@ -606,6 +733,10 @@ public class TestItemService {
     }
     @Test
     public void updateBookNotFound(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         String error = "";
         try{
             bookService.updateBook(LIBRARIAN_KEY, BOOK_KEY+1, MEDIA_NAME, DATE_PUBLISHED, AUTHOR_DIRECTOR_MUSICIAN, PUBLISHER_DISTRIBUTOR, GENRE);
@@ -618,6 +749,10 @@ public class TestItemService {
     
     @Test
     public void updateMusicMusician(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Music music = null;
         
         try{
@@ -635,6 +770,10 @@ public class TestItemService {
     }
     @Test
     public void updateMusicRecordLabel(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Music music = null;
         
         try{
@@ -652,6 +791,10 @@ public class TestItemService {
     }
     @Test
     public void updateMusicNotFound(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         String error = "";
         
         try{
@@ -665,6 +808,10 @@ public class TestItemService {
     
     @Test
     public void updateNewspaperHeadline(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         Newspaper newspaper = null;
         
         try{
@@ -680,6 +827,10 @@ public class TestItemService {
         assertEquals(newspaper.getHeadline(), HEADLINE2);
     }
     public void updateNewspaperNotFound(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         String error = "";
         
         try{
@@ -694,6 +845,10 @@ public class TestItemService {
     
     @Test
     public void testDeleteMovieValid(){
+    	/* This test updates an item with the provided
+    	 * global keys above, and asserts that each of their fields is accounted for.
+    	 * Uses the mock method getItemById to perform its' task.
+    	 */
         try{
             movieService.deleteMovie(MOVIE_KEY, LIBRARIAN_KEY);
         }
@@ -703,6 +858,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteBookValid(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails.
+    	 */
         try{
             bookService.deleteBook(BOOK_KEY, LIBRARIAN_KEY);
         }
@@ -712,6 +871,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteMusicValid(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails.
+    	 */
         try{
             musicService.deleteMusic(MUSIC_KEY, LIBRARIAN_KEY);
         }
@@ -721,6 +884,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteNewspaperValid(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails.
+    	 */
         try{
             newspaperService.deleteNewspaper(NEWSPAPER_KEY, LIBRARIAN_KEY);
         }
@@ -732,6 +899,10 @@ public class TestItemService {
     
     @Test
     public void testDeleteMovieMissingId(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             movieService.deleteMovie(null, LIBRARIAN_KEY);
@@ -743,6 +914,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteBookMissingId(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             bookService.deleteBook(null, LIBRARIAN_KEY);
@@ -754,6 +929,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteMusicMissingId(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             musicService.deleteMusic(null, LIBRARIAN_KEY);
@@ -765,6 +944,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteNewspaperMissingId(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             newspaperService.deleteNewspaper(null, LIBRARIAN_KEY);
@@ -778,6 +961,10 @@ public class TestItemService {
     
     @Test
     public void testDeleteMovieNotExistingLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	movieService.deleteMovie(MOVIE_KEY, LIBRARIAN_KEY+1);
@@ -789,6 +976,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteMusicNotExistingLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	musicService.deleteMusic(MUSIC_KEY, LIBRARIAN_KEY+1);
@@ -800,6 +991,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteBookNotExistingLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	bookService.deleteBook(BOOK_KEY, LIBRARIAN_KEY+1);
@@ -811,6 +1006,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteNewspaperNotExistingLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	newspaperService.deleteNewspaper(NEWSPAPER_KEY, LIBRARIAN_KEY+1);
@@ -823,6 +1022,10 @@ public class TestItemService {
     
     @Test
     public void testDeleteMovieNotFound(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	movieService.deleteMovie(MOVIE_KEY+1, LIBRARIAN_KEY);
@@ -834,6 +1037,10 @@ public class TestItemService {
     } 
     @Test
     public void testDeleteMusicNotFound(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	musicService.deleteMusic(MUSIC_KEY+1, LIBRARIAN_KEY);
@@ -845,6 +1052,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteBookNotFound(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	bookService.deleteBook(BOOK_KEY+1, LIBRARIAN_KEY);
@@ -856,6 +1067,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteNewspaperNotFound(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
         	newspaperService.deleteNewspaper(NEWSPAPER_KEY+1, LIBRARIAN_KEY);
@@ -868,6 +1083,10 @@ public class TestItemService {
     
     @Test
     public void testDeleteMovieNullLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             movieService.deleteMovie(MOVIE_KEY,null);
@@ -879,6 +1098,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteMusicNullLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             musicService.deleteMusic(MUSIC_KEY,null);
@@ -890,6 +1113,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteBookNullLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             bookService.deleteBook(BOOK_KEY,null);
@@ -901,6 +1128,10 @@ public class TestItemService {
     }
     @Test
     public void testDeleteNewspaperNullLibrarian(){
+    	/* This test deletes an item with the provided
+    	 * global keys above. If an error occurs in the process,
+    	 * it fails. Else, it checks if the error message is expected.
+    	 */
         String error = "";
         try{
             newspaperService.deleteNewspaper(NEWSPAPER_KEY,null);
@@ -913,6 +1144,9 @@ public class TestItemService {
     
     @Test
     public void testGetMovieValid() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its id.
+    	 */
     	Movie movie = null;
     	try{
     		movie = movieService.getMovie(MOVIE_KEY);
@@ -924,6 +1158,9 @@ public class TestItemService {
     }
     @Test
     public void testGetBookValid() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its id.
+    	 */
     	Book book = null;
     	try{
     		book = bookService.getBook(BOOK_KEY);
@@ -935,6 +1172,9 @@ public class TestItemService {
     }
     @Test
     public void testGetMusicValid() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its id.
+    	 */
     	Music music = null;
     	try{
     		music = musicService.getMusic(MUSIC_KEY);
@@ -946,6 +1186,9 @@ public class TestItemService {
     }
     @Test
     public void testGetNewspaperValid() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its id.
+    	 */
     	Newspaper newspaper = null;
     	try{
     		newspaper = newspaperService.getNewspaper(NEWSPAPER_KEY);
@@ -958,6 +1201,9 @@ public class TestItemService {
     
     @Test
     public void testGetMovieByName() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its name. Returns a list.
+    	 */
     	List<Item> movies = null;
     	try{
     		movies = movieService.getMovieByName(MEDIA_NAME);
@@ -969,6 +1215,9 @@ public class TestItemService {
     }
     @Test
     public void testGetBookByName() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its name. Returns a list.
+    	 */
     	List<Item> books = null;
     	try{
     		books = bookService.getBookByName(MEDIA_NAME);
@@ -980,6 +1229,9 @@ public class TestItemService {
     }
     @Test
     public void testGetMusicByName() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its name. Returns a list.
+    	 */
     	List<Item> musics = null;
     	try{
     		musics = musicService.getMusicByName(MEDIA_NAME);
@@ -991,6 +1243,9 @@ public class TestItemService {
     }
     @Test
     public void testGetNewspaperByHeadline() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its name. Returns a list.
+    	 */
     	Newspaper newspaper = null;
     	try{
     		newspaper = newspaperService.getNewspaperByHeadline(HEADLINE);
@@ -1003,6 +1258,9 @@ public class TestItemService {
     
     @Test
     public void testGetMovieByDirector() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its director. Returns a list.
+    	 */
     	List<Movie> movies = null;
     	try{
     		movies = movieService.getMovieFromDirector(AUTHOR_DIRECTOR_MUSICIAN);
@@ -1014,6 +1272,9 @@ public class TestItemService {
     }
     @Test
     public void testGetBookByAuthor() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its author. Returns a list.
+    	 */
     	List<Book> books = null;
     	try{
     		books = bookService.getBookFromAuthor(AUTHOR_DIRECTOR_MUSICIAN);
@@ -1025,6 +1286,9 @@ public class TestItemService {
     }
     @Test
     public void testGetMusicByMusician() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its musician. Returns a list.
+    	 */
     	List<Music> musics = null;
     	try{
     		musics = musicService.getMusicFromMusician(AUTHOR_DIRECTOR_MUSICIAN);
@@ -1037,6 +1301,9 @@ public class TestItemService {
     
     @Test
     public void testGetMovieByDistributor() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its distributor. Returns a list.
+    	 */
     	List<Movie> movies = null;
     	try{
     		movies = movieService.getMovieFromDistributor(PUBLISHER_DISTRIBUTOR);
@@ -1048,6 +1315,9 @@ public class TestItemService {
     }
     @Test
     public void testGetBookByPublisher() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its publisher. Returns a list.
+    	 */
     	List<Book> books = null;
     	try{
     		books = bookService.getBookFromPublisher(PUBLISHER_DISTRIBUTOR);
@@ -1059,6 +1329,9 @@ public class TestItemService {
     }
     @Test
     public void testGetMusicByLabel() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its label. Returns a list.
+    	 */
     	List<Music> musics = null;
     	try{
     		musics = musicService.getMusicFromLabel(RECORD_LABEL);
@@ -1071,6 +1344,9 @@ public class TestItemService {
     
     @Test
     public void testGetMovieByRating() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its rating. Returns a list.
+    	 */
     	List<Movie> movies = null;
     	try{
     		movies = movieService.getMovieFromRating(RATING);
@@ -1082,6 +1358,9 @@ public class TestItemService {
     }
     @Test
     public void testGetBookByGenre() {
+    	/* This test tests to see if the item is
+    	 * valid based on getting its genre. Returns a list.
+    	 */
     	List<Book> books = null;
     	try{
     		books = bookService.getBookFromGenre(GENRE);
