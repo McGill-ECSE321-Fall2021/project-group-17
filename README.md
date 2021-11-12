@@ -33,6 +33,6 @@ The Library Management System aims to create an easy to use system which can bri
   | Tomasz Mroz  |    |  |
   | Fiona Ryan   | Service methods for Reservation Management use cases, corresponding restful endpoints and mockito service tests   | 30  |
   | Victoria Sanchez| Service methods for Account Management use cases, corresponding restful endpoints and mockito service tests |  30|
-  | Jerry Xia |  |  |
+  | Jerry Xia | Service methods for Item use cases, corresponding restful endpoints and mockito service tests | 30 |
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)
