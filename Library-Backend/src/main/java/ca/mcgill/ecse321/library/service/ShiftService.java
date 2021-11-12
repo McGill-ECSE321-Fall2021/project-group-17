@@ -29,7 +29,7 @@ public class ShiftService {
     @Autowired
     private HeadLibrarianRepository headLibrarianRepository;
 
-    @Transactional
+    @Transactional //creates a new shift object and initializes the attributes with the passed parameters(only for account belonging to librarian
     public Shift createShiftLibrarian(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("This account is not authorized for this action");
@@ -42,6 +42,8 @@ public class ShiftService {
         return shift;
 
     }
+    //Creates a shift object with the passed parameters.(only for account belonging to Head Librarian)
+    @Transactional
     public Shift createShiftHeadLibrarian(String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("This account is not authorized for this action");
@@ -55,7 +57,7 @@ public class ShiftService {
 
     }
     
-    @Transactional
+    @Transactional //Gets all shifts that are associated with a given librarian
     public List<Shift> getLibrarianShifts(Integer librarianId) {
     	String error = "";
     	if (librarianId == null) {
@@ -85,7 +87,7 @@ public class ShiftService {
         if(s == null) throw new ShiftException("No Shift Exists with Provided Id");
         return s;
     }
-    @Transactional
+    @Transactional // Updates a shift (only for account which belongs to librarian)
     public Shift updateShiftLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
         if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active User is unauthorized for this action");
@@ -100,6 +102,7 @@ public class ShiftService {
         shiftRepository.save(shift);
         return shift;
     }
+    // Updates a shift (only for account which belongs to head librarian)
     @Transactional
     public Shift updateShiftHeadLibrarian(Integer shiftId, String startTime, String endTime, String DOW, Integer librarianId, String accountUsername){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
@@ -115,13 +118,13 @@ public class ShiftService {
         shiftRepository.save(shift);
         return shift;
     }
-    @Transactional
+    @Transactional //Deletes a shift with the passed Id
     public void deleteShift(String accountUsername, Integer shiftId){
         PersonRole activeUser = getActiveUser(accountUsername).getPersonRole();
-        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized forthis action");
+        if(!(activeUser instanceof HeadLibrarian)) throw new OnlineAccountException("Active user is not authorized for this action");
         shiftRepository.deleteById(shiftId);
     }
-
+    //Helper method for user authentication
     private OnlineAccount getActiveUser(String accountUsername){
         if(accountUsername == null) throw new OnlineAccountException("Invalid account id");
         OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(accountUsername);
@@ -129,12 +132,14 @@ public class ShiftService {
         if(account.getLoggedIn() == false) throw new OnlineAccountException("This account is not the active user");
         return account;
     }
+    //Helper method which finds a Librarian
     private Librarian findLibrarian(Integer librarianId){
         if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(librarianId);
         if(librarian == null) throw new OnlineAccountException("No existing account with this Id");
         return librarian;
     }
+    //Helper method which finds a Head Librarian
     private HeadLibrarian findHeadLibrarian(Integer librarianId){
         if(librarianId == null || librarianId < 0) throw new OnlineAccountException("Invalid Id");
         HeadLibrarian librarian = (HeadLibrarian) headLibrarianRepository.findPersonRoleById(librarianId);

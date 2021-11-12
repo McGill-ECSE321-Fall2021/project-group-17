@@ -32,13 +32,14 @@ public class ShiftRestController {
     @Autowired
     private PersonRoleRepository personRoleRepository;
 
-
+    //create method for when the accountUsername parameter is of type Librarian
     @PostMapping(value = { "/shift/librarian","/shift/librarian"})
     public ShiftDTO createShiftLibrarian(@RequestBody JsonBody body,
                                 @RequestParam(value = "accountusername", required = false) String accountUsername) throws IllegalArgumentException{
         Shift shift = shiftService.createShiftLibrarian(body.getStartTime(), body.getEndTime(), body.getDayOfWeek(), body.getLibrarianId(), accountUsername);
         return convertToDTO(shift);
     }
+    //create method for when the accountUsername parameter is of type Head Librarian
     @PostMapping(value = { "/shift/headLibrarian","/shift/headLibrarian"})
     public ShiftDTO createShiftHeadLibrarian(@RequestBody JsonBody body,
                                 @RequestParam(value = "accountUsername", required = false) String accountUsername) throws IllegalArgumentException{
@@ -59,6 +60,7 @@ public class ShiftRestController {
         shiftService.updateShiftLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
+
     @PutMapping(value = {"/shift/headLibrarian/{shiftid}", "/shift/headLibrarian/{shiftid}"})
     public void modifyLibraryHoursHeadLibrarian(@PathVariable("shiftid") int shiftId,
                                             @RequestBody JsonBody body,
@@ -66,7 +68,8 @@ public class ShiftRestController {
         shiftService.updateShiftHeadLibrarian(shiftId, body.getStartTime(), body.getEndTime(), body.getDayOfWeek(),
                 body.getLibrarianId(), accountUsername);
     }
-    @DeleteMapping(value = {"/shift/{shiftid}", "/libraryhour/{shiftid}"})
+    @DeleteMapping(value = {"/shift/{shiftid}", "/shift/{shiftid}"})
+
     public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
     }
@@ -75,6 +78,7 @@ public class ShiftRestController {
     public List<ShiftDTO> getShifts(@PathVariable("librarianId") Integer librarianId) throws IllegalArgumentException{
     	return shiftService.getLibrarianShifts(librarianId).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+    //Json Body used to take in paramaters from the https  request
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private String startTime;
@@ -116,7 +120,7 @@ public class ShiftRestController {
 
         public JsonBody(){}
     }
-
+    //Converts a Shift typed object into its corresponding data transfer object
     private ShiftDTO convertToDTO(Shift shift){
         if (shift == null) {
             throw new IllegalArgumentException("There is no such Customer!");

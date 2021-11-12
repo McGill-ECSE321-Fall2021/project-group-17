@@ -37,19 +37,21 @@ public class LibraryHourRestController {
     }
 
     @PutMapping(value = {"/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}", "/libraryhour/{libhourid}/{starttime}/{endtime}/{dayofweek}"})
-    public void modifyLibraryHours(@PathVariable("libhourid") int libHourId,
+    @ResponseBody
+    public LibraryHourDTO modifyLibraryHours(@PathVariable("libhourid") int libHourId,
                                 @PathVariable("starttime") String startTime, @PathVariable("endtime") String endTime,
                                 @PathVariable("dayofweek") String DOW,
                                    @RequestParam(value = "accountUsername", required = false)String accountUsername){
         //do we need to use JsonBody or Path Variable??
-        service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountUsername);
+       LibraryHour libraryHour = service.updateLibraryHour(libHourId, startTime, endTime, DOW, accountUsername);
+       return convertToDTO(libraryHour);
     }
 
     @DeleteMapping(value = {"/libraryhour/{libraryhourid}", "/libraryhour/{libraryhourid}"})
-    public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountid", required = false)int accountId){
-        service.deleteLibraryHour(libraryHourid, accountId);
+    public void deleteLibraryHour(@PathVariable("libraryhourid") int libraryHourid, @RequestParam(value = "accountUsername", required = false)String accountUsername){
+        service.deleteLibraryHour(libraryHourid, accountUsername);
     }
-
+    //Converts a libraryHour typed object into its corresponding data transfer object
     private LibraryHourDTO convertToDTO(LibraryHour libraryHour) {
         if (libraryHour == null) {
             throw new IllegalArgumentException("There is no such LibraryHour!");
@@ -58,9 +60,12 @@ public class LibraryHourRestController {
         LibraryHourDTO libraryHourDTO = new LibraryHourDTO();
         libraryHourDTO.setId(libraryHour.getId());
         libraryHourDTO.setLibrary(libraryHour.getLibrary());
+        libraryHourDTO.setDayOfWeek(libraryHour.getDayOfWeek());
+        libraryHourDTO.setEndTime(libraryHour.getEndTime());
+        libraryHourDTO.setStartTime(libraryHour.getStartTime());
         return libraryHourDTO;
     }
-
+    //Json Body used to take in paramaters from the https  request
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private String startTime;

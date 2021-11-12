@@ -60,6 +60,9 @@ public class TestLibraryHourService {
             if(invocation.getArgument(0).equals(LIBRARYHOUR_KEY)) {
                 LibraryHour libraryHour = new LibraryHour();
                 libraryHour.setId(LIBRARYHOUR_KEY);
+                Library library = new Library();
+                library.setId(LIBRARY_KEY);
+                libraryHour.setLibrary(library);
                 return libraryHour;
             } else {
                 return null;
@@ -76,6 +79,21 @@ public class TestLibraryHourService {
         });
 
         lenient().when(onlineAccountRepository.findById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(ACCOUNT_USERNAME)){
+                OnlineAccount account = new OnlineAccount();
+                account.setUsername(ACCOUNT_USERNAME);
+                account.setPassword(ACCOUNT_PASSWORD);
+                account.setLoggedIn(LOGGED_IN);
+                HeadLibrarian headLibrarian = new HeadLibrarian();
+                headLibrarian.setId(HEAD_LIBRARIAN_KEY);
+                account.setPersonRole(headLibrarian);
+                return account;
+            } else {
+                return null;
+            }
+        });
+
+        lenient().when(onlineAccountRepository.findOnlineAccountByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(ACCOUNT_USERNAME)){
                 OnlineAccount account = new OnlineAccount();
                 account.setUsername(ACCOUNT_USERNAME);
@@ -123,20 +141,12 @@ public class TestLibraryHourService {
         String id3 = ACCOUNT_USERNAME;
         LibraryHour libraryHour = null;
         try{
-            libraryHour = libraryHourService.createLibraryHour(LIBRARY_KEY,LH_START_TIME_AS_STRING,
-                    LH_END_TIME_AS_STRING, DAY_OF_WEEK_AS_STRING, ACCOUNT_USERNAME);
-        }
-        catch(Exception e){
-            fail();
-        }
-        try{
-            libraryHourService.updateLibraryHour(libraryHour.getId(), LH_START_TIME_AS_STRING,
+            libraryHour = libraryHourService.updateLibraryHour(LIBRARYHOUR_KEY, LH_START_TIME_AS_STRING,
                     LH_END_TIME_AS_STRING, DAY_OF_WEEK_2_AS_STRING, ACCOUNT_USERNAME);
         }
         catch(Exception e){
             fail();
         }
-        assertNotNull(libraryHour);
         assertNotNull(libraryHour);
         assertEquals(libraryHour.getDayOfWeek(),DAY_OF_WEEK_2);
         assertEquals(libraryHour.getStartTime(),LH_START_TIME);
