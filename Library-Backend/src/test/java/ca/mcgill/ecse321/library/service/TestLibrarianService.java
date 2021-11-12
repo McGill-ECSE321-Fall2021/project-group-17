@@ -1,12 +1,10 @@
 package ca.mcgill.ecse321.library.service;
 
+import ca.mcgill.ecse321.library.dao.HeadLibrarianRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
 import ca.mcgill.ecse321.library.dao.PersonRepository;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.Librarian;
-import ca.mcgill.ecse321.library.model.OnlineAccount;
-import ca.mcgill.ecse321.library.model.Person;
+import ca.mcgill.ecse321.library.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +26,8 @@ public class TestLibrarianService {
     private PersonRepository personRepository;
     @Mock
     private OnlineAccountRepository onlineAccountRepository;
+    @Mock
+    private HeadLibrarianRepository headLibrarianRepository;
 
     @InjectMocks
     private LibrarianService service;
@@ -37,7 +37,8 @@ public class TestLibrarianService {
     private static final String EMAIL = "librarian@mail.com";
     private static final int PERSON_ID = 1;
     private static final int LIBRARIAN_KEY = 1;
-    private static final boolean LOGGEDIN = false;
+    private static final boolean LOGGEDIN = true;
+    private static final int HEAD_LIBRARIAN_KEY = 3;
 
     @BeforeEach
     public void setMockOutput() {
@@ -72,6 +73,15 @@ public class TestLibrarianService {
                 return account;
             }
             else {
+                return null;
+            }
+        });
+        lenient().when(headLibrarianRepository.findPersonRoleById(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(HEAD_LIBRARIAN_KEY)) {
+                HeadLibrarian librarian = new HeadLibrarian();
+                librarian.setId(HEAD_LIBRARIAN_KEY);
+                return librarian;
+            } else {
                 return null;
             }
         });
@@ -269,5 +279,53 @@ public class TestLibrarianService {
 
         assertNull(librarian);
         assertEquals("No librarian by this id", error);
+    }
+
+    @Test
+    public void TestDeleteLibrarianValid() {
+        try {
+            service.deleteLibrarian(HEAD_LIBRARIAN_KEY, USERNAME);
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void TestDeleteLibrarianNoLibrarianId() {
+        String error = "";
+
+        try {
+            service.deleteLibrarian(null, USERNAME);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Null id" ,error);
+    }
+
+    @Test
+    public void TestDeleteLibrarianNoUsername() {
+        String error = "";
+
+        try {
+            service.deleteLibrarian(LIBRARIAN_KEY, null);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Null username" ,error);
+    }
+
+    @Test
+    public void TestDeleteLibrarianInvalidLibrarianId() {
+        String error = "";
+
+        try {
+            service.deleteLibrarian(10, USERNAME);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("No person role asscoiated with this id" ,error);
     }
 }
