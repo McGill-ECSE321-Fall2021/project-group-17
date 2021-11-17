@@ -4,3 +4,4 @@
 # Ignore Gradle build output directory
 build
 .idea
+/Library-Backend/src/test/java/ca/mcgill/ecse321/library/integrationTest/node_modules/
