@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @CrossOrigin(origins = "*")
 @RestController
 public class ItemInstanceRestController {
@@ -17,6 +20,11 @@ public class ItemInstanceRestController {
     public ItemInstanceDTO getItemInstance(@PathVariable("serialNum") int serialNum) throws IllegalArgumentException {
         ItemInstance itemInstance = service.getItemInstance(serialNum);
         return convertToDTO(itemInstance);
+    }
+
+    @GetMapping(value = {"/iteminstances/", "/iteminstances"})
+    public List<ItemInstanceDTO> getItemInstances() throws IllegalArgumentException {
+        return service.viewInventory().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @PostMapping(value= {"/iteminstance/", "/iteminstance"})
