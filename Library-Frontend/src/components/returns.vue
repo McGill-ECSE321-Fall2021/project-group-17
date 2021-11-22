@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default-dark.css'
+import VueMaterial from 'vue-material'
+
+Vue.use(VueMaterial)
+
 <template>
     <div id="returns">
         <md-table md-card>
