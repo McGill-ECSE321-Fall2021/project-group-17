@@ -39,5 +39,10 @@ module.exports = {
     cssSourceMap: false,
     backendHost: '127.0.0.1',
     backendPort: 8080,
-  }
+  },
+  module: {
+    rules: [
+
+    ]
+  },
 }
