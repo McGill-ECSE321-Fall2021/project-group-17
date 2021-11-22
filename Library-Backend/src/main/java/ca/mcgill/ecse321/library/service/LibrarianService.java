@@ -52,13 +52,20 @@ public class LibrarianService {
         return librarian;
     }
     @Transactional
-    public <T> List<T> getAllLibrarians() {
+    public Librarian getLibrarian(Integer id){
+        if(id == null || id < 0) throw new LibrarianException("Invalid Id");
+        Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(id);
+        if(librarian == null) throw new LibrarianException("No librarian by this id");
+        return librarian;
+    }
+    @Transactional
+    public List<PersonRole> getAllLibrarians() {
     	@SuppressWarnings("unchecked")
-		Iterator<T> iter = (Iterator<T>) librarianRepository.findAll();
-        List<T> copy = new ArrayList<T>();
+		Iterator<PersonRole> iter = (Iterator<PersonRole>) librarianRepository.findAll();
+        List<PersonRole> librarians = new ArrayList<PersonRole>();
         while (iter.hasNext())
-            copy.add(iter.next());
-        return copy;
+        	librarians.add(iter.next());
+        return librarians;
     }
     @Transactional
     public void deleteLibrarian(Integer id, String accountUsername){
