@@ -49,7 +49,6 @@ public class ItemInstanceService {
     }
 
     @Transactional
-
     public List<ItemInstance> viewInventory() {
         return (List<ItemInstance>) itemInstanceRepository.findAll();
     }
