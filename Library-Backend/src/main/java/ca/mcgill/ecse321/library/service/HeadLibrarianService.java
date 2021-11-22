@@ -4,7 +4,6 @@ import ca.mcgill.ecse321.library.dao.*;
 import ca.mcgill.ecse321.library.model.*;
 import ca.mcgill.ecse321.library.service.Exception.HeadLibrarianException;
 import ca.mcgill.ecse321.library.service.Exception.PersonException;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
