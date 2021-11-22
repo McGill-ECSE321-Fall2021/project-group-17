@@ -20,12 +20,16 @@ Vue.use(VueMaterial)
 
 <style>
     h3 {
-        margin-left: 50%;
-        margin-right: 50%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .center {
         margin-left: auto;
         margin-right: auto;
+    }
+
+    th {
+        padding: 20px;
     }
 </style>

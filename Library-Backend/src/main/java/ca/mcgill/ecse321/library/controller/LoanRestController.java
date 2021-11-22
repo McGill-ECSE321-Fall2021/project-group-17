@@ -72,6 +72,11 @@ public class LoanRestController {
         return service.viewActiveLoans(id);
     }
 
+    @GetMapping("/loan/active")
+    public List<LoanDTO> getAllActiveLoans() {
+        return service.getAllActiveLoans();
+    }
+
 
     //CONVERT TO DTO
 

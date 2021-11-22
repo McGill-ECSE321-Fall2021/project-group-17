@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -218,6 +219,23 @@ public class LoanService {
         }
 
         return loan;
+    }
+
+    @Transactional
+    public List<LoanDTO> getAllActiveLoans(){
+
+        List<Loan> loans = (List<Loan>) loanRepository.findAll();
+
+        Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
+
+        List<LoanDTO> loansDTO = new ArrayList<>();
+        for (Loan loan: loans){
+            if (loan.getReturnDate().before(currentDate) || loan.getReturnDate().equals(currentDate)) {
+                LoanDTO loanDTO = LoanService.loantoDTO(loan);
+                loansDTO.add(loanDTO);
+            }
+        }
+        return loansDTO;
     }
 
 
