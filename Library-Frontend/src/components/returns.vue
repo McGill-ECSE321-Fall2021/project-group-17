@@ -7,22 +7,25 @@ Vue.use(VueMaterial)
 
 <template>
     <div id="returns">
-        <md-table md-card>
-            <md-table-row>
-                <md-table-head>Items on Loan</md-table-head>
-                <md-table-head>Customer</md-table-head>
-                <md-table-head>Return Date</md-table-head>
-            </md-table-row>
-        </md-table>
-        <md-table md-card>
-            <md-table-row>
-                <md-table-head>Items on Hold</md-table-head>
-                <md-table-head>Customer</md-table-head>
-                <md-table-head>Last Pickup Day</md-table-head>
-            </md-table-row>
-        </md-table>
+        <h3>Returns</h3>
+        <table class="center">
+            <tr>
+                <th>Items on Loan</th>
+                <th>Customer</th>
+                <th>Return Date</th>
+            </tr>
+        </table>
     </div>
 </template>
 
 <style>
+    h3 {
+        margin-left: 50%;
+        margin-right: 50%;
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
