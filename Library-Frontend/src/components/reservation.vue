@@ -5,30 +5,32 @@ import 'vue-material/dist/theme/default-dark.css'
 Vue.use(md-datepicker)
 
 <template>
-  <div id="reservation">
-    <h2>Make Reservation</h2>
-    <div id="options">
-      <div id="Item">
-        <md-field>
-          <md-input v-model="itemId">
-             placeholder="item instance"
-          </md-input>
-        </md-field>
-      </div>
-      <div id="Pickup day">
-        <!--<md-datepicker v-model="selectedDate" md-immediately />-->
-        <md-field>
-          <md-input v-model="selectedDate">
-            placeholder="date"
-          </md-input>
-        </md-field>
-      </div>
+  <div id="wrapper" class="overlay">
+    <div id="reservation">
+      <h2>Make Reservation</h2>
+      <div id="options">
+        <div id="Item">
+          <md-field>
+            <md-input v-model="itemId">
+              placeholder="item instance"
+            </md-input>
+          </md-field>
+        </div>
+        <div id="Pickup day">
+          <!--<md-datepicker v-model="selectedDate" md-immediately />-->
+          <md-field>
+            <md-input v-model="selectedDate">
+              placeholder="date"
+            </md-input>
+          </md-field>
+        </div>
 
-      <div id="make reservation">
-        <button @click="createReservation()">Make Reservation</button>
-      </div>
-      <div id="error">
-        <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
+        <div id="make reservation">
+          <button @click="createReservation()">Make Reservation</button>
+        </div>
+        <div id="error">
+          <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
+        </div>
       </div>
     </div>
   </div>
@@ -43,12 +45,20 @@ Vue.use(md-datepicker)
 </script>
 <style>
 #reservation {
-  font-family: arial;
+  font-family: monospace;
   font-size: 24px;
   margin: 25px;
   outline: dashed 1px black;
+  background-color: #D7CeC7;
   /* Center child horizontally*/
   display: flex;
   justify-content: center;
+  flex-grow : 1;
+}
+#wrapper {
+  background-color: #565656;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 </style>
