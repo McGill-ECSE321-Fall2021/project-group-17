@@ -10,57 +10,30 @@
           <th>Day</th>
           <th>Start</th>
           <th>End</th>
-          <!--<th>Edit</th>-->
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
         <tr v-for="shift in librarian.shifts" :key="shift.id">
-          <td>{{ shift.dayOfWeek }}</td>
-          <td>{{ shift.startTime }}</td>
-          <td>{{ shift.endTime }}</td>
-          <td>
-            <button v-on:click="updateShift(shift.id)">Edit</button>
-          </td>
-        </tr>
-        <!--<tr>
           <td>
             <input
               type="text"
-              v-model="newEvent.name"
+              v-model="shift.dayOfWeek"
               placeholder="Event Name"
             />
           </td>
           <td>
-            <input
-              type="date"
-              v-model="newEvent.eventDate"
-              placeholder="YYYY-MM-DD"
-            />
+            <input type="time" v-model="shift.startTime" placeholder="HH:mm" />
           </td>
           <td>
-            <input
-              type="time"
-              v-model="newEvent.startTime"
-              placeholder="HH:mm"
-            />
+            <input type="time" v-model="shift.endTime" placeholder="HH:mm" />
           </td>
           <td>
-            <input type="time" v-model="newEvent.endTime" placeholder="HH:mm" />
+            <button v-on:click="updateShift(shift.id)">Update</button>
           </td>
           <td>
-            <button
-              v-bind:disabled="!newEvent.name"
-              v-on:click="
-                createEvent(
-                  newEvent.name,
-                  newEvent.eventDate,
-                  newEvent.startTime,
-                  newEvent.endTime
-                )
-              "
-            >
-              Create
-            </button>
+            <button v-on:click="updateShift(shift.id)">Delete</button>
           </td>
-        </tr>!-->
+        </tr>
         <hr />
       </table>
     </tr>
