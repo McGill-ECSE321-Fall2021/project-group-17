@@ -12,13 +12,20 @@ var AXIOS = axios.create({
 function ReservationDTO (){}
 export default {
   name: 'registration',
+  props: {
+    dialog: {
+      default: true
+    },
+    itemInstanceId: {
+      default: 0
+    }
+  },
   data () {
     return {
       errorReservation: '',
       reservations: [],
       selectedDate: null,
-      itemId: null,
-      error: false
+      error: false,
     }
   },
   created: function () {
@@ -32,7 +39,7 @@ export default {
   },
   methods: {
     createReservation: function () {
-      let body = {itemInstanceId: this.itemId, customerId: 4, dateReserved:new Date().toISOString().slice(0, 10), pickupDay: this.selectedDate }
+      let body = {itemInstanceId: this.itemInstanceId, customerId: 60, dateReserved:new Date().toISOString().slice(0, 10), pickupDay: this.selectedDate }
       AXIOS.post('/reservation/',body,{}).then(response => {
         this.reservations.push(response.data)
         this.errorReservation = ''
@@ -43,6 +50,17 @@ export default {
           this.errorReservation = errorMsg
           this.error = true
         })
+    },
+    close() {
+      this.$emit('update:dialog', false)
+    }
+  },
+  computed: {
+    propModel: {
+      get () {
+        return this.dialog
+      },
+      set (value) { this.$emit('input', value) },
     }
   }
 }

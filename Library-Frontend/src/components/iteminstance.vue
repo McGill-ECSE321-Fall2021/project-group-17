@@ -6,7 +6,6 @@ import 'vue-material/dist/theme/default-dark.css'
 <template>
   <div id="wrapper" class="overlay">
     <div id="reservation">
-      <h2 class="layer1">Make Reservation</h2>
       <div id="table" class="layer2">
         <md-table v-model="searched" md-card md-fixed-header md-sort-order="asc" @md-selected="onSelect">
           <md-table-toolbar>
@@ -23,7 +22,7 @@ import 'vue-material/dist/theme/default-dark.css'
           </md-table-empty-state>
 
 
-          <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single">
+          <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single">
             <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.checkableItem.id }}</md-table-cell>
             <md-table-cell md-label="Name" md-sort-by="name">{{ item.checkableItem.name }}</md-table-cell>
             <md-table-cell md-label="Date Published" md-sort-by="datePublished">{{ item.checkableItem.datePublished }}</md-table-cell>
@@ -31,7 +30,8 @@ import 'vue-material/dist/theme/default-dark.css'
             <md-table-cell md-label="Type" md-sort-by="type">{{ item.checkableItem.type }}</md-table-cell>
           </md-table-row>
         </md-table>
-        <md-button >Create Reservation</md-button>
+        <md-button :disabled="buttonEnabled" class="create-button" @click="openDialog()">Create Reservation</md-button>
+        <reservation :dialog.sync="dialog" :itemInstanceId=selected.serialNum ></reservation>
       </div>
     </div>
   </div>

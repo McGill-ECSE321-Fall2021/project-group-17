@@ -4,36 +4,27 @@ import 'vue-material/dist/theme/default-dark.css'
 
 
 <template>
-  <div id="wrapper" class="overlay">
-    <div id="reservation">
-      <h2 class="layer1">Make Reservation</h2>
-      <div id="options" class="layer2">
-        <div id="Item" class="div-element">
-          <h3 >Item Instance serial num:</h3>
-          <md-field >
-            <md-input v-model="itemId" placeholder="item instance">
-            </md-input>
-          </md-field>
-        </div>
-        <div id="Pickup day" class="div-element">
-          <h3 >Pickup date:</h3>
-          <md-datepicker v-model="selectedDate" md-immediately />
-          <!--<md-field>
-            <md-input v-model="selectedDate">
-              placeholder="date"
-            </md-input>
-          </md-field>-->
-        </div>
+  <md-dialog :md-active.sync="dialog" >
+    <md-dialog-title>Make Reservation</md-dialog-title>
+    <div id="options" class="wrapper">
+      <div id="Pickup day" class="dialog" >
+        <h3 style="flex-grow: 2;">Pickup date:</h3>
+        <md-datepicker v-model="selectedDate" md-immediately />
+        <!--<md-field>
+          <md-input v-model="selectedDate">
+            placeholder="date"
+          </md-input>
+        </md-field>-->
+      </div>
 
-        <div id="make reservation">
-          <button @click="createReservation()">Make Reservation</button>
-        </div>
-        <div id="error">
-          <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
-        </div>
+      <div id="make reservation" class="dialog">
+        <md-button @click="createReservation()" class="create-button">Make Reservation</md-button>
+      </div>
+      <div id="error">
+        <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
       </div>
     </div>
-  </div>
+  </md-dialog>
 </template>
 <script src="./reservation.js">
 /*export default {
@@ -47,15 +38,15 @@ import 'vue-material/dist/theme/default-dark.css'
 #reservation {
   font-family: monospace;
   font-size: 24px;
-  outline: dashed 1px black;
+  outline:  20px black;
   background-color: #D7CeC7;
   /* Center child horizontally*/
   justify-content: center;
   flex-grow : 1;
   display: grid
 }
-#wrapper {
-  background-color: #565656;
+.wrapper {
+  background-color: #C09F80;
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -71,6 +62,14 @@ import 'vue-material/dist/theme/default-dark.css'
 }
 .div-element{
   display: flex;
+  justify-content: center;
+}
+.dialog{
+  border: black 2px;
+  margin: 10% 10% 10% 10%;
+
+  display: flex;
+  flex-flow: row;
   justify-content: center;
 }
 </style>

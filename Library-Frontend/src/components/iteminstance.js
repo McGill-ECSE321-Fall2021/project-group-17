@@ -1,4 +1,5 @@
 import axios from 'axios'
+import reservation from "./reservation.vue";
 
 var config = require('../../config')
 
@@ -23,6 +24,9 @@ const searchByName = (items, term) => {
 }
 export default {
   name: 'itemInstance',
+  components: {
+    reservation
+  },
   data () {
     return {
       errorItemInstance: '',
@@ -31,6 +35,8 @@ export default {
       search: null,
       searched: [],
       selected: {},
+      buttonEnabled: true,
+      dialog: false
     }
   },
   created: function () {
@@ -69,6 +75,11 @@ export default {
     },
     onSelect (item) {
       this.selected = item
+      this.buttonEnabled = false
+      console.log(this.selected)
+    },
+    openDialog () {
+      this.dialog = true
     }
   }
 }
