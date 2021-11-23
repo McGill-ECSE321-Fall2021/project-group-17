@@ -64,6 +64,11 @@ public class LoanRestController {
         return convertToDto(service.getLoan(id,customerId));
     }
 
+    @GetMapping("/loan/active")
+    public List<LoanDTO> getAllActiveLoans() {
+        return service.getAllActiveLoans();
+    }
+
     /**
      * returns all loans for a customer
      */
