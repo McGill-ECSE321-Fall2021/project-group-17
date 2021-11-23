@@ -58,7 +58,7 @@ public class PersonRestController {
         PersonDTO personDto = new PersonDTO(p.getId());
         personDto.setId(p.getId());
         personDto.setName(p.getName());
-        personDto.setPersonRoleList(p.getPersonRoleList());
+        //personDto.setPersonRoleList(p.getPersonRoleList());
         return personDto;
     }
 

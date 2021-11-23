@@ -14,12 +14,14 @@ export default {
     data () {
       return {
         loans: [],
-        errorLoan: ''
+        errorLoan: '',
       }
     },
     created: function () {
       AXIOS.get('/loan/active').then(response => {
         this.loans = response.data
+        console.log("result is = ")
+        console.log(response.data)
       })
         .catch(e =>{
           this.errorLoan = e

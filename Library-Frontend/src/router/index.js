@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import reservation from '@/components/reservation'
-import returns from '@/components/returns'
+//import returns from '@/components/returns'
 
 Vue.use(Router)
 
@@ -21,7 +21,7 @@ export default new Router({
     {
       path: '/returns',
       name: 'Returns',
-      component: returns
+      component: require("@/components/returns.vue").default
     }
   ]
 })

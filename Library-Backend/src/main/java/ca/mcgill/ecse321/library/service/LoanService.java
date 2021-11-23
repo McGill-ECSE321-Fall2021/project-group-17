@@ -224,13 +224,12 @@ public class LoanService {
     @Transactional
     public List<LoanDTO> getAllActiveLoans(){
 
-        List<Loan> loans = (List<Loan>) loanRepository.findAll();
-
         Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
+        List<Loan> loans = (List<Loan>) loanRepository.findAll();
 
         List<LoanDTO> loansDTO = new ArrayList<>();
         for (Loan loan: loans){
-            if (loan.getReturnDate().before(currentDate) || loan.getReturnDate().equals(currentDate)) {
+            if (loan.getReturnDate().after(currentDate) || loan.getReturnDate().equals(currentDate)) {
                 LoanDTO loanDTO = LoanService.loantoDTO(loan);
                 loansDTO.add(loanDTO);
             }
