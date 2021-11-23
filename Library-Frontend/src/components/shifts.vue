@@ -1,5 +1,5 @@
 <template>
-  <div id="eventregistration">
+  <div id="shifts">
     <h2>Persons</h2>
     <table>
       <tr v-for="person in persons" :key="person.name">
@@ -116,9 +116,9 @@
     </span>
   </div>
 </template>
-<script src="./shifts.js"></script>
+<script src="./schedule.js"></script>
 <style>
-#eventregistration {
+#shifts {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
