@@ -25,7 +25,7 @@
     <hr />
   </div>
 </template>
-<script src="./schedule.js"></script>
+<script src="./shifts.js"></script>
 <style>
 #shifts {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

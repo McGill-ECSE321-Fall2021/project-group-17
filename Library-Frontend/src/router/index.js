@@ -20,7 +20,7 @@ export default new Router({
     },
     {
       path: "/shifts",
-      name: "EventRegistration",
+      name: "LibrarianShifts",
       component: shifts
     }
   ]
