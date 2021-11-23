@@ -60,11 +60,9 @@ public class LibrarianService {
     }
     @Transactional
     public List<PersonRole> getAllLibrarians() {
-    	@SuppressWarnings("unchecked")
-		Iterator<PersonRole> iter = (Iterator<PersonRole>) librarianRepository.findAll();
+		Iterable<PersonRole> iter = (Iterable<PersonRole>) librarianRepository.findAll();
         List<PersonRole> librarians = new ArrayList<PersonRole>();
-        while (iter.hasNext())
-        	librarians.add(iter.next());
+        iter.forEach(librarians::add);
         return librarians;
     }
     @Transactional
