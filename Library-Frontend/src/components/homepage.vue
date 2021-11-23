@@ -50,57 +50,68 @@ Vue.use(md-datepicker)
     <div>
     <b-carousel
       id="carousel-1"
-      v-model="slide"
       :interval="4000"
       controls
       indicators
-      background="#ababab"
-      img-width="800"
-      img-height="480"
+      background="#ffffff"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
-      <!-- Text slides with image -->
-      <b-carousel-slide
-        img-src="https://picsum.photos/1024/480/?image=52"
-      ></b-carousel-slide>
-
-      <!-- Slides with custom text -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-        <h1>Hello world!</h1>
-      </b-carousel-slide>
-
-      <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
       <b-carousel-slide>
-        <template #img>
+      
+           <template #img>
           <img
-            class="d-block img-fluid w-100"
             width="800"
-            height="480"
-            src="https://picsum.photos/1024/480/?image=55"
+            height="400"
+            src="https://i.ibb.co/NWyhxkx/WELCOME-TO-MONTREALS-BIGGEST-PUBLIC-LIBRARY-2.gif"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide>
+      <b-carousel-slide >
+         <template #img>
+          <img
+            width="400"
+            height="400"
+            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
             alt="image slot"
           >
         </template>
       </b-carousel-slide>
 
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-          a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-        </p>
+           <b-carousel-slide >
+         <template #img>
+          <img
+            width="400"
+            height="400"
+            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide>
+
+         <b-carousel-slide >
+         <template #img>
+          <img
+            width="400"
+            height="400"
+            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide>
+      <b-carousel-slide >
+         <template #img>
+          <img
+            width="400"
+            height="400"
+            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
+            alt="image slot"
+          >
+        </template>
       </b-carousel-slide>
     </b-carousel>
-
-    <p class="mt-4">
-      Slide #: {{ slide }}<br>
-      Sliding: {{ sliding }}
-    </p>
   <div id="wrapper" class="overlay">
     <div id="homepage">
       <h2 class="layer1">Welcome User!</h2>
@@ -157,11 +168,17 @@ export default {
   font-family: monospace;
   font-size: 24px;
   outline: dashed 1px black;
-  background-color: #D7CeC7;
+  background-color: #b9b4b477;
   /* Center child horizontally*/
   justify-content: center;
   flex-grow : 1;
   display: grid
+}
+.title {
+  font-family: monospace;
+  font-size: 50px;
+  color: black;
+
 }
 #wrapper {
   background-color: #565656;
