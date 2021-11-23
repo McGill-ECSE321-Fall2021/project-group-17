@@ -7,20 +7,18 @@ Vue.use(md-datepicker)
 <template>
 
 <div>
-  <b-navbar toggleable="lg" type="light" variant="light">
-      <b-navbar variant="faded" type="light" left>
+  <b-navbar toggleable="lg" type="dark" variant="light">
+      <b-navbar variant="faded" type="dark" left>
     <b-navbar-brand >
-      <img src="https://www.clipartqueen.com/image-files/open-red-book-clipart.png" alt="Logo" height="30" width="30">
+      <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="60" width="60">
     </b-navbar-brand>
     </b-navbar>
-       <b-nav-item-dropdown left>
-          <template #button-content>
-            <em>Library Services</em>
-          </template>
+       <b-nav-item-dropdown text="Library Services" left>
           <b-dropdown-item href="#">Find items</b-dropdown-item>
           <b-dropdown-item href="#">View loans</b-dropdown-item>
           <b-dropdown-item href="#">Make Reservations</b-dropdown-item>
         </b-nav-item-dropdown>
+  
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -53,7 +51,7 @@ Vue.use(md-datepicker)
       :interval="4000"
       controls
       indicators
-      background="#ffffff"
+      background="#d7cec7"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
@@ -62,18 +60,19 @@ Vue.use(md-datepicker)
       
            <template #img>
           <img
-            width="800"
-            height="400"
+            width="840"
+            height="500"
             src="https://i.ibb.co/NWyhxkx/WELCOME-TO-MONTREALS-BIGGEST-PUBLIC-LIBRARY-2.gif"
             alt="image slot"
           >
         </template>
       </b-carousel-slide>
+  
       <b-carousel-slide >
          <template #img>
           <img
-            width="400"
-            height="400"
+            width="840"
+            height="500"
             src="https://media.timeout.com/images/105464457/750/562/image.jpg"
             alt="image slot"
           >
@@ -83,8 +82,8 @@ Vue.use(md-datepicker)
            <b-carousel-slide >
          <template #img>
           <img
-            width="400"
-            height="400"
+            width="840"
+            height="500"
             src="https://media.timeout.com/images/105464457/750/562/image.jpg"
             alt="image slot"
           >
@@ -94,8 +93,8 @@ Vue.use(md-datepicker)
          <b-carousel-slide >
          <template #img>
           <img
-            width="400"
-            height="400"
+            width="840"
+            height="500"
             src="https://media.timeout.com/images/105464457/750/562/image.jpg"
             alt="image slot"
           >
@@ -104,40 +103,156 @@ Vue.use(md-datepicker)
       <b-carousel-slide >
          <template #img>
           <img
-            width="400"
-            height="400"
+            width="840"
+            height="500"
             src="https://media.timeout.com/images/105464457/750/562/image.jpg"
             alt="image slot"
           >
         </template>
       </b-carousel-slide>
     </b-carousel>
-  <div id="wrapper" class="overlay">
-    <div id="homepage">
-      <h2 class="layer1">Welcome User!</h2>
-      <div id="options" class="layer2">
-        <div id="Item" class="div-element">
-          <h3 >Item Instance serial num:</h3>
-          <md-field >
-            <md-input v-model="itemId" placeholder="item instance">
-            </md-input>
-          </md-field>
+      <div id="wrapper" class="overlay">
+      <h2 class="layer1">UPCOMING EVENTS</h2>
         </div>
-        <div id="Pickup day" class="div-element">
-          <h3 >Pickup date:</h3>
-          <md-datepicker v-model="selectedDate" md-immediately />
+    </div>
+<div>
+  <div>
+    <b-card-group deck>
+     
+    <b-card
+    no-body
+    style="max-width: 20rem;"
+    img-src="https://i.ibb.co/C6bmGBZ/Untitled-design.png"
+    img-height=200
+    img-alt="Image"
+    img-top
+  >
+    <template #header>
+      <h4 class="mb-0">DECEMBER 14TH </h4>
+    </template>
+
+    <b-card-body>
+      <b-card-title>Reading with Santa</b-card-title>
+      <b-card-text>
+        Join us at our main branch for a holiday themed reading circle with Santa Clause
+      </b-card-text>
+    </b-card-body>
+
+    <b-list-group flush>
+      <b-list-group-item>TIME: 11:00 am</b-list-group-item>
+      <b-list-group-item>AGES: 3-12</b-list-group-item>
+    </b-list-group>
+
+    <b-card-body>
+      <a href="#" class="card-link">Learn More</a>
+    </b-card-body>
+
+  </b-card>
+
+      
+    <b-card
+    no-body
+    style="max-width: 20rem;"
+    img-src="https://i.ibb.co/C6bmGBZ/Untitled-design.png"
+    img-height=200
+    img-alt="Image"
+    img-top
+  >
+    <template #header>
+      <h4 class="mb-0">DECEMBER 22ND</h4>
+    </template>
+
+    <b-card-body>
+      <b-card-title>Holiday Bakesale</b-card-title>
+      <b-card-text>
+       Out of time to make bake this holiday season, we got you covered! Join us for a wide selection of holiday goods
+      </b-card-text>
+    </b-card-body>
+
+    <b-list-group flush>
+      <b-list-group-item>TIME: 10:00AM to 3:00PM</b-list-group-item>
+      <b-list-group-item>ALL ARE WELCOME</b-list-group-item>
+    </b-list-group>
+
+    <b-card-body>
+      <a href="#" class="card-link">Learn More</a>
+    </b-card-body>
+  </b-card>
+
+    <b-card
+    no-body
+    style="max-width: 20rem;"
+    img-src="https://i.ibb.co/C6bmGBZ/Untitled-design.png"
+    img-height=200
+    img-alt="Image"
+    img-top
+  >
+    <template #header>
+      <h4 class="mb-0">JANUARY 5TH</h4>
+    </template>
+
+    <b-card-body>
+      <b-card-title>New Year Resolution Writing</b-card-title>
+      <b-card-text>
+        A very special guest will be guiding our community through the best practices for setting resolutions that you can achieve!
+      </b-card-text>
+    </b-card-body>
+
+    <b-list-group flush>
+      <b-list-group-item>TIME: 1:00PM</b-list-group-item>
+      <b-list-group-item>AGES: 16+</b-list-group-item>
+    </b-list-group>
+
+    <b-card-body>
+      <a href="#" class="card-link">Learn more</a>
+    </b-card-body>
+  </b-card>
+   <b-card
+    no-body
+    style="max-width: 20rem;"
+    img-src="https://i.ibb.co/C6bmGBZ/Untitled-design.png"
+    img-height=200
+    img-alt="Image"
+    img-top
+  >
+    <template #header>
+      <h4 class="mb-0">JANUARY 18TH</h4>
+    </template>
+
+    <b-card-body>
+      <b-card-title>Brit Bennett Book Signing</b-card-title>
+      <b-card-text>
+       Author of NYT best selling book 'The Vanishing Half' will be signing copies at our main branch.
+      </b-card-text>
+    </b-card-body>
+
+    <b-list-group flush>
+      <b-list-group-item>TIME: 5:00PM</b-list-group-item>
+      <b-list-group-item>ALL ARE WELCOME</b-list-group-item>
+    </b-list-group>
+
+    <b-card-body>
+      <a href="#" class="card-link">Learn more</a>
+    </b-card-body>
+  </b-card>
+    </b-card-group>
+  </div>
+</div>
+<div id="footer" class="overlay">
+  <b-container>
+  <b-row>
+    <b-col>CONTACT US</b-col>
+    <b-col>ABOUT US</b-col>
+    <b-col>SIGN UP FOR OUR NEWSLETTER</b-col>
+  </b-row>
+    <b-row>
+    <b-col>EMAIL:</b-col>
+    <b-col>Mission Statement</b-col>
+    <b-col></b-col>
+  </b-row>
+</b-container>
         </div>
 
-        <div id="make reservation">
-          <button @click="createReservation()">Make Reservation</button>
-        </div>
-        <div id="error">
-          <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
     </div>
 </template>
 <script>
@@ -168,7 +283,7 @@ export default {
   font-family: monospace;
   font-size: 24px;
   outline: dashed 1px black;
-  background-color: #b9b4b477;
+  background-color: #fdebd077;
   /* Center child horizontally*/
   justify-content: center;
   flex-grow : 1;
@@ -181,12 +296,26 @@ export default {
 
 }
 #wrapper {
-  background-color: #565656;
+  background-color: #76323F;
     display: flex;
+    font-size: 100px;
+    font-family: monospace;
+    color: black;
   align-items: center;
   justify-content:center;
-  height: 50%;
-  padding: 3% 7.5% 10%;
+  height: 25%;
+  padding: 3% 3% 3%;
+}
+#footer {
+  background-color: #76323F;
+    display: flex;
+    font-size: 35px;
+    font-family: monospace;
+    color: black;
+  align-items: center;
+  justify-content:center;
+  height: 25%;
+  padding: 3% 3% 3%;
 }
 .layer1{
   grid-column: 1;
