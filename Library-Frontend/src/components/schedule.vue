@@ -1,5 +1,6 @@
 <template>
   <div id="schedule">
+    <hr />
     <h1>All Schedules</h1>
     <hr />
     <tr v-for="librarian in librarians" :key="librarian.id">
@@ -14,7 +15,7 @@
         <tr v-for="shift in librarian.shifts" :key="shift.id">
           <td>{{ shift.dayOfWeek }}</td>
           <td>{{ shift.startTime }}</td>
-          <td>{{ event.endTime }}</td>
+          <td>{{ shift.endTime }}</td>
           <!-- <td>
             <button v-on:click="updateEvent(event.name)">Edit</button>
           </td> -->
@@ -60,6 +61,7 @@
             </button>
           </td>
         </tr>!-->
+        <hr />
       </table>
     </tr>
 
@@ -67,7 +69,7 @@
     <hr />
   </div>
 </template>
-<script src="./shifts.js"></script>
+<script src="./schedule.js"></script>
 <style>
 #schedule {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
