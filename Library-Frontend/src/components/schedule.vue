@@ -16,9 +16,9 @@
           <td>{{ shift.dayOfWeek }}</td>
           <td>{{ shift.startTime }}</td>
           <td>{{ shift.endTime }}</td>
-          <!-- <td>
-            <button v-on:click="updateEvent(event.name)">Edit</button>
-          </td> -->
+          <td>
+            <button v-on:click="updateShift(shift.id)">Edit</button>
+          </td>
         </tr>
         <!--<tr>
           <td>
@@ -65,7 +65,7 @@
       </table>
     </tr>
 
-    <span v-if="errorEvent" style="color:red">Error: {{ errorEvent }} </span>
+    <!-- <span v-if="errorEvent" style="color:red">Error: {{ errorEvent }} </span> -->
     <hr />
   </div>
 </template>

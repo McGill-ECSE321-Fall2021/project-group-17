@@ -52,5 +52,30 @@ export default {
         this.errorPerson = e;
       });
   },
-  methods: {}
+  methods: {
+    updateShift: function(librarianId, dayOfWeek, startTime, endTime) {
+      AXIOS.post(
+        "/events/".concat(eventName),
+        {},
+        {
+          params: {
+            date: dayOfWeek,
+            startTime: startTime,
+            endTime: endTime
+          }
+        }
+      )
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.events.push(response.data);
+          this.errorEvent = "";
+          this.newEvent.name = "";
+        })
+        .catch(e => {
+          var errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorEvent = errorMsg;
+        });
+    }
+  }
 };

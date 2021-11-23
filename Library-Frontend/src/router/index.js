@@ -2,8 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 import Hello from "@/components/Hello";
 import reservation from "@/components/reservation";
-import shifts from "@/components/shifts";
-import schedule from "@/components/schedule";
 
 Vue.use(Router);
 
@@ -21,13 +19,13 @@ export default new Router({
     },
     {
       path: "/shifts",
-      name: "EventRegistration",
-      component: shifts
+      name: "Shifts",
+      component: require("@/components/shifts.vue").default
     },
     {
       path: "/schedule",
-      name: "EventRegistration",
-      component: schedule
+      name: "Schedule",
+      component: require("@/components/schedule.vue").default
     }
   ]
 });
