@@ -14,6 +14,9 @@ Vue.use(VueMaterial)
                 <th>Customer</th>
                 <th>Return Date</th>
             </tr>
+            <tr v-for="loan in loans" :key="loan.returnDate">
+                <td>{{ loan.returnDate }}</td>
+            </tr>
         </table>
     </div>
 </template>
@@ -33,3 +36,6 @@ Vue.use(VueMaterial)
         padding: 20px;
     }
 </style>
+
+<script src="./returns.js">
+</script>
