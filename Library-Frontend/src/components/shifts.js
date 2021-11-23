@@ -19,7 +19,7 @@ var AXIOS = axios.create({
 });
 
 export default {
-  name: "schedule",
+  name: "shifts",
   data() {
     return {
       librarian: null,
