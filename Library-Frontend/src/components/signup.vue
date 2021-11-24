@@ -41,7 +41,7 @@ import Vue from 'vue'
                 </div>
                 <div class="signup-info">
                   <input v-model="search" class="search" placeholder="Search for name here..." @input="searchOnTable"/>
-                  <b-button class="btn"><router-link to="/search"> Search </router-link></b-button>
+                  <b-button class="btn">Search </b-button>
                 </div>
                 <form class="signup-info">
                   <div class="address-label">
