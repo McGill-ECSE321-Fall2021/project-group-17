@@ -4,28 +4,51 @@ import Vue from 'vue'
     <div class="signup-page">
       <div class="container">
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
-          <div class="card signup">
-            <h1>Sign Up</h1>
-            <form class="signup-info">
-              <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
-              <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
-              <div class="address-label">
-                <label>Address</label>
-              </div>
-              <input v-model="streetNum" class="signup-input" placeholder="Street Number" required >
-              <input v-model="streetName" class="signup-input" placeholder="Street Name" required >
 
-              <input v-model="city" class="signup-input" placeholder="City" required >
-              <input v-model="country" class="signup-input" placeholder="Country" required >
-            </form>
-            <b-button size="sm" class="btn">Sign Up</b-button>
-            <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
+            <md-tabs class="md-primary" md-alignment="centered">
+              <md-tab id="tab-home" md-label="Create Account">
+                <h1>Sign Up</h1>
+                <form class="signup-info">
+                  <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
+                  <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <div class="address-label">
+                    <label>Address</label>
+                  </div>
+                  <input v-model="streetNum" class="signup-input" placeholder="Street Number" required >
+                  <input v-model="streetName" class="signup-input" placeholder="Street Name" required >
+
+                  <input v-model="city" class="signup-input" placeholder="City" required >
+                  <input v-model="country" class="signup-input" placeholder="Country" required >
+                </form>
+                <b-button size="sm" class="btn">Sign Up</b-button>
+                <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
+              </md-tab>
+              <md-tab id="tab-pages" md-label="Create Person">
+                <h1>Sign Up</h1>
+                <form class="signup-info">
+                  <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
+                  <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <div class="address-label">
+                    <label>Address</label>
+                  </div>
+                  <input v-model="streetNum" class="signup-input" placeholder="Street Number" required >
+                  <input v-model="streetName" class="signup-input" placeholder="Street Name" required >
+
+                  <input v-model="city" class="signup-input" placeholder="City" required >
+                  <input v-model="country" class="signup-input" placeholder="Country" required >
+                </form>
+                <b-button size="sm" class="btn">Sign Up</b-button>
+                <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
+              </md-tab>
+            </md-tabs>
+
+
           </div>
         </div>
       </div>
 
     </div>
-  </div>
+
 </template>
 
 <script src="./signup.js">
@@ -37,12 +60,11 @@ import Vue from 'vue'
   line-height: 1rem;
 }
 
-.card {
+.md-primary {
   padding: 20px;
   font-family: monospace;
   color: #76323F;
   background: #D7CEC7;
-  align-items: center;
   font-size: 0.8rem;
 
 }
@@ -76,20 +98,10 @@ h1 {
 }
 
 
-.address {
-  align: left;
-  font-size: 16px;
-  display: flex;
-  flex-direction: row;
-  width: 250px;
-  padding: 30px;
-}
-
 .address-label {
   margin-top: 30px;
   margin-bottom: -15px;
 }
-
 
 
 </style>
