@@ -41,7 +41,29 @@ import Vue from 'vue'
                 </div>
                 <div class="signup-info">
                   <input v-model="search" class="search" placeholder="Search for name here..." @input="searchOnTable"/>
-                  <b-button class="btn">Search </b-button>
+                  <b-button class="btn" @click="onSearchClick()">Search</b-button>
+
+                  <md-dialog :md-active.sync="searchDialog">
+                    <md-dialog-title>Make Reservation</md-dialog-title>
+                    <div id="options" class="wrapper">
+                      <div id="Pickup day" class="dialog" >
+                        <h3 style="flex-grow: 2;">Pickup date:</h3>
+                        <md-datepicker v-model="selectedDate" md-immediately />
+                        <!--<md-field>
+                          <md-input v-model="selectedDate">
+                            placeholder="date"
+                          </md-input>
+                        </md-field>-->
+                      </div>
+
+                      <div id="make reservation" class="dialog">
+                        <md-button @click="createReservation()" class="create-button">Make Reservation</md-button>
+                      </div>
+                      <div id="error">
+                        <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
+                      </div>
+                    </div>
+                  </md-dialog>
                 </div>
                 <form class="signup-info">
                   <div class="address-label">

@@ -34,7 +34,8 @@ export default {
       city: null,
       country: null,
       search: null,
-      error: false
+      error: false,
+      searchDialog: false
     }
   },
   created: function () {
@@ -75,8 +76,9 @@ export default {
     openDialog () {
       this.dialog = true
     },
-
-
+    onSearchClick(){
+      this.searchDialog = true
+    },
 
     createOnlineAccount: function () {
       console.log(this.userSignup)
