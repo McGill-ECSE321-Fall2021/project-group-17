@@ -32,15 +32,15 @@ jobs:
           heroku_app_name: "library-backend-534a" #Must be unique in Heroku
           heroku_email: "tomasz.mroz@mail.mcgill.ca"
           dontuseforce: false
-    frontend:
-      needs: backend
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - name: push frontend
-          uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-          with:
-            heroku_api_key: 1a042c12-7a0e-4bb7-9b7d-a092a87d9da6
-            heroku_app_name: "library-frontend-534a" #Must be unique in Heroku
-            heroku_email: "tomasz.mroz@mail.mcgill.ca"
-            dontuseforce: false
+  frontend:
+    needs: backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: push frontend
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: 1a042c12-7a0e-4bb7-9b7d-a092a87d9da6
+          heroku_app_name: "library-frontend-534a" #Must be unique in Heroku
+          heroku_email: "tomasz.mroz@mail.mcgill.ca"
+          dontuseforce: false
