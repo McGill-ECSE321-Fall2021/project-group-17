@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default-dark.css'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 Vue.use(md-datepicker)
 
@@ -257,9 +258,14 @@ Vue.use(md-datepicker)
     <b-col></b-col>
     <b-col></b-col>
     <b-col><b-link href="#foo"><a class="text-my-own-color">Support the Library</a></b-link></b-col>
-    <b-col></b-col>
-  </b-row>
+     <b-col><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Facebook%2BIcon%2BBlack.png" alt="Logo" height="20" width="20" left>
+     <img src="https://i.ibb.co/Z6bPFc0/5ecec78673e4440004f09e77.png" alt="Logo" height="20" width="20" >
+     
+     <img src="https://icon-library.com/images/twitter-icon-png-white/twitter-icon-png-white-9.jpg" alt="Logo" height="25" width="25" >
+     </b-col>
+     </b-row>
 </b-container>
+
         </div>
 
     </div>
