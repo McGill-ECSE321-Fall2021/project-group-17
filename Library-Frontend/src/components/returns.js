@@ -15,6 +15,7 @@ export default {
       return {
         loans: [],
         errorLoan: '',
+        selectedLoan: ''
       }
     },
     created: function () {
@@ -28,4 +29,9 @@ export default {
           console.log(e.response.data.message)
         })
     },
+    methods: {
+      selectLoan: function () {
+        this.selectedLoan = "Bob"
+      }
+    }
 }
