@@ -19,16 +19,17 @@ export default {
         loans: [],
         errorLoan: '',
         selectedLoan: '',
-        checkedOut: new Date(),
+        returnDate: '',
         serialNum: 'Input Serial Number',
-        libCard: 'Input Library Card Number'
+        libCard: 'Input Library Card Number',
+        selectedItem: '',
+        selectedCustomer: '',
+        returnItemError: ''
       }
     },
     created: function () {
       AXIOS.get('/loan/active').then(response => {
         this.loans = response.data
-        console.log("result is = ")
-        console.log(response.data)
       })
         .catch(e =>{
           this.errorLoan = e
@@ -36,8 +37,38 @@ export default {
         })
     },
     methods: {
-      selectLoan: function () {
-        this.selectedLoan = "Bob"
+      selectLoan: function (loan) {
+        this.selectedLoan = loan
+        this.selectedItem = loan.itemInstance.checkableItem.name
+        this.selectedCustomer = loan.customer.person.name
+      },
+
+      returnItem: function () {
+        var id = this.selectedLoan.id
+        var customerId = this.selectedLoan.customer.id
+        AXIOS.delete('/loan/' + parseInt(id), { params: { customerId:  parseInt(customerId)} }).then(response => {
+          this.selectedLoan = []
+        })
+          .catch(e =>{
+            this.errorLoan = e
+            console.log(e.response.data.message)
+          })
+
+        document.location.reload(true)
+      },
+
+      createLoan: function () {
+        AXIOS.post('/loan/libraryCard/' +  parseInt(this.libCard) + '/' + parseInt(this.serialNum) + '/' + this.returnDate)
+        .then(response => {
+          this.libraryCardNum = '';
+          this.serialNum = '';
+          this.returnDate = '';
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
+
+        document.location.reload(true)
       }
     }
 }

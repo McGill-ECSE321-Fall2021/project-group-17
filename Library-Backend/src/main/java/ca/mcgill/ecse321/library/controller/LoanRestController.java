@@ -29,6 +29,13 @@ public class LoanRestController {
         return convertToDto(loan);
     }
 
+    @PostMapping(value= {"/loan/libraryCard/{libraryCardNum}/{serialNum}/{date}","/loan/libraryCard/{libraryCardNum}/{serialNum}/{date}/"})
+    public LoanDTO createLoanWithLibraryCard(@PathVariable Integer libraryCardNum, @PathVariable Integer serialNum,
+                                             @PathVariable String date ){
+        Loan loan = service.createLoanWithLibraryCard(libraryCardNum, serialNum, date);
+        return convertToDto(loan);
+    }
+
     /**
      * deletes loan
      * @param id

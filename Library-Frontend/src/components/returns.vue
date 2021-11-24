@@ -14,14 +14,14 @@ import Vue from 'vue'
                     <md-table-cell class="th">Customer</md-table-cell>
                     <md-table-cell class="th">Return Date</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="loan in loans" :key="loan" @click="selectLoan(loan)" class="tr" md-selectable="single">
+                <md-table-row v-for="loan in loans" :key="loan.id" @click="selectLoan(loan)" class="tr" md-selectable="single">
                     <md-table-cell>{{ loan.itemInstance.checkableItem.name }}</md-table-cell>
                     <md-table-cell> {{ loan.customer.person.name }}</md-table-cell>
                     <md-table-cell>{{ loan.returnDate }}</md-table-cell>
                 </md-table-row>
             </md-table>
             <div class="returnItem">
-                <md-field>
+                <md-field class="itemToReturn">
                     <label>Item to Return</label>
                     <md-input v-model="selectedItem" disabled></md-input>
                 </md-field>
@@ -33,7 +33,7 @@ import Vue from 'vue'
                 </md-field>
             </div>
             <div class="returnItem">
-                <md-button class="md-raised">Return Item</md-button>
+                <md-button class="md-raised" @click="returnItem()">Return Item</md-button>
             </div>
         </div>
         <div class="side">
@@ -50,12 +50,12 @@ import Vue from 'vue'
                             <md-input v-model="serialNum"></md-input>
                         </md-field>
                         <md-field class="input">
-                            <md-datepicker v-model="checkedOut" />
+                            <md-datepicker v-model="returnDate" />
                         </md-field>
                     </div>
                 </md-card>
                 <div class="moveButton">
-                    <md-button class="md-raised">Create Loan</md-button>
+                    <md-button class="md-raised" @click="createLoan()">Create Loan</md-button>
                 </div>
             </div>
         </div>
@@ -69,12 +69,13 @@ import Vue from 'vue'
 
     .table {
         position: relative;
-        right: 80%;
-        width: 150%;
+        right: 60%;
+        width: 130%;
     }
 
     .createLoan {
         position: relative;
+        right: 30%;
     }
 
     .th {
@@ -83,6 +84,10 @@ import Vue from 'vue'
 
     .tr {
         background-color: #d7cec7;
+    }
+
+    .tr:hover {
+        background-color: #c09f80;
     }
 
     .side {
@@ -94,7 +99,7 @@ import Vue from 'vue'
 
     .returnText {
         position: relative;
-        right: 50%;
+        right: 40%;
     }
 
     .header {
@@ -103,13 +108,13 @@ import Vue from 'vue'
     }
 
     .md-primary {
-        width: 300%;
+        width: 250%;
         background-color: #d7cec7;
     }
 
     .loanText {
         position: relative;
-        left: 90%;
+        left: 70%;
     }
 
     .loan {
@@ -120,13 +125,18 @@ import Vue from 'vue'
 
     .returnItem {
         position: relative;
-        right: 50%;
+        right: 35%;
         display: inline-block;
     }
 
     .moveButton {
         position: relative;
-        left: 90%;
+        left: 70%;
+    }
+
+    .itemToReturn {
+        right: 40%;
+        width: 110%;
     }
 
 </style>
