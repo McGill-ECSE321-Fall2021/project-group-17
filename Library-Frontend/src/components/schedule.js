@@ -22,6 +22,7 @@ export default {
   name: "schedule",
   data() {
     return {
+      currentUser: "",
       librarians: [],
       errorPerson: "",
       response: []
@@ -53,29 +54,27 @@ export default {
       });
   },
   methods: {
-    // updateShift: function(librarianId, dayOfWeek, startTime, endTime) {
-    //   AXIOS.post(
-    //     "/events/".concat(eventName),
-    //     {},
-    //     {
-    //       params: {
-    //         date: dayOfWeek,
-    //         startTime: startTime,
-    //         endTime: endTime
-    //       }
-    //     }
-    //   )
-    //     .then(response => {
-    //       // JSON responses are automatically parsed.
-    //       this.events.push(response.data);
-    //       this.errorEvent = "";
-    //       this.newEvent.name = "";
-    //     })
-    //     .catch(e => {
-    //       var errorMsg = e.response.data.message;
-    //       console.log(errorMsg);
-    //       this.errorEvent = errorMsg;
-    //     });
-    // }
+    deleteShift: function(shiftId) {
+      AXIOS.delete(
+        "/shift/".concat(shiftId),
+        {},
+        {
+          params: {
+            username: this.currentUser
+          }
+        }
+      )
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.events.push(response.data);
+          this.errorEvent = "";
+          this.newEvent.name = "";
+        })
+        .catch(e => {
+          var errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorEvent = errorMsg;
+        });
+    }
   }
 };

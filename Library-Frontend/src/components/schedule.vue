@@ -15,23 +15,19 @@
         </tr>
         <tr v-for="shift in librarian.shifts" :key="shift.id">
           <td>
-            <input
-              type="text"
-              v-model="shift.dayOfWeek"
-              placeholder="Event Name"
-            />
+            <input type="text" v-model="shift.dayOfWeek" />
           </td>
           <td>
-            <input type="time" v-model="shift.startTime" placeholder="HH:mm" />
+            <input type="time" v-model="shift.startTime" />
           </td>
           <td>
-            <input type="time" v-model="shift.endTime" placeholder="HH:mm" />
+            <input type="time" v-model="shift.endTime" />
           </td>
           <td>
             <button v-on:click="updateShift(shift.id)">Update</button>
           </td>
           <td>
-            <button v-on:click="updateShift(shift.id)">Delete</button>
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
           </td>
         </tr>
         <hr />
