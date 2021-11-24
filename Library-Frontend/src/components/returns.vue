@@ -14,38 +14,53 @@ import Vue from 'vue'
                     <md-table-cell class="th">Customer</md-table-cell>
                     <md-table-cell class="th">Return Date</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="loan in loans" :key="loan" @click="selectLoan()" class="tr" md-selectable="single">
+                <md-table-row v-for="loan in loans" :key="loan" @click="selectLoan(loan)" class="tr" md-selectable="single">
                     <md-table-cell>{{ loan.itemInstance.checkableItem.name }}</md-table-cell>
                     <md-table-cell> {{ loan.customer.person.name }}</md-table-cell>
                     <md-table-cell>{{ loan.returnDate }}</md-table-cell>
                 </md-table-row>
             </md-table>
+            <div class="row">
+                <md-field>
+                    <label>Item to Return</label>
+                    <md-input v-model="selectedItem" disabled></md-input>
+                </md-field>
+                <md-field>
+                    <label>Customer</label>
+                    <md-input v-model="selectedCustomer" disabled></md-input>
+                </md-field>
+                <md-button class="md-raised">Return Item</md-button>
+            </div>
         </div>
         <div class="side">
             <div class="createLoan">
                 <h4 class="loanText">Loan an item</h4>
-                <md-card class="card">
+                <md-card class="md-primary">
                     <div class="loan">
-                    <md-field class="input">
-                        <label>Library Card Id</label>
-                        <md-input v-model="libCard"></md-input>
-                    </md-field>
-                    <md-field class="input">
-                        <label>Serial Number</label>
-                        <md-input v-model="serialNum"></md-input>
-                    </md-field>
-                    <md-field class="input">
-                        <md-datepicker v-model="selectedDate" />
-                    </md-field>
-                    <md-button class="md-raised">Create Loan</md-button>
+                        <md-field class="input">
+                            <label>Library Card Id</label>
+                            <md-input v-model="libCard"></md-input>
+                        </md-field>
+                        <md-field class="input">
+                            <label>Serial Number</label>
+                            <md-input v-model="serialNum"></md-input>
+                        </md-field>
+                        <md-field class="input">
+                            <md-datepicker v-model="checkedOut" />
+                        </md-field>
                     </div>
                 </md-card>
+                <md-button class="md-raised md-accent">Create Loan</md-button>
             </div>
         </div>
     </div>
 </template>
 
 <style>
+    #returns {
+        font-family: monospace;
+    }
+
     h3 {
         margin-left: 0px;
     }
@@ -85,7 +100,7 @@ import Vue from 'vue'
         height: 150%;
     }
 
-    .card {
+    .md-primary {
         width: 300%;
         background-color: #d7cec7;
     }
@@ -99,6 +114,10 @@ import Vue from 'vue'
         width: 75%;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .center {
+        display: inline-block;
     }
 
 </style>

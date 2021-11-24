@@ -11,11 +11,17 @@ var AXIOS = axios.create({
 
 export default {
     name: 'returns',
+    mounted: function() {
+      this.$material.theming.theme = "colors"; 
+    },
     data () {
       return {
         loans: [],
         errorLoan: '',
-        selectedLoan: ''
+        selectedLoan: '',
+        checkedOut: new Date(),
+        serialNum: 'Input Serial Number',
+        libCard: 'Input Library Card Number'
       }
     },
     created: function () {
