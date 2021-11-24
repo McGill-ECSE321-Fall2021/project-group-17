@@ -2,9 +2,13 @@
   <div id="app">
     <div id="LMS">
       <h1>Library Management System</h1>
-      <md-button to="/" class="md-icon-button">
+      <b-row>
+        <md-button to="/homepage" class="md-icon-button">
         <md-icon>home</md-icon>
       </md-button>
+        <b-button to="/login" class="button" > Logout </b-button>
+      </b-row>
+
     </div>
     <router-view></router-view>
   </div>
@@ -58,4 +62,13 @@ export default {
   color: white !important;
 
 }
+.button {
+  margin-right: 20px;
+  align-items: center;
+  background: #D7CEC7;
+  font-weight: bold;
+  height: 40px;
+  margin-top: 10px;
+}
+
 </style>

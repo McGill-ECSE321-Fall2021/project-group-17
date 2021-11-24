@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import reservation from '@/components/reservation.vue'
 import itemInstance from '@/components/iteminstance.vue'
 import login from '@/components/login.vue'
