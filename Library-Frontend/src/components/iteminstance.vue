@@ -22,6 +22,7 @@ import 'vue-material/dist/theme/default-dark.css'
           </md-table-empty-state>
 
 
+
           <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single">
             <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.checkableItem.id }}</md-table-cell>
             <md-table-cell md-label="Name" md-sort-by="name">{{ item.checkableItem.name }}</md-table-cell>

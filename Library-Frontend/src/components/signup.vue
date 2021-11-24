@@ -5,7 +5,7 @@ import Vue from 'vue'
       <div class="container">
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
           <div class="card signup">
-          <md-tabs class="md-primary" md-alignment="centered">
+            <md-tabs class="md-primary" md-alignment="centered">
               <md-tab id="tab-home" md-label="New Member">
                 <h1>Sign Up</h1>
                 <form class="signup-info">
@@ -29,7 +29,7 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="createOnlineAccount() ; createPerson() ; logIn()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{error}}</span>
                 </p>
@@ -43,26 +43,29 @@ import Vue from 'vue'
                   <input v-model="search" class="search" placeholder="Search for name here..." @input="searchOnTable"/>
                   <b-button class="btn" @click="onSearchClick()">Search</b-button>
 
-                  <md-dialog :md-active.sync="searchDialog">
-                    <md-dialog-title>Make Reservation</md-dialog-title>
-                    <div id="options" class="wrapper">
-                      <div id="Pickup day" class="dialog" >
-                        <h3 style="flex-grow: 2;">Pickup date:</h3>
-                        <md-datepicker v-model="selectedDate" md-immediately />
-                        <!--<md-field>
-                          <md-input v-model="selectedDate">
-                            placeholder="date"
-                          </md-input>
-                        </md-field>-->
-                      </div>
+                  <md-dialog :md-active.sync="searchDialog" >
 
-                      <div id="make reservation" class="dialog">
-                        <md-button @click="createReservation()" class="create-button">Make Reservation</md-button>
+                    <md-dialog-title>Members of LMS</md-dialog-title>
+                    <template>
+                      <div>
+                        <md-table>
+                          <md-table-row>
+                            <md-table-head>Name</md-table-head>
+                          </md-table-row>
+
+                          <md-table-empty-state
+                            md-label="No Members Found"
+                            :md-description="`No member found for this search query. Try a different search term.`">
+                          </md-table-empty-state>
+
+                          <md-table-row slot="md-table-row" slot-scope="{ person }" class="md-primary" md-selectable="single">
+                            <md-table-cell md-label="Name" md-sort-by="name">{{ person.name }}</md-table-cell>
+                          </md-table-row>
+
+                        </md-table>
                       </div>
-                      <div id="error">
-                        <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
-                      </div>
-                    </div>
+                    </template>
+
                   </md-dialog>
                 </div>
                 <form class="signup-info">
@@ -80,29 +83,25 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="createOnlineAccount() ; logIn()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{error}}</span>
                 </p>
                 <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
               </md-tab>
             </md-tabs>
+          </div>
         </div>
-        </div>
-
       </div>
     </div>
-
   </div>
-
 </template>
 
-<script src="./signup.js">
 
+<script src="./signup.js">
 </script>
 
 <style scoped>
-
 p {
   line-height: 1rem;
 }

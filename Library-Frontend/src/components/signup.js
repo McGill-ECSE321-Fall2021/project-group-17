@@ -26,6 +26,7 @@ export default {
   data () {
     return {
       persons: [],
+      accounts: [],
       userName: null,
       userSignup: null,
       passwordSignup: null,
@@ -47,7 +48,7 @@ export default {
       })
       persons.forEach(function(element,index,array){
         if(element.name){
-          array[index].name = "Music"
+          array[index].name = element.name
         }
       })
       this.items = persons
@@ -60,11 +61,6 @@ export default {
   },
 
   methods: {
-    data () {
-      return {
-        showModal: true
-      }
-    },
     searchOnTable () {
       this.searched = searchByName(this.persons, this.search)
     },
@@ -80,11 +76,39 @@ export default {
       this.searchDialog = true
     },
 
-    createOnlineAccount: function () {
+    createOnlineAccountCustomer: function () {
+      AXIOS.post('/signup/'+'/' + 'customer'+'/'+this.userSignup + this.passwordSignup,{}).then(response => {
+        this.accounts.push(response.data)
+        this.errorLogin = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorLogin = errorMsg
+          this.error = true
+        })
+    },
+
+    createPerson: function(){
+      AXIOS.post('/signup/'+this.userName,{}).then(response => {
+        this.persons.push(response.data)
+        this.errorLogin = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorLogin = errorMsg
+          this.error = true
+        })
+    },
+
+    logIn: function () {
       console.log(this.userSignup)
-      AXIOS.push('/login/'+this.userSignup+'/'+this.passwordSignup,{}).then(response => {
+      AXIOS.put('/signup/'+this.userSignup+'/'+this.passwordSignup,{}).then(response => {
         this.errorLogin = ''
         this.$cookie.set("username", this.userSignup)
+        this.$router.push({name: 'homepage'});
+
       })
         .catch(e => {
           let errorMsg = e.response.data.message
@@ -93,5 +117,6 @@ export default {
           this.error = true
         })
     }
+
   }
 }
