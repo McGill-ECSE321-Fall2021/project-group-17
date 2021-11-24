@@ -53,6 +53,7 @@ export default {
         this.errorPerson = e;
       });
   },
+
   methods: {
     deleteShift: function(shiftId) {
       AXIOS.delete(
@@ -63,18 +64,28 @@ export default {
             username: this.currentUser
           }
         }
-      )
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.events.push(response.data);
-          this.errorEvent = "";
-          this.newEvent.name = "";
-        })
-        .catch(e => {
-          var errorMsg = e.response.data.message;
-          console.log(errorMsg);
-          this.errorEvent = errorMsg;
-        });
+      ).catch(e => {
+        var errorMsg = e.response.data.message;
+        console.log(errorMsg);
+        this.errorPerson = errorMsg;
+      });
+    },
+    updateShift: function(shiftId, librarianId, startTime, endTime, dayOfWeek) {
+      const json = JSON.stringify({
+        startTime: startTime,
+        endTime: endTime,
+        dayOfWeek: dayOfWeek,
+        librarianId: librarianId
+      });
+      AXIOS.put("/shift/librarian/".concat(shiftId), json, {
+        params: {
+          username: this.currentUser
+        }
+      }).catch(e => {
+        var errorMsg = e.response.data.message;
+        console.log(errorMsg);
+        this.errorPerson = errorMsg;
+      });
     }
   }
 };

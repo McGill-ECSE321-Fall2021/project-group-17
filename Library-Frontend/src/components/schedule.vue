@@ -5,8 +5,11 @@
     <hr />
     <tr v-for="librarian in librarians" :key="librarian.id">
       <h2>{{ librarian.person.name }}</h2>
+      <p v-if="!librarian.shifts || librarian.shifts.length == 0">
+        No shifts to display
+      </p>
       <table>
-        <tr>
+        <tr v-if="librarian.shifts && librarian.shifts.length != 0">
           <th>Day</th>
           <th>Start</th>
           <th>End</th>
@@ -24,7 +27,19 @@
             <input type="time" v-model="shift.endTime" />
           </td>
           <td>
-            <button v-on:click="updateShift(shift.id)">Update</button>
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
           </td>
           <td>
             <button v-on:click="deleteShift(shift.id)">Delete</button>

@@ -69,7 +69,6 @@ public class ShiftRestController {
                 body.getLibrarianId(), accountUsername);
     }
     @DeleteMapping(value = {"/shift/{shiftid}", "/shift/{shiftid}"})
-
     public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
     }
