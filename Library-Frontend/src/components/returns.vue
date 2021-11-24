@@ -20,15 +20,19 @@ import Vue from 'vue'
                     <md-table-cell>{{ loan.returnDate }}</md-table-cell>
                 </md-table-row>
             </md-table>
-            <div class="row">
+            <div class="returnItem">
                 <md-field>
                     <label>Item to Return</label>
                     <md-input v-model="selectedItem" disabled></md-input>
                 </md-field>
+            </div>
+            <div class="returnItem">
                 <md-field>
                     <label>Customer</label>
                     <md-input v-model="selectedCustomer" disabled></md-input>
                 </md-field>
+            </div>
+            <div class="returnItem">
                 <md-button class="md-raised">Return Item</md-button>
             </div>
         </div>
@@ -50,7 +54,9 @@ import Vue from 'vue'
                         </md-field>
                     </div>
                 </md-card>
-                <md-button class="md-raised md-accent">Create Loan</md-button>
+                <div class="moveButton">
+                    <md-button class="md-raised">Create Loan</md-button>
+                </div>
             </div>
         </div>
     </div>
@@ -61,13 +67,9 @@ import Vue from 'vue'
         font-family: monospace;
     }
 
-    h3 {
-        margin-left: 0px;
-    }
-
     .table {
         position: relative;
-        right: 400px;
+        right: 80%;
         width: 150%;
     }
 
@@ -92,7 +94,7 @@ import Vue from 'vue'
 
     .returnText {
         position: relative;
-        right: 250px;
+        right: 50%;
     }
 
     .header {
@@ -107,7 +109,7 @@ import Vue from 'vue'
 
     .loanText {
         position: relative;
-        left: 250px;
+        left: 90%;
     }
 
     .loan {
@@ -116,8 +118,15 @@ import Vue from 'vue'
         margin-right: auto;
     }
 
-    .center {
+    .returnItem {
+        position: relative;
+        right: 50%;
         display: inline-block;
+    }
+
+    .moveButton {
+        position: relative;
+        left: 90%;
     }
 
 </style>
