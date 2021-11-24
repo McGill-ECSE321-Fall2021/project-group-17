@@ -7,19 +7,24 @@ Vue.use(md-datepicker)
 <template>
 
 <div>
-  <b-navbar toggleable="lg" type="dark" variant="light">
-      <b-navbar variant="faded" type="dark" left>
+  <b-navbar toggleable="md" type="light" variant="light">
+      <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
-      <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="60" width="60">
+      <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
     </b-navbar-brand>
     </b-navbar>
-       <b-nav-item-dropdown text="Library Services" left>
-          <b-dropdown-item href="#">Find items</b-dropdown-item>
-          <b-dropdown-item href="#">View loans</b-dropdown-item>
-          <b-dropdown-item href="#">Make Reservations</b-dropdown-item>
-        </b-nav-item-dropdown>
-  
+    <b-nav-item href="#">
+     <a class="text-my-own-color ">
+      Find movies, books, and movies
+    </a>
 
+      </b-nav-item>
+          <b-nav-item href="#" class="unstyled">
+         <a class="text-my-own-color ">
+     View Active Loans
+    </a>
+      </b-nav-item >
+  
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     
@@ -61,7 +66,7 @@ Vue.use(md-datepicker)
            <template #img>
           <img
             width="840"
-            height="500"
+            height="600"
             src="https://i.ibb.co/NWyhxkx/WELCOME-TO-MONTREALS-BIGGEST-PUBLIC-LIBRARY-2.gif"
             alt="image slot"
           >
@@ -72,7 +77,7 @@ Vue.use(md-datepicker)
          <template #img>
           <img
             width="840"
-            height="500"
+            height="600"
             src="https://media.timeout.com/images/105464457/750/562/image.jpg"
             alt="image slot"
           >
@@ -83,8 +88,8 @@ Vue.use(md-datepicker)
          <template #img>
           <img
             width="840"
-            height="500"
-            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
+            height="600"
+            src="https://media2.ledevoir.com/images_galerie/nwd_746098_584235/image.jpg"
             alt="image slot"
           >
         </template>
@@ -94,18 +99,8 @@ Vue.use(md-datepicker)
          <template #img>
           <img
             width="840"
-            height="500"
-            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide>
-      <b-carousel-slide >
-         <template #img>
-          <img
-            width="840"
-            height="500"
-            src="https://media.timeout.com/images/105464457/750/562/image.jpg"
+            height="600"
+            src="https://newtechinstallation.com/wp-content/uploads/2013/05/newtech_photos_27-1.jpg"
             alt="image slot"
           >
         </template>
@@ -241,13 +236,27 @@ Vue.use(md-datepicker)
 <div id="footer" class="overlay">
   <b-container>
   <b-row>
-    <b-col>CONTACT US</b-col>
-    <b-col>ABOUT US</b-col>
-    <b-col>SIGN UP FOR OUR NEWSLETTER</b-col>
+    <b-col> <b>LIBRARY INFORMATION</b> </b-col>
+    <b-col ><b>CONTACT US</b></b-col>
+    <b-col><b>ABOUT US</b></b-col>
+    <b-col><b>SIGN UP FOR OUR NEWSLETTER</b></b-col>
   </b-row>
     <b-row>
+    <b-col>ADDRESS:</b-col>
     <b-col>EMAIL:</b-col>
-    <b-col>Mission Statement</b-col>
+    <b-col><b-link href="#foo"><a class="text-my-own-color">Mission Statement</a></b-link></b-col>
+    <b-col><b-form-input v-model="text" placeholder="Enter your email"></b-form-input></b-col>
+  </b-row>
+  <b-row>
+    <b-col>WEEKLY HOURS</b-col>
+    <b-col>PHONE NUMBER:</b-col>
+    <b-col><b-link href="#foo"><a class="text-my-own-color">Our History</a></b-link></b-col>
+    <b-col></b-col>
+  </b-row>
+    <b-row>
+    <b-col></b-col>
+    <b-col></b-col>
+    <b-col><b-link href="#foo"><a class="text-my-own-color">Support the Library</a></b-link></b-col>
     <b-col></b-col>
   </b-row>
 </b-container>
@@ -309,13 +318,18 @@ export default {
 #footer {
   background-color: #76323F;
     display: flex;
-    font-size: 35px;
+    font-size: 20px;
     font-family: monospace;
     color: black;
   align-items: center;
   justify-content:center;
   height: 25%;
   padding: 3% 3% 3%;
+}
+.text-my-own-color {
+  font-size:18px;
+  font-family:monospace;
+    color: black;
 }
 .layer1{
   grid-column: 1;
