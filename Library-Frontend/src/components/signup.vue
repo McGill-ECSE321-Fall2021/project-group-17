@@ -40,8 +40,8 @@ import Vue from 'vue'
                   <label>Already a Member?</label>
                 </div>
                 <div class="signup-info">
-                  <input v-model="search" class="search" placeholder="Search for name here..." outlined clearable></input>
-                  <b-button size="sm" class="btn"> Search </b-button>
+                  <input v-model="search" class="search" placeholder="Search for name here..." @input="searchOnTable"/>
+                  <b-button class="btn"><router-link to="/search"> Search </router-link></b-button>
                 </div>
                 <form class="signup-info">
                   <div class="address-label">
@@ -76,6 +76,7 @@ import Vue from 'vue'
 </template>
 
 <script src="./signup.js">
+
 </script>
 
 <style scoped>
@@ -125,7 +126,8 @@ p {
   margin-bottom: 20px;
   margin-top: 20px;
   color: #D7CEC7;
-  background: #76323F;
+  background: #76323f;
+  text-align: center;
   align-items: center;
 }
 
