@@ -4,13 +4,22 @@ import Vue from 'vue'
     <div class="signup-page">
       <div class="container">
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
-
-            <md-tabs class="md-primary" md-alignment="centered">
-              <md-tab id="tab-home" md-label="Create Account">
+          <div class="card signup">
+          <md-tabs class="md-primary" md-alignment="centered">
+              <md-tab id="tab-home" md-label="New Member">
                 <h1>Sign Up</h1>
                 <form class="signup-info">
-                  <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
+                  <div class="address-label">
+                    <label>Name</label>
+                  </div>
+                  <input v-model="userName" class="signup-input" placeholder="Enter Name" required>
+
+                  <div class="address-label">
+                    <label>Login Information</label>
+                  </div>
+                  <input v-model="userSignup" class="signup-input" placeholder="Enter Username" required>
                   <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+
                   <div class="address-label">
                     <label>Address</label>
                   </div>
@@ -21,11 +30,23 @@ import Vue from 'vue'
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
                 <b-button size="sm" class="btn">Sign Up</b-button>
-                <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
+                <p>
+                  <span v-if="error" style="color:red">Error: {{error}}</span>
+                </p>
               </md-tab>
-              <md-tab id="tab-pages" md-label="Create Person">
+              <md-tab id="tab-pages" md-label="Create Account">
                 <h1>Sign Up</h1>
+                <div class="address-label">
+                  <label>Already a Member?</label>
+                </div>
+                <div class="signup-info">
+                  <input v-model="search" class="search" placeholder="Search for name here..." outlined clearable></input>
+                  <b-button size="sm" class="btn"> Search </b-button>
+                </div>
                 <form class="signup-info">
+                  <div class="address-label">
+                    <label>Login Information</label>
+                  </div>
                   <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
                   <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
                   <div class="address-label">
@@ -38,16 +59,19 @@ import Vue from 'vue'
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
                 <b-button size="sm" class="btn">Sign Up</b-button>
+                <p>
+                  <span v-if="error" style="color:red">Error: {{error}}</span>
+                </p>
                 <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
               </md-tab>
             </md-tabs>
-
-
-          </div>
         </div>
-      </div>
+        </div>
 
+      </div>
     </div>
+
+  </div>
 
 </template>
 
@@ -56,9 +80,24 @@ import Vue from 'vue'
 
 <style scoped>
 
+p {
+  line-height: 1rem;
+}
+
 .acct {
   line-height: 1rem;
 }
+
+.card {
+  padding: 0px;
+  font-family: monospace;
+  color: #76323F;
+  background: #D7CEC7;
+  align-items: center;
+  font-size: 0.8rem;
+
+}
+
 
 .md-primary {
   padding: 20px;
@@ -75,7 +114,11 @@ import Vue from 'vue'
   height: 25px
 }
 
-
+.search{
+  margin-right: 20px;
+  height: 25px;
+  margin-top: 20px;
+}
 .btn {
   width: 100px;
   height: 25px;
