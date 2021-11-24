@@ -40,6 +40,9 @@ export default {
             .then(response => {
               this.librarians[i]["shifts"] = [];
               for (let j = 0; j < response.data.length; j++) {
+                response.data[j].dayOfWeek =
+                  response.data[j].dayOfWeek[0] +
+                  response.data[j].dayOfWeek.slice(1).toLowerCase();
                 this.librarians[i]["shifts"].push(response.data[j]);
               }
             })
@@ -74,9 +77,19 @@ export default {
       const json = JSON.stringify({
         startTime: startTime,
         endTime: endTime,
-        dayOfWeek: dayOfWeek,
+        dayOfWeek: dayOfWeek.toUpperCase(),
         librarianId: librarianId
       });
+      if (
+        dayOfWeek.toLowerCase() != "monday" ||
+        "tuesday" ||
+        "wednesday" ||
+        "thursday" ||
+        "friday"
+      ) {
+        this.errorPerson = "Day string not formatted correctly!";
+        return;
+      }
       AXIOS.put("/shift/librarian/".concat(shiftId), json, {
         params: {
           username: this.currentUser
