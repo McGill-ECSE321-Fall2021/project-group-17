@@ -17,6 +17,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+
 @import url("https://fonts.googleapis.com/css?family=Material+Icons");
 
 @import "~vue-material/dist/theme/engine.scss";
@@ -27,6 +29,8 @@ export default {
 ));
 
 @import "~vue-material/dist/theme/all";
+
+
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
