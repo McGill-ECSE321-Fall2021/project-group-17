@@ -21,5 +21,6 @@ export default new Router({
     {path:'/homepage',
   name: 'HomePage',
 component: homepage }
+
   ]
 })
