@@ -12,7 +12,7 @@ import Vue from 'vue'
             </form>
             <b-button size="sm" class="btn" v-bind:disabled="!userLogin" @click="logIn">Login</b-button>
             <p>
-              <span v-if="error" style="color:red">Error: {{error}}</span>
+              <span v-if="error" style="color:red">Error: {{errorLogin}}</span>
             </p>
 
             <div class="acct">Don't have an account?<router-link to="/signup"> Sign up here</router-link></div>

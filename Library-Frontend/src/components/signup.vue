@@ -29,9 +29,9 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button @click="createOnlineAccount() ; createPerson() ; logIn()" size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="createOnlineAccountCustomer() ; createPerson() ; logIn()" size="sm" class="btn">Sign Up</b-button>
                 <p>
-                  <span v-if="error" style="color:red">Error: {{error}}</span>
+                  <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>
               </md-tab>
               <md-tab id="tab-pages" md-label="Create Account">
@@ -40,32 +40,32 @@ import Vue from 'vue'
                   <label>Already a Member?</label>
                 </div>
                 <div class="signup-info">
-                  <input v-model="search" class="search" placeholder="Search for name here..." @input="searchOnTable"/>
+                  <label>
+                    <input v-model="search" class="search" placeholder="Search for name here..."/>
+                  </label>
                   <b-button class="btn" @click="onSearchClick()">Search</b-button>
 
                   <md-dialog :md-active.sync="searchDialog" >
-
                     <md-dialog-title>Members of LMS</md-dialog-title>
-                    <template>
-                      <div>
-                        <md-table>
-                          <md-table-row>
-                            <md-table-head>Name</md-table-head>
-                          </md-table-row>
+                    <div>
+                      <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                        <md-table-toolbar>
+                         <md-field md-clearable class="md-toolbar-section-end">
+                           <md-input placeholder="Search by name..." v-model="tableSearch" @input="searchOnTable" />
+                         </md-field>
+                       </md-table-toolbar>
 
-                          <md-table-empty-state
-                            md-label="No Members Found"
-                            :md-description="`No member found for this search query. Try a different search term.`">
-                          </md-table-empty-state>
+                       <md-table-empty-state
+                         md-label="No Members found"
+                         :md-description="`No members found for this search query. Try a different search term.`">
+                       </md-table-empty-state>
 
-                          <md-table-row slot="md-table-row" slot-scope="{ person }" class="md-primary" md-selectable="single">
-                            <md-table-cell md-label="Name" md-sort-by="name">{{ person.name }}</md-table-cell>
-                          </md-table-row>
-
-                        </md-table>
-                      </div>
-                    </template>
-
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                          <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+                          <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+                        </md-table-row>
+                      </md-table>
+                    </div>
                   </md-dialog>
                 </div>
                 <form class="signup-info">
@@ -85,7 +85,7 @@ import Vue from 'vue'
                 </form>
                 <b-button @click="createOnlineAccount() ; logIn()" size="sm" class="btn">Sign Up</b-button>
                 <p>
-                  <span v-if="error" style="color:red">Error: {{error}}</span>
+                  <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>
                 <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
               </md-tab>

@@ -8,8 +8,10 @@ import 'vue-material/dist/theme/default-dark.css'
     <md-dialog-title>Make Reservation</md-dialog-title>
     <div id="options" class="wrapper">
       <div id="Pickup day" class="dialog" >
-        <h3 style="flex-grow: 2;">Pickup date:</h3>
-        <md-datepicker v-model="selectedDate" md-immediately />
+
+        <label class="label" >Pickup </label>
+        <label class="label" >Date</label>
+        <md-datepicker v-model="selectedDate" md-immediately class="date" />
         <!--<md-field>
           <md-input v-model="selectedDate">
             placeholder="date"
@@ -66,10 +68,24 @@ import 'vue-material/dist/theme/default-dark.css'
 }
 .dialog{
   border: black 2px;
-  margin: 10% 10% 10% 10%;
-
+  font-family: monospace;
+  font-size: 20px;
   display: flex;
   flex-flow: row;
   justify-content: center;
+  margin-left: 5px;
+  margin-right: 10px;
 }
+
+.label{
+  justify-content: left;
+  margin-top: 27px;
+  margin-right: 15px;
+}
+
+.date {
+  margin-left: 10px;
+}
+
+
 </style>

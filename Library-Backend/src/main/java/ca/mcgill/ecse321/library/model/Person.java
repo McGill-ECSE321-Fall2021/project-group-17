@@ -30,7 +30,7 @@ public class Person {
     }
 
 
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
+    @OneToMany(mappedBy = "id")
     public List<PersonRole> getPersonRoleList() {
         return personRoleList;
     }

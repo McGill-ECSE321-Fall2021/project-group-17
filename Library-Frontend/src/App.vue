@@ -71,4 +71,8 @@ export default {
   margin-top: 10px;
 }
 
+.md-button {
+  margin-top: 10px;
+}
+
 </style>
