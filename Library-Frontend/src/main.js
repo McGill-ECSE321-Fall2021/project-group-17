@@ -7,8 +7,13 @@ import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+Vue.use(VueMaterial)
 
 /* eslint-disable no-new */
 new Vue({
