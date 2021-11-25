@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.controller;
 
+import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.dto.ReservationDTO;
 import ca.mcgill.ecse321.library.model.Reservation;
 import ca.mcgill.ecse321.library.service.ReservationService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +44,19 @@ public class ReservationRestController {
     @DeleteMapping({"/reservation/{id}","/reservation/{id}/"})
     public void deleteReservation(@PathVariable Integer id, @RequestParam("customerId") Integer customerId){
         service.deleteReservation(id, customerId);
+    }
+
+    @GetMapping("/reservation/active")
+    public List<ReservationDTO> getAllActiveReservations() {
+        List<Reservation> reservations = service.getAllActiveReservations();
+
+        List<ReservationDTO> reservationDTOS = new ArrayList<>();
+
+        for (Reservation reservation: reservations) {
+            reservationDTOS.add(convertToDTO(reservation));
+        }
+
+        return reservationDTOS;
     }
 
     private ReservationDTO convertToDTO(Reservation r){

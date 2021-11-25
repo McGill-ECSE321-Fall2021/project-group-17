@@ -2,55 +2,55 @@ import Vue from 'vue'
 
 
 <template>
-    <div id="returns">
+    <div id="holdings">
         <div class="header">
-            <h3>Loans</h3>
+            <h3>Reservations</h3>
         </div>
         <div class="side">
-            <h4 class="returnText">Return an Item</h4>
+            <h4 class="reservationText">Current Reservations</h4>
             <md-table md-card class="table">
                 <md-table-row>
-                    <md-table-cell class="th">Item on Loan</md-table-cell>
+                    <md-table-cell class="th">Item Reserved</md-table-cell>
                     <md-table-cell class="th">Customer</md-table-cell>
-                    <md-table-cell class="th">Return Date</md-table-cell>
+                    <md-table-cell class="th">Last Pickup Day</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="loan in loans" :key="loan.id" @click="selectLoan(loan)" class="tr" md-selectable="single">
-                    <md-table-cell>{{ loan.itemInstance.checkableItem.name }}</md-table-cell>
-                    <md-table-cell> {{ loan.customer.person.name }}</md-table-cell>
-                    <md-table-cell>{{ loan.returnDate }}</md-table-cell>
+                <md-table-row v-for="reservation in reservations" :key="reservation.id" @click="selectReservation(reservation)" class="tr" md-selectable="single">
+                    <md-table-cell>{{ reservation.itemInstance.checkableItem.name }}</md-table-cell>
+                    <md-table-cell> {{ reservation.customer.person.name }}</md-table-cell>
+                    <md-table-cell>{{ reservation.pickupDay }}</md-table-cell>
                 </md-table-row>
             </md-table>
-            <div class="returnItem">
-                <md-field class="itemToReturn">
-                    <label>Item to Return</label>
+            <div class="deleteReservation">
+                <md-field class="itemToDelete">
+                    <label>Item</label>
                     <md-input v-model="selectedItem" disabled></md-input>
                 </md-field>
             </div>
-            <div class="returnItem">
+            <div class="deleteReservation">
                 <md-field>
                     <label>Customer</label>
                     <md-input v-model="selectedCustomer" disabled></md-input>
                 </md-field>
             </div>
-            <div class="returnItem">
-                <md-button class="md-raised" @click="returnItem()">Return Item</md-button>
+            <div class="deleteReservation">
+                <md-button class="md-raised" @click="deleteReservation()">Delete Reservation</md-button>
             </div>
         </div>
         <div class="side">
             <div class="createLoan">
-                <h4 class="loanText">Loan an item</h4>
+                <h4 class="loanText">Loan Item Reserved</h4>
                 <md-card class="md-primary">
                     <div class="loan">
                         <md-field class="input">
-                            <label>Library Card Id</label>
-                            <md-input v-model="libCard" placeholder="Input Library Card Number"></md-input>
+                            <label>Item</label>
+                            <md-input v-model="selectedItem" placeholder="Item" disabled></md-input>
                         </md-field>
                         <md-field class="input">
-                            <label>Serial Number</label>
-                            <md-input v-model="serialNum" placeholder="Input Serial Number"></md-input>
+                            <label>Customer</label>
+                            <md-input v-model="selectedCustomer" placeholder="Customer" disabled></md-input>
                         </md-field>
                         <md-field class="input">
-                            <md-datepicker v-model="returnDate" />
+                            <md-datepicker v-model="returnDate"/>
                         </md-field>
                     </div>
                 </md-card>
@@ -97,7 +97,7 @@ import Vue from 'vue'
         top: 25px;
     }
 
-    .returnText {
+    .reservationText {
         position: relative;
         right: 40%;
     }
@@ -123,7 +123,7 @@ import Vue from 'vue'
         margin-right: auto;
     }
 
-    .returnItem {
+    .deleteReservation {
         position: relative;
         right: 35%;
         display: inline-block;
@@ -134,12 +134,12 @@ import Vue from 'vue'
         left: 70%;
     }
 
-    .itemToReturn {
+    .itemToDelete {
         right: 40%;
         width: 110%;
     }
 
 </style>
 
-<script src="./returns.js">
+<script src="./holdings.js">
 </script>

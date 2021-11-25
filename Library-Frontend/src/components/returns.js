@@ -19,9 +19,9 @@ export default {
         loans: [],
         errorLoan: '',
         selectedLoan: '',
+        libCard: '',
+        serialNum: '',
         returnDate: '',
-        serialNum: 'Input Serial Number',
-        libCard: 'Input Library Card Number',
         selectedItem: '',
         selectedCustomer: '',
         returnItemError: ''

@@ -22,6 +22,11 @@ export default new Router({
       path: '/returns',
       name: 'Returns',
       component: require("@/components/returns.vue").default
+    },
+    {
+      path: '/holdings',
+      name: 'Holdings',
+      component: require("@/components/holdings.vue").default
     }
   ]
 })
