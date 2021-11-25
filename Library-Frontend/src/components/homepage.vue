@@ -44,8 +44,8 @@ Vue.use(md-datepicker)
           <template #button-content>
             <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
+          <b-dropdown-item >Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
          </b-navbar-nav>
      
@@ -284,6 +284,9 @@ export default {
       },
       onSlideEnd(slide) {
         this.sliding = false
+      },
+      profile(){
+        this.$router.push({name:'Profile'});
       }
     }
   }

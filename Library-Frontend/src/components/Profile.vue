@@ -1,10 +1,6 @@
 import Vue from 'vue'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default-dark.css'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-
-Vue.use(md-datepicker)
-<template>
+<template class="main">
+<div>
  <b-navbar toggleable="md" type="light" variant="light">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
@@ -47,8 +43,42 @@ Vue.use(md-datepicker)
          </b-navbar-nav>
      
   </b-navbar>
+  <div class="middle">
+  <b-card no-body class="overflow-hidden" style="max-width: 840px;" >
+    <b-row no-gutters>
+      <b-col md="6">
+        <b-card-img src="https://i.ibb.co/tzPwhww/Untitled-design-2.png" alt="Image" class="rounded-0"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        <b-card-body title="Profile Information">
+         <b-list-group flush>
+        <b-list-group-item>Username:</b-list-group-item>
+        <b-list-group-item>Password:</b-list-group-item>
+        <b-list-group-item>Address:</b-list-group-item>
+        <b-list-group-item>LibraryCard:</b-list-group-item>
+        <b-list-group-item></b-list-group-item>
+         </b-list-group>
+       <b-button @click="updateAccount()" pill variant="outline-secondary">Update Account</b-button>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
+</div>
+<nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
+<button class="left" >
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
+    </button>
+</nav>
+  </div>
 </template>
 <script>
+export default {
+    methods: {
+  updateAccount(){
+   this.$router.push({name: 'UpdateAccount'});
+    }
+    }
+  }
 
 </script>
 <style>
@@ -56,5 +86,21 @@ Vue.use(md-datepicker)
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   background: #f2ece8;
+}
+.text-my-own-color {
+  font-size:18px;
+  font-family:monospace;
+    color: black;
+}
+.middle {
+  position: fixed; 
+  top: 25%;
+  left: 20%;
+}
+.main {
+  background-color: #D7CEC7;
+}
+.left {
+  position: left;
 }
 </style>

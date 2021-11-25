@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import reservation from '@/components/reservation'
 import homepage from '@/components/homepage'
+import profile from '@/components/Profile'
+import updateAccount from '@/components/UpdateAccount'
 
 Vue.use(Router)
 
@@ -20,7 +22,13 @@ export default new Router({
     },
     {path:'/homepage',
   name: 'HomePage',
-component: homepage }
+component: homepage },
+{path:'/Profile',
+  name: 'Profile',
+component: profile},
+{path:'/UpdateAccount',
+  name: 'UpdateAccount',
+component: updateAccount}
 
   ]
 })
