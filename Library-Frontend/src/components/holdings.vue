@@ -69,8 +69,8 @@ import Vue from 'vue'
 
     .table {
         position: relative;
-        right: 60%;
-        width: 130%;
+        right: 50%;
+        width: 120%;
     }
 
     .createLoan {
@@ -125,7 +125,7 @@ import Vue from 'vue'
 
     .deleteReservation {
         position: relative;
-        right: 35%;
+        right: 30%;
         display: inline-block;
     }
 
