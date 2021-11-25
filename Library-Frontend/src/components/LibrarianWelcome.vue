@@ -21,7 +21,7 @@ import 'vue-material/dist/theme/default-dark.css'
       <div id="welcomeMSG">
         <h1 id="welcome">
           Welcome
-          <h2 id="HeadLibrarian">Head Librarian</h2>
+          <h2 id="HeadLibrarian"></h2>
         </h1>
       </div>
     </v-row>
@@ -87,7 +87,7 @@ import 'vue-material/dist/theme/default-dark.css'
 }
 #Schedule {
   width: 320px;
-  margin: 8px;
+  margin: 4px;
 }
 #ScheduleCard {
   background: #c09f80;
