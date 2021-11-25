@@ -1,17 +1,17 @@
 package ca.mcgill.ecse321.library.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.NewspaperRepository;
-import ca.mcgill.ecse321.library.model.Librarian;
-import ca.mcgill.ecse321.library.model.Music;
-import ca.mcgill.ecse321.library.model.Newspaper;
 import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NewspaperException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
@@ -93,7 +93,7 @@ public class NewspaperService {
     /**
      * Used to delete item
      * @param newspaperId
-     * @param customerId
+     * @param librarianId
      */
     @Transactional
     public void deleteNewspaper(Integer newspaperId, Integer librarianId){
@@ -129,5 +129,17 @@ public class NewspaperService {
         return result;
     }
 
+    @Transactional
+    public List<Newspaper> getNewspapers() {
+        List<Item> items = (List<Item>) newspaperRepository.findAll();
 
+        List<Newspaper> newspapers = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item instanceof Newspaper) {
+                newspapers.add((Newspaper) item);
+            }
+        }
+        return newspapers;
+    }
 }

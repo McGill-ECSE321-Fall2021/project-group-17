@@ -27,6 +27,11 @@ export default new Router({
       path: '/holdings',
       name: 'Holdings',
       component: require("@/components/holdings.vue").default
+    },
+    {
+      path: '/viewItems',
+      name: 'ViewItems',
+      component: require("@/components/viewItems.vue").default
     }
   ]
 })

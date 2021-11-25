@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,19 @@ public class ItemRestController {
         Movie movie = movieService.createMovie(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getDirector(),
 					body.getRunningTime(), body.getRating(), body.getFilmDistributor());
         return convertMovieToDTO(movie);
+    }
+
+    @GetMapping(value= {"/movie", "/movie/"})
+    public List<MovieDTO> getMovies() {
+        List<Movie> movies = movieService.getMovies();
+
+        List<MovieDTO> movieDTOS = new ArrayList<>();
+
+        for (Movie movie : movies) {
+            movieDTOS.add(convertMovieToDTO(movie));
+        }
+
+        return movieDTOS;
     }
 
     private MovieDTO convertMovieToDTO(Movie movie) {
@@ -186,6 +200,19 @@ public class ItemRestController {
         return convertBookToDTO(book);
     }
 
+    @GetMapping(value= {"/book", "/book/"})
+    public List<BookDTO> getBooks() {
+        List<Book> books = bookService.getBooks();
+
+        List<BookDTO> bookDTOS = new ArrayList<>();
+
+        for (Book book : books) {
+            bookDTOS.add(convertBookToDTO(book));
+        }
+
+        return bookDTOS;
+    }
+
     private BookDTO convertBookToDTO(Book book) {
     	/* Converts provided item to DTO. Checks if input movie is null,
     	 * then sets id in all fields. Return the DTO
@@ -282,6 +309,19 @@ public class ItemRestController {
         return convertMusicToDTO(music);
     }
 
+    @GetMapping(value= {"/music", "/music/"})
+    public List<MusicDTO> getMusic() {
+        List<Music> musics = musicService.getMusic();
+
+        List<MusicDTO> musicDTOS = new ArrayList<>();
+
+        for (Music music : musics) {
+            musicDTOS.add(convertMusicToDTO(music));
+        }
+
+        return musicDTOS;
+    }
+
     private MusicDTO convertMusicToDTO(Music music) {
     	/* Converts provided item to DTO. Checks if input movie is null,
     	 * then sets id in all fields. Return the DTO
@@ -364,6 +404,19 @@ public class ItemRestController {
     	 * Then, converts it to a DTO */
         Newspaper newspaper = newspaperService.createNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
         return convertNewspaperToDTO(newspaper);
+    }
+
+    @GetMapping(value= {"/newspaper", "/newspaper/"})
+    public List<NewspaperDTO> getNewspapers() {
+        List<Newspaper> newspapers = newspaperService.getNewspapers();
+
+        List<NewspaperDTO> newspaperDTOS = new ArrayList<>();
+
+        for (Newspaper newspaper : newspapers) {
+            newspaperDTOS.add(convertNewspaperToDTO(newspaper));
+        }
+
+        return newspaperDTOS;
     }
 
     private NewspaperDTO convertNewspaperToDTO(Newspaper newspaper) {

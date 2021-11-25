@@ -55,7 +55,7 @@ import Vue from 'vue'
                     </div>
                 </md-card>
                 <div class="moveButton">
-                    <md-button class="md-raised" @click="createLoan()">Create Loan</md-button>
+                    <md-button class="md-raised" @click="createLoan()">Loan item</md-button>
                 </div>
             </div>
         </div>
