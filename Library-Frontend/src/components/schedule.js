@@ -1,5 +1,4 @@
 import axios from "axios";
-import { update } from "lodash";
 var config = require("../../config");
 
 var backendConfigurer = function() {
@@ -57,7 +56,6 @@ export default {
       .catch(e => {
         this.errorPerson = e;
       });
-    this.update();
   },
 
   methods: {
@@ -70,12 +68,16 @@ export default {
             username: "bob344"
           }
         }
-      ).catch(e => {
-        var errorMsg = e.response.data.message;
-        console.log(errorMsg);
-        this.errorPerson = errorMsg;
-      });
-      this.update();
+      )
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(e => {
+          var errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorPerson = errorMsg;
+        });
+      document.location.reload(true);
     },
     updateShift: function(shiftId, librarianId, startTime, endTime, dayOfWeek) {
       const json = JSON.stringify({
@@ -98,12 +100,16 @@ export default {
         params: {
           username: "bob344"
         }
-      }).catch(e => {
-        var errorMsg = e.response.data.message;
-        console.log(errorMsg);
-        this.errorPerson = errorMsg;
-      });
-      this.update();
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(e => {
+          var errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorPerson = errorMsg;
+        });
+      document.location.reload(true);
     }
   }
 };
