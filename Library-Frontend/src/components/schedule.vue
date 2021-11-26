@@ -67,34 +67,55 @@
             <th id="entry">Update</th>
             <th id="entry">Delete</th>
           </tr>
-          <tr v-for="shift in librarian.shifts" :key="shift.id">
-            <td id="data"><input type="text" v-model="shift.dayOfWeek" /></td>
-            <td id="data"><input type="time" v-model="shift.startTime" /></td>
-            <td id="data"><input type="time" v-model="shift.endTime" /></td>
-            <td id="data">
-              <button
-                v-on:click="
-                  updateShift(
-                    shift.id,
-                    librarian.id,
-                    shift.startTime,
-                    shift.endTime,
-                    shift.dayOfWeek
-                  )
-                "
-              >
-                Update
-              </button>
-            </td>
-            <td id="data">
-              <button v-on:click="deleteShift(shift.id)">Delete</button>
-            </td>
-          </tr>
-
+          <td>
+            <ul>
+              <li v-for="shift in librarian.shifts" :key="shift.id">
+                <td id="data">
+                  <input type="text" v-model="shift.dayOfWeek" />
+                </td>
+                <td id="data">
+                  <input type="time" v-model="shift.startTime" />
+                </td>
+                <td id="data"><input type="time" v-model="shift.endTime" /></td>
+                <td id="data">
+                  <button
+                    v-on:click="
+                      updateShift(
+                        shift.id,
+                        librarian.id,
+                        shift.startTime,
+                        shift.endTime,
+                        shift.dayOfWeek
+                      )
+                    "
+                  >
+                    Update
+                  </button>
+                </td>
+                <td id="data">
+                  <button v-on:click="deleteShift(shift.id)">Delete</button>
+                </td>
+              </li>
+            </ul>
+          </td>
           <hr />
         </table>
       </tr>
     </div>
+
+    <nav
+      class="navbar fixed-bottom navbar-light"
+      style="background-color: #76323F;"
+    >
+      <button class="left">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+          alt="Logo"
+          height="30"
+          width="30"
+        />
+      </button>
+    </nav>
 
     <span v-if="errorPerson" id="error-box" style="color:red">
       {{ errorPerson }}
@@ -122,6 +143,7 @@
   margin-top: 60px;
 }
 #librarian_table {
+  margin-top: 40px;
   margin-left: 40px;
 }
 #row {

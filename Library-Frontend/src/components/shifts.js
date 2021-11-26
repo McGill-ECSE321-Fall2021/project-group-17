@@ -31,7 +31,7 @@ export default {
   },
   created: function() {
     // Get librarians from backend
-    AXIOS.get("/librarian/".concat(3))
+    AXIOS.get("/librarian/".concat(7))
       .then(response => {
         // response.data.forEach((shift, j) => this.shifts.push(shift));
         this.librarian = response.data;
@@ -40,7 +40,7 @@ export default {
         this.errorPerson = e;
       });
     // Getting librarian shifts
-    AXIOS.get("/shift/librarian/".concat(3))
+    AXIOS.get("/shift/librarian/".concat(7))
       .then(response => {
         // JSON responses are automatically parsed.
         for (let i = 0; i < response.data.length; i++) {

@@ -51,10 +51,10 @@
       <h3>My Schedule</h3>
     </div>
     <table id="librarian_table">
-      <p v-if="!librarians || librarians.length == 0">
+      <p v-if="!shifts">
         No schedules to display.
       </p>
-      <tr v-if="librarians && librarians.length != 0">
+      <tr v-if="shifts.length != 0">
         <th id="entry">Day</th>
         <th id="entry">Start</th>
         <th id="entry">End</th>
@@ -66,6 +66,19 @@
       </tr>
     </table>
 
+    <nav
+      class="navbar fixed-bottom navbar-light"
+      style="background-color: #76323F;"
+    >
+      <button class="left">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+          alt="Logo"
+          height="30"
+          width="30"
+        />
+      </button>
+    </nav>
     <p>
       <span v-if="errorPerson" id="error-box" style="color:red">
         {{ errorPerson }}
@@ -94,6 +107,7 @@
   margin-top: 60px;
 }
 #librarian_table {
+  margin-top: 40px;
   margin-left: 40px;
 }
 #row {
