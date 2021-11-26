@@ -1,5 +1,5 @@
 <template>
-  <div id="schedule" :key="renderCount">
+  <div id="schedule">
     <b-navbar toggleable="md" type="light" variant="light">
       <b-navbar variant="faded" type="light" left>
         <b-navbar-brand>
@@ -51,7 +51,7 @@
       <h3>Modify Schedules</h3>
     </div>
     <div id="librarian_table">
-      <p v-if="!librarians || librarians.length == 0">
+      <p v-if="(!librarians || librarians.length == 0) && !errorPerson">
         No schedules to display.
       </p>
       <tr v-for="librarian in librarians" :key="librarian.id">
@@ -143,7 +143,7 @@
   margin-top: 60px;
 }
 #librarian_table {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-left: 40px;
 }
 #row {

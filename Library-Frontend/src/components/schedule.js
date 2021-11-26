@@ -23,15 +23,11 @@ export default {
   name: "schedule",
   data() {
     return {
-      renderCount: 0,
       currentUser: "",
       librarians: [],
       errorPerson: "",
       response: []
     };
-  },
-  update() {
-    this.renderCount++;
   },
   created: function() {
     AXIOS.get("/librarians")
@@ -65,9 +61,6 @@ export default {
   },
 
   methods: {
-    update() {
-      this.renderCount++;
-    },
     deleteShift: function(shiftId) {
       AXIOS.delete(
         "/shift/".concat(shiftId),

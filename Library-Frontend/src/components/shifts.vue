@@ -51,7 +51,7 @@
       <h3>My Schedule</h3>
     </div>
     <table id="librarian_table">
-      <p v-if="!shifts">
+      <p v-if="!shifts && !errorPerson">
         No schedules to display.
       </p>
       <tr v-if="shifts.length != 0">
@@ -107,7 +107,7 @@
   margin-top: 60px;
 }
 #librarian_table {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-left: 40px;
 }
 #row {
