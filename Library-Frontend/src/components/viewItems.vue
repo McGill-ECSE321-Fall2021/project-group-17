@@ -168,7 +168,7 @@ import Vue from 'vue'
                 </div>
             </md-card>
             <div>
-                <b-button pill variant="outline-secondary" class="buttons">Add Movie</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addMovie()">Add Movie</b-button>
                 <b-button pill variant="outline-secondary" class="buttons">Delete Movie</b-button>
             </div>
         </div>
@@ -214,7 +214,7 @@ import Vue from 'vue'
                 </div>
             </md-card>
             <div>
-                <b-button pill variant="outline-secondary" class="buttons">Add Music</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addMusic()">Add Music</b-button>
                 <b-button pill variant="outline-secondary" class="buttons">Delete Music</b-button>
             </div>
         </div>
@@ -252,7 +252,7 @@ import Vue from 'vue'
                 </div>
             </md-card>
             <div>
-                <b-button pill variant="outline-secondary" class="buttons">Add Newspaper</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addNewspaper()">Add Newspaper</b-button>
                 <b-button pill variant="outline-secondary" class="buttons">Delete Newspaper</b-button>
             </div>
         </div>
