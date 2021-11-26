@@ -1,9 +1,12 @@
 <template>
-  <div id="schedule">
+  <div id="schedule" :key="renderCount">
     <hr />
     <h1>Modify Schedule</h1>
     <hr />
     <div id="librarian_table">
+      <p v-if="!librarians || librarians.length == 0">
+        No schedules to display.
+      </p>
       <tr v-for="librarian in librarians" :key="librarian.id">
         <h2>{{ librarian.person.name }}, id: {{ librarian.id }}</h2>
         <p v-if="!librarian.shifts || librarian.shifts.length == 0">
@@ -46,7 +49,7 @@
       </tr>
     </div>
 
-    <!-- <span v-if="errorEvent" style="color:red">Error: {{ errorEvent }} </span> -->
+    <span v-if="errorPerson" style="color:red">Error: {{ errorPerson }} </span>
     <hr />
   </div>
 </template>

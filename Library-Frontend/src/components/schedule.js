@@ -1,4 +1,5 @@
 import axios from "axios";
+import { update } from "lodash";
 var config = require("../../config");
 
 var backendConfigurer = function() {
@@ -22,15 +23,20 @@ export default {
   name: "schedule",
   data() {
     return {
+      renderCount: 0,
       currentUser: "",
       librarians: [],
       errorPerson: "",
       response: []
     };
   },
+  update() {
+    this.renderCount++;
+  },
   created: function() {
     AXIOS.get("/librarians")
       .then(response => {
+        this.librarians = [];
         for (let i = 0; i < response.data.length; i++) {
           this.librarians.push(response.data[i]);
         }
@@ -55,16 +61,20 @@ export default {
       .catch(e => {
         this.errorPerson = e;
       });
+    this.update();
   },
 
   methods: {
+    update() {
+      this.renderCount++;
+    },
     deleteShift: function(shiftId) {
       AXIOS.delete(
         "/shift/".concat(shiftId),
         {},
         {
           params: {
-            username: this.currentUser
+            username: "bob344"
           }
         }
       ).catch(e => {
@@ -72,6 +82,7 @@ export default {
         console.log(errorMsg);
         this.errorPerson = errorMsg;
       });
+      this.update();
     },
     updateShift: function(shiftId, librarianId, startTime, endTime, dayOfWeek) {
       const json = JSON.stringify({
@@ -92,13 +103,14 @@ export default {
       }
       AXIOS.put("/shift/librarian/".concat(shiftId), json, {
         params: {
-          username: this.currentUser
+          username: "bob344"
         }
       }).catch(e => {
         var errorMsg = e.response.data.message;
         console.log(errorMsg);
         this.errorPerson = errorMsg;
       });
+      this.update();
     }
   }
 };
