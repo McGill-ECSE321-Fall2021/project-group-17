@@ -1,10 +1,13 @@
 package ca.mcgill.ecse321.library.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -189,12 +192,12 @@ public class ItemRestController {
     }
 
     @PostMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
-    @ResponseBody
     public BookDTO addBook(@PathVariable("librarianId") int librarianId,
                             @RequestBody JsonBodyBook body) throws IllegalArgumentException{
     	/* calls the item service that corresponds to the input provided, 
     	 * and creates an item with provided elements from the json body.
     	 * Then, converts it to a DTO */
+
         Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
                 body.getPublisher(), body.getGenre());
         return convertBookToDTO(book);

@@ -92,6 +92,11 @@ export default {
         this.recordLabel = music.recordLabel
         this.musicReleaseDate = music.datePublished
       },
+      updateNewspaperFields: function (newspaper) {
+        this.newspaper = newspaper.name
+        this.headline = newspaper.headline
+        this.newspaperDatePublished = newspaper.datePublished
+      },
       addBook: function () {
         const json = JSON.stringify({
           name: this.title,

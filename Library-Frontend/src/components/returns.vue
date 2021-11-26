@@ -3,6 +3,48 @@ import Vue from 'vue'
 
 <template>
     <div id="returns">
+        <b-navbar toggleable="md" type="light" variant="light">
+            <b-navbar variant="faded" type="light" left>
+            <b-navbar-brand >
+            <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
+            </b-navbar-brand>
+            </b-navbar>
+            <b-nav-item href="#">
+            <a class="text-my-own-color ">
+            Find movies, books, and movies
+            </a>
+
+            </b-nav-item>
+                <b-nav-item href="#" class="unstyled">
+                <a class="text-my-own-color ">
+            View Active Loans
+            </a>
+            </b-nav-item >
+        
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+            
+
+            <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+                <b-nav-form>
+                <b-input-group prepend="What are you looking for today?">
+                <b-form-input size="md" class="mr-sm-2" ></b-form-input>
+                </b-input-group>
+                </b-nav-form>
+
+
+                <b-nav-item-dropdown right>
+                <!-- Using 'button-content' slot -->
+                <template #button-content>
+                    <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
+                </template>
+                <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
+                <b-dropdown-item >Sign Out</b-dropdown-item>
+                </b-nav-item-dropdown>
+                </b-navbar-nav>
+            
+        </b-navbar>
         <div class="header">
             <h3>Loans</h3>
         </div>
@@ -137,6 +179,12 @@ import Vue from 'vue'
     .itemToReturn {
         right: 40%;
         width: 110%;
+    }
+
+    .text-my-own-color {
+        font-size:18px;
+        font-family:monospace;
+            color: black;
     }
 
 </style>
