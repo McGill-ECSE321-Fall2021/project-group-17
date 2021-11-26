@@ -42,6 +42,21 @@ export default new Router({
       path: "/schedule",
       name: "Schedule",
       component: require("@/components/schedule.vue").default
+    },
+    {
+      path: "/UpdateAccount",
+      name: "UpdateAccount",
+      component: require("@/components/UpdateAccount.vue").default
+    },
+    {
+      path: "/homepage",
+      name: "HomePage",
+      component: require("@/components/HomePage.vue").default
+    },
+    {
+      path: "Profile",
+      name: "Profile",
+      component: require("@/components/Profile.vue").default
     }
   ]
 });
