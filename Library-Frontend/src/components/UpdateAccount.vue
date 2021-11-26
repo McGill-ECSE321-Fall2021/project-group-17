@@ -37,7 +37,7 @@ import Vue from 'vue'
           <template #button-content>
             <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item @click="profile()" href="#">Profile</b-dropdown-item>
           <b-dropdown-item href="#">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
          </b-navbar-nav>
@@ -78,6 +78,19 @@ import Vue from 'vue'
   </div>
 </template>
 <script>
+export default {
+    data() {
+      return {
+        slide: 0,
+        sliding: null
+      }
+    },
+    methods: {
+      profile(){
+        this.$router.push({name:'Profile'});
+      }
+    }
+  }
 
 </script>
 <style>

@@ -65,7 +65,7 @@ import Vue from 'vue'
   </b-card>
 </div>
 <nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
-<button class="left" >
+<button class="left" @click="homepage()">
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
     </button>
 </nav>
@@ -76,6 +76,9 @@ export default {
     methods: {
   updateAccount(){
    this.$router.push({name: 'UpdateAccount'});
+    },
+  homepage(){
+   this.$router.push({name: 'HomePage'});
     }
     }
   }
