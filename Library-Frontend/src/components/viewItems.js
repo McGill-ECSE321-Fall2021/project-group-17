@@ -98,16 +98,19 @@ export default {
         this.newspaperDatePublished = newspaper.datePublished
       },
       addBook: function () {
-        const json = JSON.stringify({
+        /*const json = JSON.stringify({
+          id: 15,
           name: this.title,
           datePublished: this.bookDatePublished,
           author: this.author,
+          publisher: this.publisher,
           genre: this.genre,
-          publisher: this.publisher
         });
 
-        AXIOS.post('/item/book/1', json).then(response => {
+        console.log(json)*/
 
+        AXIOS.post('/item/book/2/' + this.title + '/' + this.bookDatePublished + '/' + this.author + '/' + this.publisher + '/' + this.genre).then(response => {
+          console.log(response.data)
         })
           .catch(e =>{
             console.log(e.response.data.message)

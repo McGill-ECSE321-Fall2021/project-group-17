@@ -71,6 +71,8 @@ public class ItemRestController {
         return convertMovieToDTO(movie);
     }
 
+    @PostMapping(value= {"/item/movie/{librarianId}/{name}/{datePublished}/{director}/{runningTime}/{rating}/", "/item/movie/{librarianId}/"})
+
     @GetMapping(value= {"/movie", "/movie/"})
     public List<MovieDTO> getMovies() {
         List<Movie> movies = movieService.getMovies();
@@ -191,14 +193,27 @@ public class ItemRestController {
         public JsonBodyMovie(){}
     }
 
-    @PostMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
-    public BookDTO addBook(@PathVariable("librarianId") int librarianId,
-                            @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+    @PostMapping(value= {"/item/book/{librarianId}/{title}/{datePublished}/{author}/{publisher}/{genre}", "/item/book/{librarianId}/{title}/{datePublished}/{author}/{publisher}/{genre}/"})
+    public BookDTO addBook1(@PathVariable("librarianId") int librarianId,
+                            @PathVariable("title") String title, @PathVariable("datePublished") Date date, @PathVariable("author") String author, @PathVariable("publisher") String publisher, @PathVariable("genre") String genre) throws IllegalArgumentException{
     	/* calls the item service that corresponds to the input provided, 
     	 * and creates an item with provided elements from the json body.
     	 * Then, converts it to a DTO */
 
-        Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
+        Book book = bookService.createBook(librarianId, 15, title, date,author,
+                publisher, genre);
+        return convertBookToDTO(book);
+    }
+
+    @ResponseBody
+    @PostMapping(value= {"/item/book/{librarianId}/{title}/{datePublished}/{author}/{publisher}/{genre}", "/item/book/{librarianId}/{title}/{datePublished}/{author}/{publisher}/{genre}/"})
+    public BookDTO addBook(@PathVariable("librarianId") int librarianId,
+                           @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+        /* calls the item service that corresponds to the input provided,
+         * and creates an item with provided elements from the json body.
+         * Then, converts it to a DTO */
+
+        Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(), body.getAuthor(),
                 body.getPublisher(), body.getGenre());
         return convertBookToDTO(book);
     }
