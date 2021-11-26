@@ -64,7 +64,7 @@ import Vue from 'vue'
                 </div>
             </md-card>
             <div>
-                <b-button pill variant="outline-secondary" class="buttons">Add Book</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addBook()">Add Book</b-button>
                 <b-button pill variant="outline-secondary" class="buttons">Delete Book</b-button>
             </div>
         </div>
@@ -78,7 +78,7 @@ import Vue from 'vue'
                     <md-table-cell class="th">Film Distributor</md-table-cell>
                     <md-table-cell class="th">Release Date</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="movie in movies" :key="movie.name" class="tr" md-selectable="single">
+                <md-table-row v-for="movie in movies" :key="movie.name" class="tr" md-selectable="single" @click="updateMovieFields(movie)">
                     <md-table-cell>{{ movie.name }}</md-table-cell>
                     <md-table-cell> {{ movie.director }}</md-table-cell>
                     <md-table-cell>{{ movie.runningTime }}</md-table-cell>
@@ -138,7 +138,7 @@ import Vue from 'vue'
                     <md-table-cell class="th">Record Label</md-table-cell>
                     <md-table-cell class="th">Release Date</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="m in music" :key="m.name" class="tr" md-selectable="single">
+                <md-table-row v-for="m in music" :key="m.name" class="tr" md-selectable="single" @click="updateMusicFields(music)">
                     <md-table-cell>{{ m.name }}</md-table-cell>
                     <md-table-cell> {{ m.musician }}</md-table-cell>
                     <md-table-cell>{{ m.recordLabel }}</md-table-cell>

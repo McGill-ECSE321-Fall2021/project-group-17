@@ -26,6 +26,19 @@ export default {
         bookDatePublished: '',
         genre: '',
         publisher: '',
+        movieTitle: '',
+        director: '',
+        runningTime: '',
+        rating: '',
+        filmDistributor: '',
+        movieReleaseDate: '',
+        musicName: '',
+        musician: '',
+        recordLabel: '',
+        musicReleaseDate: '',
+        newspaper: '',
+        headline: '',
+        newspaperDatePublished: ''
       }
     },
     created: function () {
@@ -64,6 +77,36 @@ export default {
         this.bookDatePublished = book.datePublished
         this.genre = book.genre
         this.publisher = book.publisher
+      },
+      updateMovieFields: function(movie) {
+        this.movieTitle = movie.name
+        this.director = movie.director
+        this.movieReleaseDate = movie.datePublished
+        this.runningTime = movie.runningTime
+        this.rating = movie.rating
+        this.filmDistributor = movie.filmDistributor
+      },
+      updateMusicFields: function (music) {
+        this.musicName = music.name
+        this.musician = music.musician
+        this.recordLabel = music.recordLabel
+        this.musicReleaseDate = music.datePublished
+      },
+      addBook: function () {
+        const json = JSON.stringify({
+          name: this.title,
+          datePublished: this.bookDatePublished,
+          author: this.author,
+          genre: this.genre,
+          publisher: this.publisher
+        });
+
+        AXIOS.post('/item/book/1', json).then(response => {
+
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
       }
     }
 }
