@@ -1,10 +1,12 @@
 package ca.mcgill.ecse321.library.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -185,5 +187,19 @@ public class MovieService {
     	 */
         List<Movie> results = movieRepository.findMovieByRating(rating);
         return results;
+    }
+
+    @Transactional
+    public List<Movie> getMovies() {
+        List<Item> items = (List<Item>) movieRepository.findAll();
+
+        List<Movie> movies = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item instanceof Movie) {
+                movies.add((Movie) item);
+            }
+        }
+        return movies;
     }
 }
