@@ -6,8 +6,15 @@ import App from './App'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
 
+<<<<<<< HEAD
 
+=======
+Vue.use(VueMaterial)
+>>>>>>> 203144a04e15799f6bb1d5d09ba7c0ae0edb5719
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 

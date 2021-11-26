@@ -29,6 +29,13 @@ public class LoanRestController {
         return convertToDto(loan);
     }
 
+    @PostMapping(value= {"/loan/libraryCard/{libraryCardNum}/{serialNum}/{date}","/loan/libraryCard/{libraryCardNum}/{serialNum}/{date}/"})
+    public LoanDTO createLoanWithLibraryCard(@PathVariable Integer libraryCardNum, @PathVariable Integer serialNum,
+                                             @PathVariable String date ){
+        Loan loan = service.createLoanWithLibraryCard(libraryCardNum, serialNum, date);
+        return convertToDto(loan);
+    }
+
     /**
      * deletes loan
      * @param id
@@ -62,6 +69,11 @@ public class LoanRestController {
     @GetMapping("/loan/returndate/{id}")
     public LoanDTO getLoan(@PathVariable("id") Integer id, @RequestParam(value = "customerId", required = false) Integer customerId){
         return convertToDto(service.getLoan(id,customerId));
+    }
+
+    @GetMapping("/loan/active")
+    public List<LoanDTO> getAllActiveLoans() {
+        return service.getAllActiveLoans();
     }
 
     /**

@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.CustomerRepository;
 import ca.mcgill.ecse321.library.dao.ItemInstanceRepository;
+import ca.mcgill.ecse321.library.dao.LibraryCardRepository;
 import ca.mcgill.ecse321.library.dao.LoanRepository;
 import ca.mcgill.ecse321.library.dto.LoanDTO;
 import ca.mcgill.ecse321.library.model.*;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -25,6 +28,8 @@ public class LoanService {
     private ItemInstanceRepository itemInstanceRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private LibraryCardRepository libraryCardRepository;
 
     @Transactional
     /**
@@ -99,8 +104,70 @@ public class LoanService {
         if(customer == null){
             throw new LoanException("Owner of loan does not match customer in request");
         }
+
+        Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
+
+        if (currentDate.after(loan.getReturnDate())) {
+            customer.setPenalty(customer.getPenalty() + 1);
+
+            customerRepository.save(customer);
+        }
+
         loanRepository.delete(loan);
         loan = null;
+    }
+
+    @Transactional
+    public Loan createLoanWithLibraryCard(Integer libraryCardNum, Integer serialNum, String returnDate) {
+        if (returnDate == null) {
+            throw new LoanException("Return date is required.");
+        }
+
+        Date date = new Date(Calendar.getInstance().getTimeInMillis());
+
+        try {
+            date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(returnDate).getTime());
+        } catch (Exception e) {
+            throw new LoanException("Incorrect date provided.");
+        }
+
+        if (libraryCardNum == null) {
+            throw new LoanException("Libary Card number is required!");
+        }
+
+        LibraryCard libraryCard = libraryCardRepository.findLibraryCardById(libraryCardNum);
+
+        if (libraryCard == null) {
+            throw new LoanException("Incorrect library card number provided.");
+        }
+
+        Customer customer = libraryCard.getCustomer();
+
+        if (customer == null) {
+            throw new LoanException("Can't find customer from library card");
+        }
+
+        if (serialNum == null) {
+            throw new LoanException("Item serial number is required to create a loan");
+        }
+
+        ItemInstance itemInstance = itemInstanceRepository.findItemInstanceBySerialNum(serialNum);
+
+        if (itemInstance == null) {
+            throw new LoanException("Can't find item from serial number");
+        }
+
+        Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
+
+        Loan loan = new Loan();
+        loan.setCheckedOut(currentDate);
+        loan.setReturnDate(date);
+        loan.setItemInstance(itemInstance);
+        loan.setCustomer(customer);
+
+        loanRepository.save(loan);
+
+        return loan;
     }
 
     /**
@@ -218,6 +285,18 @@ public class LoanService {
         }
 
         return loan;
+    }
+
+    @Transactional
+    public List<LoanDTO> getAllActiveLoans(){
+        List<Loan> loans = (List<Loan>) loanRepository.findAll();
+
+        List<LoanDTO> loansDTO = new ArrayList<>();
+        for (Loan loan: loans){
+            LoanDTO loanDTO = LoanService.loantoDTO(loan);
+            loansDTO.add(loanDTO);
+        }
+        return loansDTO;
     }
 
 

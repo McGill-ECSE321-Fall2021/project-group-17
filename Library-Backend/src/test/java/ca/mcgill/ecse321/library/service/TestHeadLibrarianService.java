@@ -1,14 +1,11 @@
 package ca.mcgill.ecse321.library.service;
 
 import ca.mcgill.ecse321.library.dao.HeadLibrarianRepository;
-import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
 import ca.mcgill.ecse321.library.dao.PersonRepository;
 import ca.mcgill.ecse321.library.model.HeadLibrarian;
-import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.model.OnlineAccount;
 import ca.mcgill.ecse321.library.model.Person;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

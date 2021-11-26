@@ -30,12 +30,4 @@ public class PersonDTO {
     public int getId() {
         return id;
     }
-
-    public List<PersonRole> getPersonRoleList() {
-        return personRoleList;
-    }
-
-    public void setPersonRoleList(List<PersonRole> personRoleList) {
-        this.personRoleList = personRoleList;
-    }
 }

@@ -10,8 +10,6 @@ public class Person {
     private int id;
     private String name;
 
-    private List<PersonRole> personRoleList;
-
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -29,13 +27,4 @@ public class Person {
         this.name = name;
     }
 
-
-    @OneToMany(cascade={CascadeType.ALL},mappedBy = "id")
-    public List<PersonRole> getPersonRoleList() {
-        return personRoleList;
-    }
-
-    public void setPersonRoleList(List<PersonRole> personRoleList) {
-        this.personRoleList = personRoleList;
-    }
 }
