@@ -1,5 +1,6 @@
 import axios from 'axios'
 import reservation from "./reservation.vue";
+import loan from "./loan.vue";
 
 var config = require('../../config')
 
@@ -25,7 +26,8 @@ const searchByName = (items, term) => {
 export default {
   name: 'itemInstance',
   components: {
-    reservation
+    reservation,
+    loan
   },
   data () {
     return {
@@ -36,7 +38,8 @@ export default {
       searched: [],
       selected: {},
       buttonEnabled: true,
-      dialog: false
+      loanDialog: false,
+      reservationDialog: false
     }
   },
   created: function () {
@@ -78,8 +81,11 @@ export default {
       this.buttonEnabled = false
       console.log(this.selected)
     },
-    openDialog () {
-      this.dialog = true
+    openLoanDialog () {
+      this.loanDialog = true
+    },
+    openReservationDialog () {
+      this.reservationDialog = true
     }
   }
 }

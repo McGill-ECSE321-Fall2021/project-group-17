@@ -11,7 +11,7 @@ var AXIOS = axios.create({
 
 function ReservationDTO (){}
 export default {
-  name: 'registration',
+  name: 'loan',
   props: {
     dialog: {
       default: true
@@ -22,23 +22,24 @@ export default {
   },
   data () {
     return {
-      errorReservation: '',
-      reservations: [],
-      selectedDate: null,
+      errorLoan: '',
+      loans: [],
+      selectedEndDate: null,
+      selectedStartDate: null,
       error: false,
     }
   },
   methods: {
-    createReservation: function () {
-      let body = {itemInstanceId: this.itemInstanceId, customerId: 60, dateReserved:new Date().toISOString().slice(0, 10), pickupDay: this.selectedDate }
-      AXIOS.post('/reservation/',body,{}).then(response => {
-        this.reservations.push(response.data)
-        this.errorReservation = ''
+    createLoan: function () {
+      let body = {itemId: this.itemInstanceId, customerId: 60, dateReserved: this.selectedStartDate, pickupDay: this.selectedEndDate }
+      AXIOS.post('/loan/',body,{}).then(response => {
+        this.loans.push(response.data)
+        this.errorLoan = ''
       })
         .catch(e => {
           let errorMsg = e.response.data.message
           console.log(errorMsg)
-          this.errorReservation = errorMsg
+          this.errorLoan = errorMsg
           this.error = true
         })
     },

@@ -30,8 +30,12 @@ import 'vue-material/dist/theme/default-dark.css'
             <md-table-cell md-label="Type" md-sort-by="type">{{ item.checkableItem.type }}</md-table-cell>
           </md-table-row>
         </md-table>
-        <md-button :disabled="buttonEnabled" class="create-button" @click="openDialog()">Create Reservation</md-button>
-        <reservation :dialog.sync="dialog" :itemInstanceId=selected.serialNum ></reservation>
+        <div>
+          <md-button :disabled="buttonEnabled" class="create-button" @click="openLoanDialog()">Create Loan</md-button>
+          <md-button :disabled="buttonEnabled" class="create-button" @click="openReservationDialog()">Create Reservation</md-button>
+        </div>
+        <reservation :dialog.sync="reservationDialog" :itemInstanceId=selected.serialNum ></reservation>
+        <loan :dialog.sync="loanDialog" :itemInstanceId=selected.serialNum ></loan>
       </div>
     </div>
   </div>

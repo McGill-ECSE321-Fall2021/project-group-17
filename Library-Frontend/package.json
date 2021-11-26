@@ -18,10 +18,11 @@
     "bootstrap-vue": "latest",
     "jquery": "^3.6.0",
     "loader": "^2.1.1",
+    "opencollective-postinstall": "^2.0.3",
     "popper.js": "^1.12.9",
     "sass": "^1.43.4",
     "vue": "^2.5.2",
-    "vue-material": "^1.0.0-beta-7",
+    "vue-material": "^1.0.0-beta-15",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

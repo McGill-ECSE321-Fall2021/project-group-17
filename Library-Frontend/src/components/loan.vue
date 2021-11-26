@@ -6,16 +6,17 @@ import 'vue-material/dist/theme/default-dark.css'
 <template>
   <md-dialog :md-active.sync="dialog" >
     <md-dialog-title>
-      <span>Make Reservation</span>
+      <span>Make Loan</span>
       <md-button id="close" class="md-icon-button" @click="close()">
         <md-icon>close</md-icon>
       </md-button>
     </md-dialog-title>
-
     <div id="options" class="wrapper">
       <div id="Pickup day" class="dialog" >
         <h3 style="flex-grow: 2;">Pickup date:</h3>
-        <md-datepicker v-model="selectedDate" md-immediately />
+        <md-datepicker v-model="selectedStartDate" md-immediately />
+        <h3 style="flex-grow: 2;">End date:</h3>
+        <md-datepicker v-model="selectedEndDate" md-immediately />
         <!--<md-field>
           <md-input v-model="selectedDate">
             placeholder="date"
@@ -24,15 +25,15 @@ import 'vue-material/dist/theme/default-dark.css'
       </div>
 
       <div id="make reservation" class="dialog">
-        <md-button @click="createReservation()" class="create-button">Make Reservation</md-button>
+        <md-button @click="createLoan()" class="create-button">Make Reservation</md-button>
       </div>
       <div id="error">
-        <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
+        <md-dialog-alert :md-active.sync="error" :md-content="errorLoan" md-confirm-text="OK!" />
       </div>
     </div>
   </md-dialog>
 </template>
-<script src="./reservation.js">
+<script src="./loan.js">
 /*export default {
   name: 'BasicDatepicker',
   data: () => ({

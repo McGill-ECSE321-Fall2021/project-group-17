@@ -2,9 +2,6 @@
   <div id="app">
     <div id="LMS">
       <h1>Library Management System</h1>
-      <md-button to="/" class="md-icon-button">
-        <md-icon>home</md-icon>
-      </md-button>
     </div>
     <router-view></router-view>
   </div>
