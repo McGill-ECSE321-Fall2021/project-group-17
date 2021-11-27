@@ -256,6 +256,12 @@ import Vue from 'vue'
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteNewspaper()">Delete Newspaper</b-button>
             </div>
         </div>
+        <p class="error">{{ error }}</p>
+        <nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
+            <button class="left" @click="homepage()">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
+            </button>
+        </nav>
     </div>
 </template>
 
@@ -332,7 +338,18 @@ import Vue from 'vue'
     .text-my-own-color {
         font-size:18px;
         font-family:monospace;
-            color: black;
+        color: black;
+    }
+
+    .left {
+        position: left;
+    }
+
+    .error {
+        color: red;
+        position: relative;
+        top: 50px;
+        font-size: 150%;
     }
 </style>
 

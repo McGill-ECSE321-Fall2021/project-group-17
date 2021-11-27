@@ -9,6 +9,16 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+function findIndex (array, item) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == item) {
+      return i
+    }
+  }
+
+return -1
+}
+
 export default {
     name: 'returns',
     mounted: function() {
@@ -42,14 +52,17 @@ export default {
         musicReleaseDate: '',
         newspaper: '',
         headline: '',
-        newspaperDatePublished: ''
+        newspaperDatePublished: '',
+        error: ''
       }
     },
     created: function () {
       AXIOS.get('/book').then(response => {
         this.books = response.data
+        console.log(response.data)
       })
         .catch(e =>{
+          this.error = e.response.data.message
           console.log(e.response.data.message)
         })
 
@@ -57,6 +70,7 @@ export default {
         this.movies = response.data
       })
         .catch(e =>{
+          this.error = e.response.data.message
           console.log(e.response.data.message)
         })
 
@@ -64,6 +78,7 @@ export default {
         this.music = response.data
       })
         .catch(e =>{
+          this.error = e.response.data.message
           console.log(e.response.data.message)
         })
 
@@ -71,10 +86,11 @@ export default {
         this.newspapers = response.data
       })
         .catch(e =>{
+          this.error = e.response.data.message
           console.log(e.response.data.message)
         })
     },
-    methods: {
+    methods: { 
       updateBookFields: function (book) {
         this.bookSelected = book
         this.title = book.name
@@ -106,131 +122,91 @@ export default {
         this.newspaperDatePublished = newspaper.datePublished
       },
       addBook: function () {
+        this.error = ''
         AXIOS.post('/item/book/2/' + this.title + '/' + this.bookDatePublished + '/' + this.author + '/' + this.publisher + '/' + this.genre).then(response => {
-          console.log(response.data)
+          this.books.push(response.data)
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
-
-        AXIOS.get('/book').then(response => {
-          this.books = response.data
-        })
-          .catch(e =>{
-            console.log(e.response.data.message)
-          })
-
-          AXIOS.get('/book').then(response => {
-            this.books = response.data
-          })
-            .catch(e =>{
-              console.log(e.response.data.message)
-            })
       },
       addMovie: function () {
+        this.error = ''
         AXIOS.post('/item/movie/2/' + this.movieTitle + '/' + this.movieReleaseDate + '/' + this.director + '/' + this.runningTime + '/' + this.rating + '/' + this.filmDistributor).then(response => {
-          console.log(response.data)
+          this.movies.push(response.data)
         })
           .catch(e =>{
-            console.log(e.response.data.message)
-          })
-
-        AXIOS.get('/movie').then(response => {
-          this.movies = response.data
-        })
-          .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
       },
       addMusic: function () {
+        this.error = ''
         AXIOS.post('/item/music/2/' + this.musicName + '/' + this.musicReleaseDate + '/' + this.musician + '/' + this.recordLabel).then(response => {
-          console.log(response.data)
+          this.music.push(response.data)
         })
           .catch(e =>{
-            console.log(e.response.data.message)
-          })
-
-        AXIOS.get('/music').then(response => {
-          this.music = response.data
-        })
-          .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
       },
       addNewspaper: function () {
+        this.error = ''
         AXIOS.post('/item/newspaper/2/' + this.newspaper + '/' + this.headline + '/' + this.newspaperDatePublished).then(response => {
-          console.log(response.data)
+          this.newspapers.push(response.data)
         })
           .catch(e =>{
-            console.log(e.response.data.message)
-          })
-
-        AXIOS.get('/newspaper').then(response => {
-          this.newspapers = response.data
-        })
-          .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
       },
       deleteBook: function () {
         AXIOS.delete('/item/book/2/' + this.bookSelected.id).then(response => {
-
+          
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
-        AXIOS.get('/book').then(response => {
-          this.books = response.data
-        })
-          .catch(e =>{
-            console.log(e.response.data.message)
-          })
+          this.$delete(this.books, findIndex(this.books, this.bookSelected))
       },
       deleteMovie: function () {
+        this.error = ''
         AXIOS.delete('/item/movie/2/' + this.movieSelected.id).then(response => {
           
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
-        AXIOS.get('/movie').then(response => {
-          this.movies = response.data
-        })
-          .catch(e =>{
-            console.log(e.response.data.message)
-          })
+          this.$delete(this.movies, findIndex(this.movies, this.movieSelected))
       },
       deleteMusic: function () {
+        this.error = ''
         AXIOS.delete('/item/music/2/' + this.musicSelected.id).then(response => {
           
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
-        AXIOS.get('/music').then(response => {
-          this.music = response.data
-        })
-          .catch(e =>{
-            console.log(e.response.data.message)
-          })
+          this.$delete(this.music, findIndex(this.music, this.musicSelected))
       },
       deleteNewspaper: function () {
+        this.error = ''
         AXIOS.delete('/item/newspaper/2/' + this.newspaperSelected.id).then(response => {
           
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
-        AXIOS.get('/newspaper').then(response => {
-          this.newspapers = response.data
-        })
-          .catch(e =>{
-            console.log(e.response.data.message)
-          })
+          this.$delete(this.newspapers, findIndex(this.newspapers, this.newspaperSelected))
       }
     }
 }
