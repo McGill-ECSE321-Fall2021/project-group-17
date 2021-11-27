@@ -102,11 +102,13 @@ import Vue from 'vue'
             </div>
         </div>
         <p class="error">{{ error }}</p>
-        <nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
-            <button class="left" @click="homepage()">
-            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
-            </button>
-        </nav>
+        <div class="nav">
+            <nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
+                <button class="left" @click="homepage()">
+                <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
+                </button>
+            </nav>
+        </div>
     </div>
 </template>
 
@@ -202,6 +204,10 @@ import Vue from 'vue'
         position: relative;
         top: 50px;
         font-size: 150%;
+    }
+
+    .nav {
+        padding-top: 25%;
     }
 
 </style>

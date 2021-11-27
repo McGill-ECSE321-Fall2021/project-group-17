@@ -125,6 +125,11 @@ export default {
         this.error = ''
         AXIOS.post('/item/book/2/' + this.title + '/' + this.bookDatePublished + '/' + this.author + '/' + this.publisher + '/' + this.genre).then(response => {
           this.books.push(response.data)
+          this.title= ''
+          this.author= ''
+          this.bookDatePublished= ''
+          this.genre= ''
+          this.publisher= ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -135,6 +140,12 @@ export default {
         this.error = ''
         AXIOS.post('/item/movie/2/' + this.movieTitle + '/' + this.movieReleaseDate + '/' + this.director + '/' + this.runningTime + '/' + this.rating + '/' + this.filmDistributor).then(response => {
           this.movies.push(response.data)
+          this.movieTitle = ''
+          this.director = ''
+          this.movieReleaseDate = ''
+          this.runningTime = ''
+          this.rating = ''
+          this.filmDistributor = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -145,6 +156,10 @@ export default {
         this.error = ''
         AXIOS.post('/item/music/2/' + this.musicName + '/' + this.musicReleaseDate + '/' + this.musician + '/' + this.recordLabel).then(response => {
           this.music.push(response.data)
+          this.musicName = ''
+          this.musician = ''
+          this.recordLabel = ''
+          this.musicReleaseDate = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -155,6 +170,9 @@ export default {
         this.error = ''
         AXIOS.post('/item/newspaper/2/' + this.newspaper + '/' + this.headline + '/' + this.newspaperDatePublished).then(response => {
           this.newspapers.push(response.data)
+          this.newspaper = ''
+          this.headline = ''
+          this.newspaperDatePublished = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -163,7 +181,11 @@ export default {
       },
       deleteBook: function () {
         AXIOS.delete('/item/book/2/' + this.bookSelected.id).then(response => {
-          
+          this.title= ''
+          this.author= ''
+          this.bookDatePublished= ''
+          this.genre= ''
+          this.publisher= ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -175,7 +197,13 @@ export default {
       deleteMovie: function () {
         this.error = ''
         AXIOS.delete('/item/movie/2/' + this.movieSelected.id).then(response => {
-          
+          this.movies.push(response.data)
+          this.movieTitle = ''
+          this.director = ''
+          this.movieReleaseDate = ''
+          this.runningTime = ''
+          this.rating = ''
+          this.filmDistributor = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -187,7 +215,10 @@ export default {
       deleteMusic: function () {
         this.error = ''
         AXIOS.delete('/item/music/2/' + this.musicSelected.id).then(response => {
-          
+          this.musicName = ''
+          this.musician = ''
+          this.recordLabel = ''
+          this.musicReleaseDate = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -199,7 +230,9 @@ export default {
       deleteNewspaper: function () {
         this.error = ''
         AXIOS.delete('/item/newspaper/2/' + this.newspaperSelected.id).then(response => {
-          
+          this.newspaper = ''
+          this.headline = ''
+          this.newspaperDatePublished = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
