@@ -57,6 +57,10 @@ public class OnlineAccountRestController {
     public OnlineAccountDTO logIn(@PathVariable("username") String username, @PathVariable("password") String password) throws IllegalArgumentException {
         return convertToDTO(service.logIn(username, password));
     }
+    @PutMapping(value = {"/UpdateAccount/{username}/{password}/{email}/{streetNumber}/{street}/{city}/{country}", "/UpdateAccount/{password}/{email}/{streetNumber}/{street}/{city}/{country}/"})
+    public OnlineAccountDTO updateAccount(@PathVariable("username") String username, @PathVariable("password") String password, @PathVariable("email") String email, @PathVariable("streetNumber") Integer streetNumber, @PathVariable("street") String street, @PathVariable("city") String city, @PathVariable("country") String country) throws IllegalArgumentException {
+        return convertToDTO(service.updateOnlineAccountCustomer(username,password,email,streetNumber,street,city,country));
+    }
 
     //logs out the user for the given username
     @PutMapping(value={"/logout/{username}", "/logout/{username}/"})
@@ -73,6 +77,7 @@ public class OnlineAccountRestController {
         accountDTO.setPassword(account.getPassword());
         accountDTO.setPersonRole(account.getPersonRole());
         accountDTO.setLoggedIn(account.getLoggedIn());
+        accountDTO.setEmail(account.getEmail());
         return accountDTO;
     }
 }

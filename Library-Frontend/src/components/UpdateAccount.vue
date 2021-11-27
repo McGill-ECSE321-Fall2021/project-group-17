@@ -53,17 +53,17 @@ import Vue from 'vue'
         <b-card-body title="Profile Information">
          <b-list-group flush>
         <b-list-group-item><b-input-group prepend="Email">
-        <b-form-input placeholder="New email"></b-form-input>
+        <b-form-input v-model="email" placeholder="New email"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item><b-input-group prepend="Password">
-        <b-form-input placeholder="New Password"></b-form-input>
+        <b-form-input v-model="password" placeholder="New Password"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item></b-list-group-item>
         <b-list-group-item></b-list-group-item>
         <b-list-group-item></b-list-group-item>
         <b-list-group-item></b-list-group-item>
          </b-list-group>
-       <b-button pill variant="outline-secondary">Confirm Update</b-button>
+       <b-button @click= "updateAccount()" pill variant="outline-secondary">Confirm Update</b-button>
         </b-card-body>
       </b-col>
     </b-row>
@@ -79,20 +79,20 @@ import Vue from 'vue'
         <b-card-body title="Address Information">
          <b-list-group flush>
         <b-list-group-item><b-input-group prepend="Street Number">
-        <b-form-input placeholder="New street number"></b-form-input>
+        <b-form-input v-model="streetNum" placeholder="New street number"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item><b-input-group prepend="Street Name">
-        <b-form-input placeholder="New street name"></b-form-input>
+        <b-form-input v-model="streetName" placeholder="New street name"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item><b-input-group prepend="City">
-        <b-form-input placeholder="New City"></b-form-input>
+        <b-form-input v-model="city" placeholder="New City"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item><b-input-group prepend="Country">
-        <b-form-input placeholder="New Country"></b-form-input>
+        <b-form-input v-model="Country" placeholder="New Country"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item></b-list-group-item>
          </b-list-group>
-       <b-button pill variant="outline-secondary">Confirm Update</b-button>
+       <b-button @click= "updateAccount()" pill variant="outline-secondary">Confirm Update</b-button>
         </b-card-body>
       </b-col>
     </b-row>
@@ -105,24 +105,7 @@ import Vue from 'vue'
 </nav>
   </div>
 </template>
-<script>
-export default {
-    data() {
-      return {
-        slide: 0,
-        sliding: null
-      }
-    },
-    methods: {
-      profile(){
-        this.$router.push({name:'Profile'});
-      },
-        homepage(){
-   this.$router.push({name: 'HomePage'});
-    }
-    }
-  }
-
+<script src="./UpdateAccount.js">
 </script>
 <style>
 #eventregistration {

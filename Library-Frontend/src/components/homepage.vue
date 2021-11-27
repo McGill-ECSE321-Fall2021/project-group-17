@@ -16,7 +16,7 @@ Vue.use(md-datepicker)
     </b-navbar>
     <b-nav-item href="#">
      <a class="text-my-own-color ">
-      Find movies, books, and movies
+      Find movies, books, and music
     </a>
 
       </b-nav-item>
