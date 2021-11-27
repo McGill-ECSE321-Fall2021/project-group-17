@@ -61,7 +61,6 @@ public class MusicService {
         }
 
         Music music = new Music();
-        music.setId(id);
         music.setName(name);
         music.setDatePublished(date);
         music.setMusician(musician);

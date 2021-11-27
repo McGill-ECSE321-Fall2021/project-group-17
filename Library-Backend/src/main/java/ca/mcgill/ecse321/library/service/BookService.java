@@ -63,7 +63,6 @@ public class BookService {
         }
         
     	Book book = new Book();
-        book.setId(id);
         book.setName(name);
         book.setDatePublished(date);
         book.setAuthor(author);

@@ -106,27 +106,37 @@ export default {
         this.newspaperDatePublished = newspaper.datePublished
       },
       addBook: function () {
-        /*const json = JSON.stringify({
-          id: 15,
-          name: this.title,
-          datePublished: this.bookDatePublished,
-          author: this.author,
-          publisher: this.publisher,
-          genre: this.genre,
-        });
-
-        console.log(json)*/
-
         AXIOS.post('/item/book/2/' + this.title + '/' + this.bookDatePublished + '/' + this.author + '/' + this.publisher + '/' + this.genre).then(response => {
           console.log(response.data)
         })
           .catch(e =>{
             console.log(e.response.data.message)
           })
+
+        AXIOS.get('/book').then(response => {
+          this.books = response.data
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
+
+          AXIOS.get('/book').then(response => {
+            this.books = response.data
+          })
+            .catch(e =>{
+              console.log(e.response.data.message)
+            })
       },
       addMovie: function () {
         AXIOS.post('/item/movie/2/' + this.movieTitle + '/' + this.movieReleaseDate + '/' + this.director + '/' + this.runningTime + '/' + this.rating + '/' + this.filmDistributor).then(response => {
           console.log(response.data)
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
+
+        AXIOS.get('/movie').then(response => {
+          this.movies = response.data
         })
           .catch(e =>{
             console.log(e.response.data.message)
@@ -139,10 +149,24 @@ export default {
           .catch(e =>{
             console.log(e.response.data.message)
           })
+
+        AXIOS.get('/music').then(response => {
+          this.music = response.data
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
       },
       addNewspaper: function () {
         AXIOS.post('/item/newspaper/2/' + this.newspaper + '/' + this.headline + '/' + this.newspaperDatePublished).then(response => {
           console.log(response.data)
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
+
+        AXIOS.get('/newspaper').then(response => {
+          this.newspapers = response.data
         })
           .catch(e =>{
             console.log(e.response.data.message)
@@ -155,10 +179,24 @@ export default {
           .catch(e =>{
             console.log(e.response.data.message)
           })
+
+        AXIOS.get('/book').then(response => {
+          this.books = response.data
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
       },
       deleteMovie: function () {
         AXIOS.delete('/item/movie/2/' + this.movieSelected.id).then(response => {
           
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
+
+        AXIOS.get('/movie').then(response => {
+          this.movies = response.data
         })
           .catch(e =>{
             console.log(e.response.data.message)
@@ -171,10 +209,24 @@ export default {
           .catch(e =>{
             console.log(e.response.data.message)
           })
+
+        AXIOS.get('/music').then(response => {
+          this.music = response.data
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
       },
       deleteNewspaper: function () {
         AXIOS.delete('/item/newspaper/2/' + this.newspaperSelected.id).then(response => {
           
+        })
+          .catch(e =>{
+            console.log(e.response.data.message)
+          })
+
+        AXIOS.get('/newspaper').then(response => {
+          this.newspapers = response.data
         })
           .catch(e =>{
             console.log(e.response.data.message)

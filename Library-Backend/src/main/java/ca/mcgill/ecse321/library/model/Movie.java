@@ -17,7 +17,7 @@ public class Movie extends CheckableItem {
 
     }
     public Movie(int id, String name, Date date, String director, Integer runningTime, String rating, String filmDistributor){
-        super(id,name,date);
+        super(name,date);
         this.director=director;
         this.runningTime=runningTime;
         this.rating=rating;

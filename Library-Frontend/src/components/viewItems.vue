@@ -65,7 +65,7 @@ import Vue from 'vue'
                     <md-table-cell class="th">Genre</md-table-cell>
                     <md-table-cell class="th">Publisher</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="book in books" :key="book.name" class="tr" md-selectable="single" @click="updateBookFields(book)">
+                <md-table-row v-for="book in books" :key="book.id" class="tr" md-selectable="single" @click="updateBookFields(book)">
                     <md-table-cell>{{ book.name }}</md-table-cell>
                     <md-table-cell> {{ book.author }}</md-table-cell>
                     <md-table-cell>{{ book.datePublished }}</md-table-cell>
@@ -107,7 +107,7 @@ import Vue from 'vue'
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addBook()">Add Book</b-button>
-                <b-button pill variant="outline-secondary" class="buttons">Delete Book</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteBook()">Delete Book</b-button>
             </div>
         </div>
         <div v-else-if="itemSelected == 'movie'">
@@ -120,13 +120,13 @@ import Vue from 'vue'
                     <md-table-cell class="th">Film Distributor</md-table-cell>
                     <md-table-cell class="th">Release Date</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="movie in movies" :key="movie.name" class="tr" md-selectable="single" @click="updateMovieFields(movie)">
+                <md-table-row v-for="movie in movies" :key="movie.id" class="tr" md-selectable="single" @click="updateMovieFields(movie)">
                     <md-table-cell>{{ movie.name }}</md-table-cell>
                     <md-table-cell> {{ movie.director }}</md-table-cell>
                     <md-table-cell>{{ movie.runningTime }}</md-table-cell>
                     <md-table-cell>{{ movie.rating }}</md-table-cell>
                     <md-table-cell>{{ movie.filmDistributor }}</md-table-cell>
-                    <md-table-cell>{{ movie.releaseDate }}</md-table-cell>
+                    <md-table-cell>{{ movie.datePublished }}</md-table-cell>
                 </md-table-row>
             </md-table>
             <md-card class="md-primary">
@@ -169,7 +169,7 @@ import Vue from 'vue'
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addMovie()">Add Movie</b-button>
-                <b-button pill variant="outline-secondary" class="buttons">Delete Movie</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteMovie()">Delete Movie</b-button>
             </div>
         </div>
         <div v-else-if="itemSelected == 'music'">
@@ -180,11 +180,11 @@ import Vue from 'vue'
                     <md-table-cell class="th">Record Label</md-table-cell>
                     <md-table-cell class="th">Release Date</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="m in music" :key="m.name" class="tr" md-selectable="single" @click="updateMusicFields(m)">
+                <md-table-row v-for="m in music" :key="m.id" class="tr" md-selectable="single" @click="updateMusicFields(m)">
                     <md-table-cell>{{ m.name }}</md-table-cell>
                     <md-table-cell> {{ m.musician }}</md-table-cell>
                     <md-table-cell>{{ m.recordLabel }}</md-table-cell>
-                    <md-table-cell>{{ m.releaseDate }}</md-table-cell>
+                    <md-table-cell>{{ m.datePublished }}</md-table-cell>
                 </md-table-row>
             </md-table>
             <md-card class="md-primary">
@@ -215,7 +215,7 @@ import Vue from 'vue'
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addMusic()">Add Music</b-button>
-                <b-button pill variant="outline-secondary" class="buttons">Delete Music</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteMusic()">Delete Music</b-button>
             </div>
         </div>
         <div v-else-if="itemSelected == 'newspaper'">
@@ -225,7 +225,7 @@ import Vue from 'vue'
                     <md-table-cell class="th">Headline</md-table-cell>
                     <md-table-cell class="th">Date Published</md-table-cell>
                 </md-table-row>
-                <md-table-row v-for="newspaper in newspapers" :key="newspaper.name" class="tr" md-selectable="single" @click="updateNewspaperFields(newspaper)">
+                <md-table-row v-for="newspaper in newspapers" :key="newspaper.id" class="tr" md-selectable="single" @click="updateNewspaperFields(newspaper)">
                     <md-table-cell>{{ newspaper.name }}</md-table-cell>
                     <md-table-cell> {{ newspaper.headline }}</md-table-cell>
                     <md-table-cell>{{ newspaper.datePublished }}</md-table-cell>
@@ -253,7 +253,7 @@ import Vue from 'vue'
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addNewspaper()">Add Newspaper</b-button>
-                <b-button pill variant="outline-secondary" class="buttons">Delete Newspaper</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteNewspaper()">Delete Newspaper</b-button>
             </div>
         </div>
     </div>

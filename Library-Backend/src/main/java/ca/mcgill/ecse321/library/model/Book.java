@@ -14,7 +14,7 @@ public class Book extends CheckableItem{
 
     }
     public Book(int id, String name, Date date,String author, String publisher, String genre){ //main constructor
-        super(id,name,date);
+        super(name,date);
         this.author=author;
         this.publisher=publisher;
         this.genre=genre;

@@ -103,6 +103,7 @@ public class ItemRestController {
         movieDTO.setName(movie.getName());
         movieDTO.setDatePublished(movie.getDatePublished());
         movieDTO.setDirector(movie.getDirector());
+        movieDTO.setRating(movie.getRating());
         movieDTO.setRunningTime(movie.getRunningTime());
         movieDTO.setFilmDistributor(movie.getFilmDistributor());
         return movieDTO;
