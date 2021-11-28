@@ -12,11 +12,6 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'login',
-      component: login
-    },
-    {
       path: '/iteminstance',
       name: 'Item Instance',
       component: itemInstance
