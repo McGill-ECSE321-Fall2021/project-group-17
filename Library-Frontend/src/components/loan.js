@@ -31,11 +31,11 @@ export default {
   },
   methods: {
     createLoan: function () {
-      let body = {itemId: this.itemInstanceId, customerId: this.$cookie.get('customerId'), dateReserved: this.selectedStartDate, pickupDay: this.selectedEndDate }
+      let body = {itemId: this.itemInstanceId, customerId: this.$cookie.get('customerId'), checkedOut: this.selectedStartDate, returnDate: this.selectedEndDate }
       AXIOS.post('/loan/',body,{}).then(response => {
         this.loans.push(response.data)
-        this.errorLoan = ''
-        this.close()
+        this.errorLoan = "Loan created successfully"
+        this.error = true
       })
         .catch(e => {
           let errorMsg = e.response.data.message

@@ -33,8 +33,8 @@ export default {
       let body = {itemInstanceId: this.itemInstanceId, customerId: this.$cookie.get('customerId'), dateReserved:new Date().toISOString().slice(0, 10), pickupDay: this.selectedDate }
       AXIOS.post('/reservation/',body,{}).then(response => {
         this.reservations.push(response.data)
-        this.errorReservation = ''
-        this.close()
+        this.errorReservation = 'Reservation created successfully'
+        this.error = true
       })
         .catch(e => {
           let errorMsg = e.response.data.message

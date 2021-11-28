@@ -4,9 +4,9 @@
       <h1>Library Management System</h1>
       <b-row>
         <md-button to="/homepage" class="md-icon-button">
-        <md-icon>home</md-icon>
-      </md-button>
-        <b-button to="/" class="button" > Logout </b-button>
+          <md-icon>home</md-icon>
+        </md-button>
+      <md-button @click="logout()" class="create-button">Logout</md-button>
       </b-row>
 
     </div>
@@ -16,8 +16,15 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    logout: function () {
+      this.$cookie.delete('customerId');
+      this.$router.push({name: 'login'});
+    }
+  }
 }
+
 </script>
 
 <style lang="scss">
