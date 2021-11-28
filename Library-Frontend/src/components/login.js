@@ -17,6 +17,7 @@ export default {
     return {
       userLogin: null,
       passwordLogin: null,
+      errorLogin: false,
       error: false
     }
   },

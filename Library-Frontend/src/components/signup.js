@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -9,23 +10,47 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function PersonDTO (){}
+function PersonDTO (name){}
 const toLower = text => {
   return text.toString().toLowerCase()
 }
-const searchByName = (persons, term) => {
+const searchByName = (items, term) => {
   if (term) {
-    return persons.filter(person => toLower(person.name).includes(toLower(term)))
+    return items.filter(item => toLower(item.name).includes(toLower(term)))
   }
 
-  return persons
+  return items
 }
 
 export default {
   name: 'signup',
   data () {
     return {
+        users: [
+          {
+            id: 1,
+            name: "Shawna Dubbin",
+            email: "sdubbin0@geocities.com",
+            gender: "Male",
+            title: "Assistant Media Planner"
+          },
+          {
+            id: 2,
+            name: "Odette Demageard",
+            email: "odemageard1@spotify.com",
+            gender: "Female",
+            title: "Account Coordinator"
+          },
+          {
+            id: 3,
+            name: "Vera Taleworth",
+            email: "vtaleworth2@google.ca",
+            gender: "Male",
+            title: "Community Outreach Specialist"
+          }
+        ],
       persons: [],
+      errorSignup: false,
       userName: null,
       userSignup: null,
       passwordSignup: null,
@@ -35,63 +60,33 @@ export default {
       country: null,
       search: null,
       error: false,
-      searchDialog: false
+      searchDialog: false,
+      tableSearch: null,
+      searched: []
     }
   },
   created: function () {
-    AXIOS.get('/signup/', {}).then(response => {
+    AXIOS.get('/persons/', {}).then(response => {
       let persons = response.data
-      console.log("persons1", persons)
-      persons = persons.filter(function (el){
-        return el.name != null;
-      })
-      persons.forEach(function(element,index,array){
-        if(element.name){
-          array[index].name = "Music"
-        }
-      })
-      this.items = persons
-      console.log("persons2", this.items)
+      this.users = persons
       this.searched = persons
     })
       .catch(e =>{
-        this.error = e.response
+        this.errorItemInstance = e.response
+        //console.log(e.response.data.message)
       })
   },
-
   methods: {
-    data () {
-      return {
-        showModal: true
-      }
-    },
-    searchOnTable () {
-      this.searched = searchByName(this.persons, this.search)
-    },
-    onSelect (person) {
-      this.selected = person
-      this.buttonEnabled = false
-      console.log(this.selected)
-    },
-    openDialog () {
-      this.dialog = true
-    },
-    onSearchClick(){
+    onSearchClick() {
       this.searchDialog = true
     },
+    searchOnTable(){
+      this.searched = searchByName(this.users, this.tableSearch)
+    },
+    onSelected(){
+      this.searchDialog = false
+      //this.person = selectedPerson
 
-    createOnlineAccount: function () {
-      console.log(this.userSignup)
-      AXIOS.push('/login/'+this.userSignup+'/'+this.passwordSignup,{}).then(response => {
-        this.errorLogin = ''
-        this.$cookie.set("username", this.userSignup)
-      })
-        .catch(e => {
-          let errorMsg = e.response.data.message
-          console.log(errorMsg)
-          this.errorLogin = errorMsg
-          this.error = true
-        })
     }
   }
 }

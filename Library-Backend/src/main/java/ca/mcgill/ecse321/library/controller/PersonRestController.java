@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.controller;
 
+import ca.mcgill.ecse321.library.dto.ItemInstanceDTO;
 import ca.mcgill.ecse321.library.dto.PersonDTO;
 import ca.mcgill.ecse321.library.model.Person;
 import ca.mcgill.ecse321.library.service.PersonService;
@@ -47,6 +48,12 @@ public class PersonRestController {
     @DeleteMapping(value = {"/person/{id}", "/person/{id}/"})
     public void deletePerson(@PathVariable Integer id){
         service.deletePerson(id);
+    }
+
+
+    @GetMapping(value = {"/persons/", "/persons"})
+    public List<PersonDTO> getAllPersons() throws IllegalArgumentException {
+        return service.getAllPersons().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     //DTO CONVERSION SECTION
