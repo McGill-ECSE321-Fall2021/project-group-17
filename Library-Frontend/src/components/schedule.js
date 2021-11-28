@@ -1,21 +1,13 @@
 import axios from "axios";
 var config = require("../../config");
 
-var backendConfigurer = function() {
-  switch (process.env.NODE_ENV) {
-    case "development":
-      return "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
-    case "production":
-      return (
-        "https://" + config.build.backendHost + ":" + config.build.backendPort
-      );
-  }
-};
-
-var backendUrl = backendConfigurer();
+var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
+var backendUrl =
+  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
 
 var AXIOS = axios.create({
-  baseURL: backendUrl
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
 export default {
@@ -25,12 +17,26 @@ export default {
       currentUser: "",
       librarians: [],
       errorPerson: "",
-      response: []
+      response: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+      Sunday: []
     };
   },
   created: function() {
     AXIOS.get("/librarians")
       .then(response => {
+        this.Monday = [];
+        this.Tuesday = [];
+        this.Wednesday = [];
+        this.Thursday = [];
+        this.Friday = [];
+        this.Saturday = [];
+        this.Sunday = [];
         this.librarians = [];
         for (let i = 0; i < response.data.length; i++) {
           this.librarians.push(response.data[i]);
@@ -39,19 +45,33 @@ export default {
         for (let i = 0; i < this.librarians.length; i++) {
           AXIOS.get("/shift/librarian/".concat(this.librarians[i].id))
             .then(response => {
-              this.librarians[i]["shifts"] = [];
+              // this.librarians[i].shifts = [];
               for (let j = 0; j < response.data.length; j++) {
                 response.data[j].dayOfWeek =
                   response.data[j].dayOfWeek[0] +
                   response.data[j].dayOfWeek.slice(1).toLowerCase();
-                this.librarians[i]["shifts"].push(response.data[j]);
+
+                if (response.data[j].dayOfWeek === "Monday") {
+                  this.Monday.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Tuesday") {
+                  this.Tuesday.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Wednesday") {
+                  this.Wednesday.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Thursday") {
+                  this.Thursday.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Friday") {
+                  this.Friday.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Saturday") {
+                  this.Saturday.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Sunday") {
+                  this.Sunday.push(response.data[j]);
+                }
               }
             })
             .catch(e => {
               this.errorPerson = e;
             });
         }
-        console.log(this.librarians);
       })
       .catch(e => {
         this.errorPerson = e;
@@ -59,16 +79,10 @@ export default {
   },
 
   methods: {
-    deleteShift: function(shiftId) {
-      AXIOS.delete(
-        "/shift/".concat(shiftId),
-        {},
-        {
-          params: {
-            username: "bob344"
-          }
-        }
-      )
+    deleteShift: function(shiftid) {
+      AXIOS.delete("/shift/".concat(shiftid), {
+        params: { accountusername: "bob344" }
+      })
         .then(response => {
           console.log(response.data);
         })
@@ -79,30 +93,32 @@ export default {
         });
       document.location.reload(true);
     },
-    updateShift: function(shiftId, librarianId, startTime, endTime, dayOfWeek) {
-      const json = JSON.stringify({
+    updateShift: function(shiftid, librarianId, startTime, endTime, dayOfWeek) {
+      const json = {
         startTime: startTime,
         endTime: endTime,
         dayOfWeek: dayOfWeek.toUpperCase(),
         librarianId: librarianId
-      });
+      };
+      console.log(json);
       if (
-        dayOfWeek.toLowerCase() != "monday" ||
-        "tuesday" ||
-        "wednesday" ||
-        "thursday" ||
-        "friday"
+        dayOfWeek.toUpperCase() != "MONDAY" &&
+        dayOfWeek.toUpperCase() != "TUESDAY" &&
+        dayOfWeek.toUpperCase() != "WEDNESDAY" &&
+        dayOfWeek.toUpperCase() != "THURSDAY" &&
+        dayOfWeek.toUpperCase() != "FRIDAY" &&
+        dayOfWeek.toUpperCase() != "SATURDAY" &&
+        dayOfWeek.toUpperCase() != "SUNDAY"
       ) {
         this.errorPerson = "Day string not formatted correctly!";
         return;
       }
-      AXIOS.put("/shift/librarian/".concat(shiftId), json, {
-        params: {
-          username: "bob344"
-        }
+      console.log("p/assed");
+      AXIOS.put("/shift/librarian/".concat(shiftid), json, {
+        params: { accountUsername: "bob344" }
       })
         .then(response => {
-          console.log(response.data);
+          console.log(response);
         })
         .catch(e => {
           var errorMsg = e.response.data.message;

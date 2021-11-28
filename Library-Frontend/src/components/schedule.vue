@@ -55,49 +55,332 @@
       <p v-if="(!librarians || librarians.length == 0) && !errorPerson">
         No schedules to display.
       </p>
-      <tr v-for="librarian in librarians" :key="librarian.id">
-        <h2>{{ librarian.person.name }}, id: {{ librarian.id }}</h2>
-        <p v-if="!librarian.shifts || librarian.shifts.length == 0">
-          No shifts to display.
-        </p>
-        <table id="row">
-          <tr v-if="librarian.shifts && librarian.shifts.length != 0">
-            <th id="entry">Day</th>
-            <th id="entry">Start</th>
-            <th id="entry">End</th>
-            <th id="entry">Update</th>
-            <th id="entry">Delete!</th>
-          </tr>
-          <tr v-for="shift in librarian.shifts" :key="shift.id">
-            <td id="data">
-              <input type="text" v-model="shift.dayOfWeek" />
-            </td>
-            <td id="data">
-              <input type="time" v-model="shift.startTime" />
-            </td>
-            <td id="data"><input type="time" v-model="shift.endTime" /></td>
-            <td id="data">
-              <button
-                v-on:click="
-                  updateShift(
-                    shift.id,
-                    librarian.id,
-                    shift.startTime,
-                    shift.endTime,
-                    shift.dayOfWeek
-                  )
-                "
-              >
-                Update
-              </button>
-            </td>
-            <td id="data">
-              <button v-on:click="deleteShift(shift.id)">Delete</button>
-            </td>
-          </tr>
-          <hr />
-        </table>
-      </tr>
+      <table id="row" v-if="Monday && Monday.length != 0">
+        <h2 v-if="Monday && Monday.length != 0">Monday</h2>
+        <tr v-if="Monday && Monday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Monday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
+      <table id="row" v-if="Tuesday && Tuesday.length != 0">
+        <h2 v-if="Tuesday && Tuesday.length != 0">Tuesday</h2>
+        <tr v-if="Tuesday && Tuesday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Tuesday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
+      <table id="row" v-if="Wednesday && Wednesday.length != 0">
+        <h2 v-if="Wednesday && Wednesday.length != 0">Wednesday</h2>
+        <tr v-if="Wednesday && Wednesday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Wednesday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
+
+      <table id="row" v-if="Thursday && Thursday.length != 0">
+        <h2 v-if="Thursday && Thursday.length != 0">Thursday</h2>
+        <tr v-if="Thursday && Thursday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Thursday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
+
+      <table id="row" v-if="Friday && Friday.length != 0">
+        <h2 v-if="Friday && Friday.length != 0">Friday</h2>
+        <tr v-if="Friday && Friday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Friday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
+
+      <table id="row" v-if="Saturday && Saturday.length != 0">
+        <h2 v-if="Saturday && Saturday.length != 0">Saturday</h2>
+        <tr v-if="Saturday && Saturday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Saturday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
+
+      <table id="row" v-if="Sunday && Sunday.length != 0">
+        <h2 v-if="Sunday && Sunday.length != 0">Sunday</h2>
+        <tr v-if="Sunday && Sunday.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in Sunday" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShift(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
     </div>
 
     <nav
@@ -113,10 +396,11 @@
         />
       </button>
     </nav>
-
-    <span v-if="errorPerson" id="error-box" style="color:red">
-      {{ errorPerson }}
-    </span>
+    <p>
+      <span v-if="errorPerson" id="error-box" style="color:red">
+        {{ errorPerson }}
+      </span>
+    </p>
     <hr />
   </div>
 </template>
