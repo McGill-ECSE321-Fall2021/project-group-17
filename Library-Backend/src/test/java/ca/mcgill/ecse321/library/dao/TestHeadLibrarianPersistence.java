@@ -36,7 +36,7 @@ public class TestHeadLibrarianPersistence {
         Person person = new Person();
         //person.setId(1432);
         person.setName("bob");
-        person.setPersonRoleList(null);
+        //person.setPersonRoleList(null);
         personRepository.save(person);
         int id = person.getId();
 

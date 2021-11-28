@@ -1,10 +1,13 @@
 package ca.mcgill.ecse321.library.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ca.mcgill.ecse321.library.service.Exception.LoanException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,6 +71,12 @@ public class ItemRestController {
         return convertMovieToDTO(movie);
     }
 
+    @PostMapping(value= {"/item/movie/{librarianId}/{name}/{datePublished}/{director}/{runningTime}/{rating}/{filmDistributor}", "/item/movie/{librarianId}/{name}/{datePublished}/{director}/{runningTime}/{rating}/{filmDistributor}/"})
+    public MovieDTO addMovie1(@PathVariable("librarianId") Integer librarianId, @PathVariable("name") String name, @PathVariable("datePublished") Date date, @PathVariable("director") String director, @PathVariable("runningTime") Integer runningTime, @PathVariable("rating") String rating, @PathVariable("filmDistributor") String filmDistributor) throws Exception {
+        Movie movie = movieService.createMovie(librarianId, 20, name, date, director, runningTime, rating, filmDistributor);
+        return convertMovieToDTO(movie);
+    }
+
     @GetMapping(value= {"/movie", "/movie/"})
     public List<MovieDTO> getMovies() {
         List<Movie> movies = movieService.getMovies();
@@ -94,6 +103,7 @@ public class ItemRestController {
         movieDTO.setName(movie.getName());
         movieDTO.setDatePublished(movie.getDatePublished());
         movieDTO.setDirector(movie.getDirector());
+        movieDTO.setRating(movie.getRating());
         movieDTO.setRunningTime(movie.getRunningTime());
         movieDTO.setFilmDistributor(movie.getFilmDistributor());
         return movieDTO;
@@ -188,15 +198,28 @@ public class ItemRestController {
         public JsonBodyMovie(){}
     }
 
-    @PostMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
     @ResponseBody
+    @PostMapping(value= {"/item/book/{librarianId}", "/item/book/{librarianId}/"})
     public BookDTO addBook(@PathVariable("librarianId") int librarianId,
-                            @RequestBody JsonBodyBook body) throws IllegalArgumentException{
-    	/* calls the item service that corresponds to the input provided, 
-    	 * and creates an item with provided elements from the json body.
-    	 * Then, converts it to a DTO */
-        Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getAuthor(),
+                           @RequestBody JsonBodyBook body) throws IllegalArgumentException{
+        /* calls the item service that corresponds to the input provided,
+         * and creates an item with provided elements from the json body.
+         * Then, converts it to a DTO */
+
+        Book book = bookService.createBook(librarianId, body.getId(), body.getName(), body.getDatePublished(), body.getAuthor(),
                 body.getPublisher(), body.getGenre());
+        return convertBookToDTO(book);
+    }
+
+    @PostMapping(value= {"/item/book/{librarianId}/{title}/{datePublished}/{author}/{publisher}/{genre}", "/item/book/{librarianId}/{title}/{datePublished}/{author}/{publisher}/{genre}/"})
+    public BookDTO addBook1(@PathVariable("librarianId") int librarianId,
+                            @PathVariable("title") String title, @PathVariable("datePublished") Date date, @PathVariable("author") String author, @PathVariable("publisher") String publisher, @PathVariable("genre") String genre) throws IllegalArgumentException{
+        /* calls the item service that corresponds to the input provided,
+         * and creates an item with provided elements from the json body.
+         * Then, converts it to a DTO */
+
+        Book book = bookService.createBook(librarianId, 15, title, date,author,
+                publisher, genre);
         return convertBookToDTO(book);
     }
 
@@ -309,6 +332,12 @@ public class ItemRestController {
         return convertMusicToDTO(music);
     }
 
+    @PostMapping(value= {"/item/music/{librarianId}/{name}/{datePublished}/{musician}/{recordLabel}", "/item/music/{librarianId}/{name}/{datePublished}/{musician}/{recordLabel}/"})
+    public MusicDTO addMusic1(@PathVariable("librarianId") Integer librarianId, @PathVariable("name") String name, @PathVariable("datePublished") Date date, @PathVariable("musician") String musician, @PathVariable("recordLabel") String recordLabel) {
+        Music music = musicService.createMusic(librarianId, 25, name, date, musician, recordLabel);
+        return convertMusicToDTO(music);
+    }
+
     @GetMapping(value= {"/music", "/music/"})
     public List<MusicDTO> getMusic() {
         List<Music> musics = musicService.getMusic();
@@ -403,6 +432,12 @@ public class ItemRestController {
     	 * and creates an item with provided elements from the json body.
     	 * Then, converts it to a DTO */
         Newspaper newspaper = newspaperService.createNewspaper(librarianId, body.getId(), body.getName(), body.getDatePublished(),body.getHeadline());
+        return convertNewspaperToDTO(newspaper);
+    }
+
+    @PostMapping(value= {"/item/newspaper/{librarianId}/{name}/{headline}/{datePublished}", "/item/newspaper/{librarianId}/{name}/{headline}/{datePublished}/"})
+    public NewspaperDTO addNewspaper1(@PathVariable("librarianId") Integer librarianId, @PathVariable("name") String name, @PathVariable("headline") String headline, @PathVariable("datePublished") Date date) {
+        Newspaper newspaper = newspaperService.createNewspaper(librarianId, 30, name, date, headline);
         return convertNewspaperToDTO(newspaper);
     }
 
