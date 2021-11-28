@@ -30,7 +30,7 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button @click="createOnlineAccountCustomer() ; createPerson() ; logIn()" size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="createPerson()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>

@@ -26,7 +26,6 @@ export default {
   name: 'signup',
   data () {
     return {
-
       persons: [],
       errorSignup: false,
       userName: null,
@@ -43,6 +42,9 @@ export default {
       searchDialog: false,
       tableSearch: null,
       searched: [],
+      addressId: null,
+      id: null,
+      personRoleId: null
     }
   },
   created: function () {
@@ -70,9 +72,11 @@ export default {
     },
 
     createPerson: function(){
-      let body = {userName: this.userName, personRole: "customer"}
+      let body = {name: this.userName, personRole: "customer"}
       AXIOS.post('/person/',body,{}).then(response => {
         this.persons.push(response.data)
+        this.id = response.data.id
+        this.createAddress()
         this.errorSignup = ''
       })
         .catch(e => {
@@ -83,9 +87,11 @@ export default {
         })
     },
 
-    createOnlineAccountCustomer: function () {
-      let body = {userName: this.userName, passwordSignup:this.passwordSignup, customerId: 60, email: this.email }
-      AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup,body,{}).then(response => {
+    createOnlineAccountCustomer: function (customerId) {
+      console.log(customerId)
+      AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+customerId, {} ,{}).then(response => {
+        this.$cookie.set("customerId", response.data.personRole.id)
+        this.$router.push({name: 'Item Instance'});
         this.errorSignup = ''
       })
         .catch(e => {
@@ -96,11 +102,45 @@ export default {
         })
     },
 
+    createCustomer: function (){
+      let body = {personId: this.id, penalty: 0, addressId: this.addressId}
+      console.log(body)
+      AXIOS.post('/customer/1' ,body,{}).then(response => {
+        console.log(response.data.id)
+        this.createOnlineAccountCustomer(response.data.id)
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
+
+    createAddress: function (){
+      AXIOS.post('/address/1/' + this.streetNum + '/' + this.streetName + '/' + this.city + '/' + this.country,{},{}).then(response => {
+        console.log(response.data.id)
+        this.addressId = response.data.id
+        this.createCustomer()
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    }
+
+    /*
     logIn: function () {
       console.log(this.userLogin)
       AXIOS.put('/login/'+this.userLogin+'/'+this.passwordLogin,{}).then(response => {
         this.errorLogin = ''
-        this.$cookie.set("username", this.userLogin)
+
+        this.$cookie.set("customerId", response.data.personRole.id)
+        this.$router.push({name: 'Item Instance'});
 
       })
         .catch(e => {
@@ -110,6 +150,6 @@ export default {
           this.error = true
         })
     }
-
+  */
   }
 }
