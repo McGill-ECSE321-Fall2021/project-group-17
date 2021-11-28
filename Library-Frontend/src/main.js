@@ -14,6 +14,8 @@ import 'vue-material/dist/theme/default.css'
 Vue.use(VueMaterial)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+var VueCookie = require('vue-cookie');
+Vue.use(VueCookie);
 
 /* eslint-disable no-new */
 new Vue({

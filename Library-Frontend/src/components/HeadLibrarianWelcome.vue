@@ -20,6 +20,11 @@ Vue.use(md-datepicker)
         </a>
 
       </b-nav-item>
+      <b-nav-item href="#" class="unstyled">
+        <a class="text-my-own-color ">
+          Update Schedule
+        </a>
+      </b-nav-item >
       <b-nav-item href="#/shifts" class="unstyled">
         <a class="text-my-own-color ">
           View Shifts
@@ -55,7 +60,7 @@ Vue.use(md-datepicker)
         <div id="welcomeMSG">
           <h1 id="welcome">
             Welcome
-            <h2 onload="setUsername" id="Librarian">Librarian</h2>
+            <h2 onload="setUsername" id="HeadLibrarian">Head Librarian</h2>
           </h1>
         </div>
       </v-row>
@@ -287,7 +292,7 @@ export default {
   },
   methods: {
     setUsername(){
-      document.getElementById("Librarian").innerHTML(this.$cookie.get('username'))
+      document.getElementById("HeadLibrarian").innerHTML(this.$cookie.get('username'))
     },
     onSlideStart(slide) {
       this.sliding = true
@@ -363,7 +368,7 @@ export default {
   justify-content: center;
 }
 #welcomeMSG {
-  font-family: Apple Chancery, cursive, bold;
+  font-family: Apple Chancery, cursive;
   position: absolute;
   right: 880px;
   top: 70px;

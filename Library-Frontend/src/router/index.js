@@ -20,9 +20,14 @@ export default new Router({
       component: reservation
     },
     {
-      path:'/LibrarianWelcomePage',
-      name:'Librarian Welcome Page',
-      component: LibrarianWelcome
+      path:'/LibrarianWelcome',
+      name:'LibrarianWelcome',
+      component: require("@/components/LibrarianWelcome.vue").default
+    },
+    {
+      path:'/HeadLibrarianWelcome',
+      name:'HeadLibrarianWelcome',
+      component: require("@/components/HeadLibrarianWelcome.vue").default
     },
     {
       path: "/returns",
