@@ -1,7 +1,7 @@
 import Vue from 'vue'
 <template class="main">
 <div>
- <b-navbar toggleable="md" type="light" variant="light">
+ <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
       <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
@@ -9,7 +9,7 @@ import Vue from 'vue'
     </b-navbar>
     <b-nav-item href="#">
      <a class="text-my-own-color ">
-      Find movies, books, and movies
+      Find movies, books, and music
     </a>
 
       </b-nav-item>
