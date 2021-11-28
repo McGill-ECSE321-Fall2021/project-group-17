@@ -22,17 +22,19 @@ export default {
     }
   },
   created: function () {
-    if(this.$cookie.get('username') === true){
-      //go to homepage
-    };
+      if( this.$cookie.get("customerId")){
+        console.log("user already logged in")
+        this.$router.push({name: 'Item Instance'});
+      }
   },
   methods: {
     logIn: function () {
       console.log(this.userLogin)
       AXIOS.put('/login/'+this.userLogin+'/'+this.passwordLogin,{}).then(response => {
         this.errorLogin = ''
-        this.$cookie.set("username", this.userLogin)
-        //this.$router.push({name: 'homepage'});
+
+        this.$cookie.set("customerId", response.data.personRole.id)
+        this.$router.push({name: 'Item Instance'});
 
       })
         .catch(e => {

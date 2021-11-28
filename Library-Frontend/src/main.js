@@ -9,6 +9,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueCookie from "vue-cookie"
 
 import VueMaterial from 'vue-material'
+import VueCookie from 'vue-cookie'
 import 'vue-material/dist/vue-material.min.css'
 //import 'vue-material/dist/theme/default.css'
 

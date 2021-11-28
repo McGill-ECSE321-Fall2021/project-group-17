@@ -6,18 +6,17 @@ import 'vue-material/dist/theme/default-dark.css'
 <template>
   <md-dialog :md-active.sync="dialog" >
     <md-dialog-title>
-      <span>Make Reservation</span>
+      <span>Make Loan</span>
       <md-button id="close" class="md-icon-button" @click="close()">
         <md-icon>close</md-icon>
       </md-button>
     </md-dialog-title>
-
     <div id="options" class="wrapper">
       <div id="Pickup day" class="dialog" >
-
-        <label class="label" >Pickup </label>
-        <label class="label" >Date</label>
-        <md-datepicker v-model="selectedDate" md-immediately class="date" />
+        <h3 style="flex-grow: 2;">Pickup date:</h3>
+        <md-datepicker v-model="selectedStartDate" md-immediately />
+        <h3 style="flex-grow: 2;">End date:</h3>
+        <md-datepicker v-model="selectedEndDate" md-immediately />
         <!--<md-field>
           <md-input v-model="selectedDate">
             placeholder="date"
@@ -26,15 +25,15 @@ import 'vue-material/dist/theme/default-dark.css'
       </div>
 
       <div id="make reservation" class="dialog">
-        <md-button @click="createReservation()" class="create-button">Make Reservation</md-button>
+        <md-button @click="createLoan()" class="create-button">Make Reservation</md-button>
       </div>
       <div id="error">
-        <md-dialog-alert :md-active.sync="error" :md-content="errorReservation" md-confirm-text="OK!" />
+        <md-dialog-alert :md-active.sync="error" :md-content="errorLoan" md-confirm-text="OK!" />
       </div>
     </div>
   </md-dialog>
 </template>
-<script src="./reservation.js">
+<script src="./loan.js">
 /*export default {
   name: 'BasicDatepicker',
   data: () => ({
@@ -73,24 +72,10 @@ import 'vue-material/dist/theme/default-dark.css'
 }
 .dialog{
   border: black 2px;
-  font-family: monospace;
-  font-size: 20px;
+  margin: 10% 10% 10% 10%;
+
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin-left: 5px;
-  margin-right: 10px;
 }
-
-.label{
-  justify-content: left;
-  margin-top: 27px;
-  margin-right: 15px;
-}
-
-.date {
-  margin-left: 10px;
-}
-
-
 </style>
