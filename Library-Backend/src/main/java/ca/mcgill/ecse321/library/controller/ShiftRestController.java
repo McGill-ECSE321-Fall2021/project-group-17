@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.library.controller;
+													package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.ShiftDTO;
 import ca.mcgill.ecse321.library.service.LibrarianService;
@@ -69,7 +69,6 @@ public class ShiftRestController {
                 body.getLibrarianId(), accountUsername);
     }
     @DeleteMapping(value = {"/shift/{shiftid}", "/shift/{shiftid}"})
-
     public void deleteShift(@PathVariable("shiftid") int shiftId, @RequestParam(value = "accountusername", required = false)String accountUsername){
         shiftService.deleteShift(accountUsername, shiftId);
     }

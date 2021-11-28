@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.library.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -75,7 +76,7 @@ public class BookService {
     /**
      * Used to delete item
      * @param bookId
-     * @param customerId
+     * @param librarianId
      */
     @Transactional
     public void deleteBook(Integer bookId, Integer librarianId){
@@ -189,5 +190,19 @@ public class BookService {
     	 */
         List<Book> results = bookRepository.findBookByGenre(genre);
         return results;
+    }
+
+    @Transactional
+    public List<Book> getBooks() {
+        List<Item> items = (List<Item>) bookRepository.findAll();
+
+        List<Book> books = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item instanceof Book) {
+                books.add((Book) item);
+            }
+        }
+        return books;
     }
 }
