@@ -197,7 +197,6 @@ export default {
       deleteMovie: function () {
         this.error = ''
         AXIOS.delete('/item/movie/2/' + this.movieSelected.id).then(response => {
-          this.movies.push(response.data)
           this.movieTitle = ''
           this.director = ''
           this.movieReleaseDate = ''
