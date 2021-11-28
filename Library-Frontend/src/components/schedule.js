@@ -81,7 +81,7 @@ export default {
   methods: {
     deleteShift: function(shiftid) {
       AXIOS.delete("/shift/".concat(shiftid), {
-        params: { accountusername: "bob344" }
+        params: { accountusername: this.$cookie.get("customerId") }
       })
         .then(response => {
           console.log(response.data);
@@ -100,7 +100,6 @@ export default {
         dayOfWeek: dayOfWeek.toUpperCase(),
         librarianId: librarianId
       };
-      console.log(json);
       if (
         dayOfWeek.toUpperCase() != "MONDAY" &&
         dayOfWeek.toUpperCase() != "TUESDAY" &&
@@ -113,9 +112,8 @@ export default {
         this.errorPerson = "Day string not formatted correctly!";
         return;
       }
-      console.log("p/assed");
       AXIOS.put("/shift/librarian/".concat(shiftid), json, {
-        params: { accountUsername: "bob344" }
+        params: { accountUsername: this.$cookie.get("customerId") }
       })
         .then(response => {
           console.log(response);
