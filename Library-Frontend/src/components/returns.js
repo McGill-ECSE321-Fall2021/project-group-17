@@ -24,7 +24,8 @@ export default {
         returnDate: '',
         selectedItem: '',
         selectedCustomer: '',
-        returnItemError: ''
+        returnItemError: '',
+        error: ''
       }
     },
     created: function () {
@@ -32,7 +33,7 @@ export default {
         this.loans = response.data
       })
         .catch(e =>{
-          this.errorLoan = e
+          this.error = e.response.data.message
           console.log(e.response.data.message)
         })
     },
@@ -44,13 +45,14 @@ export default {
       },
 
       returnItem: function () {
+        this.error = ''
         var id = this.selectedLoan.id
         var customerId = this.selectedLoan.customer.id
         AXIOS.delete('/loan/' + parseInt(id), { params: { customerId:  parseInt(customerId)} }).then(response => {
           this.selectedLoan = []
         })
           .catch(e =>{
-            this.errorLoan = e
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
@@ -58,6 +60,7 @@ export default {
       },
 
       createLoan: function () {
+        this.error = ''
         AXIOS.post('/loan/libraryCard/' +  parseInt(this.libCard) + '/' + parseInt(this.serialNum) + '/' + this.returnDate)
         .then(response => {
           this.libraryCardNum = '';
@@ -65,6 +68,7 @@ export default {
           this.returnDate = '';
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 

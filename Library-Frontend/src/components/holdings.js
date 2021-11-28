@@ -24,7 +24,8 @@ export default {
         returnDate: '',
         selectedItem: '',
         selectedCustomer: '',
-        returnItemError: ''
+        returnItemError: '',
+        error: ''
       }
     },
     created: function () {
@@ -32,7 +33,7 @@ export default {
         this.reservations = response.data
       })
         .catch(e =>{
-          this.errorReservation = e
+          this.error = e.response.data.message
           console.log(e.response.data.message)
         })
     },
@@ -44,13 +45,14 @@ export default {
       },
 
       deleteReservation: function () {
+        this.error = ''
         var id = this.selectedReservation.id
         var customerId = this.selectedReservation.customer.id
         AXIOS.delete('/reservation/' + parseInt(id), { params: { customerId:  parseInt(customerId)} }).then(response => {
           this.selectedreservation = []
         })
           .catch(e =>{
-            this.errorReservation = e
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
@@ -58,6 +60,7 @@ export default {
       },
 
       createLoan: function () {
+        this.error = ''
         var libCard = this.selectedReservation.customer.libraryCard.id
         var serialNum = this.selectedReservation.itemInstance.serialNum
         AXIOS.post('/loan/libraryCard/' +  parseInt(libCard) + '/' + parseInt(serialNum) + '/' + this.returnDate)
@@ -67,6 +70,7 @@ export default {
           this.returnDate = '';
         })
           .catch(e =>{
+            this.error = e.response.data.message
             console.log(e.response.data.message)
           })
 
@@ -77,7 +81,7 @@ export default {
         this.selectedreservation = []
         })
         .catch(e =>{
-            this.errorReservation = e
+            this.error = e.response.data.message
             console.log(e.response.data.message)
         })
 

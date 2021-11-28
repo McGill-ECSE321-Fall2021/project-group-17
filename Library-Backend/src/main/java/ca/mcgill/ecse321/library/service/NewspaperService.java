@@ -49,7 +49,6 @@ public class NewspaperService {
         }
         
         Newspaper newspaper = new Newspaper();
-        newspaper.setId(id);
         newspaper.setName(name);
         newspaper.setDatePublished(date);
         newspaper.setHeadline(headline);

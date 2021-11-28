@@ -13,7 +13,7 @@ public abstract class CheckableItem extends Item {
     public CheckableItem(){
 
     }
-    public CheckableItem(int id, String name, Date date) {
-        super(id,name,date);
+    public CheckableItem(String name, Date date) {
+        super(name,date);
     }
 }
