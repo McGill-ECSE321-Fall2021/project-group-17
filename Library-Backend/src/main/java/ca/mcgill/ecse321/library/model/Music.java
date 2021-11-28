@@ -15,7 +15,7 @@ public class Music extends CheckableItem{
 
     }
     public Music(int id, String name, Date date, String musician, String recordLabel){
-        super(id,name,date);
+        super(name,date);
         this.musician=musician;
         this.recordLabel=recordLabel;
     }

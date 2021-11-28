@@ -5,7 +5,7 @@
     <hr />
     <div id="librarian_table">
       <p v-if="!librarians || librarians.length == 0">
-        No schedules to display.
+        No schedules to display!
       </p>
       <tr v-for="librarian in librarians" :key="librarian.id">
         <h2>{{ librarian.person.name }}, id: {{ librarian.id }}</h2>

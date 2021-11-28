@@ -41,7 +41,7 @@ public class ItemInstanceRestController {
 
         ItemInstanceDTO itemInstanceDTO = new ItemInstanceDTO();
         itemInstanceDTO.setSerialNum(itemInstance.getSerialNum());
-        itemInstanceDTO.setCheckableItem(itemInstanceDTO.getCheckableItem());
+        itemInstanceDTO.setCheckableItem(itemInstance.getCheckableItem());
         return itemInstanceDTO;
     }
 

@@ -12,7 +12,7 @@ public class Newspaper extends Item {
     }
 
     public Newspaper(int id, String name, Date date, String headline) {
-        super(id, name, date);
+        super(name, date);
         this.headline = headline;
     }
 

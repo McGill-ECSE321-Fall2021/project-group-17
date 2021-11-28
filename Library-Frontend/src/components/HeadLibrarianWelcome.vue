@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Cookie from 'cookie'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default-dark.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
@@ -50,7 +51,7 @@ Vue.use(md-datepicker)
             <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
           </template>
           <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
-          <b-dropdown-item >Sign Out</b-dropdown-item>
+          <b-dropdown-item>Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
 
@@ -60,7 +61,7 @@ Vue.use(md-datepicker)
         <div id="welcomeMSG">
           <h1 id="welcome">
             Welcome
-            <h2 onload="setUsername" id="HeadLibrarian">Head Librarian</h2>
+            <h2 id="HeadLibrarian">Head Librarian</h2>
           </h1>
         </div>
       </v-row>
@@ -283,6 +284,8 @@ Vue.use(md-datepicker)
   </div>
 </template>
 <script>
+//import $cookie from "babel-register/lib/cache";
+//require("@babel/register");
 export default {
   data() {
     return {
@@ -292,7 +295,8 @@ export default {
   },
   methods: {
     setUsername(){
-      document.getElementById("HeadLibrarian").innerHTML(this.$cookie.get('username'))
+     //document.getElementById("HeadLibrarian").innerHTML = get username from cookie
+
     },
     onSlideStart(slide) {
       this.sliding = true
@@ -371,7 +375,7 @@ export default {
   font-family: Apple Chancery, cursive;
   position: absolute;
   right: 880px;
-  top: 70px;
+  top: 90px;
   z-index: 3;
   color: #76323f;
 }
