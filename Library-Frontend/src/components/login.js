@@ -22,7 +22,9 @@ export default {
     }
   },
   created: function () {
-
+    if(this.$cookie.get('username') === true){
+      //go to homepage
+    };
   },
   methods: {
     logIn: function () {
@@ -30,7 +32,7 @@ export default {
       AXIOS.put('/login/'+this.userLogin+'/'+this.passwordLogin,{}).then(response => {
         this.errorLogin = ''
         this.$cookie.set("username", this.userLogin)
-        this.$router.push({name: 'homepage'});
+        //this.$router.push({name: 'homepage'});
 
       })
         .catch(e => {

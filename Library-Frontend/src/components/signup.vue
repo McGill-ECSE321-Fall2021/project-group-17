@@ -19,6 +19,7 @@ import Vue from 'vue'
                   </div>
                   <input v-model="userSignup" class="signup-input" placeholder="Enter Username" required>
                   <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <input v-model="email" type="email" class="signup-input" placeholder="Enter Email" required>
 
                   <div class="address-label">
                     <label>Address</label>
@@ -41,17 +42,17 @@ import Vue from 'vue'
                 </div>
                 <div class="signup-info">
                   <label>
-                    <input v-model="search" class="search" placeholder="Search for name here..."/>
+                    <input v-model="search" class="search" placeholder="Search for id here..."/>
                   </label>
                   <b-button class="btn" @click="onSearchClick()">Search</b-button>
 
                   <md-dialog :md-active.sync="searchDialog" >
                     <md-dialog-title>Members of LMS</md-dialog-title>
                     <div>
-                      <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                      <md-table v-model="searched" md-sort="id" md-sort-order="asc" md-card md-fixed-header @md-selected="onSelected">
                         <md-table-toolbar>
                          <md-field md-clearable class="md-toolbar-section-end">
-                           <md-input placeholder="Search by name..." v-model="tableSearch" @input="searchOnTable" />
+                           <md-input placeholder="Search by id..." v-model="tableSearch" @input="searchOnTable" />
                          </md-field>
                        </md-table-toolbar>
 
@@ -74,6 +75,8 @@ import Vue from 'vue'
                   </div>
                   <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
                   <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <input v-model="email" class="signup-input" placeholder="Enter Email" required>
+
                   <div class="address-label">
                     <label>Address</label>
                   </div>
@@ -83,7 +86,7 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button @click="createOnlineAccount() ; logIn()" size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="createOnlineAccountCustomer() ; logIn()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>

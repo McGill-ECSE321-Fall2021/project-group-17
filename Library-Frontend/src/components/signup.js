@@ -16,7 +16,7 @@ const toLower = text => {
 }
 const searchByName = (items, term) => {
   if (term) {
-    return items.filter(item => toLower(item.name).includes(toLower(term)))
+    return items.filter(item => toLower(item.id).includes(toLower(term)))
   }
 
   return items
@@ -53,7 +53,9 @@ export default {
       errorSignup: false,
       userName: null,
       userSignup: null,
+      selected: {},
       passwordSignup: null,
+      email: null,
       streetNum: null,
       streetName: null,
       city: null,
@@ -83,10 +85,51 @@ export default {
     searchOnTable(){
       this.searched = searchByName(this.users, this.tableSearch)
     },
-    onSelected(){
+    onSelected(id){
       this.searchDialog = false
-      //this.person = selectedPerson
+      this.selected = id
+      console.log(this.selected)
+    },
+    createPerson: function(){
+      let body = {userName: this.userName}
+      AXIOS.post('/person/',body,{}).then(response => {
+        this.persons.push(response.data)
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
+    createOnlineAccountCustomer: function () {
+      let body = {userName: this.userName, passwordSignup:this.passwordSignup, customerId: 60, email: this.email }
+      AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup,body,{}).then(response => {
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
 
+    logIn: function () {
+      console.log(this.userLogin)
+      AXIOS.put('/login/'+this.userLogin+'/'+this.passwordLogin,{}).then(response => {
+        this.errorLogin = ''
+        this.$cookie.set("username", this.userLogin)
+
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorLogin = errorMsg
+          this.error = true
+        })
     }
+
   }
 }
