@@ -6,7 +6,7 @@
         <md-button to="/homepage" class="md-icon-button">
         <md-icon>home</md-icon>
       </md-button>
-        <b-button to="/login" class="button" > Logout </b-button>
+        <b-button to="/" class="button" > Logout </b-button>
       </b-row>
 
     </div>

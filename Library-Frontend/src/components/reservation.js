@@ -30,10 +30,11 @@ export default {
   },
   methods: {
     createReservation: function () {
-      let body = {itemInstanceId: this.itemInstanceId, customerId: 60, dateReserved:new Date().toISOString().slice(0, 10), pickupDay: this.selectedDate }
+      let body = {itemInstanceId: this.itemInstanceId, customerId: this.$cookie.get('customerId'), dateReserved:new Date().toISOString().slice(0, 10), pickupDay: this.selectedDate }
       AXIOS.post('/reservation/',body,{}).then(response => {
         this.reservations.push(response.data)
         this.errorReservation = ''
+        this.close()
       })
         .catch(e => {
           let errorMsg = e.response.data.message
