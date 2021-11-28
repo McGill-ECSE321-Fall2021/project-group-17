@@ -13,15 +13,14 @@ public abstract class Item {
     public Item(){
 
     }
-    public Item(Integer id, String name, Date datePublished){
-        this.id=id;
+    public Item(String name, Date datePublished){
         this.name=name;
         this.datePublished=datePublished;
     }
 
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public Integer getId() {
         return this.id;
     }
 

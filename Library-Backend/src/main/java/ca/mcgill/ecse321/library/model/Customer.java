@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 import javax.persistence.*;
 
@@ -33,6 +35,7 @@ public class Customer extends PersonRole{
     @JoinColumn()
     public Address getAddress(){ return this.address;}
     @OneToOne
+    @JsonManagedReference
     @JoinColumn()
     public LibraryCard getLibraryCard(){ return this.libCard;}
 
