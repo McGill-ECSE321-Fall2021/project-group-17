@@ -64,7 +64,7 @@ export default new Router({
     {
       path: "/homepage",
       name: "HomePage",
-      component: require("@/components/HomePage.vue").default
+      component: require("@/components/homepage.vue").default
     },
     {
       path: "Profile",
