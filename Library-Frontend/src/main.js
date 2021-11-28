@@ -12,8 +12,16 @@ import 'vue-material/dist/theme/default.css'
 
 Vue.use(VueMaterial)
 
+
+import VueMaterial from 'vue-material'
+import VueCookie from 'vue-cookie'
+import 'vue-material/dist/vue-material.min.css'
+//import 'vue-material/dist/theme/default.css'
+
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+Vue.use(VueMaterial)
+Vue.use(VueCookie)
 
 /* eslint-disable no-new */
 new Vue({
