@@ -62,6 +62,11 @@ public class PersonService {
     }
 
     @Transactional
+    public List<Person> getAllPersons() {
+        return (List<Person>) personRepository.findAll();
+    }
+
+    @Transactional
     public Person updatePerson(Integer id,String name, List<Integer> roles){
         Person p = personRepository.findPersonById(id);
         if(p == null){

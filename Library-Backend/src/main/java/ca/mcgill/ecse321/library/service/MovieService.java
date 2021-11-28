@@ -60,7 +60,6 @@ public class MovieService {
         }
         
     	Movie movie = new Movie();
-        movie.setId(id);
         movie.setName(name);
         movie.setDatePublished(date);
         movie.setFilmDistributor(distributor);

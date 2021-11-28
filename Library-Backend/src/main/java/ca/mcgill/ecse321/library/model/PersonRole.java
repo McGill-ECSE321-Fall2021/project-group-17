@@ -27,7 +27,7 @@ public abstract class PersonRole {
     public int getId(){return this.id;}
     public void setId(int id){this.id = id;}
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne()
     @JoinColumn()
     public OnlineAccount getAccount(){return this.account;}
     public void setAccount(OnlineAccount account){this.account = account;}
