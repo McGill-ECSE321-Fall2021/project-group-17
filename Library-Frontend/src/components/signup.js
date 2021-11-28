@@ -26,29 +26,7 @@ export default {
   name: 'signup',
   data () {
     return {
-        users: [
-          {
-            id: 1,
-            name: "Shawna Dubbin",
-            email: "sdubbin0@geocities.com",
-            gender: "Male",
-            title: "Assistant Media Planner"
-          },
-          {
-            id: 2,
-            name: "Odette Demageard",
-            email: "odemageard1@spotify.com",
-            gender: "Female",
-            title: "Account Coordinator"
-          },
-          {
-            id: 3,
-            name: "Vera Taleworth",
-            email: "vtaleworth2@google.ca",
-            gender: "Male",
-            title: "Community Outreach Specialist"
-          }
-        ],
+
       persons: [],
       errorSignup: false,
       userName: null,
@@ -64,7 +42,7 @@ export default {
       error: false,
       searchDialog: false,
       tableSearch: null,
-      searched: []
+      searched: [],
     }
   },
   created: function () {
@@ -90,8 +68,9 @@ export default {
       this.selected = id
       console.log(this.selected)
     },
+
     createPerson: function(){
-      let body = {userName: this.userName}
+      let body = {userName: this.userName, personRole: "customer"}
       AXIOS.post('/person/',body,{}).then(response => {
         this.persons.push(response.data)
         this.errorSignup = ''
@@ -103,6 +82,7 @@ export default {
           this.error = true
         })
     },
+
     createOnlineAccountCustomer: function () {
       let body = {userName: this.userName, passwordSignup:this.passwordSignup, customerId: 60, email: this.email }
       AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup,body,{}).then(response => {
