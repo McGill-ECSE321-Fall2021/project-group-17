@@ -134,10 +134,21 @@ export default {
         })
     },
 
-    personRoleFunction: function () {
-      console.log(this.selected.personRoleList)
-      this.createOnlineAccountCustomer(this.selected.personRoleList)
-    }
+    createCustomerPerson: function (){
+      let body = {personId: this.selected.id, penalty: 0, addressId: this.addressId}
+      console.log(body)
+      AXIOS.post('/customer/1' ,body,{}).then(response => {
+        console.log(response.data.id)
+        this.createOnlineAccountCustomer(response.data.id)
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
 
   }
 }
