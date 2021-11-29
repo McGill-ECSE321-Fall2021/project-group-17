@@ -31,7 +31,7 @@ export default {
   },
   data () {
     return {
-      errorItemInstance: '',
+      errorText: '',
       reservations: [],
       loans: [],
       searchedReservations: [],
@@ -52,7 +52,7 @@ export default {
       console.get(this.searchedReservations)
     })
       .catch(e =>{
-        this.errorItemInstance = e.response
+        this.errorText = e.response
         //console.log(e.response.data.message)
       })
     /*AXIOS.get('/loans/'+ this.$cookie.get("customerId") ).then(response => {
@@ -71,9 +71,8 @@ export default {
     searchOnTableReservation () {
       this.searchedReservations = searchByName(this.reservations, this.search)
     },
-    onSelect (item) {
-      this.selected = item
-      this.buttonEnabled = false
+    onSelectReservation (item) {
+      this.selectedReservation = item
       console.log(this.selected)
     },
     openLoanDialog () {
@@ -81,6 +80,16 @@ export default {
     },
     openReservationDialog () {
       this.reservationDialog = true
+    },
+    deleteReservation (){
+      axios.delete('/reservation/'+this.selectedReservation.id,{params: {customerId:this.$cookie.get("customerId")}}).then(response => {
+        this.errorText = "Reservation Deleted"
+        this.error = true
+      })
+        .catch(e => {
+          this.errorText = e.response
+          this.error = true
+        })
     }
   }
 }
