@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.library.controller;
 
-import ca.mcgill.ecse321.library.dto.ItemInstanceDTO;
 import ca.mcgill.ecse321.library.dto.PersonDTO;
 import ca.mcgill.ecse321.library.model.Person;
 import ca.mcgill.ecse321.library.service.PersonService;
@@ -65,7 +64,7 @@ public class PersonRestController {
         PersonDTO personDto = new PersonDTO(p.getId());
         personDto.setId(p.getId());
         personDto.setName(p.getName());
-        //personDto.setPersonRoleList(p.getPersonRoleList());
+        personDto.setPersonRoleList(p.getPersonRoleList());
         return personDto;
     }
 

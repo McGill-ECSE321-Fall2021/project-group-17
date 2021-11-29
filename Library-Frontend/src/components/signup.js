@@ -44,7 +44,8 @@ export default {
       searched: [],
       addressId: null,
       id: null,
-      personRoleId: null
+      personRoleId: null,
+      personRoleList: null,
     }
   },
   created: function () {
@@ -67,7 +68,7 @@ export default {
     onSelected(id){
       this.selected = id
       this.searchDialog = false
-      //console.log(this.selected)
+      console.log(this.selected)
     },
 
     createPerson: function(){
@@ -90,6 +91,7 @@ export default {
       console.log(customerId)
       AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+customerId, {} ,{}).then(response => {
         this.$cookie.set("customerId", response.data.personRole.id)
+        this.$cookie.set("username", response.data.name)
         this.$router.push({name: 'HomePage'});
         this.errorSignup = ''
       })
@@ -132,10 +134,36 @@ export default {
         })
     },
 
-    personRoleFunction: function () {
-      console.log(this.selected.id)
-      this.createOnlineAccountCustomer(this.selected.id)
-    }
+    createCustomerPerson: function (){
+      let body = {personId: this.selected.id, penalty: 0, addressId: this.addressId}
+      console.log(body)
+      AXIOS.post('/customer/1' ,body,{}).then(response => {
+        console.log(response.data.id)
+        this.createOnlineAccountCustomer(response.data.id)
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
+
+    createAddressPerson: function (){
+      AXIOS.post('/address/1/' + this.streetNum + '/' + this.streetName + '/' + this.city + '/' + this.country,{},{}).then(response => {
+        console.log(response.data.id)
+        this.addressId = response.data.id
+        this.createCustomerPerson()
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
 
   }
 }

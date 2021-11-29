@@ -33,6 +33,7 @@ export default {
       AXIOS.put('/login/'+this.userLogin+'/'+this.passwordLogin,{}).then(response => {
         this.errorLogin = ''
 
+        this.$cookie.set("username", response.data.name)
         this.$cookie.set("customerId", response.data.personRole.id)
         this.$router.push({name: 'HomePage'});
 
