@@ -81,7 +81,7 @@ export default {
   methods: {
     deleteShift: function(shiftid) {
       AXIOS.delete("/shift/".concat(shiftid), {
-        params: { accountusername: this.$cookie.get("customerId") }
+        params: { accountusername: "bob344" }
       })
         .then(response => {
           console.log(response.data);
@@ -113,7 +113,7 @@ export default {
         return;
       }
       AXIOS.put("/shift/librarian/".concat(shiftid), json, {
-        params: { accountUsername: this.$cookie.get("customerId") }
+        params: { accountUsername: "bob344" }
       })
         .then(response => {
           console.log(response);

@@ -59,11 +59,18 @@ public class LibrarianService {
         return librarian;
     }
     @Transactional
-    public List<PersonRole> getAllLibrarians() {
+    public List<Librarian> getAllLibrarians() {
 		Iterable<PersonRole> iter = (Iterable<PersonRole>) librarianRepository.findAll();
         List<PersonRole> librarians = new ArrayList<PersonRole>();
+        List<Librarian> out = new ArrayList<Librarian>();
         iter.forEach(librarians::add);
-        return librarians;
+        for(int i = 0; i < librarians.size(); i++) {
+        	if (librarians.get(i) instanceof Librarian 
+        	|| librarians.get(i) instanceof HeadLibrarian) {
+        		out.add((Librarian) librarians.get(i));
+        	}
+        }
+        return out;
     }
     @Transactional
     public void deleteLibrarian(Integer id, String accountUsername){
