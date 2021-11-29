@@ -12,15 +12,15 @@
     </a>
 
       </b-nav-item>
-          <b-nav-item href="#/active" class="unstyled">
+          <b-nav-item href="#" class="unstyled">
          <a class="text-my-own-color ">
      View Active Loans
     </a>
       </b-nav-item >
-
+  
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-
+    
 
       <!-- Right aligned nav items -->
    <b-navbar-nav class="ml-auto">
@@ -40,7 +40,7 @@
           <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
          </b-navbar-nav>
-
+     
   </b-navbar>
   <nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
 <button class="left" @click="homepage()">
@@ -68,9 +68,9 @@ export default {
     login(){
         this.$router.push({name:'login'});
       },
-    homepage(){
+         homepage(){
         this.$router.push({name: 'HomePage'});
-    }
+         }
   }
 }
 
@@ -95,6 +95,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: #ebe3dd;
+
 }
 #LMS {
   display:flex;
