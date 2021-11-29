@@ -1,11 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
 import reservation from '@/components/reservation.vue'
 import itemInstance from '@/components/iteminstance.vue'
 import login from '@/components/login.vue'
 import signup from '@/components/signup.vue'
 import Vue from "vue";
 import Router from "vue-router";
+import active from '@/components/active-items.vue'
 //import returns from '@/components/returns'
 
 Vue.use(Router);
@@ -71,6 +70,11 @@ export default new Router({
       path: "Profile",
       name: "Profile",
       component: require("@/components/Profile.vue").default
+    },
+    {
+      path: "/active",
+      name: "active",
+      component: active
     }
 
   ]
