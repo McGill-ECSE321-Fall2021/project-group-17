@@ -6,18 +6,14 @@ import App from './App'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-<<<<<<< HEAD
-=======
+
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+
 import VueMaterial from 'vue-material'
 import VueCookie from 'vue-cookie'
->>>>>>> d22e37a870920b97512ac45468e5b1c441099cd4
-import 'vue-material/dist/vue-material.min.css'
-//import 'vue-material/dist/theme/default.css'
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d22e37a870920b97512ac45468e5b1c441099cd4
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
