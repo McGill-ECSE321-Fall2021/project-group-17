@@ -62,33 +62,33 @@
           <th id="entry">Head Librarian?</th>
         </tr>
         <tr>
-          <td name="enter_id" id="data">
-            <input type="text"/>
+          <td id="data">
+            <input v-model="librarian_Id" type="text"/>
           </td>
-          <td name="enter_day" id="data">
-            <input type="text"/>
+          <td id="data">
+            <input v-model="dayOf_Week" type="text"/>
           </td>
-          <td name="enter_start_time" id="data">
-            <input type="time"/>
+          <td id="data">
+            <input v-model="start_time" type="time"/>
           </td>
-          <td name="enter_end_time" id="data">
-            <input type="time"/>
+          <td id="data">
+            <input v-model="end_time" type="time"/>
           </td>
-          <td name="enter_yes_no" id="data">
-            <select>
+          <td id="data1">
+            <select v-model="bool">
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
           </td>
-          <td id="data">
+          <td>
             <button
-              v-on:click="
+              @click="
                 createShift(
-                  document.getElementByName('enter_id').value,
-                  document.getElementByName('enter_day').value,
-                  document.getElementByName('enter_start_time').value,
-                  document.getElementByName('enter_end_time').value,
-                  document.getElementByName('enter_yes_no').value
+                  librarian_Id,
+                  start_time,
+                  end_time,
+                  dayOf_Week,
+                  bool
                 )
               "
             >
@@ -528,6 +528,11 @@
 }
 #data {
   padding: 8px;
+}
+#data1 {
+  padding-left: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 #text-my-own-color {
   font-size: 18px;
