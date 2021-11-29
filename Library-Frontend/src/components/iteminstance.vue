@@ -4,7 +4,7 @@ import 'vue-material/dist/theme/default-dark.css'
 
 
 <template>
-  <div id="wrapper" class="overlay">
+  <div id="wrapper">
     <div id="reservation">
       <div id="table" class="layer2">
         <md-table v-model="searched" md-card md-fixed-header md-sort-order="asc" @md-selected="onSelect">

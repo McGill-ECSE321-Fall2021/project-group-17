@@ -45,24 +45,7 @@ export default {
     }
   },
   created: function () {
-    AXIOS.get('/reservation/',{ params : {customerId: this.$cookie.get("customerId")}}).then(response => {
-      this.reservations = response.data
-      this.searchedReservations = response.data
-
-      console.get(this.searchedReservations)
-    })
-      .catch(e =>{
-        this.errorText = e.response
-        //console.log(e.response.data.message)
-      })
-    /*AXIOS.get('/loans/'+ this.$cookie.get("customerId") ).then(response => {
-      this.loans = response.data
-      this.searchedLoans = response.data
-    })
-      .catch(e =>{
-        this.errorItemInstance = e.response
-        //console.log(e.response.data.message)
-      })*/
+    this.populateTable()
   },
   methods: {
     searchOnTableLoan () {
@@ -73,7 +56,9 @@ export default {
     },
     onSelectReservation (item) {
       this.selectedReservation = item
-      console.log(this.selected)
+    },
+    onSelectLoan (item) {
+      this.selectedLoan = item
     },
     openLoanDialog () {
       this.loanDialog = true
@@ -82,14 +67,48 @@ export default {
       this.reservationDialog = true
     },
     deleteReservation (){
-      axios.delete('/reservation/'+this.selectedReservation.id,{params: {customerId:this.$cookie.get("customerId")}}).then(response => {
+      AXIOS.delete('/reservation/'+this.selectedReservation.id,{params: {customerId:this.$cookie.get("customerId")}}).then(response => {
         this.errorText = "Reservation Deleted"
         this.error = true
+        this.populateTable()
       })
         .catch(e => {
           this.errorText = e.response
           this.error = true
         })
+    },
+    deleteLoan (){
+      AXIOS.delete('/loan/'+this.selectedLoan.id,{params: {customerId:this.$cookie.get("customerId")}}).then(response => {
+        this.errorText = "Loan Deleted"
+        this.error = true
+        this.populateTable()
+      })
+        .catch(e => {
+          this.errorText = e.response
+          this.error = true
+        })
+    },
+    populateTable() {
+      AXIOS.get('/reservation/',{ params : {customerId: this.$cookie.get("customerId")}}).then(response => {
+        this.reservations = response.data
+        this.searchedReservations = response.data
+
+        console.get(this.searchedReservations)
+      })
+        .catch(e =>{
+          this.errorText = e.response
+          //console.log(e.response.data.message)
+        })
+      AXIOS.get('/loans/'+ this.$cookie.get("customerId") ).then(response => {
+      this.loans = response.data
+      this.searchedLoans = response.data
+    })
+      .catch(e =>{
+        this.errorItemInstance = e.response
+        //console.log(e.response.data.message)
+      })
+
     }
+
   }
 }

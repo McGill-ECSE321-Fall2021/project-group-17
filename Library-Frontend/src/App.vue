@@ -112,7 +112,7 @@ accent: #C09F80 // The accent or secondary color
 #LMS {
   display:flex;
   justify-content:space-between;
-  outline: 2px #76323F;
+  outline: 2px #C09F80;
   color: #565656;
 }
 .overlay {

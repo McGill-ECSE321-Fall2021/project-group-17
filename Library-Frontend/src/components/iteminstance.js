@@ -78,7 +78,7 @@ export default {
     },
     onSelect (item) {
       this.selected = item
-      this.buttonEnabled = true
+      this.buttonEnabled = false
       console.log(this.selected)
     },
     openLoanDialog () {
