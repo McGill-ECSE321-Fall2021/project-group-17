@@ -19,6 +19,7 @@ import Vue from 'vue'
                   </div>
                   <input v-model="userSignup" class="signup-input" placeholder="Enter Username" required>
                   <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <input v-model="email" type="email" class="signup-input" placeholder="Enter Email" required>
 
                   <div class="address-label">
                     <label>Address</label>
@@ -29,7 +30,7 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button @click="createOnlineAccountCustomer() ; createPerson() ; logIn()" size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="createPerson()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>
@@ -40,18 +41,16 @@ import Vue from 'vue'
                   <label>Already a Member?</label>
                 </div>
                 <div class="signup-info">
-                  <label>
-                    <input v-model="search" class="search" placeholder="Search for name here..."/>
-                  </label>
+
                   <b-button class="btn" @click="onSearchClick()">Search</b-button>
 
                   <md-dialog :md-active.sync="searchDialog" >
                     <md-dialog-title>Members of LMS</md-dialog-title>
                     <div>
-                      <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                      <md-table v-model="searched" md-sort="id" md-sort-order="asc" md-card md-fixed-header @md-selected="onSelected">
                         <md-table-toolbar>
                          <md-field md-clearable class="md-toolbar-section-end">
-                           <md-input placeholder="Search by name..." v-model="tableSearch" @input="searchOnTable" />
+                           <md-input placeholder="Search by id..." v-model="tableSearch" @input="searchOnTable" />
                          </md-field>
                        </md-table-toolbar>
 
@@ -60,7 +59,7 @@ import Vue from 'vue'
                          :md-description="`No members found for this search query. Try a different search term.`">
                        </md-table-empty-state>
 
-                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                        <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single">
                           <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
                           <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
                         </md-table-row>
@@ -74,6 +73,8 @@ import Vue from 'vue'
                   </div>
                   <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
                   <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <input v-model="email" class="signup-input" placeholder="Enter Email" required>
+
                   <div class="address-label">
                     <label>Address</label>
                   </div>
@@ -83,7 +84,7 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button @click="createOnlineAccount() ; logIn()" size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="personRoleFunction()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>
@@ -144,12 +145,13 @@ p {
 .btn {
   width: 100px;
   height: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   margin-top: 20px;
   color: #D7CEC7;
   background: #76323f;
   text-align: center;
   align-items: center;
+  padding: 0px;
 }
 
 .signup-page {

@@ -34,7 +34,7 @@ export default {
         this.errorLogin = ''
 
         this.$cookie.set("customerId", response.data.personRole.id)
-        this.$router.push({name: 'Item Instance'});
+        this.$router.push({name: 'HomePage'});
 
       })
         .catch(e => {

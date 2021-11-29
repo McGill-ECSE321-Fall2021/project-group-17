@@ -79,7 +79,7 @@ public class LoanRestController {
     /**
      * returns all loans for a customer
      */
-    @GetMapping("/loan/customer/{id}")
+    @GetMapping("/loans/{id}")
     public List<LoanDTO> viewActiveLoans(@PathVariable("id") Integer id){
         return service.viewActiveLoans(id);
     }
