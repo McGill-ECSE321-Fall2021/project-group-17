@@ -65,16 +65,8 @@ import 'vue-material/dist/theme/default-dark.css'
   height: 100%;
   padding: 3% 7.5% 10%;
 }
-.layer1{
-  grid-column: 1;
-  grid-row: 1
-}
 .layer2{
   grid-column: 1;
   grid-row: 2;
-}
-.div-element{
-  display: flex;
-  justify-content: center;
 }
 </style>
