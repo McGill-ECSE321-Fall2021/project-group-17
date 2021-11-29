@@ -14,7 +14,7 @@ function PersonDTO (name){}
 const toLower = text => {
   return text.toString().toLowerCase()
 }
-const searchByName = (items, term) => {
+const searchById = (items, term) => {
   if (term) {
     return items.filter(item => toLower(item.id).includes(toLower(term)))
   }
@@ -55,7 +55,6 @@ export default {
     })
       .catch(e =>{
         this.errorItemInstance = e.response
-        //console.log(e.response.data.message)
       })
   },
   methods: {
@@ -63,12 +62,12 @@ export default {
       this.searchDialog = true
     },
     searchOnTable(){
-      this.searched = searchByName(this.users, this.tableSearch)
+      this.searched = searchById(this.users, this.tableSearch)
     },
     onSelected(id){
-      this.searchDialog = false
       this.selected = id
-      console.log(this.selected)
+      this.searchDialog = false
+      //console.log(this.selected)
     },
 
     createPerson: function(){
@@ -131,25 +130,12 @@ export default {
           this.errorSignup = errorMsg
           this.error = true
         })
+    },
+
+    personRoleFunction: function () {
+      console.log(this.selected.id)
+      this.createOnlineAccountCustomer(this.selected.id)
     }
 
-    /*
-    logIn: function () {
-      console.log(this.userLogin)
-      AXIOS.put('/login/'+this.userLogin+'/'+this.passwordLogin,{}).then(response => {
-        this.errorLogin = ''
-
-        this.$cookie.set("customerId", response.data.personRole.id)
-        this.$router.push({name: 'Item Instance'});
-
-      })
-        .catch(e => {
-          let errorMsg = e.response.data.message
-          console.log(errorMsg)
-          this.errorLogin = errorMsg
-          this.error = true
-        })
-    }
-  */
   }
 }

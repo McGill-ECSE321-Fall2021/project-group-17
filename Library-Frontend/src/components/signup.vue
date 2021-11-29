@@ -41,9 +41,7 @@ import Vue from 'vue'
                   <label>Already a Member?</label>
                 </div>
                 <div class="signup-info">
-                  <label>
-                    <input v-model="search" class="search" placeholder="Search for id here..."/>
-                  </label>
+
                   <b-button class="btn" @click="onSearchClick()">Search</b-button>
 
                   <md-dialog :md-active.sync="searchDialog" >
@@ -61,7 +59,7 @@ import Vue from 'vue'
                          :md-description="`No members found for this search query. Try a different search term.`">
                        </md-table-empty-state>
 
-                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                        <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single">
                           <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
                           <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
                         </md-table-row>
@@ -86,7 +84,7 @@ import Vue from 'vue'
                   <input v-model="city" class="signup-input" placeholder="City" required >
                   <input v-model="country" class="signup-input" placeholder="Country" required >
                 </form>
-                <b-button @click="createOnlineAccountCustomer() ; logIn()" size="sm" class="btn">Sign Up</b-button>
+                <b-button @click="personRoleFunction()" size="sm" class="btn">Sign Up</b-button>
                 <p>
                   <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
                 </p>
@@ -147,12 +145,13 @@ p {
 .btn {
   width: 100px;
   height: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   margin-top: 20px;
   color: #D7CEC7;
   background: #76323f;
   text-align: center;
   align-items: center;
+  padding: 0px;
 }
 
 .signup-page {
