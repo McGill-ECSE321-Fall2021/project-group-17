@@ -23,24 +23,15 @@ export default {
   data() {
     return {
       librarian: null,
-      librarianId: 0,
+      librarianId: this.$cookies.get("customerId"),
       shifts: [],
       errorPerson: "",
       response: []
     };
   },
   created: function() {
-    // Get librarians from backend
-    AXIOS.get("/librarian/".concat(3))
-      .then(response => {
-        // response.data.forEach((shift, j) => this.shifts.push(shift));
-        this.librarian = response.data;
-      })
-      .catch(e => {
-        this.errorPerson = e;
-      });
     // Getting librarian shifts
-    AXIOS.get("/shift/librarian/".concat(3))
+    AXIOS.get("/shift/librarian/".concat(this.librarianId))
       .then(response => {
         // JSON responses are automatically parsed.
         for (let i = 0; i < response.data.length; i++) {

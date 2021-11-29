@@ -14,15 +14,15 @@ import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
 import VueCookie from 'vue-cookie'
 
-Vue.use(BootstrapVue)
-Vue.config.productionTip = false
-Vue.use(VueMaterial)
-Vue.use(VueCookie)
+Vue.use(BootstrapVue);
+Vue.config.productionTip = false;
+Vue.use(VueMaterial);
+Vue.use(VueCookie);
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: "#app",
   router,
-  template: '<App/>',
+  template: "<App/>",
   components: { App }
-})
+});
