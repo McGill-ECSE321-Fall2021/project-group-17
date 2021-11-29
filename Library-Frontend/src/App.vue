@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+<<<<<<< HEAD
  <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
@@ -47,6 +48,18 @@
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
     </button>
 </nav>
+=======
+<!--    <div id="LMS">
+      <h1>Library Management System</h1>
+      <b-row>
+        <md-button to="/homepage" class="md-icon-button">
+          <md-icon>home</md-icon>
+        </md-button>
+      <md-button @click="logout()" class="create-button">Logout</md-button>
+      </b-row>
+
+    </div>-->
+>>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
     <router-view></router-view>
   </div>
 </template>
@@ -94,7 +107,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+<<<<<<< HEAD
   background-color: #ebe3dd;
+=======
+  background-color: white;
+  color: #2c3e50;
+
+>>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
 
 }
 #LMS {
@@ -113,7 +132,10 @@ export default {
 .create-button {
   background-color: #76323F;
   color: white !important;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
 }
 .button {
   margin-right: 20px;
