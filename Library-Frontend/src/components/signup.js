@@ -44,7 +44,8 @@ export default {
       searched: [],
       addressId: null,
       id: null,
-      personRoleId: null
+      personRoleId: null,
+      personRoleList: null,
     }
   },
   created: function () {
@@ -67,7 +68,7 @@ export default {
     onSelected(id){
       this.selected = id
       this.searchDialog = false
-      //console.log(this.selected)
+      console.log(this.selected)
     },
 
     createPerson: function(){
@@ -90,6 +91,7 @@ export default {
       console.log(customerId)
       AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+customerId, {} ,{}).then(response => {
         this.$cookie.set("customerId", response.data.personRole.id)
+        this.$cookie.set("username", response.data.name)
         this.$router.push({name: 'HomePage'});
         this.errorSignup = ''
       })
@@ -133,8 +135,8 @@ export default {
     },
 
     personRoleFunction: function () {
-      console.log(this.selected.id)
-      this.createOnlineAccountCustomer(this.selected.id)
+      console.log(this.selected.personRoleList)
+      this.createOnlineAccountCustomer(this.selected.personRoleList)
     }
 
   }
