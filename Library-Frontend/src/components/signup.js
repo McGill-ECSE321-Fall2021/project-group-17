@@ -150,5 +150,20 @@ export default {
         })
     },
 
+    createAddressPerson: function (){
+      AXIOS.post('/address/1/' + this.streetNum + '/' + this.streetName + '/' + this.city + '/' + this.country,{},{}).then(response => {
+        console.log(response.data.id)
+        this.addressId = response.data.id
+        this.createCustomerPerson()
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
+
   }
 }
