@@ -1,7 +1,7 @@
 import Vue from 'vue'
 <template class="main">
 <div>
- <b-navbar toggleable="md" type="light" variant="light">
+ <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
       <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
@@ -9,7 +9,7 @@ import Vue from 'vue'
     </b-navbar>
     <b-nav-item href="#">
      <a class="text-my-own-color ">
-      Find movies, books, and movies
+      Find movies, books, and music
     </a>
 
       </b-nav-item>
@@ -44,7 +44,7 @@ import Vue from 'vue'
      
   </b-navbar>
   <div class="middle">
-  <b-card no-body class="overflow-hidden" style="max-width: 840px;" >
+  <b-card no-body style="max-width: 840px;"  height="400">
     <b-row no-gutters>
       <b-col md="6">
         <b-card-img src="https://i.ibb.co/tzPwhww/Untitled-design-2.png" alt="Image" class="rounded-0"></b-card-img>
@@ -52,46 +52,60 @@ import Vue from 'vue'
       <b-col md="6">
         <b-card-body title="Profile Information">
          <b-list-group flush>
-        <b-list-group-item><b-input-group prepend="Username">
-        <b-form-input placeholder="Username"></b-form-input>
+        <b-list-group-item><b-input-group prepend="Email">
+        <b-form-input v-model="email" placeholder="New email"></b-form-input>
       </b-input-group></b-list-group-item>
         <b-list-group-item><b-input-group prepend="Password">
-        <b-form-input placeholder="Password"></b-form-input>
+        <b-form-input v-model="password" placeholder="New Password"></b-form-input>
       </b-input-group></b-list-group-item>
-        <b-list-group-item><b-input-group prepend="Address">
-        <b-form-input placeholder="Address"></b-form-input>
-      </b-input-group></b-list-group-item>
+        <b-list-group-item></b-list-group-item>
+        <b-list-group-item></b-list-group-item>
         <b-list-group-item></b-list-group-item>
         <b-list-group-item></b-list-group-item>
          </b-list-group>
-       <b-button pill variant="outline-secondary">Confirm Update</b-button>
+       <b-button @click= "updateAccount()" pill variant="outline-secondary">Confirm Update</b-button>
         </b-card-body>
       </b-col>
     </b-row>
   </b-card>
 </div>
-<nav class="navbar fixed-bottom navbar-light" style="background-color: #76323F;">
-<button class="left" >
+ <div class="middle_bottom">
+  <b-card no-body style="max-width: 840px;" height="400" >
+    <b-row no-gutters>
+      <b-col md="6">
+        <b-card-img src="https://i.ibb.co/LRF4wz9/Untitled-design-4.png" alt="Image" class="rounded-0"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        <b-card-body title="Address Information">
+         <b-list-group flush>
+        <b-list-group-item><b-input-group prepend="Street Number">
+        <b-form-input v-model="streetNum" placeholder="New street number"></b-form-input>
+      </b-input-group></b-list-group-item>
+        <b-list-group-item><b-input-group prepend="Street Name">
+        <b-form-input v-model="streetName" placeholder="New street name"></b-form-input>
+      </b-input-group></b-list-group-item>
+        <b-list-group-item><b-input-group prepend="City">
+        <b-form-input v-model="city" placeholder="New City"></b-form-input>
+      </b-input-group></b-list-group-item>
+        <b-list-group-item><b-input-group prepend="Country">
+        <b-form-input v-model="Country" placeholder="New Country"></b-form-input>
+      </b-input-group></b-list-group-item>
+        <b-list-group-item></b-list-group-item>
+         </b-list-group>
+       <b-button @click= "updateAccount()" pill variant="outline-secondary">Confirm Update</b-button>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
+</div>
+<nav class="navbar navbar-light" style="background-color: #76323F;">
+<button class="left" @click="homepage()" >
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
     </button>
 </nav>
   </div>
 </template>
-<script>
-export default {
-    data() {
-      return {
-        slide: 0,
-        sliding: null
-      }
-    },
-    methods: {
-      profile(){
-        this.$router.push({name:'Profile'});
-      }
-    }
-  }
-
+<script src="./UpdateAccount.js">
 </script>
 <style>
 #eventregistration {
@@ -105,9 +119,17 @@ export default {
     color: black;
 }
 .middle {
-  position: fixed; 
+  margin-top:5%;
+  position: relative; 
   top: 25%;
   left: 20%;
+  margin-bottom:5%;
+}
+.middle_bottom {
+  position: relative; 
+  top: 95%;
+  left: 20%;
+  margin-bottom:10%;
 }
 .main {
   background-color: #D7CEC7;

@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.service;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,6 @@ import ca.mcgill.ecse321.library.dao.HeadLibrarianRepository;
 import ca.mcgill.ecse321.library.dao.LibrarianRepository;
 import ca.mcgill.ecse321.library.dao.OnlineAccountRepository;
 import ca.mcgill.ecse321.library.dao.PersonRoleRepository;
-import ca.mcgill.ecse321.library.model.Customer;
-import ca.mcgill.ecse321.library.model.HeadLibrarian;
-import ca.mcgill.ecse321.library.model.Librarian;
-import ca.mcgill.ecse321.library.model.OnlineAccount;
-import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.service.Exception.OnlineAccountException;
 
 @Service
@@ -110,6 +106,37 @@ public class OnlineAccountService {
         return account;
     }
 
+    public OnlineAccount updateOnlineAccountCustomer( String username, String password,  String email,Integer streetNumber, String street, String city, String country) {
+        OnlineAccount o1 =onlineAccountRepository.findOnlineAccountByUsername(username);
+        Customer c1= (Customer) o1.getPersonRole();
+
+        if (password != null) {
+            o1.setPassword(password);
+        }
+
+        if (email != null) {
+            o1.setEmail(email);
+        }
+        if(c1!=null){
+                Address a= c1.getAddress();
+                if(a!=null){
+                    if(streetNumber!=null) {
+                        a.setStreetNumber(streetNumber);
+                    }
+                    if(street!=null) {
+                        a.setStreet(street);
+                    }
+                    if(city!=null) {
+                        a.setCity(city);
+                    }
+                    if(country!=null) {
+                        a.setCountry(country);
+                    }
+            }
+        }
+        onlineAccountRepository.save(o1);
+        return o1;
+    }
     /**
      * Creates an account for a head librarian
      * @param username

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 <template class="main">
 <div>
- <b-navbar toggleable="md" type="light" variant="light">
+ <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
       <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
@@ -9,7 +9,7 @@ import Vue from 'vue'
     </b-navbar>
     <b-nav-item href="#">
      <a class="text-my-own-color ">
-      Find movies, books, and movies
+      Find movies, books, and music
     </a>
 
       </b-nav-item>
@@ -52,13 +52,14 @@ import Vue from 'vue'
       <b-col md="6">
         <b-card-body title="Profile Information">
          <b-list-group flush>
-        <b-list-group-item>Username:</b-list-group-item>
-        <b-list-group-item>Password:</b-list-group-item>
-        <b-list-group-item>Address:</b-list-group-item>
-        <b-list-group-item>LibraryCard:</b-list-group-item>
+        <b-list-group-item v-model="user">Username: {{user}}</b-list-group-item>
+        <b-list-group-item v-model="password">Password: {{password}}</b-list-group-item>
+        <b-list-group-item v-model="Address">Address: {{Address}}</b-list-group-item>
+        <b-list-group-item v-model="Email">Email: {{email}} </b-list-group-item>
+        <b-list-group-item v-model="libCard">LibraryCard: {{libCard}}</b-list-group-item>
         <b-list-group-item></b-list-group-item>
          </b-list-group>
-       <b-button @click="updateAccount()" pill variant="outline-secondary">Update Account</b-button>
+       <b-button @click="updateAccountPage()" pill variant="outline-secondary">Update Account</b-button>
         </b-card-body>
       </b-col>
     </b-row>
@@ -71,17 +72,7 @@ import Vue from 'vue'
 </nav>
   </div>
 </template>
-<script>
-export default {
-    methods: {
-  updateAccount(){
-   this.$router.push({name: 'UpdateAccount'});
-    },
-  homepage(){
-   this.$router.push({name: 'HomePage'});
-    }
-    }
-  }
+<script src="./Profile.js">
 
 </script>
 <style>

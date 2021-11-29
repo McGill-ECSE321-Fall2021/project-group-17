@@ -49,6 +49,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: white;
+  color: #2c3e50;
+
 
 }
 #LMS {
@@ -67,7 +69,6 @@ export default {
 .create-button {
   background-color: #76323F;
   color: white !important;
-
 }
 .button {
   margin-right: 20px;

@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -46,6 +48,7 @@ public class OnlineAccount {
     }
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn
     @JsonManagedReference
     public PersonRole getPersonRole(){ return this.personRole; }
