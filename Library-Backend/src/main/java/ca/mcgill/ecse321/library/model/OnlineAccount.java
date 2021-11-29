@@ -50,7 +50,6 @@ public class OnlineAccount {
     @OneToOne
     @JsonBackReference
     @JoinColumn
-    @JsonManagedReference
     public PersonRole getPersonRole(){ return this.personRole; }
 
     public void setPersonRole(PersonRole role){ this.personRole = role; }
