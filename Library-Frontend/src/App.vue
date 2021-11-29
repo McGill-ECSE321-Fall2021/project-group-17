@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="LMS">
+<!--    <div id="LMS">
       <h1>Library Management System</h1>
       <b-row>
         <md-button to="/homepage" class="md-icon-button">
@@ -9,7 +9,7 @@
       <md-button @click="logout()" class="create-button">Logout</md-button>
       </b-row>
 
-    </div>
+    </div>-->
     <router-view></router-view>
   </div>
 </template>
@@ -48,7 +48,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #C09F80;
+  background-color: white;
+  color: #2c3e50;
+
 
 }
 #LMS {
@@ -67,7 +69,6 @@ export default {
 .create-button {
   background-color: #76323F;
   color: white !important;
-
 }
 .button {
   margin-right: 20px;
