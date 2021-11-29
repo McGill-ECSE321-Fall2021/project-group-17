@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.model;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -49,6 +50,7 @@ public class OnlineAccount {
     @OneToOne
     @JsonBackReference
     @JoinColumn
+    @JsonManagedReference
     public PersonRole getPersonRole(){ return this.personRole; }
 
     public void setPersonRole(PersonRole role){ this.personRole = role; }

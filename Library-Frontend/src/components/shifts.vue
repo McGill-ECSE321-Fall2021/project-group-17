@@ -1,15 +1,63 @@
 <template>
   <div id="shifts">
-    <hr />
-    <h1>My Schedule</h1>
-    <hr />
+    <b-navbar toggleable="md" type="light" variant="light">
+      <b-navbar variant="faded" type="light" left>
+        <b-navbar-brand>
+          <img
+            src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png"
+            alt="Logo"
+            height="50"
+            width="60"
+          />
+        </b-navbar-brand>
+      </b-navbar>
+      <b-nav-item href="#">
+        <a class="text-my-own-color ">
+          Find movies, books, and movies
+        </a>
+      </b-nav-item>
+      <b-nav-item href="#" class="unstyled">
+        <a class="text-my-own-color ">
+          View Active Loans
+        </a>
+      </b-nav-item>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+        <b-nav-form>
+          <b-input-group prepend="What are you looking for today?">
+            <b-form-input size="md" class="mr-sm-2"></b-form-input>
+          </b-input-group>
+        </b-nav-form>
+
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <img
+              src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png"
+              alt="Logo"
+              height="30"
+              width="30"
+            />
+          </template>
+          <b-dropdown-item @click="profile()" href="#">Profile</b-dropdown-item>
+          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-navbar>
+    <div id="header">
+      <h3>My Schedule</h3>
+    </div>
     <table id="librarian_table">
-      <!-- <td>{{ librarian.person.name }}</td> -->
-      <tr>
+      <p v-if="!shifts && !errorPerson">
+        No schedules to display.
+      </p>
+      <tr v-if="shifts.length != 0">
         <th id="entry">Day</th>
         <th id="entry">Start</th>
         <th id="entry">End</th>
-        <!--<th>Edit</th>-->
       </tr>
       <tr v-for="shift in shifts" :key="shift.id">
         <td id="data">{{ shift.dayOfWeek }}</td>
@@ -18,9 +66,22 @@
       </tr>
     </table>
 
+    <nav
+      class="navbar fixed-bottom navbar-light"
+      style="background-color: #76323F;"
+    >
+      <button class="left">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+          alt="Logo"
+          height="30"
+          width="30"
+        />
+      </button>
+    </nav>
     <p>
-      <span v-if="errorPerson" style="color:red"
-        >Error: {{ errorPerson }}
+      <span v-if="errorPerson" id="error-box" style="color:red">
+        {{ errorPerson }}
       </span>
     </p>
     <hr />
@@ -28,8 +89,16 @@
 </template>
 <script src="./shifts.js"></script>
 <style>
+#error-box {
+  padding-left: 40px;
+}
+#header {
+  background-color: #76323f;
+  height: 150%;
+  text-align: center;
+}
 #shifts {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
@@ -38,6 +107,7 @@
   margin-top: 60px;
 }
 #librarian_table {
+  margin-top: 20px;
   margin-left: 40px;
 }
 #row {
@@ -49,6 +119,11 @@
 }
 #data {
   padding: 8px;
+}
+#text-my-own-color {
+  font-size: 18px;
+  font-family: monospace;
+  color: black;
 }
 h1 {
   font-weight: normal;

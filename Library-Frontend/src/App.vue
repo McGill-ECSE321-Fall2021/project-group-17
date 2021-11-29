@@ -95,7 +95,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: #ebe3dd;
-
 }
 #LMS {
   display:flex;
@@ -113,7 +112,6 @@ export default {
 .create-button {
   background-color: #76323F;
   color: white !important;
-
 }
 .button {
   margin-right: 20px;
