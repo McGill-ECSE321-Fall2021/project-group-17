@@ -97,6 +97,7 @@ public class CustomerRestController {
         cDTO.setLibCard(customer.getLibraryCard());
         cDTO.setPenalty(customer.getPenalty());
         cDTO.setPerson(customer.getPerson());
+        cDTO.setAccount(customer.getAccount());
         return cDTO;
     }
 }
