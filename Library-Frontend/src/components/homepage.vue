@@ -9,6 +9,7 @@ Vue.use(md-datepicker)
 
 <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
@@ -54,6 +55,8 @@ Vue.use(md-datepicker)
   </b-navbar>
 
 >>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
+=======
+>>>>>>> df0c17c9994ed7685f3e715c70140bd48af47a54
     <div>
     <b-carousel
       id="carousel-1"

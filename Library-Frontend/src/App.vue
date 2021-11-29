@@ -1,6 +1,9 @@
 <template>
   <div id="app">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> df0c17c9994ed7685f3e715c70140bd48af47a54
  <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
@@ -48,6 +51,7 @@
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo" height="30" width="30">
     </button>
 </nav>
+<<<<<<< HEAD
 =======
 <!--    <div id="LMS">
       <h1>Library Management System</h1>
@@ -60,6 +64,8 @@
 
     </div>-->
 >>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
+=======
+>>>>>>> df0c17c9994ed7685f3e715c70140bd48af47a54
     <router-view></router-view>
   </div>
 </template>
@@ -108,6 +114,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 <<<<<<< HEAD
+<<<<<<< HEAD
   background-color: #ebe3dd;
 =======
   background-color: white;
@@ -115,6 +122,9 @@ export default {
 
 >>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
 
+=======
+  background-color: #ebe3dd;
+>>>>>>> df0c17c9994ed7685f3e715c70140bd48af47a54
 }
 #LMS {
   display:flex;
@@ -133,9 +143,12 @@ export default {
   background-color: #76323F;
   color: white !important;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> a1ac5a2f3c47a31157723800edbc3f2527359006
+=======
+>>>>>>> df0c17c9994ed7685f3e715c70140bd48af47a54
 }
 .button {
   margin-right: 20px;
