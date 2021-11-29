@@ -20,7 +20,7 @@ Vue.use(md-datepicker)
     </a>
 
       </b-nav-item>
-          <b-nav-item href="#" class="unstyled">
+          <b-nav-item href="#/active" class="unstyled">
          <a class="text-my-own-color ">
      View Active Loans
     </a>
@@ -45,7 +45,7 @@ Vue.use(md-datepicker)
             <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
           </template>
           <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
-          <b-dropdown-item >Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="signout">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
          </b-navbar-nav>
 
@@ -289,6 +289,10 @@ export default {
       },
       profile(){
         this.$router.push({name:'Profile'});
+      },
+      signout (){
+        this.$cookie.delete('customerId');
+        this.$router.push({name: 'login'});
       }
     }
   }

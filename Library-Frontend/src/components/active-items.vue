@@ -93,45 +93,5 @@ p {
 
 }
 
-.signup-input {
-  margin-top: 15px;
-  margin-left: 10px;
-  height: 25px
-}
-
-.search{
-  margin-right: 20px;
-  height: 25px;
-  margin-top: 20px;
-}
-.btn {
-  width: 100px;
-  height: 25px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  color: #D7CEC7;
-  background: #76323f;
-  text-align: center;
-  align-items: center;
-}
-
-.signup-page {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  background: url(https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTB8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80);
-}
-
-h1 {
-  margin-bottom: 20px;
-}
-
-
-.address-label {
-  margin-top: 30px;
-  margin-bottom: -15px;
-}
-
-
 </style>
 
