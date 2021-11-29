@@ -1,10 +1,12 @@
 package ca.mcgill.ecse321.library.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +61,6 @@ public class MusicService {
         }
 
         Music music = new Music();
-        music.setId(id);
         music.setName(name);
         music.setDatePublished(date);
         music.setMusician(musician);
@@ -113,7 +114,7 @@ public class MusicService {
     /**
      * Used to delete item
      * @param musicId
-     * @param customerId
+     * @param librarianId
      */
     @Transactional
     public void deleteMusic(Integer musicId, Integer librarianId){
@@ -172,5 +173,19 @@ public class MusicService {
     	 */
         List<Music> results = musicRepository.findMusicByRecordLabel(label);
         return results;
+    }
+
+    @Transactional
+    public List<Music> getMusic() {
+        List<Item> items = (List<Item>) musicRepository.findAll();
+
+        List<Music> music = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item instanceof Music) {
+                music.add((Music) item);
+            }
+        }
+        return music;
     }
 }

@@ -25,7 +25,7 @@ public class PersonService {
             throw new PersonException("Cannot have person with no name");
         }
         person.setName(name);
-        person.setPersonRoleList(new ArrayList<>());
+        //person.setPersonRoleList(new ArrayList<>());
 
         if(personRoles != null){
             for(Integer s :personRoles){
@@ -36,10 +36,10 @@ public class PersonService {
                 if(role == null){
                     throw new PersonException("Cannot find person role with that id");
                 }
-                List<PersonRole> roles = person.getPersonRoleList();
-                roles.add(role);
+                //List<PersonRole> roles = person.getPersonRoleList();
+                //roles.add(role);
                 role.setPerson(person);
-                person.setPersonRoleList(roles);
+                //person.setPersonRoleList(roles);
             }
         }
         personRepository.save(person);
@@ -84,12 +84,12 @@ public class PersonService {
                 if(role == null){
                     throw new PersonException("Cannot find person role with that id");
                 }
-                List<PersonRole> personRoles = p.getPersonRoleList();
+                /*List<PersonRole> personRoles = p.getPersonRoleList();
                 if(!personRoles.contains(role)){
                     personRoles.add(role);
                 }
                 role.setPerson(p);
-                p.setPersonRoleList(personRoles);
+                p.setPersonRoleList(personRoles);*/
             }
         }
         return p;

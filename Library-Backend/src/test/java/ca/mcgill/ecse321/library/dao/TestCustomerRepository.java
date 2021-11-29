@@ -39,7 +39,7 @@ public class TestCustomerRepository {
     public void testPersistAndLoadCustomer(){
         Person person = new Person();
         person.setName("bob");
-        person.setPersonRoleList(null);
+        //person.setPersonRoleList(null);
         personRepository.save(person);
         int pId = person.getId();
 

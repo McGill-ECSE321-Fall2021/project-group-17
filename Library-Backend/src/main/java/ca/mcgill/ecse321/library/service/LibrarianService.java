@@ -1,5 +1,9 @@
 package ca.mcgill.ecse321.library.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import ca.mcgill.ecse321.library.dao.*;
@@ -53,6 +57,13 @@ public class LibrarianService {
         Librarian librarian = (Librarian) librarianRepository.findPersonRoleById(id);
         if(librarian == null) throw new LibrarianException("No librarian by this id");
         return librarian;
+    }
+    @Transactional
+    public List<PersonRole> getAllLibrarians() {
+		Iterable<PersonRole> iter = (Iterable<PersonRole>) librarianRepository.findAll();
+        List<PersonRole> librarians = new ArrayList<PersonRole>();
+        iter.forEach(librarians::add);
+        return librarians;
     }
     @Transactional
     public void deleteLibrarian(Integer id, String accountUsername){

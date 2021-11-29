@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,7 @@ public class LibraryCard {
 
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn
     public Customer getCustomer(){ return this.customer; }
 
