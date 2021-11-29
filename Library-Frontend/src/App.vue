@@ -48,6 +48,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+<<<<<<< HEAD
+  color: #2c3e50;
+=======
   background-color: #C09F80;
 
 }
@@ -68,6 +71,7 @@ export default {
   background-color: #76323F;
   color: white !important;
 
+>>>>>>> d22e37a870920b97512ac45468e5b1c441099cd4
 }
 .button {
   margin-right: 20px;

@@ -8,7 +8,7 @@ Vue.use(md-datepicker)
 <template>
 
 <div>
-  <b-navbar toggleable="md" type="light" variant="light">
+  <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
       <b-navbar variant="faded" type="light" left>
     <b-navbar-brand >
       <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
@@ -16,7 +16,7 @@ Vue.use(md-datepicker)
     </b-navbar>
     <b-nav-item href="#">
      <a class="text-my-own-color ">
-      Find movies, books, and movies
+      Find movies, books, and music
     </a>
 
       </b-nav-item>
@@ -108,12 +108,14 @@ Vue.use(md-datepicker)
       </b-carousel-slide>
     </b-carousel>
       <div id="wrapper" class="overlay">
+      <img src="https://pixsector.com/cache/0266455f/ava13c3ac53812cde1b88.png" alt="Logo" height="70" width="60">
       <h2 class="layer1">UPCOMING EVENTS</h2>
+      <img src="https://pixsector.com/cache/0266455f/ava13c3ac53812cde1b88.png" alt="Logo" height="70" width="60">
         </div>
     </div>
 <div>
   <div>
-    <b-card-group deck>
+    <b-card-group deck class= "sizing">
      
     <b-card
     no-body
@@ -339,6 +341,11 @@ export default {
   font-size:18px;
   font-family:monospace;
     color: black;
+}
+.sizing {
+position:relative;
+left:2%;
+
 }
 .layer1{
   grid-column: 1;

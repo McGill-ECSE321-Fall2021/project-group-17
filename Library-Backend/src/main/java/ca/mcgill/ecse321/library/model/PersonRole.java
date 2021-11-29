@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.library.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -27,7 +29,8 @@ public abstract class PersonRole {
     public int getId(){return this.id;}
     public void setId(int id){this.id = id;}
 
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JsonManagedReference
     @JoinColumn()
     public OnlineAccount getAccount(){return this.account;}
     public void setAccount(OnlineAccount account){this.account = account;}
