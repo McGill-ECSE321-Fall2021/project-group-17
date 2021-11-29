@@ -33,7 +33,6 @@ public abstract class PersonRole {
     public void setId(int id){this.id = id;}
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JsonManagedReference
     @JoinColumn()
     public OnlineAccount getAccount(){return this.account;}
     public void setAccount(OnlineAccount account){this.account = account;}
