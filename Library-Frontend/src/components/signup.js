@@ -90,7 +90,7 @@ export default {
       console.log(customerId)
       AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+customerId, {} ,{}).then(response => {
         this.$cookie.set("customerId", response.data.personRole.id)
-        this.$router.push({name: 'Item Instance'});
+        this.$router.push({name: 'HomePage'});
         this.errorSignup = ''
       })
         .catch(e => {
