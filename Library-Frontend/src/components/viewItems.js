@@ -130,6 +130,13 @@ export default {
           this.bookDatePublished= ''
           this.genre= ''
           this.publisher= ''
+
+          AXIOS.post('/iteminstance/' + response.data.id).then(response => {
+          })
+            .catch(e =>{
+              this.error = e.response.data.message
+              console.log(e.response.data.message)
+            })
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -146,6 +153,13 @@ export default {
           this.runningTime = ''
           this.rating = ''
           this.filmDistributor = ''
+
+          AXIOS.post('/iteminstance/' + response.data.id).then(response => {
+          })
+            .catch(e =>{
+              this.error = e.response.data.message
+              console.log(e.response.data.message)
+            })
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -160,6 +174,13 @@ export default {
           this.musician = ''
           this.recordLabel = ''
           this.musicReleaseDate = ''
+
+          AXIOS.post('/iteminstance/' + response.data.id).then(response => {
+          })
+            .catch(e =>{
+              this.error = e.response.data.message
+              console.log(e.response.data.message)
+            })
         })
           .catch(e =>{
             this.error = e.response.data.message
