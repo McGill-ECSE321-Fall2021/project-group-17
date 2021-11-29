@@ -24,7 +24,7 @@ export default {
   created: function () {
       if( this.$cookie.get("customerId")){
         console.log("user already logged in")
-        this.$router.push({name: 'Item Instance'});
+        this.$router.push({name: 'HomePage'});
       }
   },
   methods: {
