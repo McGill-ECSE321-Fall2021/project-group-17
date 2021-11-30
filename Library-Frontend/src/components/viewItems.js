@@ -131,13 +131,22 @@ export default {
           this.bookDatePublished= ''
           this.genre= ''
           this.publisher= ''
-
-          AXIOS.post('/iteminstance/' + response.data.id).then(response => {
+          this.serialNum = ''
+        })
+          .catch(e =>{
+            this.error = e.response.data.message
+            console.log(e.response.data.message)
           })
-            .catch(e =>{
-              this.error = e.response.data.message
-              console.log(e.response.data.message)
-            })
+      },
+      addBookInstance: function () {
+        this.error = ''
+        AXIOS.post('/iteminstance/' + this.bookSelected.id).then(response => {
+          this.title= ''
+          this.author= ''
+          this.bookDatePublished= ''
+          this.genre= ''
+          this.publisher= ''
+          this.serialNum = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -154,13 +163,23 @@ export default {
           this.runningTime = ''
           this.rating = ''
           this.filmDistributor = ''
-
-          AXIOS.post('/iteminstance/' + response.data.id).then(response => {
+          this.serialNum = ''
+        })
+          .catch(e =>{
+            this.error = e.response.data.message
+            console.log(e.response.data.message)
           })
-            .catch(e =>{
-              this.error = e.response.data.message
-              console.log(e.response.data.message)
-            })
+      },
+      addMovieInstance: function () {
+        this.error = ''
+        AXIOS.post('/iteminstance/' + this.movieSelected.id).then(response => {
+          this.movieTitle = ''
+          this.director = ''
+          this.movieReleaseDate = ''
+          this.runningTime = ''
+          this.rating = ''
+          this.filmDistributor = ''
+          this.serialNum = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -175,13 +194,21 @@ export default {
           this.musician = ''
           this.recordLabel = ''
           this.musicReleaseDate = ''
-
-          AXIOS.post('/iteminstance/' + response.data.id).then(response => {
+          this.serialNum = ''
+        })
+          .catch(e =>{
+            this.error = e.response.data.message
+            console.log(e.response.data.message)
           })
-            .catch(e =>{
-              this.error = e.response.data.message
-              console.log(e.response.data.message)
-            })
+      },
+      addMusicInstance: function () {
+        this.error = ''
+        AXIOS.post('/iteminstance/' + this.musicSelected.id).then(response => {
+          this.musicName = ''
+          this.musician = ''
+          this.recordLabel = ''
+          this.musicReleaseDate = ''
+          this.serialNum = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -208,6 +235,7 @@ export default {
           this.bookDatePublished= ''
           this.genre= ''
           this.publisher= ''
+          this.serialNum = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -225,6 +253,7 @@ export default {
           this.runningTime = ''
           this.rating = ''
           this.filmDistributor = ''
+          this.serialNum = ''
         })
           .catch(e =>{
             this.error = e.response.data.message
@@ -240,6 +269,7 @@ export default {
           this.musician = ''
           this.recordLabel = ''
           this.musicReleaseDate = ''
+          this.serialNum = ''
         })
           .catch(e =>{
             this.error = e.response.data.message

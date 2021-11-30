@@ -65,12 +65,13 @@ import Vue from 'vue'
                 <div class="inputLine">
                     <md-field>
                         <label>Serial Number</label>
-                        <md-input v-model="serialNum" placeholder="Serial Number"></md-input>
+                        <md-input v-model="serialNum" placeholder="Serial Number for Delete"></md-input>
                     </md-field>
                 </div>
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addBook()">Add Book</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addBookInstance()">Add Book Instance</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteBook()">Delete Book</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteBySerialNum()">Delete Book By Serial Number</b-button>
             </div>
@@ -134,12 +135,13 @@ import Vue from 'vue'
                 <div class="inputLine1">
                     <md-field>
                         <label>Serial Number</label>
-                        <md-input v-model="serialNum" placeholder="Serial Number"></md-input>
+                        <md-input v-model="serialNum" placeholder="Serial Number for Delete"></md-input>
                     </md-field>
                 </div>
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addMovie()">Add Movie</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addMovieInstance()">Add Movie Instance</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteMovie()">Delete Movie</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteBySerialNum()">Delete Movie By Serial Number</b-button>
             </div>
@@ -187,12 +189,13 @@ import Vue from 'vue'
                 <div class="inputLine">
                     <md-field class=serialNum>
                         <label>Serial Number</label>
-                        <md-input v-model="serialNum" placeholder="Serial Number"></md-input>
+                        <md-input v-model="serialNum" placeholder="Serial Number for Delete"></md-input>
                     </md-field>
                 </div>
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addMusic()">Add Music</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="addMusicInstance()">Add Music Instance</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteMusic()">Delete Music</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteBySerialNum()">Delete Music By Serial Number</b-button>
             </div>
