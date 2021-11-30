@@ -14,6 +14,12 @@ export default {
   name: "schedule",
   data() {
     return {
+      username: this.$cookie.set("username"),
+      librarian_Id: "",
+      dayOf_Week: "",
+      start_time: "",
+      end_time: "",
+      bool: "",
       currentUser: "",
       librarians: [],
       errorPerson: "",
@@ -24,7 +30,8 @@ export default {
       Thursday: [],
       Friday: [],
       Saturday: [],
-      Sunday: []
+      Sunday: [],
+      headLibrarianShifts: []
     };
   },
   created: function() {
@@ -50,7 +57,8 @@ export default {
                 response.data[j].dayOfWeek =
                   response.data[j].dayOfWeek[0] +
                   response.data[j].dayOfWeek.slice(1).toLowerCase();
-
+                // if (this.librarians[i].id === this.$cookies.get("customerId")) {
+                //   this.headLibrarianShifts.push(response.data[j]);
                 if (response.data[j].dayOfWeek === "Monday") {
                   this.Monday.push(response.data[j]);
                 } else if (response.data[j].dayOfWeek === "Tuesday") {
@@ -79,9 +87,49 @@ export default {
   },
 
   methods: {
+    createShift: function(librarianId, startTime, endTime, dayOfWeek, boolean) {
+      startTime = startTime.concat(":00");
+      endTime = endTime.concat(":00");
+      const json = {
+        startTime: startTime,
+        endTime: endTime,
+        dayOfWeek: dayOfWeek.toUpperCase(),
+        librarianId: librarianId
+      };
+      if (
+        dayOfWeek.toUpperCase() != "MONDAY" &&
+        dayOfWeek.toUpperCase() != "TUESDAY" &&
+        dayOfWeek.toUpperCase() != "WEDNESDAY" &&
+        dayOfWeek.toUpperCase() != "THURSDAY" &&
+        dayOfWeek.toUpperCase() != "FRIDAY" &&
+        dayOfWeek.toUpperCase() != "SATURDAY" &&
+        dayOfWeek.toUpperCase() != "SUNDAY"
+      ) {
+        this.errorPerson = "Day string not formatted correctly!";
+        return;
+      }
+      if (boolean === "Yes") {
+        AXIOS.post("/shift/headLibrarian", json, {
+          params: { accountUsername: this.username }
+        }).catch(e => {
+          var errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorPerson = errorMsg;
+        });
+      } else {
+        AXIOS.post("/shift/librarian", json, {
+          params: { accountusername: this.username }
+        }).catch(e => {
+          var errorMsg = e.response.data.message;
+          console.log(errorMsg);
+          this.errorPerson = errorMsg;
+        });
+      }
+      document.location.reload(true);
+    },
     deleteShift: function(shiftid) {
       AXIOS.delete("/shift/".concat(shiftid), {
-        params: { accountusername: this.$cookie.get("customerId") }
+        params: { accountusername: this.username }
       })
         .then(response => {
           console.log(response.data);
@@ -113,7 +161,7 @@ export default {
         return;
       }
       AXIOS.put("/shift/librarian/".concat(shiftid), json, {
-        params: { accountUsername: this.$cookie.get("customerId") }
+        params: { accountUsername: this.username }
       })
         .then(response => {
           console.log(response);

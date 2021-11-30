@@ -1,13 +1,104 @@
 <template>
   <div id="schedule">
-
     <div id="header">
-      <h3>Modify Schedules</h3>
+      <h3 style="color:White;padding-top:17.5px;padding-bottom:17.5px">Modify Schedules</h3>
     </div>
-    <div id="librarian_table">
+    <div id="librarian_table" v-if="!errorPerson">
+      <table id="row">
+        <h2>Create Shifts</h2>
+        <tr>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Head Librarian?</th>
+        </tr>
+        <tr>
+          <td id="data">
+            <input v-model="librarian_Id" type="text"/>
+          </td>
+          <td id="data">
+            <input v-model="dayOf_Week" type="text"/>
+          </td>
+          <td id="data">
+            <input v-model="start_time" type="time"/>
+          </td>
+          <td id="data">
+            <input v-model="end_time" type="time"/>
+          </td>
+          <td id="data1">
+            <select v-model="bool">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+          <td>
+            <button
+              @click="
+                createShift(
+                  librarian_Id,
+                  start_time,
+                  end_time,
+                  dayOf_Week,
+                  bool
+                )
+              "
+            >
+              Create
+            </button>
+          </td>
+        </tr>
+        <hr />
+      </table>
       <p v-if="(!librarians || librarians.length == 0) && !errorPerson">
         No schedules to display.
       </p>
+      <table id="row" v-if="headLibrarianShifts && headLibrarianShifts.length != 0">
+        <h2 v-if="headLibrarianShifts && headLibrarianShifts.length != 0">Your Shifts</h2>
+        <tr v-if="headLibrarianShifts && headLibrarianShifts.length != 0">
+          <th id="entry">Librarian Name</th>
+          <th id="entry">Librarian Id</th>
+          <th id="entry">Day</th>
+          <th id="entry">Start</th>
+          <th id="entry">End</th>
+          <th id="entry">Update</th>
+          <th id="entry">Delete</th>
+        </tr>
+        <tr v-for="shift in headLibrarianShifts" :key="shift.id">
+          <td id="data">
+            <th id="entry">{{shift.librarian.person.name}}</th>
+          </td>
+          <td id="data">
+            <th id="entry">{{shift.librarian.id}}</th>
+          </td>
+          <td id="data">
+            <input type="text" v-model="shift.dayOfWeek" />
+          </td>
+          <td id="data">
+            <input type="time" v-model="shift.startTime" />
+          </td>
+          <td id="data"><input type="time" v-model="shift.endTime" /></td>
+          <td id="data">
+            <button
+              v-on:click="
+                updateShiftHeadLibrarian(
+                  shift.id,
+                  shift.librarian.id,
+                  shift.startTime,
+                  shift.endTime,
+                  shift.dayOfWeek
+                )
+              "
+            >
+              Update
+            </button>
+          </td>
+          <td id="data">
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
+          </td>
+        </tr>
+        <hr />
+      </table>
       <table id="row" v-if="Monday && Monday.length != 0">
         <h2 v-if="Monday && Monday.length != 0">Monday</h2>
         <tr v-if="Monday && Monday.length != 0">
@@ -350,7 +441,7 @@
       </button>
     </nav>
     <p>
-      <span v-if="errorPerson" id="error-box" style="color:red">
+      <span v-if="errorPerson" id="error-box" style="color:black">
         {{ errorPerson }}
       </span>
     </p>
@@ -374,7 +465,6 @@
   text-align: left;
   color: #2c3e50;
   background: #f2ece8;
-  margin-top: 60px;
 }
 #librarian_table {
   margin-top: 20px;
@@ -389,6 +479,11 @@
 }
 #data {
   padding: 8px;
+}
+#data1 {
+  padding-left: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 #text-my-own-color {
   font-size: 18px;
