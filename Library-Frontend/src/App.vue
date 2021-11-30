@@ -198,6 +198,7 @@ export default {
   name: 'app',
   methods: {
     logout: function () {
+      this.$cookie.delete("usertype");
       this.$cookie.delete('customerId');
       this.$router.push({name: 'login'});
     },
@@ -210,7 +211,7 @@ export default {
     login(){
         this.$router.push({name:'login'});
       },
-    homepage(){
+         homepage(){
         this.$router.push({name: 'HomePage'});
     },
     shift(){

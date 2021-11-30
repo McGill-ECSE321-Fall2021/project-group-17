@@ -13,7 +13,7 @@ import Vue from 'vue'
         <b-list-group-item v-model="user">Username: {{user}}</b-list-group-item>
         <b-list-group-item v-model="password">Password: {{password}}</b-list-group-item>
         <b-list-group-item v-model="Address">Address: {{Address}}</b-list-group-item>
-        <b-list-group-item v-model="Email">Email: {{email}} </b-list-group-item>
+        <b-list-group-item v-model="email">Email: {{email}} </b-list-group-item>
         <b-list-group-item v-model="libCard">LibraryCard: {{libCard}}</b-list-group-item>
         <b-list-group-item></b-list-group-item>
          </b-list-group>
