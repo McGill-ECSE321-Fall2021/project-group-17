@@ -5,7 +5,7 @@
     </div>
     <div v-if="!errorPerson">
             <md-table md-card class="table1">
-        <h2>Create Shifts</h2>
+        <h2>Create:</h2>
           <md-table-row>
             <md-table-cell class="th">Librarian ID</md-table-cell>
             <md-table-cell class="th">Day of Week</md-table-cell>
@@ -121,7 +121,7 @@
             </button>
           </td>
           <td id="data">
-            <button v-on:click="deleteShift(shift.id, 'HEADLIBRARIAN')">Delete</button>
+            <button v-on:click="deleteShift(shift.id)">Delete</button>
           </td>
         </tr>
         <hr />
@@ -174,7 +174,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'MONDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -227,7 +227,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'TUESDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -280,7 +280,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'WEDNESDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -334,7 +334,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'THURSDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -388,7 +388,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'FRIDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -442,7 +442,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'SATURDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -496,7 +496,7 @@
             </b-button>
           </td>
           <td id="data">
-            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id, 'SUNDAY')">Delete</b-button>
+            <b-button pill variant="outline-secondary" class="buttons" v-on:click="deleteShift(shift.id)">Delete</b-button>
           </td>
         </tr>
         <hr />
@@ -605,14 +605,14 @@ h1 {
   font-weight: normal;
   margin-left: 40px;
 }
-/* h2 {
+h2 {
   font-weight: normal;
-  padding-left: 6px;
-} */
-/* p {
+  padding-left: 16px;
+}
+p {
   font-weight: normal;
   padding-left: 8px;
-} */
+}
 a {
   color: #42b983;
 }
