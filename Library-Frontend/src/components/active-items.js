@@ -55,14 +55,14 @@ export default {
         this.errorItemInstance = e.response
         //console.log(e.response.data.message)
       })
-    /*AXIOS.get('/loans/'+ this.$cookie.get("customerId") ).then(response => {
+    AXIOS.get('/loans/'+ this.$cookie.get("customerId") ).then(response => {
       this.loans = response.data
       this.searchedLoans = response.data
     })
       .catch(e =>{
         this.errorItemInstance = e.response
         //console.log(e.response.data.message)
-      })*/
+      })
   },
   methods: {
     searchOnTableLoan () {

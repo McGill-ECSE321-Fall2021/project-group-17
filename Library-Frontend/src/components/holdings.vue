@@ -50,6 +50,10 @@ import Vue from 'vue'
                             <md-input v-model="selectedCustomer" placeholder="Customer" disabled></md-input>
                         </md-field>
                         <md-field class="input">
+                            <label>Library Card</label>
+                            <md-input v-model="libCard" placeholder="Library Card"></md-input>
+                        </md-field>
+                        <md-field class="input">
                             <md-datepicker v-model="returnDate"/>
                         </md-field>
                     </div>

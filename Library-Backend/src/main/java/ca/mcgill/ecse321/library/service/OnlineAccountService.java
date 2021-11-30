@@ -211,12 +211,12 @@ public class OnlineAccountService {
             throw new OnlineAccountException("Cannot find the account for the given username");
         }
 
-        if (account.getPersonRole() instanceof Librarian) {
-            return 1;
-        }
-
         if (account.getPersonRole() instanceof HeadLibrarian) {
             return 2;
+        }
+
+        if (account.getPersonRole() instanceof Librarian) {
+            return 1;
         }
 
         return 0;

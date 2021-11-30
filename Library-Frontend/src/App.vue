@@ -112,7 +112,6 @@ var AXIOS = axios.create({
             <template #button-content>
               <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
             </template>
-            <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -157,7 +156,7 @@ var AXIOS = axios.create({
 
         <b-nav-item @click="schedule()" class="unstyled">
           <a class="text-my-own-color ">
-            Create Schedule
+            Manage Schedule
           </a>
         </b-nav-item >
 
@@ -179,7 +178,6 @@ var AXIOS = axios.create({
             <template #button-content>
               <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
             </template>
-            <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -254,7 +252,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #ebe3dd;
+  background-color: white;
 }
 #LMS {
   display:flex;

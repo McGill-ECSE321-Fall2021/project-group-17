@@ -70,7 +70,9 @@ public class OnlineAccountRestController {
 
     @GetMapping(value={"/checkPersonRole/{username}", "/checkPersonRole/{username}/"})
     public Integer determinePersonRoleType(@PathVariable("username") String username) {
-        return service.determinePersonRoleType(username);
+        Integer roleNum = service.determinePersonRoleType(username);
+        System.out.println("RoleNum is: " + roleNum);
+        return roleNum;
     }
 
     private OnlineAccountDTO convertToDTO(OnlineAccount account) {
