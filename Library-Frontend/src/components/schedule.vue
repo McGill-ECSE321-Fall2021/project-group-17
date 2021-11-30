@@ -623,25 +623,25 @@
     position: relative;
     left: 50%;
 }
-/* #librarian_table {
+#librarian_table {
   margin-top: 20px;
   margin-left: 40px;
-} */
-/* #row {
+}
+#row {
   margin-bottom: 20px;
-} */
-/* #entry {
+}
+#entry {
   padding-left: 8px;
   padding-right: 8px;
-} */
-/* #data {
+}
+#data {
   padding: 8px;
-} */
-/* #data1 {
+}
+#data1 {
   padding-left: 8px;
   padding-top: 8px;
   padding-bottom: 8px;
-} */
+}
 #text-my-own-color {
   font-size: 18px;
   font-family: monospace;
