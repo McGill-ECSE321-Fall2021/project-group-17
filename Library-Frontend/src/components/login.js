@@ -35,7 +35,31 @@ export default {
 
         this.$cookie.set("username", response.data.name)
         this.$cookie.set("customerId", response.data.personRole.id)
-        this.$router.push({name: 'HomePage'});
+
+        AXIOS.get('/checkPersonRole/' + this.userLogin).then(response => {
+          if (response.data == 0) {
+            this.$cookie.set("usertype", 0);
+            this.$router.push({name: 'HomePage'});
+          }
+
+          else if (response.data == 1) {
+            this.$cookie.set("usertype", 1);
+            this.$router.push({name: 'LibrarianWelcome'});
+          }
+
+          else if (response.data == 2) {
+            this.$cookie.set("usertype", 2);
+            this.$router.push({name: 'HeadLibrarianWelcome'});
+          }
+        })
+          .catch(e =>{
+            let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorLogin = errorMsg
+          this.error = true
+          })
+
+        
 
       })
         .catch(e => {

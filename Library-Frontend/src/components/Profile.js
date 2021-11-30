@@ -26,6 +26,7 @@ export default {
     },
     created: function () {
       AXIOS.get("/customer/"+this.$cookie.get('customerId')).then(response=>{
+        console.log(response.data)
         this.user=response.data.account.username;
         this.password=response.data.account.password;
         this.email=response.data.account.email;
@@ -35,7 +36,6 @@ export default {
         this.Country=response.data.address.country;
         this.Address= this.streetNum + " " + this.streetName + " " + this.city + " " + this.Country;
         this.libCard=response.data.personRole.libraryCard.id;
-        console.log(response.data)
       })
           .catch(e =>{
             this.errorLoan = e
