@@ -64,6 +64,7 @@ var AXIOS = axios.create({
       </div>
     </div>
     <div v-if="this.$cookie.get('usertype') == 1">
+
       <b-navbar toggleable="md" type="light" variant="light" class="list-unstyled">
         <b-navbar variant="faded" type="light" left>
           <b-navbar-brand >
@@ -178,6 +179,7 @@ var AXIOS = axios.create({
             <template #button-content>
               <img src="https://icons-for-free.com/iconfiles/png/512/person+user+icon-1320166085409390336.png" alt="Logo" height="30" width="30">
             </template>
+            <b-dropdown-item @click="profile()">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -211,7 +213,7 @@ export default {
     login(){
         this.$router.push({name:'login'});
       },
-         homepage(){
+    homepage(){
         this.$router.push({name: 'HomePage'});
     },
     shift(){
@@ -226,7 +228,7 @@ export default {
     viewItems(){
         this.$router.push({name: 'ViewItems'});
     },
-      schedule(){
+    schedule(){
         this.$router.push({name: 'Schedule'});
     }
     
@@ -239,6 +241,14 @@ export default {
 
 
 @import url("https://fonts.googleapis.com/css?family=Material+Icons");
+@import "~vue-material/dist/theme/engine.scss";
+
+@include md-register-theme("default", (
+primary: #76323F, // The primary color of your application
+accent: #C09F80 // The accent or secondary color
+));
+
+@import "~vue-material/dist/theme/all";
 
 
 
@@ -258,7 +268,7 @@ export default {
 #LMS {
   display:flex;
   justify-content:space-between;
-  outline: 2px #76323F;
+  outline: 2px #C09F80;
   color: #565656;
 }
 .overlay {
