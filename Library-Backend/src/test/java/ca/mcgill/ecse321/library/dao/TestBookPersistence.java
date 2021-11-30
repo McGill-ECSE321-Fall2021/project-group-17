@@ -28,20 +28,20 @@ public class TestBookPersistence {
     }
     @Test
     public void testPersistAndLoadBook(){
-        Integer bookID= 1234; //create object to be tested
+         //create object to be tested
         String author="Victoria";
         String publisher="penguin";
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
         String genre= "horror";
         String name= "My Brilliant Friend";
         Book book = new Book();
-        book.setId(bookID);
         book.setName(name);
         book.setDatePublished(date);
         book.setAuthor(author);
         book.setPublisher(publisher);
         book.setGenre(genre);
         bookRepository.save(book);
+        Integer bookID= book.getId();
         book=null;
         book=(Book) bookRepository.findItemById(bookID);
         assertNotNull(book);

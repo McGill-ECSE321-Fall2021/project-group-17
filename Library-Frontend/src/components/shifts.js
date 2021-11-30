@@ -12,10 +12,23 @@ var backendConfigurer = function() {
   }
 };
 
+var frontendConfigurer = function() {
+  switch (process.env.NODE_ENV) {
+    case "development":
+      return "http://" + config.dev.host + ":" + config.dev.port;
+    case "production":
+      return (
+        "http://" + config.build.host + ":" + config.build.port
+      );
+  }
+};
+
 var backendUrl = backendConfigurer();
+var frontendUrl = frontendConfigurer();
 
 var AXIOS = axios.create({
-  baseURL: backendUrl
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
 });
 
 export default {
