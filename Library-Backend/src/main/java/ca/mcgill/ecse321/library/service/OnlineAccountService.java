@@ -199,6 +199,29 @@ public class OnlineAccountService {
         return account;
     }
 
+    @Transactional
+    public Integer determinePersonRoleType(String username) {
+        if (username == null) {
+            throw new OnlineAccountException("Cannot get account with a null username");
+        }
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+
+        if (account == null) {
+            throw new OnlineAccountException("Cannot find the account for the given username");
+        }
+
+        if (account.getPersonRole() instanceof HeadLibrarian) {
+            return 2;
+        }
+
+        if (account.getPersonRole() instanceof Librarian) {
+            return 1;
+        }
+
+        return 0;
+    }
+
     /**
      * Sets the account for the given username to logged out
      * @param username

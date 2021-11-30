@@ -34,6 +34,12 @@ public class ItemInstanceRestController {
         return convertToDTO(itemInstance);
     }
 
+    @PostMapping(value= {"/iteminstance/{id}", "/iteminstance/{id}/"})
+    public ItemInstanceDTO createItemInstance1(@PathVariable("id") Integer id) throws IllegalArgumentException{
+        ItemInstance itemInstance = service.createItemInstance(id);
+        return convertToDTO(itemInstance);
+    }
+
     private ItemInstanceDTO convertToDTO(ItemInstance itemInstance) {
         if (itemInstance == null) {
             throw new IllegalArgumentException("There is no such ItemInstance");

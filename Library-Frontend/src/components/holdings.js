@@ -25,7 +25,8 @@ export default {
         selectedItem: '',
         selectedCustomer: '',
         returnItemError: '',
-        error: ''
+        error: '',
+        libCard: ''
       }
     },
     created: function () {
@@ -61,9 +62,8 @@ export default {
 
       createLoan: function () {
         this.error = ''
-        var libCard = this.selectedReservation.customer.libraryCard.id
         var serialNum = this.selectedReservation.itemInstance.serialNum
-        AXIOS.post('/loan/libraryCard/' +  parseInt(libCard) + '/' + parseInt(serialNum) + '/' + this.returnDate)
+        AXIOS.post('/loan/libraryCard/' +  this.libCard + '/' + parseInt(serialNum) + '/' + this.returnDate)
         .then(response => {
           this.libraryCardNum = '';
           this.serialNum = '';

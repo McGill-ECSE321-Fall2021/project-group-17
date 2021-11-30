@@ -22,23 +22,22 @@ export default {
   name: "shifts",
   data() {
     return {
-      librarian: null,
-      librarianId: this.$cookies.get("customerId"),
-      shifts: [],
+      librarianId: this.$cookie.get("customerId"),
+      shifts_to_show: [],
       errorPerson: "",
       response: []
     };
   },
   created: function() {
     // Getting librarian shifts
-    AXIOS.get("/shift/librarian/".concat(this.librarianId))
+    AXIOS.get("/shift/librarian/".concat(this.$cookie.get("customerId")))
       .then(response => {
         // JSON responses are automatically parsed.
         for (let i = 0; i < response.data.length; i++) {
           response.data[i].dayOfWeek =
             response.data[i].dayOfWeek[0] +
             response.data[i].dayOfWeek.slice(1).toLowerCase();
-          this.shifts.push(response.data[i]);
+          this.shifts_to_show.push(response.data[i]);
         }
       })
       .catch(e => {
