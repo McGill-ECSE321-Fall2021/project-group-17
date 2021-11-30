@@ -29,7 +29,7 @@ module.exports = {
   dev: {
     env: require("./dev.env"),
     port: 8087,
-    host: "localhost",
+    host: "library-frontend-534a.herokuapp.com",
     autoOpenBrowser: true,
     assetsSubDirectory: "static",
     assetsPublicPath: "/",
@@ -40,7 +40,7 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
-    backendHost: "127.0.0.1",
-    backendPort: 8080
+    backendHost: "library-backend-534a.herokuapp.com",
+    backendPort: 443
   }
 };

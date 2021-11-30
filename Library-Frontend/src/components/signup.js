@@ -119,6 +119,15 @@ export default {
       console.log(body)
       AXIOS.post('/customer/1' ,body,{}).then(response => {
         console.log(response.data.id)
+        AXIOS.post('/librarycard/' + response.data.id).then(response=>{
+
+        }).catch(e=>{
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        }
+        )
         this.createOnlineAccountCustomer(response.data.id)
         this.errorSignup = ''
       })

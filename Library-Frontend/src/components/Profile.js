@@ -35,7 +35,7 @@ export default {
         this.city=response.data.address.city;
         this.Country=response.data.address.country;
         this.Address= this.streetNum + " " + this.streetName + " " + this.city + " " + this.Country;
-        this.libCard=response.data.personRole.libraryCard.id;
+        this.libCard=response.data.libCard.id;
       })
           .catch(e =>{
             this.errorLoan = e
