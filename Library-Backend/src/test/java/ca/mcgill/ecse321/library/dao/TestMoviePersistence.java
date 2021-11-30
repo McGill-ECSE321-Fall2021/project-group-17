@@ -29,7 +29,7 @@ public class TestMoviePersistence {
     }
     @Test
     public void testPersistAndLoadMovie(){
-        Integer movieID= 1234; //create object to be tested
+        //create object to be tested
         String director="Victoria";
         Integer runningTime=55;
         String rating="PG-13";
@@ -37,7 +37,6 @@ public class TestMoviePersistence {
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
         String name= "My Brilliant Friend";
         Movie movie = new Movie();
-        movie.setId(movieID);
         movie.setName(name);
         movie.setDatePublished(date);
         movie.setDirector(director);
@@ -45,6 +44,7 @@ public class TestMoviePersistence {
         movie.setRating(rating);
         movie.setFilmDistributor(filmDistributor);
         movieRepository.save(movie);
+        Integer movieID= movie.getId();
         movie=null;
         movie=(Movie) movieRepository.findItemById(movieID);
         assertNotNull(movie);

@@ -44,7 +44,10 @@ public class TestItemService {
     @Mock
     private MusicRepository musicRepository;
     @Mock
+    private ItemInstanceRepository itemInstanceRepository;
+    @Mock
     private NewspaperRepository newspaperRepository;
+
 
 	/*
 	 * Provided service classes that allow manipulation with the
@@ -279,6 +282,24 @@ public class TestItemService {
                 return null;
             }
         });
+
+        lenient().when(itemInstanceRepository.findByCheckableItem(any())).thenAnswer((InvocationOnMock invocation) -> {
+            if(((CheckableItem)invocation.getArgument(0)).getId().equals(BOOK_KEY)){
+                List<ItemInstance> list = new ArrayList<>();
+                return list;
+            }
+            else if (((CheckableItem)invocation.getArgument(0)).getId().equals(MOVIE_KEY)){
+                List<ItemInstance> list = new ArrayList<>();
+                return list;
+            }
+            else if(((CheckableItem)invocation.getArgument(0)).getId().equals(MUSIC_KEY)){
+                List<ItemInstance> list = new ArrayList<>();
+                return list;
+            }
+            else {
+                return null;
+            }
+        });
         
         // Whenever anything is saved, just return the parameter object
  		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -317,7 +338,6 @@ public class TestItemService {
             fail();
         }
         assertNotNull(movie);
-        assertEquals(movie.getId(), MOVIE_KEY);
         assertEquals(movie.getName(), MEDIA_NAME);
         assertEquals(movie.getDatePublished(), DATE_PUBLISHED);
         assertEquals(movie.getDirector(), AUTHOR_DIRECTOR_MUSICIAN);
@@ -525,7 +545,6 @@ public class TestItemService {
             fail();
         }
         assertNotNull(book);
-        assertEquals(book.getId(), BOOK_KEY);
         assertEquals(book.getName(), MEDIA_NAME);
         assertEquals(book.getDatePublished(), DATE_PUBLISHED);
         assertEquals(book.getAuthor(), AUTHOR_DIRECTOR_MUSICIAN);
@@ -549,7 +568,6 @@ public class TestItemService {
             fail();
         }
         assertNotNull(music);
-        assertEquals(music.getId(), MUSIC_KEY);
         assertEquals(music.getName(), MEDIA_NAME);
         assertEquals(music.getDatePublished(), DATE_PUBLISHED);
         assertEquals(music.getMusician(), AUTHOR_DIRECTOR_MUSICIAN);
@@ -572,7 +590,6 @@ public class TestItemService {
             fail();
         }
         assertNotNull(newspaper);
-        assertEquals(newspaper.getId(), NEWSPAPER_KEY);
         assertEquals(newspaper.getName(), MEDIA_NAME);
         assertEquals(newspaper.getDatePublished(), DATE_PUBLISHED);
         assertEquals(newspaper.getHeadline(), HEADLINE);

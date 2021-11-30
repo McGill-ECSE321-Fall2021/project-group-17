@@ -28,18 +28,17 @@ public class TestMusicPersistance {
     }
     @Test
     public void testPersistAndLoadMusic(){
-        Integer musicID= 1234; //create object to be tested
         String musician="Victoria";
         String recordLabel="Sony";
         Date date =java.sql.Date.valueOf(LocalDate.of(2021, Month.OCTOBER,12));
         String name= "My Brilliant Friend";
         Music music = new Music();
-        music.setId(musicID);
         music.setName(name);
         music.setDatePublished(date);
         music.setMusician(musician);
         music.setRecordLabel((recordLabel));
         musicRepository.save(music);
+        Integer musicID= music.getId(); //create object to be tested
         music=null;
         music=(Music) musicRepository.findItemById(musicID);
         assertNotNull(music);

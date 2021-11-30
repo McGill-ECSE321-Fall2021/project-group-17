@@ -26,12 +26,12 @@ public class TestNewspaperPersistence {
     }
     @Test
     public void testPersistAndLoadNewspaper() {
-        Integer id = 1234;
         String name = "New York Times";
         Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.MAY,24));
         String headline = "US deaths near 100,000, an incalculable loss";
-        Newspaper newspaper = new Newspaper(id, name, date, headline);
+        Newspaper newspaper = new Newspaper(0, name, date, headline);
         newspaperRepository.save(newspaper);
+        Integer id = newspaper.getId();
         newspaper = (Newspaper) newspaperRepository.findItemById(id);
         assertNotNull(newspaper);
         assertEquals(id,newspaper.getId());
@@ -42,12 +42,12 @@ public class TestNewspaperPersistence {
 
     @Test
     public void testFindNewspaperByHeadline() {
-        Integer id = 1234;
         String name = "New York Times";
         Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.MAY,24));
         String headline = "US deaths near 100,000, an incalculable loss";
-        Newspaper newspaper = new Newspaper(id, name, date, headline);
+        Newspaper newspaper = new Newspaper(0, name, date, headline);
         newspaperRepository.save(newspaper);
+        Integer id = newspaper.getId();
         newspaper = newspaperRepository.findNewspaperByHeadline(headline);
         assertNotNull(newspaper);
         assertEquals(id,newspaper.getId());
