@@ -51,15 +51,15 @@
       <h3>My Schedule</h3>
     </div>
     <table id="librarian_table">
-      <p v-if="!shifts && !errorPerson">
+      <p v-if="!shifts_to_show && !errorPerson">
         No schedules to display.
       </p>
-      <tr v-if="shifts.length != 0">
+      <tr v-if="shifts_to_show.length != 0">
         <th id="entry">Day</th>
         <th id="entry">Start</th>
         <th id="entry">End</th>
       </tr>
-      <tr v-for="shift in shifts" :key="shift.id">
+      <tr v-for="shift in shifts_to_show" :key="shift.id">
         <td id="data">{{ shift.dayOfWeek }}</td>
         <td id="data">{{ shift.startTime }}</td>
         <td id="data">{{ shift.endTime }}</td>
