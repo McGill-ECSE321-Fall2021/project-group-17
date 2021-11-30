@@ -198,6 +198,7 @@ export default {
   name: 'app',
   methods: {
     logout: function () {
+      this.$cookie.delete("usertype");
       this.$cookie.delete('customerId');
       this.$router.push({name: 'login'});
     },
@@ -212,9 +213,6 @@ export default {
       },
          homepage(){
         this.$router.push({name: 'HomePage'});
-<<<<<<< HEAD
-         }
-=======
     },
     shift(){
         this.$router.push({name: 'Shifts'});
@@ -232,7 +230,6 @@ export default {
         this.$router.push({name: 'Schedule'});
     }
     
->>>>>>> 4c552b84fbd73013ea6cc5d671905eb38ce83340
   }
 }
 
@@ -256,12 +253,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-<<<<<<< HEAD
-  background-color: #ebe3dd;
-
-=======
   background-color: white;
->>>>>>> 4c552b84fbd73013ea6cc5d671905eb38ce83340
 }
 #LMS {
   display:flex;
