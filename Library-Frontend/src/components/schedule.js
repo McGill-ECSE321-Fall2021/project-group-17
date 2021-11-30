@@ -14,6 +14,7 @@ export default {
   name: "schedule",
   data() {
     return {
+      username: this.$cookie.set("username"),
       librarian_Id: "",
       dayOf_Week: "",
       start_time: "",
@@ -109,7 +110,7 @@ export default {
       }
       if (boolean === "Yes") {
         AXIOS.post("/shift/headLibrarian", json, {
-          params: { accountUsername: "bob344" }
+          params: { accountUsername: this.username }
         }).catch(e => {
           var errorMsg = e.response.data.message;
           console.log(errorMsg);
@@ -117,7 +118,7 @@ export default {
         });
       } else {
         AXIOS.post("/shift/librarian", json, {
-          params: { accountusername: "bob344" }
+          params: { accountusername: this.username }
         }).catch(e => {
           var errorMsg = e.response.data.message;
           console.log(errorMsg);
@@ -128,7 +129,7 @@ export default {
     },
     deleteShift: function(shiftid) {
       AXIOS.delete("/shift/".concat(shiftid), {
-        params: { accountusername: "bob344" }
+        params: { accountusername: this.username }
       })
         .then(response => {
           console.log(response.data);
@@ -160,7 +161,7 @@ export default {
         return;
       }
       AXIOS.put("/shift/librarian/".concat(shiftid), json, {
-        params: { accountUsername: "bob344" }
+        params: { accountUsername: this.username }
       })
         .then(response => {
           console.log(response);
