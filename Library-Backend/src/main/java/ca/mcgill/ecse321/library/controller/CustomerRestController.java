@@ -47,6 +47,11 @@ public class CustomerRestController {
 
     }
 
+    @PutMapping(value={"/customer/{id}/{username}", "/customer/{id}/{username}/"})
+    public CustomerDTO updateCustomerAccount(@PathVariable("id") int id, @PathVariable("username") String username) throws IllegalArgumentException{
+        return convertToDTO(customerService.updateCustomerAccount(id, username));
+    }
+
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private static class JsonBody{
         private Integer personId;
@@ -97,6 +102,7 @@ public class CustomerRestController {
         cDTO.setLibCard(customer.getLibraryCard());
         cDTO.setPenalty(customer.getPenalty());
         cDTO.setPerson(customer.getPerson());
+        cDTO.setAccount(customer.getAccount());
         return cDTO;
     }
 }

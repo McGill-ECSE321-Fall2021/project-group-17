@@ -65,7 +65,6 @@ public class LibrarianRestController {
         }
         LibrarianDTO librarianDTO = new LibrarianDTO();
         librarianDTO.setId(librarian.getId());
-        librarianDTO.setAccount(librarian.getAccount());
         librarianDTO.setPerson(librarian.getPerson());
         return librarianDTO;
     }

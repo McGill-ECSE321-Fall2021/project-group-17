@@ -17,6 +17,8 @@ public class CustomerService {
     private PersonRepository personRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private OnlineAccountRepository onlineAccountRepository;
 
     /**
      * @author Victoria Sanchez
@@ -72,6 +74,15 @@ public class CustomerService {
         if(libCard!=null){
             customer.setLibraryCard(libCard);
         }
+        customerRepository.save(customer);
+        return customer;
+    }
+
+    public Customer updateCustomerAccount(Integer id, String username){
+        Customer customer = (Customer) customerRepository.findPersonRoleById(id);
+
+        OnlineAccount account = onlineAccountRepository.findOnlineAccountByUsername(username);
+        customer.setAccount(account);
         customerRepository.save(customer);
         return customer;
     }

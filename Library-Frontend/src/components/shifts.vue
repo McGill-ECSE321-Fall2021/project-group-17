@@ -1,26 +1,42 @@
 <template>
   <div id="shifts">
-    <hr />
-    <h1>My Schedule</h1>
-    <hr />
-    <table id="librarian_table">
-      <!-- <td>{{ librarian.person.name }}</td> -->
-      <tr>
+    <div id="header">
+      <h3 style="color:White;padding-top:17.5px;padding-bottom:17.5px">
+        My Schedule
+      </h3>
+    </div>
+    <table id="librarian_table" v-if="!errorPerson">
+      <p v-if="!shifts_to_show && !errorPerson">
+        No schedules to display.
+      </p>
+      <tr v-if="shifts_to_show.length != 0">
         <th id="entry">Day</th>
         <th id="entry">Start</th>
         <th id="entry">End</th>
-        <!--<th>Edit</th>-->
       </tr>
-      <tr v-for="shift in shifts" :key="shift.id">
+      <tr v-for="shift in shifts_to_show" :key="shift.id">
         <td id="data">{{ shift.dayOfWeek }}</td>
         <td id="data">{{ shift.startTime }}</td>
         <td id="data">{{ shift.endTime }}</td>
       </tr>
     </table>
 
+    <nav
+      class="navbar fixed-bottom navbar-light"
+      style="background-color: #76323F;"
+    >
+      <button class="left">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+          alt="Logo"
+          height="30"
+          width="30"
+        />
+      </button>
+    </nav>
     <p>
-      <span v-if="errorPerson" style="color:red"
-        >Error: {{ errorPerson }}
+      <span v-if="errorPerson" id="error-box" style="color:black">
+        {{ errorPerson }}
       </span>
     </p>
     <hr />
@@ -28,16 +44,24 @@
 </template>
 <script src="./shifts.js"></script>
 <style>
+#error-box {
+  padding-left: 40px;
+}
+#header {
+  background-color: #76323f;
+  height: 150%;
+  text-align: center;
+}
 #shifts {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #2c3e50;
   background: #f2ece8;
-  margin-top: 60px;
 }
 #librarian_table {
+  margin-top: 20px;
   margin-left: 40px;
 }
 #row {
@@ -49,6 +73,11 @@
 }
 #data {
   padding: 8px;
+}
+#text-my-own-color {
+  font-size: 18px;
+  font-family: monospace;
+  color: black;
 }
 h1 {
   font-weight: normal;
