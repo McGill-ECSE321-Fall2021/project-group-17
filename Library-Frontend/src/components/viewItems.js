@@ -53,7 +53,8 @@ export default {
         newspaper: '',
         headline: '',
         newspaperDatePublished: '',
-        error: ''
+        error: '',
+        serialNum: ''
       }
     },
     created: function () {
@@ -260,6 +261,32 @@ export default {
           })
 
           this.$delete(this.newspapers, findIndex(this.newspapers, this.newspaperSelected))
+      },
+      deleteBySerialNum: function () {
+        this.error = ''
+        AXIOS.delete('/iteminstance/' + this.serialNum).then(response => {
+          this.title= ''
+          this.author= ''
+          this.bookDatePublished= ''
+          this.genre= ''
+          this.publisher= ''
+          this.movieTitle = ''
+          this.director = ''
+          this.movieReleaseDate = ''
+          this.runningTime = ''
+          this.rating = ''
+          this.filmDistributor = ''
+          this.musicName = ''
+          this.musician = ''
+          this.recordLabel = ''
+          this.musicReleaseDate = ''
+          this.serialNum = ''
+        })
+          .catch(e =>{
+            this.error = e.response.data.message
+            console.log(e.response.data.message)
+          })
+
       }
     }
 }

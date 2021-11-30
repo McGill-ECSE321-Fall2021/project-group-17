@@ -6,15 +6,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import ca.mcgill.ecse321.library.model.Book;
+import ca.mcgill.ecse321.library.dao.*;
+import ca.mcgill.ecse321.library.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.mcgill.ecse321.library.dao.LibrarianRepository;
-import ca.mcgill.ecse321.library.dao.MusicRepository;
-import ca.mcgill.ecse321.library.model.Item;
-import ca.mcgill.ecse321.library.model.Librarian;
-import ca.mcgill.ecse321.library.model.Music;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
 import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
@@ -32,6 +28,12 @@ public class MusicService {
     private MusicRepository musicRepository;
     @Autowired
     private LibrarianRepository librarianRepository;
+    @Autowired
+    private ItemInstanceRepository itemInstanceRepository;
+    @Autowired
+    private LoanRepository loanRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
     
     @Transactional
     public Music createMusic(Integer librarianId, Integer id, String name, Date date, String musician, String recordLabel){
@@ -139,7 +141,26 @@ public class MusicService {
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        musicRepository.deleteById(musicId);
+
+        List<ItemInstance> itemInstances = itemInstanceRepository.findByCheckableItem(music);
+
+        for (ItemInstance itemInstance : itemInstances) {
+            Loan loan = loanRepository.findByItemInstance(itemInstance);
+
+            if (loan != null) {
+                loanRepository.delete(loan);
+            }
+
+            Reservation reservation = reservationRepository.findByItemInstance(itemInstance);
+
+            if (reservation != null) {
+                reservationRepository.delete(reservation);
+            }
+
+            itemInstanceRepository.delete(itemInstance);
+        }
+
+        musicRepository.delete(music);
         music = null;
     }
     @Transactional

@@ -63,16 +63,15 @@ export default {
         this.error = ''
         AXIOS.post('/loan/libraryCard/' +  parseInt(this.libCard) + '/' + parseInt(this.serialNum) + '/' + this.returnDate)
         .then(response => {
-          this.libraryCardNum = '';
+          this.libCard = '';
           this.serialNum = '';
           this.returnDate = '';
+          this.loans.push(response.data)
         })
           .catch(e =>{
             this.error = e.response.data.message
             console.log(e.response.data.message)
           })
-
-        document.location.reload(true)
       }
     }
 }
