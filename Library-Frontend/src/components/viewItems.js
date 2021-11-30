@@ -1,13 +1,34 @@
 import axios from 'axios'
 var config = require('../../config')
+var backendConfigurer = function() {
+  switch (process.env.NODE_ENV) {
+    case "development":
+      return "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
+    case "production":
+      return (
+        "https://" + config.build.backendHost + ":" + config.build.backendPort
+      );
+  }
+};
 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendConfigurer = function() {
+  switch (process.env.NODE_ENV) {
+    case "development":
+      return "http://" + config.dev.host + ":" + config.dev.port;
+    case "production":
+      return (
+        "http://" + config.build.host + ":" + config.build.port
+      );
+  }
+};
+
+var backendUrl = backendConfigurer();
+var frontendUrl = frontendConfigurer();
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
-})
+});
 
 function findIndex (array, item) {
   for (let i = 0; i < array.length; i++) {
@@ -22,7 +43,7 @@ return -1
 export default {
     name: 'returns',
     mounted: function() {
-      this.$material.theming.theme = "colors"; 
+      this.$material.theming.theme = "colors";
     },
     data () {
       return {
@@ -91,7 +112,7 @@ export default {
           console.log(e.response.data.message)
         })
     },
-    methods: { 
+    methods: {
       updateBookFields: function (book) {
         this.bookSelected = book
         this.title = book.name
