@@ -14,7 +14,8 @@ export default {
   name: "schedule",
   data() {
     return {
-      username: this.$cookie.set("username"),
+      currentShift: null,
+      username: "hl1",
       librarian_Id: "",
       dayOf_Week: "",
       start_time: "",
@@ -127,7 +128,7 @@ export default {
       }
       document.location.reload(true);
     },
-    deleteShift: function(shiftid) {
+    deleteShift: function(shiftid, field) {
       AXIOS.delete("/shift/".concat(shiftid), {
         params: { accountusername: this.username }
       })
@@ -139,7 +140,27 @@ export default {
           console.log(errorMsg);
           this.errorPerson = errorMsg;
         });
-      document.location.reload(true);
+      if (field == "HEADLIBRARIAN") {
+        this.$delete(
+          this.headLibrarianShifts,
+          findIndex(this.headLibrarianShifts, this.shift)
+        );
+      } else if (field === "MONDAY") {
+        this.$delete(this.Monday, findIndex(this.Monday, this.shift));
+      } else if (field === "TUESDAY") {
+        this.$delete(this.Tuesday, findIndex(this.Tuesday, this.shift));
+      } else if (field === "WEDNESDAY") {
+        this.$delete(this.Wednesday, findIndex(this.Wednesday, this.shift));
+      } else if (field === "THURSDAY") {
+        this.$delete(this.Thursday, findIndex(this.Thursday, this.shift));
+      } else if (field === "FRIDAY") {
+        this.$delete(this.Friday, findIndex(this.Friday, this.shift));
+      } else if (field === "SATURDAY") {
+        this.$delete(this.Saturday, findIndex(this.Saturday, this.shift));
+      } else if (field === "SUNDAY") {
+        this.$delete(this.Sunday, findIndex(this.Sunday, this.shift));
+      }
+      // document.location.reload(true);
     },
     updateShift: function(shiftid, librarianId, startTime, endTime, dayOfWeek) {
       const json = {
