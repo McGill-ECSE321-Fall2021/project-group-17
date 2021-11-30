@@ -70,25 +70,25 @@ var AXIOS = axios.create({
             <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
           </b-navbar-brand>
         </b-navbar>
-        <b-nav-item @click="iteminstance()">
+        <b-nav-item @click="shift()">
           <a class="text-my-own-color ">
             View Shifts
           </a>
 
         </b-nav-item>
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="loan()" class="unstyled">
           <a class="text-my-own-color ">
             Manage Loans
           </a>
         </b-nav-item >
 
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="holdings()" class="unstyled">
           <a class="text-my-own-color ">
             Manage Reservations
           </a>
         </b-nav-item >
 
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="viewItems()" class="unstyled">
           <a class="text-my-own-color ">
             Manage Items
           </a>
@@ -131,31 +131,31 @@ var AXIOS = axios.create({
             <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
           </b-navbar-brand>
         </b-navbar>
-        <b-nav-item @click="iteminstance()">
+            <b-nav-item @click="shift()">
           <a class="text-my-own-color ">
             View Shifts
           </a>
 
         </b-nav-item>
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="loan()" class="unstyled">
           <a class="text-my-own-color ">
             Manage Loans
           </a>
         </b-nav-item >
 
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="holdings()" class="unstyled">
           <a class="text-my-own-color ">
             Manage Reservations
           </a>
         </b-nav-item >
 
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="viewItems()" class="unstyled">
           <a class="text-my-own-color ">
             Manage Items
           </a>
         </b-nav-item >
 
-        <b-nav-item href="#/active" class="unstyled">
+        <b-nav-item @click="schedule()" class="unstyled">
           <a class="text-my-own-color ">
             Create Schedule
           </a>
@@ -214,7 +214,23 @@ export default {
       },
     homepage(){
         this.$router.push({name: 'HomePage'});
+    },
+    shift(){
+        this.$router.push({name: 'Shifts'});
+    },
+    loan(){
+        this.$router.push({name: 'Returns'});
+    },
+    holdings(){
+        this.$router.push({name: 'Holdings'});
+    },
+    viewItems(){
+        this.$router.push({name: 'ViewItems'});
+    },
+      schedule(){
+        this.$router.push({name: 'Schedule'});
     }
+    
   }
 }
 
