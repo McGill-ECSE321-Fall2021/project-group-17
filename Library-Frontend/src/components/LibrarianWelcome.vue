@@ -14,7 +14,7 @@ Vue.use(md-datepicker)
           <img src="https://i.ibb.co/L5shFK6/LMS-removebg-preview.png" alt="Logo" height="50" width="60">
         </b-navbar-brand>
       </b-navbar>
-      <b-nav-item href="#">
+      <b-nav-item href="#/viewitems">
         <a class="text-my-own-color ">
           Find movies and books
         </a>
