@@ -1,7 +1,9 @@
 <template>
   <div id="shifts">
     <div id="header">
-      <h3 style="color:White;">My Schedule</h3>
+      <h3 style="color:White;padding-top:17.5px;padding-bottom:17.5px">
+        My Schedule
+      </h3>
     </div>
     <table id="librarian_table" v-if="!errorPerson">
       <p v-if="!shifts_to_show && !errorPerson">

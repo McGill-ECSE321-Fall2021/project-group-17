@@ -1,7 +1,7 @@
 <template>
   <div id="schedule">
     <div id="header">
-      <h3 style="color:White;">Modify Schedules</h3>
+      <h3 style="color:White;padding-top:17.5px;padding-bottom:17.5px">Modify Schedules</h3>
     </div>
     <div id="librarian_table" v-if="!errorPerson">
       <table id="row">
