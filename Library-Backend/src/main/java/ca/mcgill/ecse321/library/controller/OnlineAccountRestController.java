@@ -68,6 +68,11 @@ public class OnlineAccountRestController {
         service.logout(username);
     }
 
+    @GetMapping(value={"/checkPersonRole/{username}", "/checkPersonRole/{username}/"})
+    public Integer determinePersonRoleType(@PathVariable("username") String username) {
+        return service.determinePersonRoleType(username);
+    }
+
     private OnlineAccountDTO convertToDTO(OnlineAccount account) {
         if (account == null) {
             throw new IllegalArgumentException("There is no such Online Account!");
