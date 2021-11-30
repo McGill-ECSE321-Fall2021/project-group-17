@@ -36,7 +36,10 @@ export default {
         this.Country=response.data.address.country;
         this.Address= this.streetNum + " " + this.streetName + " " + this.city + " " + this.Country;
         this.libCard=response.data.personRole.libraryCard.id;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4c552b84fbd73013ea6cc5d671905eb38ce83340
       })
           .catch(e =>{
             this.errorLoan = e

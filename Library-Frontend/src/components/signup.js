@@ -92,6 +92,18 @@ export default {
       AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+customerId, {} ,{}).then(response => {
         this.$cookie.set("customerId", response.data.personRole.id)
         this.$cookie.set("username", response.data.name)
+        this.$cookie.set("usertype", 0);
+
+        AXIOS.put('/customer/'+ response.data.personRole.id + '/'+ this.userSignup).then(response => {
+
+        })
+          .catch(e => {
+            let errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorSignup = errorMsg
+            this.error = true
+      })
+
         this.$router.push({name: 'HomePage'});
         this.errorSignup = ''
       })

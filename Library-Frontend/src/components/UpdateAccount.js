@@ -56,7 +56,10 @@ export default {
                 this.city=response.data.personRole.address.city;
                 this.Country=response.data.personRole.address.country;
                 this.Address= this.streetNum + " " + this.streetName + " " + this.city + " " + this.Country;
+
+                if (this.libCard != null) {
                 this.libCard=response.data.personRole.libraryCard.id;
+                }
                 this.$router.push({name:'Profile'});
             })
               .catch(e =>{
