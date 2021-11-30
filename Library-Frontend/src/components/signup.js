@@ -86,7 +86,6 @@ export default {
           this.error = true
         })
     },
-
     createOnlineAccountCustomer: function (customerId) {
       console.log(customerId)
       AXIOS.post('/onlineaccount/customer/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+customerId, {} ,{}).then(response => {
@@ -146,6 +145,7 @@ export default {
         })
     },
 
+
     createCustomerPerson: function (){
       let body = {personId: this.selected.id, penalty: 0, addressId: this.addressId}
       console.log(body)
@@ -162,11 +162,52 @@ export default {
         })
     },
 
-    createAddressPerson: function (){
+    createAddressPerson: function (){//entry
       AXIOS.post('/address/1/' + this.streetNum + '/' + this.streetName + '/' + this.city + '/' + this.country,{},{}).then(response => {
         console.log(response.data.id)
         this.addressId = response.data.id
         this.createCustomerPerson()
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
+    createLibrarianPerson: function (){ //{username}/{personid}/{accountid} //entry
+      AXIOS.post('/librarian/' + this.personId,{}, {}).then(response => {
+        console.log(response.data.id)
+        this.librarianId = response.data.id
+        this.createOnlineAccountLibrarian()
+        this.errorSignup = ''
+      })
+        .catch(e => {
+          let errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorSignup = errorMsg
+          this.error = true
+        })
+    },
+    createOnlineAccountLibrarian: function (librarianId) {//entry
+      console.log(librarianId)
+      AXIOS.post('/onlineaccount/librarian/'+ this.userSignup + '/'+ this.passwordSignup + '/' + this.email + "?personRoleId="+librarianId, {} ,{}).then(response => {
+        this.$cookie.set("librarianId", response.data.personRole.id)
+        this.$cookie.set("username", response.data.name)
+        this.$cookie.set("usertype", 1);
+
+        AXIOS.put('/librarian/'+ this.userSignup +'/'+ this.personId + '/'+ response.data.personRole.id).then(response => {
+
+        })
+          .catch(e => {
+            let errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorSignup = errorMsg
+            this.error = true
+          })
+
+        this.$router.push({name: 'LibrarianWelcomePage'});
         this.errorSignup = ''
       })
         .catch(e => {

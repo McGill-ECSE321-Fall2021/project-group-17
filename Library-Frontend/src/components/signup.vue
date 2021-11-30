@@ -90,6 +90,52 @@ import Vue from 'vue'
                 </p>
                 <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
               </md-tab>
+              <md-tab id="tab-librarian" md-label="Create Librarian">
+                <h1>Sign Up</h1>
+                <div class="address-label">
+                  <label>Already a Member?</label>
+                </div>
+                <div class="signup-info">
+
+                  <b-button class="btn" @click="onSearchClick()">Search</b-button>
+
+                  <md-dialog :md-active.sync="searchDialog" >
+                    <md-dialog-title>Members of LMS</md-dialog-title>
+                    <div>
+                      <md-table v-model="searched" md-sort="id" md-sort-order="asc" md-card md-fixed-header @md-selected="onSelected">
+                        <md-table-toolbar>
+                          <md-field md-clearable class="md-toolbar-section-end">
+                            <md-input placeholder="Search by id..." v-model="tableSearch" @input="searchOnTable" />
+                          </md-field>
+                        </md-table-toolbar>
+
+                        <md-table-empty-state
+                          md-label="No Members found"
+                          :md-description="`No members found for this search query. Try a different search term.`">
+                        </md-table-empty-state>
+
+                        <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single">
+                          <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+                          <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+                        </md-table-row>
+                      </md-table>
+                    </div>
+                  </md-dialog>
+                </div>
+                <form class="signup-info">
+                  <div class="address-label">
+                    <label>Login Information</label>
+                  </div>
+                  <input v-model="userSignup" type="email" class="signup-input" placeholder="Enter Username" required>
+                  <input v-model="passwordSignup" type="password" class="signup-input" placeholder="Enter Password" required>
+                  <input v-model="email" class="signup-input" placeholder="Enter Email" required>
+                </form>
+                <b-button @click="createLibrarianPerson()" size="sm" class="btn">Sign Up</b-button>
+                <p>
+                  <span v-if="error" style="color:red">Error: {{errorSignup}}</span>
+                </p>
+                <div class="acct">Already have an account?<router-link to="/login"> Login here</router-link></div>
+              </md-tab>
             </md-tabs>
           </div>
         </div>
