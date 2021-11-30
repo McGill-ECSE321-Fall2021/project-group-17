@@ -43,7 +43,7 @@ The Library Management System aims to create an easy to use system which can bri
   | Tomasz Mroz  |  |  |
   | Fiona Ryan   |  |  |
   | Victoria Sanchez| | |
-  | Jerry Xia |  |  |
+  | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 20 |
   
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)
