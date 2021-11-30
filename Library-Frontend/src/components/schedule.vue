@@ -1,9 +1,9 @@
 <template>
   <div id="schedule">
     <div id="header">
-      <h3>Modify Schedules</h3>
+      <h3 style="color:White;padding-top:17.5px;padding-bottom:17.5px">Modify Schedules</h3>
     </div>
-    <div id="librarian_table">
+    <div id="librarian_table" v-if="!errorPerson">
       <table id="row">
         <h2>Create Shifts</h2>
         <tr>
@@ -441,7 +441,7 @@
       </button>
     </nav>
     <p>
-      <span v-if="errorPerson" id="error-box" style="color:red">
+      <span v-if="errorPerson" id="error-box" style="color:black">
         {{ errorPerson }}
       </span>
     </p>
@@ -465,7 +465,6 @@
   text-align: left;
   color: #2c3e50;
   background: #f2ece8;
-  margin-top: 60px;
 }
 #librarian_table {
   margin-top: 20px;
