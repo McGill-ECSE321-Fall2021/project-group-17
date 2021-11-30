@@ -43,6 +43,7 @@ export default {
         this.selectedReservation = reservation
         this.selectedItem = reservation.itemInstance.checkableItem.name
         this.selectedCustomer = reservation.customer.person.name
+        this.libCard = reservation.customer.libCard
       },
 
       deleteReservation: function () {
