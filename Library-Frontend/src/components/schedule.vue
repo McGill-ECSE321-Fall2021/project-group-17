@@ -441,7 +441,7 @@
       </button>
     </nav>
     <p>
-      <span v-if="errorPerson" id="error-box" style="color:red">
+      <span v-if="errorPerson" id="error-box" style="color:black">
         {{ errorPerson }}
       </span>
     </p>
