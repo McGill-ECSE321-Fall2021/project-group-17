@@ -6,7 +6,6 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 Vue.use(md-datepicker)
 
 <template>
-
 <div>
     <div>
     <b-carousel
@@ -24,7 +23,7 @@ Vue.use(md-datepicker)
       <b-carousel-slide>
 
            <template #img>
-          <img
+          <img 
             width="840"
             height="600"
             src="https://i.ibb.co/NWyhxkx/WELCOME-TO-MONTREALS-BIGGEST-PUBLIC-LIBRARY-2.gif"
@@ -208,26 +207,26 @@ Vue.use(md-datepicker)
     <b-col><b>SIGN UP FOR OUR NEWSLETTER</b></b-col>
   </b-row>
     <b-row>
-    <b-col>ADDRESS:</b-col>
-    <b-col>EMAIL:</b-col>
+    <b-col>ADDRESS: </b-col>
+    <b-col>EMAIL: libraries@gmail.com</b-col>
     <b-col><b-link href="#foo"><a class="text-my-own-color">Mission Statement</a></b-link></b-col>
-    <b-col><b-form-input v-model="text" placeholder="Enter your email"></b-form-input></b-col>
+    <b-col></b-col>
   </b-row>
   <b-row>
-    <b-col>WEEKLY HOURS</b-col>
-    <b-col>PHONE NUMBER:</b-col>
-    <b-col><b-link href="#foo"><a class="text-my-own-color">Our History</a></b-link></b-col>
     <b-col></b-col>
+    <b-col>PHONE NUMBER: 123-456-7890</b-col>
+    <b-col><b-link href="#foo"><a class="text-my-own-color">Support the library</a></b-link></b-col>
+    <b-col><b-form-input v-model="text" placeholder="Enter your email"></b-form-input></b-col>
   </b-row>
     <b-row>
-    <b-col></b-col>
-    <b-col></b-col>
-    <b-col><b-link href="#foo"><a class="text-my-own-color">Support the Library</a></b-link></b-col>
-     <b-col><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Facebook%2BIcon%2BBlack.png" alt="Logo" height="20" width="20" left>
+    <b-col><img src="https://i.ibb.co/G0vyhkH/Screen-Shot-2021-11-29-at-9-50-07-PM.png" alt="Logo" height="150" width="150" ></b-col>
+    <b-col center><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Facebook%2BIcon%2BBlack.png" alt="Logo" height="20" width="20" left>
      <img src="https://i.ibb.co/Z6bPFc0/5ecec78673e4440004f09e77.png" alt="Logo" height="20" width="20" >
 
      <img src="https://icon-library.com/images/twitter-icon-png-white/twitter-icon-png-white-9.jpg" alt="Logo" height="25" width="25" >
      </b-col>
+     <b-col></b-col>
+    <b-col></b-col>
      </b-row>
 </b-container>
 
@@ -239,6 +238,7 @@ Vue.use(md-datepicker)
 export default {
     data() {
       return {
+        center: { lat: 45.508, lng: -73.587 },
         slide: 0,
         sliding: null
       }
@@ -306,6 +306,7 @@ export default {
   font-size:18px;
   font-family:monospace;
     color: black;
+    padding: 3% 3% 3% 3%;
 }
 .sizing {
 position:relative;
