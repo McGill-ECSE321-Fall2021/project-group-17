@@ -40,6 +40,11 @@ public class ItemInstanceRestController {
         return convertToDTO(itemInstance);
     }
 
+    @DeleteMapping(value= {"/iteminstance/{serialNum}", "/iteminstance/{serialNum}/"})
+    public void deleteItemInstance(@PathVariable("serialNum") Integer serialNum) throws IllegalArgumentException{
+        service.deleteItemInstance(serialNum);
+    }
+
     private ItemInstanceDTO convertToDTO(ItemInstance itemInstance) {
         if (itemInstance == null) {
             throw new IllegalArgumentException("There is no such ItemInstance");

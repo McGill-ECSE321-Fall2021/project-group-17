@@ -62,10 +62,17 @@ import Vue from 'vue'
                     <md-input v-model="publisher" placeholder="Publisher"></md-input>
                 </md-field>
                 </div>
+                <div class="inputLine">
+                    <md-field>
+                        <label>Serial Number</label>
+                        <md-input v-model="serialNum" placeholder="Serial Number"></md-input>
+                    </md-field>
+                </div>
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addBook()">Add Book</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteBook()">Delete Book</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteBySerialNum()">Delete Book By Serial Number</b-button>
             </div>
         </div>
         <div v-else-if="itemSelected == 'movie'">
@@ -124,10 +131,17 @@ import Vue from 'vue'
                         <md-input v-model="movieReleaseDate" placeholder="Release Date (yyyy-mm-dd)"></md-input>
                     </md-field>
                 </div>
+                <div class="inputLine1">
+                    <md-field>
+                        <label>Serial Number</label>
+                        <md-input v-model="serialNum" placeholder="Serial Number"></md-input>
+                    </md-field>
+                </div>
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addMovie()">Add Movie</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteMovie()">Delete Movie</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteBySerialNum()">Delete Movie By Serial Number</b-button>
             </div>
         </div>
         <div v-else-if="itemSelected == 'music'">
@@ -170,10 +184,17 @@ import Vue from 'vue'
                         <md-input v-model="musicReleaseDate" placeholder="Release Date (yyyy-mm-dd)"></md-input>
                     </md-field>
                 </div>
+                <div class="inputLine">
+                    <md-field class=serialNum>
+                        <label>Serial Number</label>
+                        <md-input v-model="serialNum" placeholder="Serial Number"></md-input>
+                    </md-field>
+                </div>
             </md-card>
             <div>
                 <b-button pill variant="outline-secondary" class="buttons" @click="addMusic()">Add Music</b-button>
                 <b-button pill variant="outline-secondary" class="buttons" @click="deleteMusic()">Delete Music</b-button>
+                <b-button pill variant="outline-secondary" class="buttons" @click="deleteBySerialNum()">Delete Music By Serial Number</b-button>
             </div>
         </div>
         <div v-else-if="itemSelected == 'newspaper'">
@@ -314,6 +335,11 @@ import Vue from 'vue'
 
     .nav {
         padding-top: 25%;
+    }
+
+    .serialNum {
+        position: relative;
+        left: 80px;
     }
 </style>
 

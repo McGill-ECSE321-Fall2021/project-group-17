@@ -293,6 +293,9 @@ public class LoanService {
 
         List<LoanDTO> loansDTO = new ArrayList<>();
         for (Loan loan: loans){
+            if (loan.getItemInstance().getCheckableItem() == null) {
+                continue;
+            }
             LoanDTO loanDTO = LoanService.loantoDTO(loan);
             loansDTO.add(loanDTO);
         }

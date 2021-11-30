@@ -6,14 +6,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ca.mcgill.ecse321.library.dao.*;
+import ca.mcgill.ecse321.library.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.mcgill.ecse321.library.dao.BookRepository;
-import ca.mcgill.ecse321.library.dao.LibrarianRepository;
-import ca.mcgill.ecse321.library.model.Book;
-import ca.mcgill.ecse321.library.model.Item;
-import ca.mcgill.ecse321.library.model.Librarian;
 import ca.mcgill.ecse321.library.service.Exception.BookException;
 import ca.mcgill.ecse321.library.service.Exception.MovieException;
 import ca.mcgill.ecse321.library.service.Exception.NotFoundException;
@@ -31,6 +28,13 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private LibrarianRepository librarianRepository;
+    @Autowired
+    private ItemInstanceRepository itemInstanceRepository;
+    @Autowired
+    private LoanRepository loanRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     @Transactional
     public Book createBook(Integer librarianId, Integer id, String name, Date date, 
     		String author, String publisher, String genre){
@@ -100,7 +104,26 @@ public class BookService {
         if (!(librarian instanceof Librarian)) {
         	throw new PersonException("User must be a librarian");
         }
-        bookRepository.deleteById(bookId);
+
+        List<ItemInstance> itemInstances = itemInstanceRepository.findByCheckableItem(book);
+
+        for (ItemInstance itemInstance : itemInstances) {
+            Loan loan = loanRepository.findByItemInstance(itemInstance);
+
+            if (loan != null) {
+                loanRepository.delete(loan);
+            }
+
+            Reservation reservation = reservationRepository.findByItemInstance(itemInstance);
+
+            if (reservation != null) {
+                reservationRepository.delete(reservation);
+            }
+
+            itemInstanceRepository.delete(itemInstance);
+        }
+
+        bookRepository.delete(book);
         book = null;
     }
     
