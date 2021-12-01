@@ -65,6 +65,7 @@ export default {
         this.selectedReservation = reservation
         this.selectedItem = reservation.itemInstance.checkableItem.name
         this.selectedCustomer = reservation.customer.person.name
+        this.libCard = reservation.customer.libCard.id
       },
 
       deleteReservation: function () {
@@ -87,7 +88,7 @@ export default {
         var serialNum = this.selectedReservation.itemInstance.serialNum
         AXIOS.post('/loan/libraryCard/' +  this.libCard + '/' + parseInt(serialNum) + '/' + this.returnDate)
         .then(response => {
-          this.libraryCardNum = '';
+          this.libCard = '';
           this.serialNum = '';
           this.returnDate = '';
         })

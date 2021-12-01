@@ -35,11 +35,11 @@ public class LibrarianRestController {
         return convertToDTO(librarian);
     }
 
-    @PutMapping(value= {"/librarian/{username}/{personid}/{accountid}","/librarian/{username}/{personid}/{accountid}"})
+    @PutMapping(value= {"/librarian/{username}/{personid}/{librarianid}","/librarian/{username}/{personid}/{accountid}"})
     public LibrarianDTO createLibrarian(@PathVariable("personid") Integer personId,
-                                                @PathVariable("accountid") Integer accountId,
+                                                @PathVariable("librarianid") Integer librarianId,
                                                 @PathVariable("username")String username) throws IllegalArgumentException{
-        Librarian librarian = librarianService.updateLibrarian(personId, accountId, username);
+        Librarian librarian = librarianService.updateLibrarian(librarianId, personId, username);
         return convertToDTO(librarian);
     }
 
