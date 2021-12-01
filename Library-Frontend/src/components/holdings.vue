@@ -51,7 +51,7 @@ import Vue from 'vue'
                         </md-field>
                         <md-field class="input">
                             <label>Library Card</label>
-                            <md-input v-model="libCard" placeholder="Library Card"></md-input>
+                            <md-input v-model="libCard" placeholder="Library Card" disabled></md-input>
                         </md-field>
                         <md-field class="input">
                             <md-datepicker v-model="returnDate"/>
