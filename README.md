@@ -38,7 +38,7 @@ The Library Management System aims to create an easy to use system which can bri
   ### Effort Breakdown Sprint Three
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
-  | Aidan Jackson|  | 20 |
+  | Aidan Jackson| Librarian, Head Librarian welcome pages, Librarian sign up, librarian service method fixes, meeting minutes, key architecture layer explanations | 25 |
   | Hana Gustyn  |  |  |
   | Tomasz Mroz  | Reservation, Item Instance, and Loan UI on customer side  | 25 |
   | Fiona Ryan   |  |  |
