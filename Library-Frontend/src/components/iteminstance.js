@@ -72,6 +72,7 @@ export default {
       items = items.filter(function (el){
         return el.checkableItem != null;
       })
+      //Used to determine type of item through attributes
       items.forEach(function(element,index,array){
         if(element.checkableItem.musician){
           array[index].checkableItem.type = "Music"
