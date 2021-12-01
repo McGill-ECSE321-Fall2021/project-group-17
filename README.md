@@ -43,7 +43,7 @@ The Library Management System aims to create an easy to use system which can bri
   | Tomasz Mroz  | Reservation, Item Instance, and Loan UI on customer side  | 25 |
   | Fiona Ryan   | Login and Sign up UI pages | 25 |
   | Victoria Sanchez|User homepage, navigation between pages, profile and update account functionality for users, meeting minutes |25 |
-  | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 20 |
+  | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 25 |
   
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)
