@@ -42,7 +42,7 @@ The Library Management System aims to create an easy to use system which can bri
   | Hana Gustyn  |  |  |
   | Tomasz Mroz  | Reservation, Item Instance, and Loan UI on customer side  | 25 |
   | Fiona Ryan   |  |  |
-  | Victoria Sanchez| | |
+  | Victoria Sanchez|User homepage, navigation between pages, profile and update account functionality for users, meeting minutes |25 |
   | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 20 |
   
 ### Project Wiki
