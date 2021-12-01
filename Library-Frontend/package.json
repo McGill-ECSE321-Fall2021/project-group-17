@@ -25,6 +25,7 @@
     "popper.js": "^1.12.9",
     "serve-static": "^1.1.1",
     "server-static": "^2.0.5",
+    "sass": "^1.43.4",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
     "vue-material": "^1.0.0-beta-15",
