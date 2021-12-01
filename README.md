@@ -41,7 +41,7 @@ The Library Management System aims to create an easy to use system which can bri
   | Aidan Jackson| Librarian, Head Librarian welcome pages, Librarian Sign Up, Librarian Service Method Fixes, Meeting Minutes, Key Architecture Layer Explanations | 25 |
   | Hana Gustyn  | Manage Loans, Manage Reservations, Manage Items, Navigation between pages, Key Architecture Layer Explanations | 25 |
   | Tomasz Mroz  | Reservation, Item Instance, and Loan UI on customer side  | 25 |
-  | Fiona Ryan   |  |  |
+  | Fiona Ryan   | Login and Sign up UI pages | 25 |
   | Victoria Sanchez|User homepage, navigation between pages, profile and update account functionality for users, meeting minutes |25 |
   | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 20 |
   
