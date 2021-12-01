@@ -39,7 +39,7 @@ The Library Management System aims to create an easy to use system which can bri
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
   | Aidan Jackson| Librarian, Head Librarian welcome pages, Librarian sign up, librarian service method fixes, meeting minutes, key architecture layer explanations | 25 |
-  | Hana Gustyn  |  |  |
+  | Hana Gustyn  | Manage Loans, Manage Reservations, Manage Items, Navigation between pages, Key Architecture Layer Explanations | 25 |
   | Tomasz Mroz  | Reservation, Item Instance, and Loan UI on customer side  | 25 |
   | Fiona Ryan   |  |  |
   | Victoria Sanchez|User homepage, navigation between pages, profile and update account functionality for users, meeting minutes |25 |
