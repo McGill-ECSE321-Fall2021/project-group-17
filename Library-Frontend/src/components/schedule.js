@@ -17,9 +17,7 @@ var frontendConfigurer = function() {
     case "development":
       return "http://" + config.dev.host + ":" + config.dev.port;
     case "production":
-      return (
-        "http://" + config.build.host + ":" + config.build.port
-      );
+      return "http://" + config.build.host + ":" + config.build.port;
   }
 };
 
@@ -28,14 +26,14 @@ var frontendUrl = frontendConfigurer();
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
-  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
 export default {
   name: "schedule",
   data() {
     return {
-      username: this.$cookie.set("username"),
+      username: this.$cookie.get("username"),
       librarian_Id: "",
       dayOf_Week: "",
       start_time: "",
@@ -73,14 +71,13 @@ export default {
         for (let i = 0; i < this.librarians.length; i++) {
           AXIOS.get("/shift/librarian/".concat(this.librarians[i].id))
             .then(response => {
-              // this.librarians[i].shifts = [];
               for (let j = 0; j < response.data.length; j++) {
                 response.data[j].dayOfWeek =
                   response.data[j].dayOfWeek[0] +
                   response.data[j].dayOfWeek.slice(1).toLowerCase();
-                // if (this.librarians[i].id === this.$cookies.get("customerId")) {
-                //   this.headLibrarianShifts.push(response.data[j]);
-                if (response.data[j].dayOfWeek === "Monday") {
+                if (this.librarians[i].id === this.$cookie.get("customerId")) {
+                  this.headLibrarianShifts.push(response.data[j]);
+                } else if (response.data[j].dayOfWeek === "Monday") {
                   this.Monday.push(response.data[j]);
                 } else if (response.data[j].dayOfWeek === "Tuesday") {
                   this.Tuesday.push(response.data[j]);
@@ -108,7 +105,7 @@ export default {
   },
 
   methods: {
-    createShift: function(librarianId, startTime, endTime, dayOfWeek, boolean) {
+    createShift: function(librarianId, startTime, endTime, dayOfWeek) {
       startTime = startTime.concat(":00");
       endTime = endTime.concat(":00");
       const json = {
@@ -129,23 +126,13 @@ export default {
         this.errorPerson = "Day string not formatted correctly!";
         return;
       }
-      if (boolean === "Yes") {
-        AXIOS.post("/shift/headLibrarian", json, {
-          params: { accountUsername: this.username }
-        }).catch(e => {
-          var errorMsg = e.response.data.message;
-          console.log(errorMsg);
-          this.errorPerson = errorMsg;
-        });
-      } else {
-        AXIOS.post("/shift/librarian", json, {
-          params: { accountusername: this.username }
-        }).catch(e => {
-          var errorMsg = e.response.data.message;
-          console.log(errorMsg);
-          this.errorPerson = errorMsg;
-        });
-      }
+      AXIOS.post("/shift/librarian", json, {
+        params: { accountusername: this.username }
+      }).catch(e => {
+        var errorMsg = e.response.data.message;
+        console.log(errorMsg);
+        this.errorPerson = errorMsg;
+      });
       document.location.reload(true);
     },
     deleteShift: function(shiftid) {
