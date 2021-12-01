@@ -12,12 +12,15 @@ var backendConfigurer = function() {
   }
 };
 
+
 var frontendConfigurer = function() {
   switch (process.env.NODE_ENV) {
     case "development":
-      return "http://" + config.dev.host + ":" + config.dev.port;
+      return "http://" + config.dev.host
     case "production":
-      return "http://" + config.build.host + ":" + config.build.port;
+      return (
+        "https://" + config.build.host
+      );
   }
 };
 
