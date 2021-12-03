@@ -30,6 +30,14 @@ public class AddressRestController {
         return convertToDTO(address);
     }
 
+    @PostMapping(value= {"/address/{id}/{streetNum}/{street}/{city}/{country}","/address/{id}/{streetNum}/{street}/{city}/{country}/"})
+    public AddressDTO createAddress1(@PathVariable("id") int id, @PathVariable("streetNum") int streetNum,
+                                    @PathVariable("street") String street, @PathVariable("city") String city,
+                                    @PathVariable("country") String country) throws IllegalArgumentException{
+        Address address = service.createAddress(id, streetNum, street, city, country, null);
+        return convertToDTO(address);
+    }
+
     @PutMapping(value={"/address/{id}/{streetNum}/{street}/{city}/{country}","/address/{id}/{streetNum}/{street}/{city}/{country}/"})
     public AddressDTO updateAddress(@PathVariable("id") int id, @PathVariable("streetNum") int streetNum,
                                     @PathVariable("street") String street, @PathVariable("city") String city,
