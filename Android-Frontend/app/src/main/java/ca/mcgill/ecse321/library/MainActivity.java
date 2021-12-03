@@ -11,6 +11,7 @@ import com.loopj.android.http.RequestParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Editable;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -23,10 +24,12 @@ import cz.msebera.android.httpclient.entity.mime.Header;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,17 +94,20 @@ public class MainActivity extends AppCompatActivity {
     public void logIn(View v){
         error = "";
 
-        final String username = String.valueOf(findViewById(R.id.login_username));
-        final String password = String.valueOf(findViewById(R.id.login_password));
+        EditText login_username = (EditText)findViewById(R.id.login_username);
+        String username = login_username.getText().toString();
+
+        EditText login_password = findViewById(R.id.login_password);
+        String password = login_password.getText().toString();
 
 
-        HttpUtils.postByUrl("/login/"+ username+'/'+password, new RequestParams(), new JsonHttpResponseHandler() {
+        HttpUtils.post("/login/"+ username+'/'+password, new RequestParams(), new JsonHttpResponseHandler() {
 
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    if(response.get("password").toString().equalsIgnoreCase(password)){
+                    if(response.get("password").toString().equalsIgnoreCase(password.toString())){
                         Intent intent = new Intent(MainActivity.this, MainActivity.class);  //loginActivity to homepage
-                        intent.putExtra("username", username);
+                        intent.putExtra("username", username.toString());
                         startActivity(intent);
                     }else{
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
@@ -130,35 +136,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-/*
-        error = "";
-
-        final TextView username = findViewById(R.id.login_username);
-        final TextView password = findViewById(R.id.login_password);
-
-
-        HttpUtils.post("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
-
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                refreshErrorMessage();
-                username.setText("");
-                password.setText("");
-            }
-
-            private void refreshErrorMessage() {
-            }
-
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error += errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error += e.getMessage();
-                }
-                refreshErrorMessage();
-            }
-        });
-*/
     }
 
     private void refreshErrorMessage() {

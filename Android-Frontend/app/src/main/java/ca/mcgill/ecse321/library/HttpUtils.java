@@ -27,6 +27,7 @@ public class HttpUtils {
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.setURLEncodingEnabled(false);
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
