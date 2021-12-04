@@ -1,11 +1,7 @@
 package ca.mcgill.ecse321.library;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,7 +28,7 @@ public class SignUpActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+        setContentView(R.layout.activity_signup);
     }
 
     public void signUp(View v) throws JSONException {
@@ -49,7 +45,13 @@ public class SignUpActivity extends MainActivity {
                     if (response.get("id").toString() != null) {
                         personId = Integer.parseInt(response.get("id").toString());
 
-                        HttpUtils.post("address/1/" + streetNumber + '/' + streetName + '/' + city + '/' + country, new RequestParams(), new JsonHttpResponseHandler() {
+                        RequestParams params = new RequestParams();
+                        params.add("streetNum", String.valueOf(streetNumber));
+                        params.add("streetName", String.valueOf(streetName));
+                        params.add("city", String.valueOf(city));
+                        params.add("country", String.valueOf(country));
+
+                        HttpUtils.post("address/1", params, new JsonHttpResponseHandler() {
 
                             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                 try {
@@ -176,7 +178,7 @@ public class SignUpActivity extends MainActivity {
         });
     }
 
-    public void login(View v) {
+    private void login(View v) {
         HttpUtils.post("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
 
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
