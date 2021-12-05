@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            initReservations();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            initReservations();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         setContentView(R.layout.activity_view_items);
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());

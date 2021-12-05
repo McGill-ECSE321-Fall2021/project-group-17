@@ -27,12 +27,12 @@ public class ViewItemsActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_items);
-        try {
-            initReservations();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        setContentView(R.layout.activity_login);
+//        try {
+//            initReservations();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void initReservations() throws JSONException {

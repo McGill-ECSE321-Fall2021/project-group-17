@@ -21,15 +21,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:gravity="right"
-            android:text="@string/view_reservations"
-            android:onClick="viewReservations"/>
+<!--        <Button-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="right"-->
+<!--            android:layout_marginRight="8dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:gravity="right"-->
+<!--            android:text="@string/view_reservations"-->
+<!--            android:onClick="viewReservations"/>-->
         <HorizontalScrollView
             android:id="@+id/hscrll1"
             android:layout_width="fill_parent"
