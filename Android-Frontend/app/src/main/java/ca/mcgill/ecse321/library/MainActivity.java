@@ -34,17 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String error = null;
-    /*private Integer customerId;
-    private Integer personId;
-    private Integer addressId;
-    private final String name = String.valueOf(findViewById(R.id.person_name));
-    private final String username = String.valueOf(findViewById(R.id.signup_username));
-    private final String password = String.valueOf(findViewById(R.id.signup_password));
-    private final String email = String.valueOf(findViewById(R.id.email_address));
-    private final String streetNumber = String.valueOf(findViewById(R.id.street_number));
-    private final String streetName = String.valueOf(findViewById(R.id.street_name));
-    private final String city = String.valueOf(findViewById(R.id.city));
-    private final String country = String.valueOf(findViewById(R.id.country));*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-    private void refreshErrorMessage() {
+    protected void refreshErrorMessage() {
 
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);

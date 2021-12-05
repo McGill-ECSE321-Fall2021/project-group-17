@@ -20,25 +20,17 @@ public class SignUpActivity extends MainActivity {
         setContentView(R.layout.activity_signup);
     }
 
-    public void signUp(View v) throws JSONException {
+    public void signUp(View v) {
         error = "";
 
         EditText editText = findViewById(R.id.person_name);
         final String name = editText.getText().toString();
 
-        //final String name = String.valueOf(findViewById(R.id.person_name));
-
         HttpUtils.post("person/" + name, new RequestParams(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
-                    if (response.get("id").toString() != null) {
                         int personId = Integer.parseInt(response.get("id").toString());
-
-                        /*final String streetNumber = String.valueOf(findViewById(R.id.street_number));
-                        final String streetName = String.valueOf(findViewById(R.id.street_name));
-                        final String city = String.valueOf(findViewById(R.id.city));
-                        final String country = String.valueOf(findViewById(R.id.country));*/
 
                         EditText editText1 = findViewById(R.id.street_number);
                         final int streetNumber = Integer.parseInt(editText1.getText().toString());
@@ -82,7 +74,6 @@ public class SignUpActivity extends MainActivity {
                             }
                         });
 
-                    }
                 } catch (Exception e) {
 
                 }
@@ -96,8 +87,6 @@ public class SignUpActivity extends MainActivity {
                 }
             }
         });
-
-
     }
 
     private void createLibraryCard(View v, Integer customerId) {
@@ -115,6 +104,7 @@ public class SignUpActivity extends MainActivity {
                 } catch (JSONException e) {
                     error = e.getMessage();
                 }
+                refreshErrorMessage();
             }
         });
     }
