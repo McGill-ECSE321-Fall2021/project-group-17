@@ -29,6 +29,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:ems="10"
+            android:fontFamily="monospace"
             android:hint="Name"
             android:inputType="text" />
 
@@ -39,6 +40,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
+            android:fontFamily="monospace"
             android:text="Account Information"
             android:textSize="20sp" />
 
@@ -54,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:hint="Username"
                 android:inputType="text" />
 
@@ -64,6 +67,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:hint="Password"
                 android:inputType="textPassword" />
         </LinearLayout>
@@ -75,6 +79,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:ems="10"
+            android:fontFamily="monospace"
             android:hint="Email"
             android:inputType="textEmailAddress" />
 
@@ -101,6 +106,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
+            android:fontFamily="monospace"
             android:text="Address"
             android:textSize="20sp" />
 
@@ -117,6 +123,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:hint="Street Number"
                 android:inputType="number" />
 
@@ -127,6 +134,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:hint="Street Name"
                 android:inputType="text" />
         </LinearLayout>
@@ -144,6 +152,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:hint="City"
                 android:inputType="text" />
 
@@ -154,6 +163,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:hint="Country"
                 android:inputType="text" />
         </LinearLayout>
@@ -175,7 +185,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
