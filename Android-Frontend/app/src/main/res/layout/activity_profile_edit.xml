@@ -47,7 +47,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/email"
+            android:id="@+id/email_edit"
             android:text="@string/email"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
@@ -56,7 +56,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/password"
+            android:id="@+id/password_edit"
             android:text="@string/user_password"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
@@ -65,7 +65,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/street_number"
+            android:id="@+id/street_number_edit"
             android:text="@string/number"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
@@ -74,7 +74,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/street_name"
+            android:id="@+id/street_name_edit"
             android:text="@string/name"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
@@ -83,7 +83,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/city"
+            android:id="@+id/city_edit"
             android:text="@string/city"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
@@ -92,7 +92,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/country"
+            android:id="@+id/country_edit"
             android:text="@string/country"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
@@ -107,6 +107,6 @@
             android:layout_marginTop="16dp"
             android:gravity="right"
             android:text="@string/save_button"
-            android:onClick="viewProfile"/>
+            android:onClick="editProfileInfo"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

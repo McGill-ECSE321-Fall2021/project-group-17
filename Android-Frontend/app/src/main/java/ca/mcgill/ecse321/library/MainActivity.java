@@ -104,9 +104,45 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void editProfile(View v){
+    public void toEditProfile(View v){
         setContentView(R.layout.activity_profile_edit);
     }
+
+    public void editProfileInfo(View v){
+        error = "";
+        EditText editText1 = findViewById(R.id.email_edit);
+        final String email = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.password_edit);
+        final String password = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.street_name_edit);
+        final String streetName = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.street_number_edit);
+        final String streetNumber = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.city_edit);
+        final String city = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.country_edit);
+        final String country = editText1.getText().toString();
+
+        setContentView(R.layout.activity_profile_view);
+        TextView text1 = findViewById(R.id.email);
+        text1.setText(email);
+        text1 = findViewById(R.id.password);
+        text1.setText(password);
+        text1 = findViewById(R.id.street_number);
+        text1.setText(streetNumber);
+        text1 = findViewById(R.id.street_name);
+        text1.setText(streetName);
+        text1 = findViewById(R.id.city);
+        text1.setText(city);
+        text1 = findViewById(R.id.country);
+        text1.setText(country);
+    }
+
     public void viewProfile(View v){
         setContentView(R.layout.activity_profile_view);
     }

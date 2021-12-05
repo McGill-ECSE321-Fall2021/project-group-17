@@ -46,7 +46,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/edit_button"
-                android:onClick="editProfile"/>
+                android:onClick="toEditProfile"/>
         </LinearLayout>
 
         <TextView
