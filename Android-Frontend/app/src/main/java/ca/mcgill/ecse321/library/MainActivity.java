@@ -519,5 +519,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    public void editProfile(View v){
+        setContentView(R.layout.fragment_first);
+        TextView tv1 = (TextView)findViewById(R.id.email);
+        tv1.setText("Hello");
     }
 }
