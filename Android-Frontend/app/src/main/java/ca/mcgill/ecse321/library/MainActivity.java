@@ -130,13 +130,10 @@ public class MainActivity extends AppCompatActivity {
         editText1 = findViewById(R.id.country_edit);
         final String country = editText1.getText().toString();
 
-        HttpUtils.put("/UpdateAccount/" + accountId + "/" + password + "/" + email + "/"
-        + streetNumber + "/" + streetName + "/" + city + "/" + country,
-                new RequestParams(), new JsonHttpResponseHandler() {
-
+        HttpUtils.put("/UpdateAccount/" + accountId + "/" + password + "/" + email + "/" + streetNumber + "/" + streetName + "/" + city + "/" + country, new RequestParams(), new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if(response.get("username").toString() != null) {
+                try{
+                    if(response.get("username") == accountId){
                         setContentView(R.layout.activity_profile_view);
                         TextView text1 = findViewById(R.id.email);
                         text1.setText(email);
@@ -150,12 +147,21 @@ public class MainActivity extends AppCompatActivity {
                         text1.setText(city);
                         text1 = findViewById(R.id.country);
                         text1.setText(country);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    error += e.getMessage();
-                }
+                   }
+               }
+                catch(Exception e){
 
+                }
+           }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
     }
 
     public void viewProfile(View v){
