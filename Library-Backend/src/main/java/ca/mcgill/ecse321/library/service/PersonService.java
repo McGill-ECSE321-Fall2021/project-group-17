@@ -47,6 +47,18 @@ public class PersonService {
     }
 
     @Transactional
+    public Person createPerson1(String name){
+        Person person = new Person();
+        if(name == null){
+            throw new PersonException("Cannot have person with no name");
+        }
+        person.setName(name);
+
+        personRepository.save(person);
+        return person;
+    }
+
+    @Transactional
     public List<Person> getPerson(String name){
         return personRepository.findPersonByName(name);
     }
