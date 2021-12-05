@@ -4,7 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:id="@+id/profile_edit"
+    android:background="#D7CEC7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/profile_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_gravity="left"
+            android:text="@string/profile_view"
+            android:textColor="#000000"
+            android:fontFamily="monospace"
+            android:textSize="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,42 +37,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-                <TextView
-                android:id="@+id/profile_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_gravity="left"
-                android:text="@string/profile_view"
-                android:textColor="#76323F"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="8dp"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-
-                <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/edit_button"
-                android:onClick="editProfile"/>
-        </LinearLayout>
-
-
         <TextView
             android:id="@+id/error"
             android:layout_height="wrap_content"
@@ -57,7 +44,7 @@
             android:visibility="gone"
             android:text=""
             android:textColor="#FF0000"/>
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/email"
@@ -66,7 +53,7 @@
             android:textSize="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"/>
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/password"
@@ -75,7 +62,7 @@
             android:textSize="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"/>
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/street_number"
@@ -84,7 +71,7 @@
             android:textSize="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"/>
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/street_name"
@@ -93,7 +80,7 @@
             android:textSize="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"/>
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/city"
@@ -102,7 +89,7 @@
             android:textSize="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"/>
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/country"
@@ -112,14 +99,14 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:gravity="right"
+            android:text="@string/save_button"
+            android:onClick="viewProfile"/>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
