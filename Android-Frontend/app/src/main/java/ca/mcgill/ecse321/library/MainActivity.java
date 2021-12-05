@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.library;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -10,6 +11,7 @@ import com.loopj.android.http.RequestParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -23,17 +25,24 @@ import cz.msebera.android.httpclient.entity.mime.Header;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String error = null;
+    private Integer userId;
+    private List<JSONObject> reservations;
+    private List<JSONObject> itemInstances;
     /*private Integer customerId;
     private Integer personId;
     private Integer addressId;
@@ -49,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        try {
+            initReservations();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        setContentView(R.layout.activity_view_items);
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -396,4 +410,114 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void viewItemInstances(View v) {
+        setContentView(R.layout.activity_view_items);
+    }
+
+    public void viewReservations(View v) throws JSONException {
+        initReservations();
+        setContentView(R.layout.activity_view_reservations);
+    }
+
+    public void initReservations() throws JSONException {
+        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+        TableRow tbrow0 = new TableRow(this);
+        TextView tv0 = new TextView(this);
+        tv0.setText(" Sl.No ");
+        tv0.setTextColor(Color.WHITE);
+        tbrow0.addView(tv0);
+        TextView tv1 = new TextView(this);
+        tv1.setText(" Product ");
+        tv1.setTextColor(Color.WHITE);
+        tbrow0.addView(tv1);
+        TextView tv2 = new TextView(this);
+        tv2.setText(" Unit Price ");
+        tv2.setTextColor(Color.WHITE);
+        tbrow0.addView(tv2);
+        TextView tv3 = new TextView(this);
+        tv3.setText(" Stock Remaining ");
+        tv3.setTextColor(Color.WHITE);
+        tbrow0.addView(tv3);
+        stk.addView(tbrow0);
+        for (int i = 0; i < 25; i++) {
+            TableRow tbrow = new TableRow(this);
+            TextView t1v = new TextView(this);
+            t1v.setText("" + i);
+            t1v.setTextColor(Color.WHITE);
+            t1v.setGravity(Gravity.CENTER);
+            tbrow.addView(t1v);
+            TextView t2v = new TextView(this);
+            t2v.setText("Product " + i);
+            t2v.setTextColor(Color.WHITE);
+            t2v.setGravity(Gravity.CENTER);
+            tbrow.addView(t2v);
+            TextView t3v = new TextView(this);
+            t3v.setText("Rs." + i);
+            t3v.setTextColor(Color.WHITE);
+            t3v.setGravity(Gravity.CENTER);
+            tbrow.addView(t3v);
+            TextView t4v = new TextView(this);
+            t4v.setText("" + i * 15 / 32 * 10);
+            t4v.setTextColor(Color.WHITE);
+            t4v.setGravity(Gravity.CENTER);
+            tbrow.addView(t4v);
+            stk.addView(tbrow);
+        }
+
+    }
+
+    public void getAllItemInstances(View v) throws JSONException {
+        error = "";
+
+        RequestParams params = new RequestParams();
+
+        HttpUtils.get("iteminstances/", params, new JsonHttpResponseHandler() {
+
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response != null) {
+                        itemInstances = (List<JSONObject>) response;
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
+
+    public void getAllReservations(View v) throws JSONException {
+        error = "";
+
+        RequestParams params = new RequestParams();
+        params.add("customerId", String.valueOf(userId));
+
+        HttpUtils.get("reservation/", params, new JsonHttpResponseHandler() {
+
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response != null) {
+                        reservations = (List<JSONObject>) response;
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
 }
