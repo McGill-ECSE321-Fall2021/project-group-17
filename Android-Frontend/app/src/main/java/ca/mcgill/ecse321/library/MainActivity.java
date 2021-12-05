@@ -1,17 +1,13 @@
 package ca.mcgill.ecse321.library;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.Editable;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -20,7 +16,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import ca.mcgill.ecse321.library.databinding.ActivityMainBinding;
-import cz.msebera.android.httpclient.entity.mime.Header;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,8 +23,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -101,32 +94,19 @@ public class MainActivity extends AppCompatActivity {
         String password = login_password.getText().toString();
 
 
-        HttpUtils.post("/login/"+ username+'/'+password, new RequestParams(), new JsonHttpResponseHandler() {
+        HttpUtils.put("/login/"+ username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
 
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if(response.get("password").toString().equalsIgnoreCase(password.toString())){
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);  //loginActivity to homepage
-                        intent.putExtra("username", username.toString());
-                        startActivity(intent);
-                    }else{
-                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                                .setMessage("Wrong password")
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                                .show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    error += e.getMessage();
-                }
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject errorResponse) {
+                refreshErrorMessage();
+                Intent intent = new Intent(MainActivity.this, FirstFragment.class);  //loginActivity to homepage
+                intent.putExtra("username", username);
+                startActivity(intent);
+
             }
 
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, org.json.JSONObject errorResponse) {
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
