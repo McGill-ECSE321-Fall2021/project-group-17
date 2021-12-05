@@ -11,6 +11,7 @@ import com.loopj.android.http.RequestParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -18,26 +19,32 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import ca.mcgill.ecse321.library.databinding.ActivityMainBinding;
-import cz.msebera.android.httpclient.entity.mime.Header;
+import ca.mcgill.ecse321.library.data.ItemInstance;
+import cz.msebera.android.httpclient.Header;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
     private String error = null;
+    private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.item_instance);
+        init();
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -97,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         HttpUtils.postByUrl("/login/"+ username+'/'+password, new RequestParams(), new JsonHttpResponseHandler() {
 
+            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if(response.get("password").toString().equalsIgnoreCase(password)){
@@ -120,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
                     error += errorResponse.get("message").toString();
@@ -161,6 +170,43 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
+    public void getItemInstances() {
+        itemInstances.clear();
+        Log.d("Items", "Trying to get item instances");
+        HttpUtils.get("iteminstances",new RequestParams(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject obj = response.getJSONObject(i);
+                        ItemInstance item = new ItemInstance();
+                        item.setSerialNum(obj.getInt("serialNum"));
+                        JSONObject checkedItem = obj.getJSONObject("checkableItem");
+                        item.setItemName(checkedItem.getString("name"));
+                        item.setDatePublished(checkedItem.getString("datePublished"));
+                        itemInstances.add(item);
+                    }
+                }
+                catch (JSONException e){
+                        e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                catch (NullPointerException e) {
+                    System.out.println("Cannot resolve address");
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
+
     private void refreshErrorMessage() {
 
         // set the error message
@@ -172,6 +218,33 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tvError.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void init() {
+        getItemInstances();
+        TableLayout layout = findViewById(R.id.itemTable);
+        for(int i = 0; i < itemInstances.size(); i++){
+            TableRow row= new TableRow(this);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
+            TextView id = new TextView(this);
+            id.setText(itemInstances.get(i).getSerialNum());
+            row.addView(id);
+            TextView name = new TextView(this);
+            name.setText(itemInstances.get(i).getItemName());
+            row.addView(name);
+            TextView author = new TextView(this);
+            author.setText(itemInstances.get(i).getItemCreator());
+            row.addView(author);
+            TextView datePublished = new TextView(this);
+            datePublished.setText(itemInstances.get(i).getDatePublished());
+            row.addView(datePublished);
+
+            layout.addView(row,i);
+        }
+    }
+    public void makeReservation(View view){
+        Log.d("jawnie", "boul");
     }
 
 

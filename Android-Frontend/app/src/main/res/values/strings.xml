@@ -11,6 +11,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="username">Enter Username</string>
+    <string name="itemTitle">Item Instances</string>
     <string name="password">Enter Password</string>
+    <string name="makeReservation">Make Reservation</string>
+    <string name="makeLoan">Make Loan</string>
     <string name="login_button">Login</string>
 </resources>
