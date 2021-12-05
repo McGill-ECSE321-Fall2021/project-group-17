@@ -12,9 +12,11 @@
         android:id="@+id/divider"
         android:layout_width="358dp"
         android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="66dp"
         android:background="#D276323F"
+        card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintStart_toStartOf="parent"
         card_view:layout_constraintTop_toTopOf="parent" />
 
@@ -22,9 +24,12 @@
         android:id="@+id/divider2"
         android:layout_width="358dp"
         android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="564dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="560dp"
+        android:layout_marginEnd="58dp"
         android:background="#D276323F"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.0"
         card_view:layout_constraintStart_toStartOf="parent"
         card_view:layout_constraintTop_toTopOf="parent" />
 
@@ -32,8 +37,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="44dp"
         android:fontFamily="serif-monospace"
         android:text="Welcome to LMS"
         android:textSize="20sp"
@@ -41,55 +46,82 @@
         card_view:layout_constraintStart_toStartOf="parent"
         card_view:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="182dp"
-        android:layout_height="339dp"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="260dp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button3"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="492dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="signUp"
+        android:text="reservations"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.761"
         card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent"
-        card_view:srcCompat="@drawable/profile" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="180dp"
-        android:layout_height="334dp"
-        android:layout_marginStart="196dp"
-        android:layout_marginTop="84dp"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent"
-        card_view:srcCompat="@drawable/libraryhour" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="180dp"
-        android:layout_height="334dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent"
-        card_view:srcCompat="@drawable/profilepic" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="180dp"
-        android:layout_height="334dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="260dp"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent"
-        card_view:srcCompat="@drawable/loan" />
+   />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
-        android:layout_width="116dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="280dp"
+        android:id="@+id/signup_button2"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="356dp"
         android:background="#C09F80"
-        android:text="profile"
+        android:fontFamily="monospace"
+        android:onClick="signOut"
+        android:text="active loans"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.222"
         card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent" />
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button5"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="356dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="libraryHours"
+        android:text="library hours"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.761"
+        card_view:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button8"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="208dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="signOut"
+        android:text="sign out"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.803"
+        card_view:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button4"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="492dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="signUp"
+        android:text="profile"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.222"
+        card_view:layout_constraintStart_toStartOf="parent"
+      />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

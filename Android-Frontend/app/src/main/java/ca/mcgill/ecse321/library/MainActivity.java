@@ -185,6 +185,15 @@ public class MainActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
+    public void signOut(View v) throws JSONException{
+        setContentView(R.layout.activity_login);
+    }
+    public void libraryHours(View v) throws JSONException{
+        setContentView(R.layout.activity_libraryhour);
+    }
+    public void homepage(View v) throws JSONException{
+        setContentView(R.layout.activity_homepage);
+    }
 
     public void signUp(View v) throws JSONException {
         error = "";
