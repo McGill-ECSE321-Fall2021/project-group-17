@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_login);
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -111,9 +112,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject errorResponse) {
                 refreshErrorMessage();
-                Intent intent = new Intent(MainActivity.this, FirstFragment.class);  //loginActivity to homepage
-                intent.putExtra("username", username);
-                startActivity(intent);
+                setContentView(R.layout.activity_signup);
+                //Intent intent = new Intent(MainActivity.this, FirstFragment.class);  //loginActivity to homepage
+                //intent.putExtra("username", username);
+                //startActivity(intent);
 
             }
 
@@ -327,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void login(View v) {
         EditText editText = findViewById(R.id.signup_username);
