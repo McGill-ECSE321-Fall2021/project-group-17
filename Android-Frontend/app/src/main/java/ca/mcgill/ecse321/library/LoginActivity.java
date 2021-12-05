@@ -72,7 +72,7 @@ public class LoginActivity extends MainActivity{
 
     }
 
-    /*private void refreshErrorMessage() {
+    private void refreshErrorMessage() {
 
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
@@ -83,5 +83,5 @@ public class LoginActivity extends MainActivity{
         } else {
             tvError.setVisibility(View.VISIBLE);
         }
-    }*/
+    }
 }

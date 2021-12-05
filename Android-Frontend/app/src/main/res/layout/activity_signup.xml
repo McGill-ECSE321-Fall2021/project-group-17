@@ -90,11 +90,11 @@
         android:id="@+id/linearLayout2"
         android:layout_width="380dp"
         android:layout_height="213dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/layout_bg"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/signup_button"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +174,7 @@
         android:id="@+id/sign_up_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/layout_bg"
         android:fontFamily="monospace"
@@ -186,19 +186,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signup_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_marginBottom="76dp"
-        android:background="#76323f"
-        android:fontFamily="monospace"
-        android:onClick="signUp"
-        android:text="Sign Up"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="409dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="65dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/signup_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="20dp"
+            android:background="#76323f"
+            android:fontFamily="monospace"
+            android:onClick="signUp"
+            android:text="Sign Up"
+            tools:layout_editor_absoluteX="323dp"
+            tools:layout_editor_absoluteY="607dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/switch_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="70dp"
+            android:background="#76323f"
+            android:fontFamily="monospace"
+            android:onClick="switchToLogin"
+            android:text="Login"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="667dp" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,11 +17,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import ca.mcgill.ecse321.library.databinding.ActivityMainBinding;
 import cz.msebera.android.httpclient.entity.mime.Header;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,8 +32,8 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
     private String error = null;
+    private Integer userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +162,215 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-    protected void refreshErrorMessage() {
+    public void signUp(View v) {
+        error = "";
+
+        EditText editText = findViewById(R.id.person_name);
+        final String name = editText.getText().toString();
+
+        HttpUtils.post("person/" + name, new RequestParams(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    int personId = Integer.parseInt(response.get("id").toString());
+
+                    EditText editText1 = findViewById(R.id.street_number);
+                    final int streetNumber = Integer.parseInt(editText1.getText().toString());
+
+                    editText1 = findViewById(R.id.street_name);
+                    final String streetName = editText1.getText().toString();
+
+                    editText1 = findViewById(R.id.city);
+                    final String city = editText1.getText().toString();
+
+                    editText1 = findViewById(R.id.country);
+                    final String country = editText1.getText().toString();
+
+                    RequestParams params = new RequestParams();
+                    params.add("streetNum", String.valueOf(streetNumber));
+                    params.add("streetName", String.valueOf(streetName));
+                    params.add("city", String.valueOf(city));
+                    params.add("country", String.valueOf(country));
+
+                    HttpUtils.post("address/1", params, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                            try {
+                                int addressId = Integer.parseInt(response.get("id").toString());
+
+                                createCustomer(v, personId, addressId);
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            try {
+                                error = errorResponse.get("message").toString();
+                            } catch (JSONException e) {
+                                error = e.getMessage();
+                            }
+                        }
+                    });
+
+                } catch (Exception e) {
+
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
+
+    private void createLibraryCard(View v, Integer customerId) {
+        HttpUtils.post("librarycard/" + customerId, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                createOnlineAccount(v, customerId);
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    private void createCustomer(View v, Integer personId, Integer addressId) {
+        HttpUtils.post("customer/1/" + personId + "/0/" + addressId, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    int customerId = Integer.parseInt(response.get("id").toString());
+
+                    createLibraryCard(v, customerId);
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    private void createOnlineAccount(View v, Integer customerId) {
+        RequestParams params = new RequestParams();
+        params.add("personRoleId", String.valueOf(customerId));
+
+        EditText editText = findViewById(R.id.signup_username);
+        final String username = editText.getText().toString();
+
+        editText = findViewById(R.id.signup_password);
+        final String password = editText.getText().toString();
+
+        editText = findViewById(R.id.email_address);
+        final String email = editText.getText().toString();
+
+        HttpUtils.post("onlineaccount/customer/" + username + '/' + password + '/' + email, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    HttpUtils.put("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                            try {
+                                login(v, customerId);
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            try {
+                                error = errorResponse.get("message").toString();
+                            } catch (JSONException e) {
+                                error = e.getMessage();
+                            }
+
+                            refreshErrorMessage();
+                        }
+                    });
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    private void login(View v, Integer customerId) {
+        EditText editText = findViewById(R.id.signup_username);
+        final String username = editText.getText().toString();
+
+        editText = findViewById(R.id.signup_password);
+        final String password = editText.getText().toString();
+
+        HttpUtils.put("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                userId = customerId;
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    public void switchToLogin(View v) {
+        setContentView(R.layout.activity_login);
+    }
+
+    private void refreshErrorMessage() {
 
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
@@ -174,6 +382,4 @@ public class MainActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
-
-
 }
