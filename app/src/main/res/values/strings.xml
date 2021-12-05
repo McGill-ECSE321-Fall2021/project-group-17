@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Library Application</string>
+    <string name="app_name">Library-Android</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -9,16 +9,4 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-    <string name="email">temp_email</string>
-    <string name="password">temp_password</string>
-    <string name="number">temp_street_number</string>
-    <string name="name">temp_street_name</string>
-    <string name="city">temp_city</string>
-    <string name="country">temp_country</string>
-
-
-
-    <string name="edit_button">Edit</string>
-    <string name="profile_view">Profile View</string>
 </resources>

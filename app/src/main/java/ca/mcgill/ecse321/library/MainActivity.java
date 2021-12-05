@@ -17,7 +17,6 @@ import ca.mcgill.ecse321.library.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,11 +72,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    public void editProfile(View v){
-        setContentView(R.layout.fragment_first);
-        TextView tv1 = (TextView)findViewById(R.id.email);
-        tv1.setText("Hello");
     }
 }
