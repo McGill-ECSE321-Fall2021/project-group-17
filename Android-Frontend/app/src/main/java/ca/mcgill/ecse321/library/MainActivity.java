@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
    // private ActivityMainBinding binding;
     private String error = null;
+    private String accountId;
     /*private Integer customerId;
     private Integer personId;
     private Integer addressId;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void editProfileInfo(View v){
         error = "";
+
         EditText editText1 = findViewById(R.id.email_edit);
         final String email = editText1.getText().toString();
 
@@ -128,19 +130,32 @@ public class MainActivity extends AppCompatActivity {
         editText1 = findViewById(R.id.country_edit);
         final String country = editText1.getText().toString();
 
-        setContentView(R.layout.activity_profile_view);
-        TextView text1 = findViewById(R.id.email);
-        text1.setText(email);
-        text1 = findViewById(R.id.password);
-        text1.setText(password);
-        text1 = findViewById(R.id.street_number);
-        text1.setText(streetNumber);
-        text1 = findViewById(R.id.street_name);
-        text1.setText(streetName);
-        text1 = findViewById(R.id.city);
-        text1.setText(city);
-        text1 = findViewById(R.id.country);
-        text1.setText(country);
+        HttpUtils.put("/UpdateAccount/" + accountId + "/" + password + "/" + email + "/"
+        + streetNumber + "/" + streetName + "/" + city + "/" + country,
+                new RequestParams(), new JsonHttpResponseHandler() {
+
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if(response.get("username").toString() != null) {
+                        setContentView(R.layout.activity_profile_view);
+                        TextView text1 = findViewById(R.id.email);
+                        text1.setText(email);
+                        text1 = findViewById(R.id.password);
+                        text1.setText(password);
+                        text1 = findViewById(R.id.street_number);
+                        text1.setText(streetNumber);
+                        text1 = findViewById(R.id.street_name);
+                        text1.setText(streetName);
+                        text1 = findViewById(R.id.city);
+                        text1.setText(city);
+                        text1 = findViewById(R.id.country);
+                        text1.setText(country);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    error += e.getMessage();
+                }
+
     }
 
     public void viewProfile(View v){
