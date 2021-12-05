@@ -4,106 +4,210 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D7CEC7">
+    android:background="@drawable/hourspage">
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_button6"
         android:layout_width="111dp"
         android:layout_height="49dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:background="#C09F80"
         android:fontFamily="monospace"
         android:onClick="homepage"
         android:text="homepage"
-        app:layout_constraintBottom_toTopOf="@+id/divider4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_button7"
         android:layout_width="111dp"
         android:layout_height="49dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginBottom="16dp"
         android:background="#C09F80"
         android:fontFamily="monospace"
+
         android:onClick="signOut"
         android:text="sign out"
-        app:layout_constraintBottom_toTopOf="@+id/divider4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="92dp"
-        android:fontFamily="serif-monospace"
-        android:text="Library Hours"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="358dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="68dp"
-        android:background="#D276323F"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="358dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="452dp"
-        android:background="#D276323F"
-        app:layout_constraintBottom_toTopOf="@+id/divider4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TableLayout
-        android:layout_width="385dp"
-        android:layout_height="394dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/signup_button7"
+        android:id="@+id/tlTable01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="50dp"
+        android:background="#CCC"
+        android:paddingTop="1dp"
+        android:stretchColumns="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Sunday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="1234561111"
+                android:textSize="20dp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Monday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="456789"
+                android:textSize="20dp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Tuesday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="456789"
+                android:textSize="20dp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Wednesday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="456789"
+                android:textSize="20dp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Thursday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="456789"
+                android:textSize="20dp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Friday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="456789"
+                android:textSize="20dp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Saturday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="456789"
+                android:textSize="20dp" />
+        </TableRow>
     </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
