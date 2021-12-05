@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_homepage);
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -162,7 +162,17 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-    public void signUp(View v) {
+    public void signOut(View v) throws JSONException{
+        setContentView(R.layout.activity_login);
+    }
+    public void libraryHours(View v) throws JSONException{
+        setContentView(R.layout.activity_libraryhour);
+    }
+    public void homepage(View v) throws JSONException{
+        setContentView(R.layout.activity_homepage);
+    }
+
+    public void signUp(View v) throws JSONException {
         error = "";
 
         EditText editText = findViewById(R.id.person_name);
@@ -351,6 +361,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 userId = customerId;
+                setContentView(R.layout.activity_homepage);
             }
 
             @Override
