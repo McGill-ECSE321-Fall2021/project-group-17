@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/street_name"
-            android:text="@string/name"
+            android:text="@string/temp_street_name"
             android:fontFamily="sans-serif-medium"
             android:textSize="16dp"
             android:layout_marginTop="16dp"
