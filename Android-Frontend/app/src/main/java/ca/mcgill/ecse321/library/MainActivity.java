@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ctx = getApplicationContext();
         itemInstanceErrorView = this.findViewById(R.id.IIerror);
-        getItemInstances();
-        setContentView(R.layout.activity_homepage);
+        //getItemInstances();
+        setContentView(R.layout.activity_signup);
 
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -172,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void homepage(View v) throws JSONException{
         setContentView(R.layout.activity_homepage);
+    }
+    public void goToReservations(View v) throws JSONException{
+        setContentView(R.layout.item_instance);
     }
 
     public void signUp(View v) throws JSONException {

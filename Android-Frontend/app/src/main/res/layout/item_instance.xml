@@ -7,6 +7,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button2"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="homepage"
+        android:text="homepage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button3"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="356dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+
+        android:onClick="signOut"
+        android:text="sign out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/tableTitle"
         android:paddingBottom="10dp"
