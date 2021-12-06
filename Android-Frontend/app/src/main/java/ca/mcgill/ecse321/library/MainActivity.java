@@ -26,6 +26,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import ca.mcgill.ecse321.library.data.ItemInstance;
+import ca.mcgill.ecse321.library.data.Reservation;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -40,6 +41,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private static Context ctx;
     private static TextView itemInstanceErrorView;
     private Integer userId;
-    private List<JSONObject> reservations;
+    private ArrayList<Reservation> reservations = new ArrayList<>();
     private List<JSONObject> loans;
     /*private Integer customerId;
     private Integer personId;
@@ -81,16 +83,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_view_reservations);
-        try {
-            initReservations();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // ctx = getApplicationContext();
-        // itemInstanceErrorView = this.findViewById(R.id.IIerror);
-        // getItemInstances();
-        // setContentView(R.layout.activity_homepage);
+        ctx = getApplicationContext();
+        itemInstanceErrorView = this.findViewById(R.id.IIerror);
+        //getItemInstances();
+        setContentView(R.layout.activity_homepage);
 
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -194,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void homepage(View v) throws JSONException{
         setContentView(R.layout.activity_homepage);
+    }
+    public void viewReservation(View v) throws JSONException{
+        setContentView(R.layout.activity_view_reservations);
+        getAllReservations();
     }
 
     public void signUp(View v) throws JSONException {
@@ -537,7 +537,7 @@ public class MainActivity extends AppCompatActivity {
             final String password = editText.getText().toString();
 
             HttpUtils.put("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
-                
+
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                     userId = customerId;
@@ -599,142 +599,96 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void viewLoans(View v) throws JSONException {
-        setContentView(R.layout.activity_view_loans);
-        initReservations();
-    }
-
     public void viewReservations(View v) throws JSONException {
         setContentView(R.layout.activity_view_reservations);
-        initReservations();
-    }
-
-    public void initReservations() throws JSONException {
-        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
-        TableRow tbrow0 = new TableRow(this);
-        TextView tv0 = new TextView(this);
-        tv0.setText(" No. ");
-        tv0.setTextColor(Color.WHITE);
-        tbrow0.addView(tv0);
-        TextView tv1 = new TextView(this);
-        tv1.setText(" Date checked out ");
-        tv1.setTextColor(Color.WHITE);
-        tbrow0.addView(tv1);
-        TextView tv2 = new TextView(this);
-        tv2.setText(" Return date ");
-        tv2.setTextColor(Color.WHITE);
-        tbrow0.addView(tv2);
-        TextView tv3 = new TextView(this);
-        tv3.setText(" Item ID ");
-        tv3.setTextColor(Color.WHITE);
-        tbrow0.addView(tv3);
-        stk.addView(tbrow0);
-//        for (int i = 0; i < 25; i++) {
-//            TableRow tbrow = new TableRow(this);
-//            TextView t1v = new TextView(this);
-//            t1v.setText("" + i);
-//            t1v.setTextColor(Color.WHITE);
-//            t1v.setGravity(Gravity.CENTER);
-//            tbrow.addView(t1v);
-//            TextView t2v = new TextView(this);
-//            t2v.setText("" + i);
-//            t2v.setTextColor(Color.WHITE);
-//            t2v.setGravity(Gravity.CENTER);
-//            tbrow.addView(t2v);
-//            TextView t3v = new TextView(this);
-//            t3v.setText("" + i);
-//            t3v.setTextColor(Color.WHITE);
-//            t3v.setGravity(Gravity.CENTER);
-//            tbrow.addView(t3v);
-//            TextView t4v = new TextView(this);
-//            t4v.setText("ID: " + i * 15 / 32 * 10);
-//            t4v.setTextColor(Color.WHITE);
-//            t4v.setGravity(Gravity.CENTER);
-//            tbrow.addView(t4v);
-//            stk.addView(tbrow);
-//        }
         getAllReservations();
-        for (int i = 0; i < reservations.size(); i++) {
-            TableRow tbrow = new TableRow(this);
-            TextView t1v = new TextView(this);
-            t1v.setText("" + i);
-            t1v.setTextColor(Color.WHITE);
-            t1v.setGravity(Gravity.CENTER);
-            tbrow.addView(t1v);
-            TextView t2v = new TextView(this);
-            t2v.setText("" + reservations.get(i).get("checkedOut"));
-            t2v.setTextColor(Color.WHITE);
-            t2v.setGravity(Gravity.CENTER);
-            tbrow.addView(t2v);
-            TextView t3v = new TextView(this);
-            t3v.setText("" + reservations.get(i).get("returnDate"));
-            t3v.setTextColor(Color.WHITE);
-            t3v.setGravity(Gravity.CENTER);
-            tbrow.addView(t3v);
-            TextView t4v = new TextView(this);
-            t4v.setText("ID: " + reservations.get(i).get("itemId"));
-            t4v.setTextColor(Color.WHITE);
-            t4v.setGravity(Gravity.CENTER);
-            tbrow.addView(t4v);
-            stk.addView(tbrow);
-        }
-
     }
 
-    public void getAllItemInstances(View v) throws JSONException {
-        error = "";
-
+    public void getAllReservations() {
+        if (reservations != null) reservations.clear();
+        Log.d("Reservations", "Trying to get reservations");
         RequestParams params = new RequestParams();
-
-        HttpUtils.get("iteminstances/", params, new JsonHttpResponseHandler() {
-
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response != null) {
-                        loans = (List<JSONObject>) response;
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error = errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error = e.getMessage();
-                }
-            }
-        });
-    }
-
-    public void getAllReservations() throws JSONException {
-        error = "";
-
-        RequestParams params = new RequestParams();
-        params.add("customerId", String.valueOf(3));
+        params.add("customerId", String.valueOf(userId));
         HttpUtils.get("reservation/", params, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
-                    if (response != null) {
-                        reservations = (List<JSONObject>) response;
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject obj = response.getJSONObject(i);
+                        Reservation item = new Reservation();
+                        item.setItemId(obj.getInt("id"));
+                        item.setDateReturned(obj.getString("dateReserved"));
+                        item.setDateCheckedOut(obj.getString("pickupDay"));
+                        reservations.add(item);
                     }
-                } catch (Exception e) {
-
                 }
+                catch (JSONException e){
+                        e.printStackTrace();
+                }
+                setContentView(R.layout.activity_view_reservations);
+                initReservations();
             }
 
             @Override
-            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
-                    error = errorResponse.get("message").toString();
+                    error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
-                    error = e.getMessage();
+                    error += e.getMessage();
+                }
+                catch (NullPointerException e) {
+                    System.out.println("Cannot resolve address");
                 }
             }
         });
+    }
+
+    public void initReservations() {
+        TableLayout layout = findViewById(R.id.table_main);
+        TableRow row = new TableRow(this);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        row.setLayoutParams(lp);
+
+        TextView id = new TextView(this);
+        configureTextView(id);
+        id.setText("Check Out       ");
+        row.addView(id);
+
+        TextView name = new TextView(this);
+        configureTextView(name);
+        name.setText("Return Date       ");
+        row.addView(name);
+
+        TextView datePublished = new TextView(this);
+        configureTextView(datePublished);
+        datePublished.setText("ID");
+        row.addView(datePublished);
+        layout.addView(row);
+
+        for(int i = 0; i < reservations.size(); i++){
+            row= new TableRow(this);
+            int color = Color.parseColor("#76323F");
+            row.setBackground(new ColorDrawable(color));
+            lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
+            id = new TextView(this);
+            configureTextView(id);
+            id.setText((" " + reservations.get(i).getDateCheckedOut() + "   "));
+            row.addView(id);
+
+            name = new TextView(this);
+            configureTextView(name);
+            name.setText("" + reservations.get(i).getDateReturned() + "   ");
+            row.addView(name);
+
+
+            datePublished = new TextView(this);
+            configureTextView(datePublished);
+            datePublished.setText("" + reservations.get(i).getItemId()+ " ");
+            row.addView(datePublished);
+            layout.addView(row,i+1);
+        }
     }
 
     public void editProfile(View v){

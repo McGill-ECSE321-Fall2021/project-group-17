@@ -3,16 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    android:background="@drawable/library">
+    android:layout_height="match_parent"
+    android:background="@drawable/hourspage">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button3"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="serif-monospace"
+
+        android:onClick="signOut"
+        android:text="sign out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button2"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="serif-monospace"
+        android:onClick="homepage"
+        android:text="homepage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginEnd="52dp"
         android:layout_marginBottom="8dp"
-        android:background="#3d455b"
+        android:background="#C09F80"
+        android:fontFamily="serif-monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,11 +50,13 @@
 
         <HorizontalScrollView
             android:id="@+id/hscrll1"
+            android:fontFamily="serif-monospace"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
+                android:fontFamily="serif-monospace"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
@@ -32,20 +64,11 @@
 
                 <TableLayout
                     android:id="@+id/table_main"
+                    android:fontFamily="serif-monospace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"></TableLayout>
             </RelativeLayout>
         </HorizontalScrollView>
     </ScrollView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:onClick="viewLoans"
-        android:text="@string/view_loans"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
