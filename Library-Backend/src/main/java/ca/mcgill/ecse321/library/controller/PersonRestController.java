@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.library.controller;
 
 import ca.mcgill.ecse321.library.dto.PersonDTO;
 import ca.mcgill.ecse321.library.model.Person;
+import ca.mcgill.ecse321.library.model.PersonRole;
 import ca.mcgill.ecse321.library.service.PersonService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,12 @@ public class PersonRestController {
     @ResponseBody
     public PersonDTO createPerson(@RequestBody JsonBody body) throws IllegalArgumentException{
         Person person = service.createPerson(body.getName(), body.getPersonRoles());
+        return convertToDTO(person);
+    }
+
+    @PostMapping(value= {"/person/{name}","/person/{name}/"})
+    public PersonDTO createPerson1(@PathVariable("name") String name) throws IllegalArgumentException{
+        Person person = service.createPerson1(name);
         return convertToDTO(person);
     }
 

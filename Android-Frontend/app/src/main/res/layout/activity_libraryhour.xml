@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hourspage">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button6"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="homepage"
+        android:text="homepage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button7"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+
+        android:onClick="signOut"
+        android:text="sign out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tlTable01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="50dp"
+        android:background="#CCC"
+        android:paddingTop="1dp"
+        android:stretchColumns="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Monday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box1"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Tuesday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box2"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Wednesday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box3"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Thursday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box4"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Friday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box5"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Saturday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box6"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Sunday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box7"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

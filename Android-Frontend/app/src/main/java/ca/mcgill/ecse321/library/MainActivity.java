@@ -31,9 +31,12 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.webkit.CookieManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -49,6 +52,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
+
     private static String error = null;
     private static int customerId = 4;
     private static Integer selectedItemId;
@@ -56,15 +60,17 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
     private static Context ctx;
     private static TextView itemInstanceErrorView;
+    private Integer userId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_instance);
         ctx = getApplicationContext();
         itemInstanceErrorView = this.findViewById(R.id.IIerror);
         getItemInstances();
+        setContentView(R.layout.activity_homepage);
+
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -130,70 +136,24 @@ public class MainActivity extends AppCompatActivity {
     public void logIn(View v){
         error = "";
 
-        final String username = String.valueOf(findViewById(R.id.login_username));
-        final String password = String.valueOf(findViewById(R.id.login_password));
+        EditText login_username = (EditText)findViewById(R.id.login_username);
+        String username = login_username.getText().toString();
+
+        EditText login_password = findViewById(R.id.login_password);
+        String password = login_password.getText().toString();
 
 
-        HttpUtils.postByUrl("/login/"+ username+'/'+password, new RequestParams(), new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if(response.get("password").toString().equalsIgnoreCase(password)){
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);  //loginActivity to homepage
-                        intent.putExtra("username", username);
-                        startActivity(intent);
-                    }else{
-                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                                .setMessage("Wrong password")
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                                .show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    error += e.getMessage();
-                }
-            }
+        HttpUtils.put("/login/"+ username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error = errorResponse.getString("message");
-                    error = "ERROR: "+ error;
-                    itemInstanceErrorView.setTextColor(Color.RED);
-                    itemInstanceErrorView.setText(error);
-                    itemInstanceErrorView.setVisibility(View.VISIBLE);
-                } catch (JSONException e) {
-                    error += e.getMessage();
-                }
-            }
-        });
-
-/*
-        error = "";
-
-        final TextView username = findViewById(R.id.login_username);
-        final TextView password = findViewById(R.id.login_password);
-
-
-        HttpUtils.post("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
-
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject errorResponse) {
                 refreshErrorMessage();
-                username.setText("");
-                password.setText("");
+                setContentView(R.layout.activity_homepage); //change to homepage
+
             }
 
-            private void refreshErrorMessage() {
-            }
-
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, org.json.JSONObject errorResponse) {
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
@@ -202,7 +162,382 @@ public class MainActivity extends AppCompatActivity {
                 refreshErrorMessage();
             }
         });
-*/
+    }
+
+    public void signOut(View v) throws JSONException{
+        setContentView(R.layout.activity_login);
+    }
+    public void libraryHours(View v) throws JSONException{
+        setContentView(R.layout.activity_libraryhour);
+        getLibraryHours(v);
+    }
+    public void homepage(View v) throws JSONException{
+        setContentView(R.layout.activity_homepage);
+    }
+
+    public void signUp(View v) throws JSONException {
+        error = "";
+
+        EditText editText = findViewById(R.id.person_name);
+        final String name = editText.getText().toString();
+
+        HttpUtils.post("person/" + name, new RequestParams(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    int personId = Integer.parseInt(response.get("id").toString());
+
+                    EditText editText1 = findViewById(R.id.street_number);
+                    final int streetNumber = Integer.parseInt(editText1.getText().toString());
+
+                    editText1 = findViewById(R.id.street_name);
+                    final String streetName = editText1.getText().toString();
+
+                    editText1 = findViewById(R.id.city);
+                    final String city = editText1.getText().toString();
+
+                    editText1 = findViewById(R.id.country);
+                    final String country = editText1.getText().toString();
+
+                    RequestParams params = new RequestParams();
+                    params.add("streetNum", String.valueOf(streetNumber));
+                    params.add("streetName", String.valueOf(streetName));
+                    params.add("city", String.valueOf(city));
+                    params.add("country", String.valueOf(country));
+
+                    HttpUtils.post("address/1", params, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                            try {
+                                int addressId = Integer.parseInt(response.get("id").toString());
+
+                                createCustomer(v, personId, addressId);
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            try {
+                                error = errorResponse.get("message").toString();
+                            } catch (JSONException e) {
+                                error = e.getMessage();
+                            }
+                        }
+                    });
+
+                } catch (Exception e) {
+
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
+
+    private void createLibraryCard(View v, Integer customerId) {
+        HttpUtils.post("librarycard/" + customerId, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                createOnlineAccount(v, customerId);
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
+
+    public void getLibraryHours(View v) {
+        HttpUtils.get("libraryhour/find/MONDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text1=findViewById(R.id.box1);
+                    text1.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/TUESDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text2=findViewById(R.id.box2);
+                    text2.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/WEDNESDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text3=findViewById(R.id.box3);
+                    text3.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/THURSDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text4=findViewById(R.id.box4);
+                    text4.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/FRIDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text5=findViewById(R.id.box5);
+                    text5.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/SATURDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text6=findViewById(R.id.box6);
+                    text6.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/SUNDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text7=findViewById(R.id.box7);
+                    text7.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
+    private void createCustomer(View v, Integer personId, Integer addressId) {
+        HttpUtils.post("customer/1/" + personId + "/0/" + addressId, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    int customerId = Integer.parseInt(response.get("id").toString());
+
+                    createLibraryCard(v, customerId);
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    private void createOnlineAccount(View v, Integer customerId) {
+        RequestParams params = new RequestParams();
+        params.add("personRoleId", String.valueOf(customerId));
+
+        EditText editText = findViewById(R.id.signup_username);
+        final String username = editText.getText().toString();
+
+        editText = findViewById(R.id.signup_password);
+        final String password = editText.getText().toString();
+
+        editText = findViewById(R.id.email_address);
+        final String email = editText.getText().toString();
+
+        HttpUtils.post("onlineaccount/customer/" + username + '/' + password + '/' + email, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    HttpUtils.put("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                            try {
+                                login(v,customerId);
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            try {
+                                error = errorResponse.get("message").toString();
+                            } catch (JSONException e) {
+                                error = e.getMessage();
+                            }
+
+                            refreshErrorMessage();
+                        }
+                    });
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+
+                refreshErrorMessage();
+            }
+        });
+    }
+
+
+    private void login(View v,Integer customerId){
+            EditText editText = findViewById(R.id.signup_username);
+            final String username = editText.getText().toString();
+
+            editText = findViewById(R.id.signup_password);
+            final String password = editText.getText().toString();
+
+            HttpUtils.put("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                    userId = customerId;
+                    setContentView(R.layout.activity_homepage);
+                }
+
+                @Override
+                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    try {
+                        error = errorResponse.get("message").toString();
+                    } catch (JSONException e) {
+                        error = e.getMessage();
+                    }
+
+                    refreshErrorMessage();
+                }
+            });
+        }
+
+    public void switchToLogin(View v) {
+        setContentView(R.layout.activity_login);
     }
 
     public void getItemInstances() {
