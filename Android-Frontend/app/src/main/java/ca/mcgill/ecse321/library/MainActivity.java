@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -112,10 +112,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject errorResponse) {
                 refreshErrorMessage();
-                setContentView(R.layout.activity_signup);
-                //Intent intent = new Intent(MainActivity.this, FirstFragment.class);  //loginActivity to homepage
-                //intent.putExtra("username", username);
-                //startActivity(intent);
+                setContentView(R.layout.activity_signup); //change to homepage
 
             }
 
