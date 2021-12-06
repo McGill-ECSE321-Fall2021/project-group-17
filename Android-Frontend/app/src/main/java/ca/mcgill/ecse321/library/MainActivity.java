@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_view_loans);
+        setContentView(R.layout.activity_view_reservations);
         try {
             initReservations();
         } catch (JSONException e) {
@@ -431,7 +431,32 @@ public class MainActivity extends AppCompatActivity {
         tv3.setTextColor(Color.WHITE);
         tbrow0.addView(tv3);
         stk.addView(tbrow0);
-        for (int i = 0; i < 25; i++) {
+//        for (int i = 0; i < 25; i++) {
+//            TableRow tbrow = new TableRow(this);
+//            TextView t1v = new TextView(this);
+//            t1v.setText("" + i);
+//            t1v.setTextColor(Color.WHITE);
+//            t1v.setGravity(Gravity.CENTER);
+//            tbrow.addView(t1v);
+//            TextView t2v = new TextView(this);
+//            t2v.setText("" + i);
+//            t2v.setTextColor(Color.WHITE);
+//            t2v.setGravity(Gravity.CENTER);
+//            tbrow.addView(t2v);
+//            TextView t3v = new TextView(this);
+//            t3v.setText("" + i);
+//            t3v.setTextColor(Color.WHITE);
+//            t3v.setGravity(Gravity.CENTER);
+//            tbrow.addView(t3v);
+//            TextView t4v = new TextView(this);
+//            t4v.setText("ID: " + i * 15 / 32 * 10);
+//            t4v.setTextColor(Color.WHITE);
+//            t4v.setGravity(Gravity.CENTER);
+//            tbrow.addView(t4v);
+//            stk.addView(tbrow);
+//        }
+        getAllReservations();
+        for (int i = 0; i < reservations.size(); i++) {
             TableRow tbrow = new TableRow(this);
             TextView t1v = new TextView(this);
             t1v.setText("" + i);
@@ -439,17 +464,17 @@ public class MainActivity extends AppCompatActivity {
             t1v.setGravity(Gravity.CENTER);
             tbrow.addView(t1v);
             TextView t2v = new TextView(this);
-            t2v.setText("" + i);
+            t2v.setText("" + reservations.get(i).get("checkedOut"));
             t2v.setTextColor(Color.WHITE);
             t2v.setGravity(Gravity.CENTER);
             tbrow.addView(t2v);
             TextView t3v = new TextView(this);
-            t3v.setText("" + i);
+            t3v.setText("" + reservations.get(i).get("returnDate"));
             t3v.setTextColor(Color.WHITE);
             t3v.setGravity(Gravity.CENTER);
             tbrow.addView(t3v);
             TextView t4v = new TextView(this);
-            t4v.setText("ID: " + i * 15 / 32 * 10);
+            t4v.setText("ID: " + reservations.get(i).get("itemId"));
             t4v.setTextColor(Color.WHITE);
             t4v.setGravity(Gravity.CENTER);
             tbrow.addView(t4v);
@@ -485,15 +510,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getAllReservations(View v) throws JSONException {
+    public void getAllReservations() throws JSONException {
         error = "";
 
         RequestParams params = new RequestParams();
-        params.add("customerId", String.valueOf(userId));
-
+        params.add("customerId", String.valueOf(3));
         HttpUtils.get("reservation/", params, new JsonHttpResponseHandler() {
 
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
                     if (response != null) {
                         reservations = (List<JSONObject>) response;
@@ -503,7 +528,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
                     error = errorResponse.get("message").toString();
                 } catch (JSONException e) {
