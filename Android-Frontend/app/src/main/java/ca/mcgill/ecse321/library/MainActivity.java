@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
 
     private static String error = null;
-    private static int customerId = 4;
+    //private static int customerId = 4;
     private static Integer selectedItemId;
     private static String endDate = null;
     private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
@@ -72,18 +72,6 @@ public class MainActivity extends AppCompatActivity {
     private static Integer userId;
     private ArrayList<Reservation> reservations = new ArrayList<>();
     private List<JSONObject> loans;
-    /*private Integer customerId;
-    private Integer personId;
-    private Integer addressId;
-    private final String name = String.valueOf(findViewById(R.id.person_name));
-    private final String username = String.valueOf(findViewById(R.id.signup_username));
-    private final String password = String.valueOf(findViewById(R.id.signup_password));
-    private final String email = String.valueOf(findViewById(R.id.email_address));
-    private final String streetNumber = String.valueOf(findViewById(R.id.street_number));
-    private final String streetName = String.valueOf(findViewById(R.id.street_name));
-    private final String city = String.valueOf(findViewById(R.id.city));
-    private final String country = String.valueOf(findViewById(R.id.country));*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         ctx = getApplicationContext();
         itemInstanceErrorView = this.findViewById(R.id.IIerror);
         //getItemInstances();
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.activity_login);
 
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -269,6 +257,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void viewReservation(View v) throws JSONException{
         setContentView(R.layout.activity_view_reservations);
+        getAllReservations();
+    }
+    public void goToReservations(View v) throws JSONException{
+        setContentView(R.layout.item_instance);
         getAllReservations();
     }
 
