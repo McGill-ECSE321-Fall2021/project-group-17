@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void libraryHours(View v) throws JSONException{
         setContentView(R.layout.activity_libraryhour);
+        getLibraryHours(v);
     }
     public void homepage(View v) throws JSONException{
         setContentView(R.layout.activity_homepage);
@@ -261,6 +262,162 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void getLibraryHours(View v) {
+        HttpUtils.get("libraryhour/find/MONDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text1=findViewById(R.id.box1);
+                    text1.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/TUESDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text2=findViewById(R.id.box2);
+                    text2.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/WEDNESDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text3=findViewById(R.id.box3);
+                    text3.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/THURSDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text4=findViewById(R.id.box4);
+                    text4.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/FRIDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text5=findViewById(R.id.box5);
+                    text5.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/SATURDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text6=findViewById(R.id.box6);
+                    text6.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/SUNDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text7=findViewById(R.id.box7);
+                    text7.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
     private void createCustomer(View v, Integer personId, Integer addressId) {
         HttpUtils.post("customer/1/" + personId + "/0/" + addressId, new RequestParams(), new JsonHttpResponseHandler() {
 

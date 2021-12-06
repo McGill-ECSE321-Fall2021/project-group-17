@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.dao;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -15,4 +16,5 @@ public interface LibraryHourRepository extends CrudRepository<LibraryHour,Intege
 	boolean existsByLibrary(Library library);
 
     LibraryHour findLibraryHourById(int id);
+	LibraryHour findLibraryHourByDayOfWeek(DayOfWeek d);
 }

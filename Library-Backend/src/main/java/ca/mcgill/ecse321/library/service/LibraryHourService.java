@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.library.service;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class LibraryHourService {
     public LibraryHour getLibraryHour(Integer id) {
         if(id == null || id < 0) throw new LibraryHourException("Invalid Library Hour Id");
         return libraryHourRepository.findLibraryHourById(id);
+    }
+    public LibraryHour getLibraryHourByDayOfWeek(String dayOfWeek) {
+        if(dayOfWeek == null) throw new LibraryHourException("Invalid Weekday");
+        return libraryHourRepository.findLibraryHourByDayOfWeek(DayOfWeek.valueOf(dayOfWeek));
     }
 
     @Transactional
