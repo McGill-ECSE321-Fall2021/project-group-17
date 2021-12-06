@@ -23,13 +23,12 @@ import cz.msebera.android.httpclient.entity.mime.Header;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.CookieManager;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,12 +56,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        try {
-//            initReservations();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-        setContentView(R.layout.activity_view_items);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_view_loans);
+        try {
+            initReservations();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -401,32 +401,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void viewItemInstances(View v) {
-        setContentView(R.layout.activity_view_items);
+    public void viewLoans(View v) throws JSONException {
+        setContentView(R.layout.activity_view_loans);
+        initReservations();
     }
 
     public void viewReservations(View v) throws JSONException {
-        initReservations();
         setContentView(R.layout.activity_view_reservations);
+        initReservations();
     }
 
     public void initReservations() throws JSONException {
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         TableRow tbrow0 = new TableRow(this);
         TextView tv0 = new TextView(this);
-        tv0.setText(" Sl.No ");
+        tv0.setText(" No. ");
         tv0.setTextColor(Color.WHITE);
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(this);
-        tv1.setText(" Product ");
+        tv1.setText(" Date checked out ");
         tv1.setTextColor(Color.WHITE);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(this);
-        tv2.setText(" Unit Price ");
+        tv2.setText(" Return date ");
         tv2.setTextColor(Color.WHITE);
         tbrow0.addView(tv2);
         TextView tv3 = new TextView(this);
-        tv3.setText(" Stock Remaining ");
+        tv3.setText(" Item ID ");
         tv3.setTextColor(Color.WHITE);
         tbrow0.addView(tv3);
         stk.addView(tbrow0);
@@ -438,17 +439,17 @@ public class MainActivity extends AppCompatActivity {
             t1v.setGravity(Gravity.CENTER);
             tbrow.addView(t1v);
             TextView t2v = new TextView(this);
-            t2v.setText("Product " + i);
+            t2v.setText("" + i);
             t2v.setTextColor(Color.WHITE);
             t2v.setGravity(Gravity.CENTER);
             tbrow.addView(t2v);
             TextView t3v = new TextView(this);
-            t3v.setText("Rs." + i);
+            t3v.setText("" + i);
             t3v.setTextColor(Color.WHITE);
             t3v.setGravity(Gravity.CENTER);
             tbrow.addView(t3v);
             TextView t4v = new TextView(this);
-            t4v.setText("" + i * 15 / 32 * 10);
+            t4v.setText("ID: " + i * 15 / 32 * 10);
             t4v.setTextColor(Color.WHITE);
             t4v.setGravity(Gravity.CENTER);
             tbrow.addView(t4v);
@@ -510,6 +511,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
     public void editProfile(View v){
         setContentView(R.layout.fragment_first);
         TextView tv1 = (TextView)findViewById(R.id.email);

@@ -11,7 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="username">Enter Username</string>
-    <string name="password">Enter Password</string>
+<!--    <string name="password">Enter Password</string>-->
     <string name="login_button">Login</string>
     <string name="person_name_label">Name</string>
     <string name="username_label">Username</string>
@@ -22,7 +22,7 @@
     <string name="city_label">City</string>
     <string name="country_label">Country</string>
     <string name="view_reservations">My reservations</string>
-    <string name="view_iteminstances">Item instances</string>
+    <string name="view_loans">My loans</string>
     <string name="email">temp_email</string>
     <string name="password">temp_password</string>
     <string name="number">temp_street_number</string>
@@ -34,4 +34,5 @@
 
     <string name="edit_button">Edit</string>
     <string name="profile_view">Profile View</string>
+    <string name="view_items">View items</string>
 </resources>
