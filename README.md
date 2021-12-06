@@ -48,7 +48,7 @@ The Library Management System aims to create an easy to use system which can bri
   ### Effort Breakdown Sprint Four
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
-  | Aidan Jackson|| 25 |
+  | Aidan Jackson|Created View Profile & Edit Profile pages, user Documentation Guide| 15 |
   | Hana Gustyn  |  | 25 |
   | Tomasz Mroz  | Set up android repository, Created page for make reservation, User Documentation  | 15 |
   | Fiona Ryan   |  | 25 |
