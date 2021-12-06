@@ -1,8 +1,13 @@
 package ca.mcgill.ecse321.library;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -10,21 +15,34 @@ import com.loopj.android.http.RequestParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 //import ca.mcgill.ecse321.library.databinding.ActivityMainBinding;
-import cz.msebera.android.httpclient.entity.mime.Header;
+//import cz.msebera.android.httpclient.entity.mime.Header;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
+
+import ca.mcgill.ecse321.library.data.ItemInstance;
+import ca.mcgill.ecse321.library.data.Reservation;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import android.view.Window;
+
+import android.widget.DatePicker;
 import android.webkit.CookieManager;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 
@@ -33,23 +51,81 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
 
-    private String error = null;
-    private Integer userId;
+    private static String error = null;
+    private static int customerId = 4;
+    private static Integer selectedItemId;
+    private static String endDate = null;
+    private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
+    private static Context ctx;
+    private static TextView itemInstanceErrorView;
+    private static Integer userId;
+    private ArrayList<Reservation> reservations = new ArrayList<>();
+    private List<JSONObject> loans;
+    /*private Integer customerId;
+    private Integer personId;
+    private Integer addressId;
+    private final String name = String.valueOf(findViewById(R.id.person_name));
+    private final String username = String.valueOf(findViewById(R.id.signup_username));
+    private final String password = String.valueOf(findViewById(R.id.signup_password));
+    private final String email = String.valueOf(findViewById(R.id.email_address));
+    private final String streetNumber = String.valueOf(findViewById(R.id.street_number));
+    private final String streetName = String.valueOf(findViewById(R.id.street_name));
+    private final String city = String.valueOf(findViewById(R.id.city));
+    private final String country = String.valueOf(findViewById(R.id.country));*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_signup);
-        //setContentView(R.layout.activity_profile_view);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ctx = getApplicationContext();
+        itemInstanceErrorView = this.findViewById(R.id.IIerror);
+        //getItemInstances();
+        setContentView(R.layout.activity_homepage);
+
+        /*
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+>>>>>>> d4231a6fd08234114e50499697a090cb55c83d50
 
         setContentView(R.layout.activity_signup);
 
 
+    }
+    private void refreshErrorMessage() {
+
+        // set the error message
+        TextView tvError = (TextView) findViewById(R.id.error);
+        tvError.setText(error);
+
+        if (error == null || error.length() == 0) {
+            tvError.setVisibility(View.GONE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }*/
+    }
+    private void refreshErrorMessage() {
+
+        // set the error message
+        TextView tvError = (TextView) findViewById(R.id.error);
+        tvError.setText(error);
+
+        if (error == null || error.length() == 0) {
+            tvError.setVisibility(View.GONE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -147,36 +223,29 @@ public class MainActivity extends AppCompatActivity {
     public void logIn(View v){
         error = "";
 
-        final String username = String.valueOf(findViewById(R.id.login_username));
-        final String password = String.valueOf(findViewById(R.id.login_password));
+        EditText login_username = (EditText)findViewById(R.id.login_username);
+        String username = login_username.getText().toString();
+
+        EditText login_password = findViewById(R.id.login_password);
+        String password = login_password.getText().toString();
 
 
-        HttpUtils.postByUrl("/login/"+ username+'/'+password, new RequestParams(), new JsonHttpResponseHandler() {
+        HttpUtils.put("/login/"+ username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
 
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject response) {
+                refreshErrorMessage();
                 try {
-                    if(response.get("password").toString().equalsIgnoreCase(password)){
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);  //loginActivity to homepage
-                        intent.putExtra("username", username);
-                        startActivity(intent);
-                    }else{
-                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                                .setMessage("Wrong password")
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                                .show();
-                    }
+                    userId = Integer.parseInt(((JSONObject) response.get("personRole")).get("id").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    error += e.getMessage();
                 }
+                setContentView(R.layout.activity_homepage); //change to homepage
+
             }
 
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, org.json.JSONObject errorResponse) {
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
@@ -188,13 +257,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signOut(View v) throws JSONException{
+        userId = null;
         setContentView(R.layout.activity_login);
     }
     public void libraryHours(View v) throws JSONException{
         setContentView(R.layout.activity_libraryhour);
+        getLibraryHours(v);
     }
     public void homepage(View v) throws JSONException{
         setContentView(R.layout.activity_homepage);
+    }
+    public void viewReservation(View v) throws JSONException{
+        setContentView(R.layout.activity_view_reservations);
+        getAllReservations();
     }
 
     public void signUp(View v) throws JSONException {
@@ -281,11 +356,166 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     error = e.getMessage();
                 }
-                refreshErrorMessage();
             }
         });
     }
 
+    public void getLibraryHours(View v) {
+        HttpUtils.get("libraryhour/find/MONDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text1=findViewById(R.id.box1);
+                    text1.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/TUESDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text2=findViewById(R.id.box2);
+                    text2.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/WEDNESDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text3=findViewById(R.id.box3);
+                    text3.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/THURSDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text4=findViewById(R.id.box4);
+                    text4.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/FRIDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text5=findViewById(R.id.box5);
+                    text5.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/SATURDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text6=findViewById(R.id.box6);
+                    text6.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+        HttpUtils.get("libraryhour/find/SUNDAY", new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text7=findViewById(R.id.box7);
+                    text7.setText(response.get("startTime").toString()+ "AM to " + response.get("endTime").toString() +"PM");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
     private void createCustomer(View v, Integer personId, Integer addressId) {
         HttpUtils.post("customer/1/" + personId + "/0/" + addressId, new RequestParams(), new JsonHttpResponseHandler() {
 
@@ -332,12 +562,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
-                    HttpUtils.put("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
+                    HttpUtils.postByUrl("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                             try {
-                                login(v, customerId);
+                                login(v,customerId);
 
                             } catch (Exception e) {
 
@@ -374,7 +604,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void login(View v, Integer customerId) {
+
+    private void login(View v,Integer customerId){
         EditText editText = findViewById(R.id.signup_username);
         final String username = editText.getText().toString();
 
@@ -406,16 +637,269 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    private void refreshErrorMessage() {
+    public void switchToSignup(View v) {
+        setContentView(R.layout.activity_signup);
+    }
 
-        // set the error message
-        TextView tvError = (TextView) findViewById(R.id.error);
-        tvError.setText(error);
+    public void getItemInstances() {
+        itemInstances.clear();
+        Log.d("Items", "Trying to get item instances");
+        HttpUtils.get("iteminstances",new RequestParams(), new JsonHttpResponseHandler() {
 
-        if (error == null || error.length() == 0) {
-            tvError.setVisibility(View.GONE);
-        } else {
-            tvError.setVisibility(View.VISIBLE);
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject obj = response.getJSONObject(i);
+                        ItemInstance item = new ItemInstance();
+                        item.setSerialNum(obj.getInt("serialNum"));
+                        JSONObject checkedItem = obj.getJSONObject("checkableItem");
+                        item.setItemName(checkedItem.getString("name"));
+                        item.setDatePublished(checkedItem.getString("datePublished"));
+                        itemInstances.add(item);
+                    }
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                init();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                catch (NullPointerException e) {
+                    System.out.println("Cannot resolve address");
+                }
+            }
+        });
+    }
+
+    public void viewReservations(View v) throws JSONException {
+        setContentView(R.layout.activity_view_reservations);
+        getAllReservations();
+    }
+
+    public void getAllReservations() {
+        if (reservations != null) reservations.clear();
+        Log.d("Reservations", "Trying to get reservations");
+        RequestParams params = new RequestParams();
+        params.add("customerId", String.valueOf(userId));
+        HttpUtils.get("reservation/", params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject obj = response.getJSONObject(i);
+                        Reservation item = new Reservation();
+                        item.setItemId(obj.getInt("id"));
+                        item.setDateReturned(obj.getString("dateReserved"));
+                        item.setDateCheckedOut(obj.getString("pickupDay"));
+                        reservations.add(item);
+                    }
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                setContentView(R.layout.activity_view_reservations);
+                initReservations();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                catch (NullPointerException e) {
+                    System.out.println("Cannot resolve address");
+                }
+            }
+        });
+    }
+
+    public void initReservations() {
+        TableLayout layout = findViewById(R.id.table_main);
+        TableRow row = new TableRow(this);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        row.setLayoutParams(lp);
+
+        TextView id = new TextView(this);
+        configureTextView(id);
+        id.setText("Check Out       ");
+        row.addView(id);
+
+        TextView name = new TextView(this);
+        configureTextView(name);
+        name.setText("Return Date       ");
+        row.addView(name);
+
+        TextView datePublished = new TextView(this);
+        configureTextView(datePublished);
+        datePublished.setText("ID");
+        row.addView(datePublished);
+        layout.addView(row);
+
+        for(int i = 0; i < reservations.size(); i++){
+            row= new TableRow(this);
+            int color = Color.parseColor("#76323F");
+            row.setBackground(new ColorDrawable(color));
+            lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
+            id = new TextView(this);
+            configureTextView(id);
+            id.setText((" " + reservations.get(i).getDateCheckedOut() + "   "));
+            row.addView(id);
+
+            name = new TextView(this);
+            configureTextView(name);
+            name.setText("" + reservations.get(i).getDateReturned() + "   ");
+            row.addView(name);
+
+
+            datePublished = new TextView(this);
+            configureTextView(datePublished);
+            datePublished.setText("" + reservations.get(i).getItemId()+ " ");
+            row.addView(datePublished);
+            layout.addView(row,i+1);
+        }
+    }
+
+    public void editProfile(View v){
+        setContentView(R.layout.fragment_first);
+        TextView tv1 = (TextView)findViewById(R.id.email);
+        tv1.setText("Hello");
+    }
+
+    public void init() {
+        //getItemInstances();
+        TableLayout layout = findViewById(R.id.itemTable);
+        TableRow row = new TableRow(this);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        row.setLayoutParams(lp);
+
+        TextView id = new TextView(this);
+        configureTextView(id);
+        id.setText("ID");
+        row.addView(id);
+
+        TextView name = new TextView(this);
+        configureTextView(name);
+        name.setText("Name");
+        row.addView(name);
+
+        TextView datePublished = new TextView(this);
+        configureTextView(datePublished);
+        datePublished.setText("Date Published");
+        row.addView(datePublished);
+        layout.addView(row);
+
+        for(int i = 0; i < itemInstances.size(); i++){
+            row= new TableRow(this);
+            int color = Color.parseColor("#76323F");
+            row.setBackground(new ColorDrawable(color));
+            lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
+            id = new TextView(this);
+            configureTextView(id);
+            id.setText(((Integer)itemInstances.get(i).getSerialNum()).toString());
+            row.addView(id);
+
+            name = new TextView(this);
+            configureTextView(name);
+            name.setText(itemInstances.get(i).getItemName());
+            row.addView(name);
+
+
+            datePublished = new TextView(this);
+            configureTextView(datePublished);
+            datePublished.setText(itemInstances.get(i).getDatePublished());
+            row.addView(datePublished);
+
+            row.setClickable(true);
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedItemId =  Integer.parseInt(((TextView)((TableRow)v).getChildAt(0)).getText().toString());
+                    v.setBackgroundColor(Color.BLACK);
+                }
+            });
+
+            layout.addView(row,i+1);
+        }
+    }
+    public void makeReservation(View view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+
+    }
+    private void configureTextView (TextView tv){
+
+        //tv.setBackground(new ColorDrawable(color));
+        tv.setTextSize(20);
+        tv.setTextColor(Color.WHITE);
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            endDate = year + "-" + (month+1) + "-" + day;
+            JSONObject object = new JSONObject();
+            if(selectedItemId == null){
+                return;
+            }
+            try{
+                object.accumulate("itemInstanceId",selectedItemId);
+                object.accumulate("customerId",((Integer)userId).toString());
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                object.accumulate("dateReserved",date);
+                object.accumulate("pickupDay", endDate);
+                HttpUtils.postJson(ctx,"reservation/",new StringEntity(object.toString()), new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        itemInstanceErrorView.setTextColor(Color.BLACK);
+                        itemInstanceErrorView.setText("Reservation made successfully");
+                        itemInstanceErrorView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Log.d("Bad", ((Integer)statusCode).toString());
+                        try {
+                            error = errorResponse.getString("message");
+                            error = "ERROR: "+ error;
+                            itemInstanceErrorView.setTextColor(Color.RED);
+                            itemInstanceErrorView.setText(error);
+                            itemInstanceErrorView.setVisibility(View.VISIBLE);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            catch (JSONException | UnsupportedEncodingException e){
+                e.printStackTrace();
+            }
         }
     }
 }

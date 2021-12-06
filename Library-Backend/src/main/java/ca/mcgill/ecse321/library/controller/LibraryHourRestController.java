@@ -26,6 +26,11 @@ public class LibraryHourRestController {
         LibraryHour libraryHour = service.getLibraryHour(id);
         return convertToDTO(libraryHour);
     }
+    @GetMapping(value = {"/libraryhour/find/{dayOfWeek}", "/libraryhour/find/{dayOfWeek}"})//
+    public LibraryHourDTO getLibraryHourByDayOfWeek(@PathVariable("dayOfWeek") String dayOfWeek) throws IllegalArgumentException {
+        LibraryHour libraryHour = service.getLibraryHourByDayOfWeek(dayOfWeek);
+        return convertToDTO(libraryHour);
+    }
 
     @PostMapping(value= {"/libraryhour/{id}", "/libraryhour/{id}"})
     @ResponseBody

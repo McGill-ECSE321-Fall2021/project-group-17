@@ -106,8 +106,12 @@ public class ReservationService {
         if(customerId == null){
             throw new ReservationException("Customer id cannot be null");
         }
-        Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
-        return reservationRepository.findByCustomer(c);
+        try {
+        	Customer c = (Customer) customerRepository.findPersonRoleById(customerId);
+            return reservationRepository.findByCustomer(c);
+        } catch (ClassCastException e) {
+        	throw new ReservationException(e.getMessage());        
+        }
     }
 
     @Transactional
