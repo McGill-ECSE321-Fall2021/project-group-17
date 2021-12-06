@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
-                    HttpUtils.postByUrl("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
+                    HttpUtils.put("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
