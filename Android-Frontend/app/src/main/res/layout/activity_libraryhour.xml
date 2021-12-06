@@ -34,22 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signup_button2"
-        android:layout_width="111dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginBottom="168dp"
-        android:background="#76323f"
-
-        android:fontFamily="monospace"
-        android:onClick="getLibraryHours"
-        android:text="update Hours"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tlTable01" />
-
     <TableLayout
         android:id="@+id/tlTable01"
         android:layout_width="fill_parent"
@@ -81,11 +65,10 @@
                 android:id="@+id/box1"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -105,11 +88,10 @@
                 android:id="@+id/box2"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -129,11 +111,10 @@
                 android:id="@+id/box3"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -153,11 +134,10 @@
                 android:id="@+id/box4"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -177,11 +157,10 @@
                 android:id="@+id/box5"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -201,11 +180,10 @@
                 android:id="@+id/box6"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -225,11 +203,10 @@
                 android:id="@+id/box7"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="12dp" />
         </TableRow>
     </TableLayout>
 

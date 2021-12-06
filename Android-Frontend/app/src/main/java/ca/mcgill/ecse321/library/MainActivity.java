@@ -32,7 +32,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
+   // private ActivityMainBinding binding;
     private String error = null;
     /*private Integer customerId;
     private Integer personId;
@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void libraryHours(View v) throws JSONException{
         setContentView(R.layout.activity_libraryhour);
+        getLibraryHours(v);
     }
     public void homepage(View v) throws JSONException{
         setContentView(R.layout.activity_homepage);
