@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject errorResponse) {
                 refreshErrorMessage();
-                setContentView(R.layout.activity_signup); //change to homepage
+                setContentView(R.layout.activity_homepage); //change to homepage
 
             }
 
