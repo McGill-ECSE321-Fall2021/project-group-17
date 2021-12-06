@@ -53,7 +53,7 @@ The Library Management System aims to create an easy to use system which can bri
   | Tomasz Mroz  |  | 25 |
   | Fiona Ryan   |  | 25 |
   | Victoria Sanchez|Created homepage, navigation between pages, view library hours page, user documentation guide, meeting minutes|15 |
-  | Jerry Xia |  | 25 |
+  | Jerry Xia |Create current reservations page| 15 |
   
   
 ### Project Wiki

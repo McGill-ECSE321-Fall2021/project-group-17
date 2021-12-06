@@ -57,27 +57,15 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
 
     private static String error = null;
-    private static int customerId = 4;
+    //private static int customerId = 4;
     private static Integer selectedItemId;
     private static String endDate = null;
     private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
     private static Context ctx;
     private static TextView itemInstanceErrorView;
-    private Integer userId;
+    private static Integer userId;
     private ArrayList<Reservation> reservations = new ArrayList<>();
     private List<JSONObject> loans;
-    /*private Integer customerId;
-    private Integer personId;
-    private Integer addressId;
-    private final String name = String.valueOf(findViewById(R.id.person_name));
-    private final String username = String.valueOf(findViewById(R.id.signup_username));
-    private final String password = String.valueOf(findViewById(R.id.signup_password));
-    private final String email = String.valueOf(findViewById(R.id.email_address));
-    private final String streetNumber = String.valueOf(findViewById(R.id.street_number));
-    private final String streetName = String.valueOf(findViewById(R.id.street_name));
-    private final String city = String.valueOf(findViewById(R.id.city));
-    private final String country = String.valueOf(findViewById(R.id.country));*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,8 +151,13 @@ public class MainActivity extends AppCompatActivity {
         HttpUtils.put("/login/"+ username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject errorResponse) {
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, org.json.JSONObject response) {
                 refreshErrorMessage();
+                try {
+                    userId = Integer.parseInt(((JSONObject) response.get("personRole")).get("id").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 setContentView(R.layout.activity_homepage); //change to homepage
 
             }
@@ -182,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signOut(View v) throws JSONException{
+        userId = null;
         setContentView(R.layout.activity_login);
     }
     public void libraryHours(View v) throws JSONException{
@@ -798,7 +792,7 @@ public class MainActivity extends AppCompatActivity {
             }
             try{
                 object.accumulate("itemInstanceId",selectedItemId);
-                object.accumulate("customerId",((Integer)customerId).toString());
+                object.accumulate("customerId",((Integer)userId).toString());
                 String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 object.accumulate("dateReserved",date);
                 object.accumulate("pickupDay", endDate);
