@@ -1,11 +1,8 @@
 package ca.mcgill.ecse321.library;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -39,7 +36,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import android.view.Window;
 
 import android.widget.DatePicker;
-import android.webkit.CookieManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -85,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
->>>>>>> d4231a6fd08234114e50499697a090cb55c83d50
 
         setContentView(R.layout.activity_signup);
 
@@ -261,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToReservations(View v) throws JSONException{
         setContentView(R.layout.item_instance);
-        getAllReservations();
+        getItemInstances();
     }
 
     public void signUp(View v) throws JSONException {
@@ -554,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
-                    HttpUtils.postByUrl("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
+                    HttpUtils.put("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
@@ -654,7 +649,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (JSONException e){
                     e.printStackTrace();
                 }
-                init();
+                updateItemInstanceTable();
             }
 
             @Override
@@ -667,6 +662,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (NullPointerException e) {
                     System.out.println("Cannot resolve address");
                 }
+                updateItemInstanceTable();
             }
         });
     }
@@ -762,18 +758,14 @@ public class MainActivity extends AppCompatActivity {
             layout.addView(row,i+1);
         }
     }
-
-    public void editProfile(View v){
-        setContentView(R.layout.fragment_first);
-        TextView tv1 = (TextView)findViewById(R.id.email);
-        tv1.setText("Hello");
-    }
-
-    public void init() {
+    
+    public void updateItemInstanceTable() {
         //getItemInstances();
         TableLayout layout = findViewById(R.id.itemTable);
         TableRow row = new TableRow(this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+
         row.setLayoutParams(lp);
 
         TextView id = new TextView(this);
@@ -797,6 +789,7 @@ public class MainActivity extends AppCompatActivity {
             int color = Color.parseColor("#76323F");
             row.setBackground(new ColorDrawable(color));
             lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+
             row.setLayoutParams(lp);
             id = new TextView(this);
             configureTextView(id);
@@ -818,8 +811,17 @@ public class MainActivity extends AppCompatActivity {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectedItemId =  Integer.parseInt(((TextView)((TableRow)v).getChildAt(0)).getText().toString());
-                    v.setBackgroundColor(Color.BLACK);
+                    int id =  Integer.parseInt(((TextView) ((TableRow) v).getChildAt(0)).getText().toString());
+                    if (selectedItemId != null && id == selectedItemId) {
+                        selectedItemId = null;
+                        int color = Color.parseColor("#76323F");
+                        v.setBackgroundColor(color);
+                    }
+                    else{
+                        selectedItemId = id;
+                        v.setBackgroundColor(Color.BLACK);
+                    }
+
                 }
             });
 
