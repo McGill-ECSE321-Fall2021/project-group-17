@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Gravity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.fragment.app.DialogFragment;
@@ -704,6 +705,8 @@ public class MainActivity extends AppCompatActivity {
         TableLayout layout = findViewById(R.id.itemTable);
         TableRow row = new TableRow(this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+
         row.setLayoutParams(lp);
 
         TextView id = new TextView(this);
@@ -727,6 +730,7 @@ public class MainActivity extends AppCompatActivity {
             int color = Color.parseColor("#76323F");
             row.setBackground(new ColorDrawable(color));
             lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+
             row.setLayoutParams(lp);
             id = new TextView(this);
             configureTextView(id);
@@ -748,8 +752,17 @@ public class MainActivity extends AppCompatActivity {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectedItemId =  Integer.parseInt(((TextView)((TableRow)v).getChildAt(0)).getText().toString());
-                    v.setBackgroundColor(Color.BLACK);
+                    int id =  Integer.parseInt(((TextView) ((TableRow) v).getChildAt(0)).getText().toString());
+                    if (selectedItemId != null && id == selectedItemId) {
+                        selectedItemId = null;
+                        int color = Color.parseColor("#76323F");
+                        v.setBackgroundColor(color);
+                    }
+                    else{
+                        selectedItemId = id;
+                        v.setBackgroundColor(Color.BLACK);
+                    }
+
                 }
             });
 

@@ -61,7 +61,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/buttons"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:paddingTop="1dp"
+
+        android:stretchColumns="*"
         android:background="#C09F80"
+        android:gravity="top"
         >
 
     </TableLayout>
@@ -83,6 +89,7 @@
             android:layout_height="wrap_content"
             android:text="@string/makeReservation"
             android:onClick="makeReservation"
+            android:backgroundTint="#76323F"
 
             />
 
