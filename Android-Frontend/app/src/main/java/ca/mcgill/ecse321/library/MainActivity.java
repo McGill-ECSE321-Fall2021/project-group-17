@@ -22,13 +22,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+//import ca.mcgill.ecse321.library.databinding.ActivityMainBinding;
+//import cz.msebera.android.httpclient.entity.mime.Header;
+
+import android.view.Menu;
+import android.view.MenuItem;
+
+
 import ca.mcgill.ecse321.library.data.ItemInstance;
 import ca.mcgill.ecse321.library.data.Reservation;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 
 import android.widget.DatePicker;
@@ -36,6 +40,8 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,21 +82,21 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        setContentView(R.layout.activity_signup);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
+    }
+    private void refreshErrorMessage() {
 
+        // set the error message
+        TextView tvError = (TextView) findViewById(R.id.error);
+        tvError.setText(error);
+
+        if (error == null || error.length() == 0) {
+            tvError.setVisibility(View.GONE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }*/
     }
     private void refreshErrorMessage() {
 
@@ -132,6 +138,69 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void toEditProfile(View v){
+        setContentView(R.layout.activity_profile_edit);
+    }
+
+    public void editProfileInfo(View v){
+        error = "";
+
+        EditText editText1 = findViewById(R.id.email_edit);
+        final String email = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.password_edit);
+        final String password = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.street_name_edit);
+        final String streetName = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.street_number_edit);
+        final String streetNumber = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.city_edit);
+        final String city = editText1.getText().toString();
+
+        editText1 = findViewById(R.id.country_edit);
+        final String country = editText1.getText().toString();
+
+        HttpUtils.put("/UpdateAccount/" + userId + "/" + password + "/" + email + "/" + streetNumber + "/" + streetName + "/" + city + "/" + country, new RequestParams(), new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try{
+                    if(response.get("username") == userId){
+                        setContentView(R.layout.activity_profile_view);
+                        TextView text1 = findViewById(R.id.email);
+                        text1.setText(email);
+                        text1 = findViewById(R.id.password);
+                        text1.setText(password);
+                        text1 = findViewById(R.id.street_number);
+                        text1.setText(streetNumber);
+                        text1 = findViewById(R.id.street_name);
+                        text1.setText(streetName);
+                        text1 = findViewById(R.id.city);
+                        text1.setText(city);
+                        text1 = findViewById(R.id.country);
+                        text1.setText(country);
+                   }
+               }
+                catch(Exception e){
+
+                }
+           }
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+    }
+
+    public void viewProfile(View v){
+        setContentView(R.layout.activity_profile_view);
     }
 
     public void logIn(View v){
@@ -524,32 +593,32 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void login(View v,Integer customerId){
-            EditText editText = findViewById(R.id.signup_username);
-            final String username = editText.getText().toString();
+        EditText editText = findViewById(R.id.signup_username);
+        final String username = editText.getText().toString();
 
-            editText = findViewById(R.id.signup_password);
-            final String password = editText.getText().toString();
+        editText = findViewById(R.id.signup_password);
+        final String password = editText.getText().toString();
 
-            HttpUtils.put("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
+        HttpUtils.put("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
 
-                @Override
-                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
-                    userId = customerId;
-                    setContentView(R.layout.activity_homepage);
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                userId = customerId;
+                setContentView(R.layout.activity_homepage);
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
                 }
 
-                @Override
-                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    try {
-                        error = errorResponse.get("message").toString();
-                    } catch (JSONException e) {
-                        error = e.getMessage();
-                    }
-
-                    refreshErrorMessage();
-                }
-            });
-        }
+                refreshErrorMessage();
+            }
+        });
+    }
 
     public void switchToLogin(View v) {
         setContentView(R.layout.activity_login);
@@ -578,7 +647,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 catch (JSONException e){
-                        e.printStackTrace();
+                    e.printStackTrace();
                 }
                 updateItemInstanceTable();
             }
@@ -623,7 +692,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 catch (JSONException e){
-                        e.printStackTrace();
+                    e.printStackTrace();
                 }
                 setContentView(R.layout.activity_view_reservations);
                 initReservations();
@@ -688,12 +757,6 @@ public class MainActivity extends AppCompatActivity {
             row.addView(datePublished);
             layout.addView(row,i+1);
         }
-    }
-
-    public void editProfile(View v){
-        setContentView(R.layout.fragment_first);
-        TextView tv1 = (TextView)findViewById(R.id.email);
-        tv1.setText("Hello");
     }
     
     public void updateItemInstanceTable() {
