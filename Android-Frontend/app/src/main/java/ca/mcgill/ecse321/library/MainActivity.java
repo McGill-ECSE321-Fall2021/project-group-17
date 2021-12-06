@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         ctx = getApplicationContext();
         itemInstanceErrorView = this.findViewById(R.id.IIerror);
         //getItemInstances();
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_login);
 
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
