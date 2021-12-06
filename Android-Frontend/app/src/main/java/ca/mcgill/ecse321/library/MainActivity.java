@@ -539,6 +539,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
+    public void switchToSignup(View v) {
+        setContentView(R.layout.activity_signup);
+    }
+
     public void getItemInstances() {
         itemInstances.clear();
         Log.d("Items", "Trying to get item instances");
