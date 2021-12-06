@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         ctx = getApplicationContext();
         itemInstanceErrorView = this.findViewById(R.id.IIerror);
         //getItemInstances();
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.activity_login);
 
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -193,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void viewReservation(View v) throws JSONException{
         setContentView(R.layout.activity_view_reservations);
+        getAllReservations();
+    }
+    public void goToReservations(View v) throws JSONException{
+        setContentView(R.layout.item_instance);
         getAllReservations();
     }
 

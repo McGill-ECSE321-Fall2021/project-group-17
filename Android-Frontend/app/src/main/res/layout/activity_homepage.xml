@@ -35,7 +35,7 @@
         android:background="#76323f"
         android:fontFamily="monospace"
         android:onClick="viewReservations"
-        android:text="Current Loans"
+        android:text="Reservations"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
