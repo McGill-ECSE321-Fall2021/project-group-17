@@ -486,7 +486,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 try {
-                    HttpUtils.put("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
+                    HttpUtils.postByUrl("customer/" + customerId + '/' + username, new RequestParams(), new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
@@ -537,7 +537,7 @@ public class MainActivity extends AppCompatActivity {
             final String password = editText.getText().toString();
 
             HttpUtils.put("login/" + username + '/' + password, new RequestParams(), new JsonHttpResponseHandler() {
-
+                
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                     userId = customerId;
@@ -565,6 +565,7 @@ public class MainActivity extends AppCompatActivity {
         itemInstances.clear();
         Log.d("Items", "Trying to get item instances");
         HttpUtils.get("iteminstances",new RequestParams(), new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
@@ -690,7 +691,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if (response != null) {
-                        itemInstances = (List<JSONObject>) response;
+                        loans = (List<JSONObject>) response;
                     }
                 } catch (Exception e) {
 
@@ -740,9 +741,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_first);
         TextView tv1 = (TextView)findViewById(R.id.email);
         tv1.setText("Hello");
-    }
-    public void switchToLogin(View v) {
-        setContentView(R.layout.activity_login);
     }
     
     public void init() {
