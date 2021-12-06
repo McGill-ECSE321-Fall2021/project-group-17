@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
         TableRow row = new TableRow(this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
+
         row.setLayoutParams(lp);
 
         TextView id = new TextView(this);
@@ -271,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
             int color = Color.parseColor("#76323F");
             row.setBackground(new ColorDrawable(color));
             lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            lp.gravity = Gravity.CENTER;
 
             row.setLayoutParams(lp);
             id = new TextView(this);
