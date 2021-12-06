@@ -48,12 +48,12 @@ The Library Management System aims to create an easy to use system which can bri
   ### Effort Breakdown Sprint Four
   |  Team Member |      Responsible For      | Time Allocated (hours) |
   |--------------|---------------------|------|
-  | Aidan Jackson| Librarian, Head Librarian welcome pages, Librarian Sign Up, Librarian Service Method Fixes, Meeting Minutes, Key Architecture Layer Explanations | 25 |
-  | Hana Gustyn  | Manage Loans, Manage Reservations, Manage Items, Navigation between pages, Key Architecture Layer Explanations | 25 |
-  | Tomasz Mroz  | Reservation, Item Instance, and Loan UI on customer side  | 25 |
-  | Fiona Ryan   | Login and Sign up UI pages | 25 |
-  | Victoria Sanchez|User homepage, navigation between pages, profile and update account functionality for users, meeting minutes |25 |
-  | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 25 |
+  | Aidan Jackson|| 25 |
+  | Hana Gustyn  |  | 25 |
+  | Tomasz Mroz  |  | 25 |
+  | Fiona Ryan   |  | 25 |
+  | Victoria Sanchez|Created homepage, navigation between pages, view library hours page, user documentation guide, meeting minutes|15 |
+  | Jerry Xia |  | 25 |
   
   
 ### Project Wiki
