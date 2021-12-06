@@ -1,11 +1,8 @@
 package ca.mcgill.ecse321.library;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Gravity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 
 import androidx.fragment.app.DialogFragment;
@@ -36,7 +32,6 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import android.widget.DatePicker;
-import android.webkit.CookieManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -192,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToReservations(View v) throws JSONException{
         setContentView(R.layout.item_instance);
-        getAllReservations();
+        getItemInstances();
     }
 
     public void signUp(View v) throws JSONException {
@@ -585,7 +580,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (JSONException e){
                         e.printStackTrace();
                 }
-                init();
+                updateItemInstanceTable();
             }
 
             @Override
@@ -598,6 +593,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (NullPointerException e) {
                     System.out.println("Cannot resolve address");
                 }
+                updateItemInstanceTable();
             }
         });
     }
@@ -700,7 +696,7 @@ public class MainActivity extends AppCompatActivity {
         tv1.setText("Hello");
     }
     
-    public void init() {
+    public void updateItemInstanceTable() {
         //getItemInstances();
         TableLayout layout = findViewById(R.id.itemTable);
         TableRow row = new TableRow(this);
