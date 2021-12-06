@@ -16,4 +16,7 @@
     <string name="makeReservation">Make Reservation</string>
     <string name="makeLoan">Make Loan</string>
     <string name="login_button">Login</string>
+    <string name="id">id</string>
+    <string name="name">name</string>
+    <string name="date_published">Date Published</string>
 </resources>

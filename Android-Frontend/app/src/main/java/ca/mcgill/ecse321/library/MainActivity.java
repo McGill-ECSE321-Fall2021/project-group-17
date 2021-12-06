@@ -1,11 +1,15 @@
 package ca.mcgill.ecse321.library;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -14,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,9 +26,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import ca.mcgill.ecse321.library.data.ItemInstance;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -32,19 +39,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private String error = null;
+    private static String error = null;
+    private static int customerId = 4;
+    private static Integer selectedItemId;
+    private static String endDate = null;
     private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
+    private static Context ctx;
+    private static TextView itemInstanceErrorView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_instance);
-        init();
+        ctx = getApplicationContext();
+        itemInstanceErrorView = this.findViewById(R.id.IIerror);
+        getItemInstances();
         /*
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -64,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
+    }
+    private void refreshErrorMessage() {
+
+        // set the error message
+        TextView tvError = (TextView) findViewById(R.id.error);
+        tvError.setText(error);
+
+        if (error == null || error.length() == 0) {
+            tvError.setVisibility(View.GONE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -131,11 +162,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
-                    error += errorResponse.get("message").toString();
+                    error = errorResponse.getString("message");
+                    error = "ERROR: "+ error;
+                    itemInstanceErrorView.setTextColor(Color.RED);
+                    itemInstanceErrorView.setText(error);
+                    itemInstanceErrorView.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     error += e.getMessage();
                 }
-                refreshErrorMessage();
             }
         });
 
@@ -190,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (JSONException e){
                         e.printStackTrace();
                 }
+                init();
             }
 
             @Override
@@ -202,50 +237,138 @@ public class MainActivity extends AppCompatActivity {
                 catch (NullPointerException e) {
                     System.out.println("Cannot resolve address");
                 }
-                refreshErrorMessage();
             }
         });
     }
 
-    private void refreshErrorMessage() {
-
-        // set the error message
-        TextView tvError = (TextView) findViewById(R.id.error);
-        tvError.setText(error);
-
-        if (error == null || error.length() == 0) {
-            tvError.setVisibility(View.GONE);
-        } else {
-            tvError.setVisibility(View.VISIBLE);
-        }
-    }
-
     public void init() {
-        getItemInstances();
+        //getItemInstances();
         TableLayout layout = findViewById(R.id.itemTable);
+        TableRow row = new TableRow(this);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        row.setLayoutParams(lp);
+
+        TextView id = new TextView(this);
+        configureTextView(id);
+        id.setText("ID");
+        row.addView(id);
+
+        TextView name = new TextView(this);
+        configureTextView(name);
+        name.setText("Name");
+        row.addView(name);
+
+        TextView datePublished = new TextView(this);
+        configureTextView(datePublished);
+        datePublished.setText("Date Published");
+        row.addView(datePublished);
+        layout.addView(row);
+
         for(int i = 0; i < itemInstances.size(); i++){
-            TableRow row= new TableRow(this);
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row= new TableRow(this);
+            int color = Color.parseColor("#76323F");
+            row.setBackground(new ColorDrawable(color));
+            lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
-            TextView id = new TextView(this);
-            id.setText(itemInstances.get(i).getSerialNum());
+            id = new TextView(this);
+            configureTextView(id);
+            id.setText(((Integer)itemInstances.get(i).getSerialNum()).toString());
             row.addView(id);
-            TextView name = new TextView(this);
+
+            name = new TextView(this);
+            configureTextView(name);
             name.setText(itemInstances.get(i).getItemName());
             row.addView(name);
-            TextView author = new TextView(this);
-            author.setText(itemInstances.get(i).getItemCreator());
-            row.addView(author);
-            TextView datePublished = new TextView(this);
+
+
+            datePublished = new TextView(this);
+            configureTextView(datePublished);
             datePublished.setText(itemInstances.get(i).getDatePublished());
             row.addView(datePublished);
 
-            layout.addView(row,i);
+            row.setClickable(true);
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedItemId =  Integer.parseInt(((TextView)((TableRow)v).getChildAt(0)).getText().toString());
+                    v.setBackgroundColor(Color.BLACK);
+                }
+            });
+
+            layout.addView(row,i+1);
         }
     }
-    public void makeReservation(View view){
-        Log.d("jawnie", "boul");
+    public void makeReservation(View view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+
+    }
+    private void configureTextView (TextView tv){
+
+        //tv.setBackground(new ColorDrawable(color));
+        tv.setTextSize(20);
+        tv.setTextColor(Color.WHITE);
     }
 
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
 
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            endDate = year + "-" + (month+1) + "-" + day;
+            JSONObject object = new JSONObject();
+            if(selectedItemId == null){
+                return;
+            }
+            try{
+                object.accumulate("itemInstanceId",selectedItemId);
+                object.accumulate("customerId",((Integer)customerId).toString());
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                object.accumulate("dateReserved",date);
+                object.accumulate("pickupDay", endDate);
+                HttpUtils.postJson(ctx,"reservation/",new StringEntity(object.toString()), new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        itemInstanceErrorView.setTextColor(Color.BLACK);
+                        itemInstanceErrorView.setText("Reservation made successfully");
+                        itemInstanceErrorView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Log.d("Bad", ((Integer)statusCode).toString());
+                        try {
+                            error = errorResponse.getString("message");
+                            error = "ERROR: "+ error;
+                            itemInstanceErrorView.setTextColor(Color.RED);
+                            itemInstanceErrorView.setText(error);
+                            itemInstanceErrorView.setVisibility(View.VISIBLE);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            catch (JSONException | UnsupportedEncodingException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public void setMessageItems(boolean error){
+
+
+
+    }
 }
