@@ -35,7 +35,7 @@ public class HttpUtils {
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
     public static void postJson(Context context, String url, StringEntity json , AsyncHttpResponseHandler responseHandler) {
-        client.post(context,getAbsoluteUrl(url), json, "application/json", responseHandler);
+        client.post(context,getAbsoluteUrl(url), json, "application/json", responseHandler);}
 
     public static void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.put(getAbsoluteUrl(url), params, responseHandler);
