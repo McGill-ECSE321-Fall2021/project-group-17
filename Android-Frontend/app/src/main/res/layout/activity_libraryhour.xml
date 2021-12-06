@@ -58,40 +58,17 @@
                 android:background="#D7CEC7"
                 android:fontFamily="serif-monospace"
                 android:padding="5dp"
-                android:text="Sunday"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_marginLeft="1dp"
-                android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
-                android:gravity="right"
-                android:padding="5dp"
-                android:text="1234561111"
-                android:textSize="20dp" />
-        </TableRow>
-
-        <TableRow
-            android:background="#D7CEC7"
-            android:paddingRight="1dp"
-            android:paddingBottom="1dp">
-
-            <TextView
-                android:layout_marginLeft="1dp"
-                android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
-                android:padding="5dp"
                 android:text="Monday"
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/box1"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
-                android:text="456789"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -108,13 +85,13 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/box2"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
-                android:text="456789"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -131,13 +108,13 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/box3"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
-                android:text="456789"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -154,13 +131,13 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/box4"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
-                android:text="456789"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -177,13 +154,13 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/box5"
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
-                android:fontFamily="serif-monospace"
                 android:gravity="right"
                 android:padding="5dp"
-                android:text="456789"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -200,13 +177,36 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/box6"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="12dp" />
+        </TableRow>
+
+        <TableRow
+            android:background="#D7CEC7"
+            android:paddingRight="1dp"
+            android:paddingBottom="1dp">
+
+            <TextView
                 android:layout_marginLeft="1dp"
                 android:background="#D7CEC7"
                 android:fontFamily="serif-monospace"
+                android:padding="5dp"
+                android:text="Sunday"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/box7"
+                android:layout_marginLeft="1dp"
+                android:background="#D7CEC7"
                 android:gravity="right"
                 android:padding="5dp"
-                android:text="456789"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="12dp" />
         </TableRow>
     </TableLayout>
 
