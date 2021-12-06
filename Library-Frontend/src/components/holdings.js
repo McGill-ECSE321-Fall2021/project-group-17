@@ -62,10 +62,11 @@ export default {
     },
     methods: {
       selectReservation: function (reservation) {
+        console.log(reservation)
         this.selectedReservation = reservation
         this.selectedItem = reservation.itemInstance.checkableItem.name
         this.selectedCustomer = reservation.customer.person.name
-        this.libCard = reservation.customer.libCard.id
+        this.libCard = reservation.customer.libraryCard.id
       },
 
       deleteReservation: function () {
