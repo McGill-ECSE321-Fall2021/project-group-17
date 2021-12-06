@@ -9,7 +9,7 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class HttpUtils {
-    public static final String DEFAULT_BASE_URL = "http://10.0.2.2:8080/";
+    public static final String DEFAULT_BASE_URL = "https://library-backend-534a.herokuapp.com/";
 
     private static String baseUrl;
     private static AsyncHttpClient client = new AsyncHttpClient();
