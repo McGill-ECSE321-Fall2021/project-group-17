@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signOut(View v) throws JSONException{
+        userId = null;
         setContentView(R.layout.activity_login);
     }
     public void libraryHours(View v) throws JSONException{
