@@ -45,5 +45,16 @@ The Library Management System aims to create an easy to use system which can bri
   | Victoria Sanchez|User homepage, navigation between pages, profile and update account functionality for users, meeting minutes |25 |
   | Jerry Xia | View for modifying schedule for librarians, view shifts (from the librarian page) | 25 |
   
+  ### Effort Breakdown Sprint Four
+  |  Team Member |      Responsible For      | Time Allocated (hours) |
+  |--------------|---------------------|------|
+  | Aidan Jackson|| 25 |
+  | Hana Gustyn  |  | 25 |
+  | Tomasz Mroz  |  | 25 |
+  | Fiona Ryan   |  | 25 |
+  | Victoria Sanchez|Created homepage, navigation between pages, view library hours page, user documentation guide, meeting minutes|15 |
+  | Jerry Xia |Create current reservations page| 15 |
+  
+  
 ### Project Wiki
 [Wiki Home Page](https://github.com/McGill-ECSE321-Fall2021/project-group-17/wiki)
