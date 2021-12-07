@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
 
     private static String error = null;
-    //private static int customerId = 4;
+    private static String customerUsername = null;
     private static Integer selectedItemId;
     private static String endDate = null;
     private ArrayList<ItemInstance> itemInstances = new ArrayList<>();
@@ -77,27 +77,8 @@ public class MainActivity extends AppCompatActivity {
         itemInstanceErrorView = this.findViewById(R.id.IIerror);
         //getItemInstances();
         setContentView(R.layout.activity_login);
-
-        /*
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setContentView(R.layout.activity_signup);
-
-
     }
-    private void refreshErrorMessage() {
 
-        // set the error message
-        TextView tvError = (TextView) findViewById(R.id.error);
-        tvError.setText(error);
-
-        if (error == null || error.length() == 0) {
-            tvError.setVisibility(View.GONE);
-        } else {
-            tvError.setVisibility(View.VISIBLE);
-        }*/
-    }
     private void refreshErrorMessage() {
 
         // set the error message
@@ -140,67 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void toEditProfile(View v){
-        setContentView(R.layout.activity_profile_edit);
-    }
-
-    public void editProfileInfo(View v){
-        error = "";
-
-        EditText editText1 = findViewById(R.id.email_edit);
-        final String email = editText1.getText().toString();
-
-        editText1 = findViewById(R.id.password_edit);
-        final String password = editText1.getText().toString();
-
-        editText1 = findViewById(R.id.street_name_edit);
-        final String streetName = editText1.getText().toString();
-
-        editText1 = findViewById(R.id.street_number_edit);
-        final String streetNumber = editText1.getText().toString();
-
-        editText1 = findViewById(R.id.city_edit);
-        final String city = editText1.getText().toString();
-
-        editText1 = findViewById(R.id.country_edit);
-        final String country = editText1.getText().toString();
-
-        HttpUtils.put("/UpdateAccount/" + userId + "/" + password + "/" + email + "/" + streetNumber + "/" + streetName + "/" + city + "/" + country, new RequestParams(), new JsonHttpResponseHandler() {
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try{
-                    if(response.get("username") == userId){
-                        setContentView(R.layout.activity_profile_view);
-                        TextView text1 = findViewById(R.id.email);
-                        text1.setText(email);
-                        text1 = findViewById(R.id.password);
-                        text1.setText(password);
-                        text1 = findViewById(R.id.street_number);
-                        text1.setText(streetNumber);
-                        text1 = findViewById(R.id.street_name);
-                        text1.setText(streetName);
-                        text1 = findViewById(R.id.city);
-                        text1.setText(city);
-                        text1 = findViewById(R.id.country);
-                        text1.setText(country);
-                   }
-               }
-                catch(Exception e){
-
-                }
-           }
-            @Override
-            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error = errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error = e.getMessage();
-                }
-            }
-        });
-    }
-
     public void viewProfile(View v){
-        setContentView(R.layout.activity_profile_view);
+        displayProfileInfo();
+        setContentView(R.layout.activity_profile);
     }
 
     public void logIn(View v){
@@ -220,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 refreshErrorMessage();
                 try {
                     userId = Integer.parseInt(((JSONObject) response.get("personRole")).get("id").toString());
+                    customerUsername = username;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -604,6 +528,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 userId = customerId;
+                customerUsername = username;
                 setContentView(R.layout.activity_homepage);
             }
 
@@ -895,5 +820,36 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void displayProfileInfo() {
+        HttpUtils.get("getaccount/" + customerUsername, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                try {
+                    TextView text1=findViewById(R.id.profile_email);
+                    text1.setText(response.get("email").toString());
+
+                    text1=findViewById(R.id.profile_password);
+                    text1.setText(response.get("password").toString());
+
+                    text1=findViewById(R.id.profile_username);
+                    text1.setText(response.get("username").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error = e.getMessage();
+                }
+            }
+        });
+
     }
 }
