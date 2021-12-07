@@ -51,9 +51,9 @@ The Library Management System aims to create an easy to use system which can bri
   | Aidan Jackson|Created View Profile & Edit Profile pages, user Documentation Guide| 15 |
   | Hana Gustyn  | Created signup page, user documentation guide | 15 |
   | Tomasz Mroz  | Set up android repository, Created page for make reservation, User Documentation  | 15 |
-  | Fiona Ryan   |  | 25 |
+  | Fiona Ryan   | Created login page, user documentation guide | 15 |
   | Victoria Sanchez|Created homepage, navigation between pages, view library hours page, user documentation guide, meeting minutes|15 |
-  | Jerry Xia |Create current reservations page| 15 |
+  | Jerry Xia |Created current reservations page, user documentation guide | 15 |
   
   
 ### Project Wiki
