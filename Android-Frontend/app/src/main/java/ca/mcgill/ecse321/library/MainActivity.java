@@ -449,8 +449,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     error = e.getMessage();
                 }
-
-                refreshErrorMessage();
             }
         });
     }
@@ -493,7 +491,6 @@ public class MainActivity extends AppCompatActivity {
                                 error = e.getMessage();
                             }
 
-                            refreshErrorMessage();
                         }
                     });
 
@@ -510,7 +507,6 @@ public class MainActivity extends AppCompatActivity {
                     error = e.getMessage();
                 }
 
-                refreshErrorMessage();
             }
         });
     }
@@ -539,8 +535,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     error = e.getMessage();
                 }
-
-                refreshErrorMessage();
             }
         });
     }
