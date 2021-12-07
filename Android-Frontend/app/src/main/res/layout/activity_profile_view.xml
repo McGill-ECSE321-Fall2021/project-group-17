@@ -7,6 +7,33 @@
     android:id="@+id/profile"
     android:background="#D7CEC7">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button4"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+        android:onClick="homepage"
+        android:text="homepage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signup_button5"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginBottom="16dp"
+        android:background="#C09F80"
+        android:fontFamily="monospace"
+
+        android:onClick="signOut"
+        android:text="sign out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +56,7 @@
                 android:layout_gravity="left"
                 android:text="@string/profile_view"
                 android:textColor="#000000"
-                android:fontFamily="monospace"
+                android:fontFamily="serif-monospace"
                 android:textSize="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="8dp"/>
